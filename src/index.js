@@ -8,10 +8,11 @@ import { MuiThemeProvider } from '@material-ui/core/styles'
 import { ThemeProvider } from 'styled-components'
 import { store, persistor, history } from 'services/redux'
 import Routes from 'Routes'
+import { muiTheme } from 'services/bootstrap';
 import * as serviceWorker from './serviceWorker';
 
 const AppContainer = () => (
-  <MuiThemeProvider theme={{}}>
+  <MuiThemeProvider theme={muiTheme}>
     <ThemeProvider theme={{}}>
       <ConnectedRouter history={history}>
         <Routes />
