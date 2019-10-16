@@ -9,7 +9,8 @@ const hoc = (ProvidersContainer) => {
     constructor(props) {
       super(props);
 
-      props.getDashboardDataRequest({ a: 1 });
+      props.getDashboardDataRequest();
+      props.getFieldsPerEntityRequest();
     }
 
     componentDidMount() {
@@ -20,6 +21,7 @@ const hoc = (ProvidersContainer) => {
       return (
         <ProvidersContainer
           dashboardReducer={this.props.dashboardReducer}
+          fieldsReducer={this.props.fieldsReducer}
           classes={this.props.classes}
           width={this.props.width}
         />
@@ -29,6 +31,7 @@ const hoc = (ProvidersContainer) => {
 
   ProvidersHoc.propTypes = {
     dashboardReducer: PropTypes.object.isRequired,
+    fieldsReducer: PropTypes.object.isRequired,
     getProvidersRequest: PropTypes.func,
   }
 
@@ -37,12 +40,14 @@ const hoc = (ProvidersContainer) => {
 
 export default (ProvidersContainer) => {
 
-  const mapStateToProps = (state, props) => ({
+  const mapStateToProps = state => ({
     dashboardReducer: state.dashboard,
+    fieldsReducer: state.fields,
   })
 
   const mapDispatchToProps = {
     getDashboardDataRequest: actions.getDashboardDataRequest,
+    getFieldsPerEntityRequest: actions.getFieldsPerEntityRequest,
   }
 
   return connect(mapStateToProps, mapDispatchToProps)(

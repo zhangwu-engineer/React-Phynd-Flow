@@ -47,7 +47,8 @@ function a11yProps(index) {
   };
 }
 
-const Dashboard = () => {
+const Dashboard = ({ fieldsReducer }) => {
+  console.log(fieldsReducer)
   const classes = useStyles();
 
   return (
@@ -68,15 +69,7 @@ const Dashboard = () => {
       >
         <div className={classes.toolbar} />
         <List>
-          {[
-            'Provider Details',
-            'Addresses',
-            'Licenses',
-            'Qualifications',
-            'Specialities',
-            'Custom Fields',
-            'Languages'
-          ].map((text, index) => (
+          {Object.keys(fieldsReducer.fields).map((text, index) => (
             <ListItem button key={text} component={NavLink} to="/provider-details">
               {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
               <ListItemText primary={text} />
@@ -93,6 +86,7 @@ const Dashboard = () => {
             variant="scrollable"
             scrollButtons="auto"
             aria-label="scrollable auto tabs example"
+            value={0}
           >
             <Tab label="Provider Module" {...a11yProps(0)} />
             <Tab label="Location Module" {...a11yProps(1)} />
