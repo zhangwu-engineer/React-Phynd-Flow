@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import * as actions from 'actions'
 
@@ -24,6 +25,7 @@ const hoc = (ProvidersContainer) => {
           fieldsReducer={this.props.fieldsReducer}
           classes={this.props.classes}
           width={this.props.width}
+          {...this.props}
         />
       )
     }
@@ -35,11 +37,10 @@ const hoc = (ProvidersContainer) => {
     getProvidersRequest: PropTypes.func,
   }
 
-  return ProvidersHoc
+  return withRouter(ProvidersHoc)
 }
 
 export default (ProvidersContainer) => {
-
   const mapStateToProps = state => ({
     dashboardReducer: state.dashboard,
     fieldsReducer: state.fields,

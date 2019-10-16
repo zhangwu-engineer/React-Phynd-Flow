@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Drawer from '@material-ui/core/Drawer';
@@ -12,6 +12,12 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+
+// Expansion Panel
+import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
+import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+
 import hoc from './hoc';
 
 const drawerWidth = 240;
@@ -40,6 +46,47 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
 }));
 
+const ExpansionPanel = withStyles({
+  root: {
+    border: '1px solid rgba(0, 0, 0, .125)',
+    boxShadow: 'none',
+    '&:not(:last-child)': {
+      borderBottom: 0,
+    },
+    '&:before': {
+      display: 'none',
+    },
+    '&$expanded': {
+      margin: 'auto',
+    },
+  },
+  expanded: {},
+})(MuiExpansionPanel);
+
+const ExpansionPanelSummary = withStyles({
+  root: {
+    backgroundColor: 'rgba(0, 0, 0, .03)',
+    borderBottom: '1px solid rgba(0, 0, 0, .125)',
+    marginBottom: -1,
+    minHeight: 56,
+    '&$expanded': {
+      minHeight: 56,
+    },
+  },
+  content: {
+    '&$expanded': {
+      margin: '12px 0',
+    },
+  },
+  expanded: {},
+})(MuiExpansionPanelSummary);
+
+const ExpansionPanelDetails = withStyles(theme => ({
+  root: {
+    padding: theme.spacing(2),
+  },
+}))(MuiExpansionPanelDetails);
+
 function a11yProps(index) {
   return {
     id: `scrollable-auto-tab-${index}`,
@@ -47,9 +94,16 @@ function a11yProps(index) {
   };
 }
 
-const Dashboard = ({ fieldsReducer }) => {
-  console.log(fieldsReducer)
+const getIDFromName = name => `${name}`.toLowerCase().replace(' ', '-')
+const getNameFromID = id => `${id}`.split('-').map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(' ');
+
+const Dashboard = ({ fieldsReducer, match }) => {
   const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(null);
+
+  const handleChange = panel => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
 
   return (
     <div className={classes.root}>
@@ -70,9 +124,14 @@ const Dashboard = ({ fieldsReducer }) => {
         <div className={classes.toolbar} />
         <List>
           {Object.keys(fieldsReducer.fields).map((text, index) => (
-            <ListItem button key={text} component={NavLink} to="/provider-details">
+            <ListItem button key={text} component={NavLink} to={getIDFromName(text)}>
               {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
-              <ListItemText primary={text} />
+              {
+                getNameFromID(match.params.entity) === text ?
+                  <ListItemText primary={text} />
+                :
+                  <ListItemText secondary={text} />
+              }
             </ListItem>
           ))}
         </List>
@@ -102,15 +161,22 @@ const Dashboard = ({ fieldsReducer }) => {
           // {...other}
         >
           <Box className={classes.box}>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-            facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-            tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-            consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-            vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-            hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-            tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-            nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-            accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
+            {
+              fieldsReducer.fields[getNameFromID(match.params.entity)].map((item, index) =>
+                <ExpansionPanel square key={index} expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
+                  <ExpansionPanelSummary aria-controls={`panel${index}d-content`} id={`panel${index}d-header`}>
+                    <Typography>{item}</Typography>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <Typography>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                      sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing
+                      elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
+                    </Typography>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
+              )
+            }
           </Box>
         </Typography>
       </main>

@@ -13,7 +13,7 @@ const Routes = () => {
         <CssBaseline />
         <LayoutContainer>
           <Switch>
-            <Route path="/" component={Dashboard} />
+            <Route path="/:entity" component={Dashboard} />
           </Switch>
         </LayoutContainer>
       </React.Fragment>
