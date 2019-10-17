@@ -20,21 +20,12 @@ import {
 } from 'utils/helper';
 import hoc from './hoc';
 
-const drawerWidth = 240;
-
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
   },
   content: {
     flexGrow: 1,

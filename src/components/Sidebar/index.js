@@ -12,12 +12,6 @@ import {
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
@@ -25,14 +19,6 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
     width: drawerWidth,
   },
-  content: {
-    flexGrow: 1,
-  },
-  box: {
-    flexGrow: 1,
-    padding: theme.spacing(2),
-  },
-  toolbar: theme.mixins.toolbar,
 }));
 
 const Sidebar = ({ fieldsReducer, match }) => {
