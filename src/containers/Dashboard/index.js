@@ -2,8 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
@@ -23,9 +21,6 @@ import hoc from './hoc';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
   },
   content: {
     flexGrow: 1,
@@ -47,13 +42,6 @@ const Dashboard = ({ fieldsReducer, match }) => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-            Channel Builder
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <Sidebar fieldsReducer={fieldsReducer} />
       <main className={classes.content}>
         <div className={classes.toolbar} />
