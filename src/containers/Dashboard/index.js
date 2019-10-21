@@ -12,6 +12,8 @@ import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 import {
   a11yProps,
   getNameFromID
@@ -71,7 +73,11 @@ const Dashboard = ({ fieldsReducer, match }) => {
             {
               fieldsReducer.fields[getNameFromID(match.params.entity)] && fieldsReducer.fields[getNameFromID(match.params.entity)].map((item, index) =>
                 <MuiExpansionPanel square key={index} expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
-                  <MuiExpansionPanelSummary aria-controls={`panel${index}d-content`} id={`panel${index}d-header`}>
+                  <MuiExpansionPanelSummary
+                    aria-controls={`panel${index}d-content`}
+                    id={`panel${index}d-header`}
+                    expandIcon={<ExpandMoreIcon />}
+                  >
                     <Typography>{item}</Typography>
                   </MuiExpansionPanelSummary>
                   <MuiExpansionPanelDetails>
