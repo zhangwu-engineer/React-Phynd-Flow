@@ -6,11 +6,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import {
-  getIDFromName,
-  getNameFromID
-} from 'utils/helper';
-
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -23,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
 }));
 
-const Sidebar = ({ fieldsReducer, match }) => {
+const Sidebar = ({ match, data }) => {
   const classes = useStyles();
 
   return (
@@ -36,14 +31,14 @@ const Sidebar = ({ fieldsReducer, match }) => {
     >
       <div className={classes.toolbar} />
       <List>
-        {Object.keys(fieldsReducer.fields).map((text, index) => (
-          <ListItem button key={text} component={NavLink} to={getIDFromName(text)}>
+        {data.map((navItem, index) => (
+          <ListItem button key={`navitem-${index}`} component={NavLink} to={navItem.link}>
             {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
             {
-              getNameFromID(match.params.entity) === text ?
-                <ListItemText primary={text} />
+              match.params.entity === navItem.link ?
+                <ListItemText primary={navItem.name} />
               :
-                <ListItemText secondary={text} />
+                <ListItemText secondary={navItem.name} />
             }
           </ListItem>
         ))}

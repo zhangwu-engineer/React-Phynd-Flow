@@ -2,10 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { getIDFromName } from 'utils/helper';
 
 import * as actions from 'actions'
 
-const hoc = (ProvidersContainer) => {
+const hoc = (Dashboard) => {
   class ProvidersHoc extends React.Component {
     constructor(props) {
       super(props);
@@ -20,7 +21,7 @@ const hoc = (ProvidersContainer) => {
 
     render() {
       return (
-        <ProvidersContainer
+        <Dashboard
           dashboardReducer={this.props.dashboardReducer}
           fieldsReducer={this.props.fieldsReducer}
           classes={this.props.classes}
@@ -40,10 +41,11 @@ const hoc = (ProvidersContainer) => {
   return withRouter(ProvidersHoc)
 }
 
-export default (ProvidersContainer) => {
+export default (Dashboard) => {
   const mapStateToProps = state => ({
     dashboardReducer: state.dashboard,
     fieldsReducer: state.fields,
+    sidebarData: Object.keys(state.fields.fields).map(name => ({ name: name, link: getIDFromName(name) }))
   })
 
   const mapDispatchToProps = {
@@ -52,6 +54,6 @@ export default (ProvidersContainer) => {
   }
 
   return connect(mapStateToProps, mapDispatchToProps)(
-    hoc(ProvidersContainer)
+    hoc(Dashboard)
   )
 }

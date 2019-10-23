@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
 }));
 
-const Dashboard = ({ fieldsReducer, match }) => {
+const Dashboard = ({ fieldsReducer, match, sidebarData }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(null);
 
@@ -44,7 +44,7 @@ const Dashboard = ({ fieldsReducer, match }) => {
 
   return (
     <div className={classes.root}>
-      <Sidebar fieldsReducer={fieldsReducer} />
+      <Sidebar data={sidebarData} />
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Paper square>

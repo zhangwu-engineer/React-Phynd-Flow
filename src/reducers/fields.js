@@ -3,7 +3,7 @@ import update from 'immutability-helper'
 import * as constants from 'constants/index'
 
 export const initialState = {
-  fields: {},
+  fields: null,
 
   getFieldsData: {
     message: null,
