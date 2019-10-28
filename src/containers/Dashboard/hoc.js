@@ -45,7 +45,7 @@ export default (Dashboard) => {
   const mapStateToProps = state => ({
     dashboardReducer: state.dashboard,
     fieldsReducer: state.fields,
-    sidebarData: Object.keys(state.fields.fields).map(name => ({ name: name, link: getIDFromName(name) }))
+    sidebarData: state.fields.fields ? Object.keys(state.fields.fields).map(name => ({ name: name, link: getIDFromName(name) })) : {}
   })
 
   const mapDispatchToProps = {
