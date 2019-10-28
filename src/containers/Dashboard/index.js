@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
 }));
 
-const Dashboard = ({ fieldsReducer, match, sidebarData }) => {
+const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(null);
 
@@ -82,9 +82,24 @@ const Dashboard = ({ fieldsReducer, match, sidebarData }) => {
                   </MuiExpansionPanelSummary>
                   <MuiExpansionPanelDetails>
                     <Typography>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                      sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing
-                      elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
+                      {
+                        dashboardReducer.dashboard[item] && dashboardReducer.dashboard[item].MappingFieldId
+                      }
+                    </Typography>
+                    <Typography>
+                      {
+                        dashboardReducer.dashboard[item] && dashboardReducer.dashboard[item].MappingFieldType
+                      }
+                    </Typography>
+                    <Typography>
+                      {
+                        dashboardReducer.dashboard[item] && dashboardReducer.dashboard[item].SerAttributeId
+                      }
+                    </Typography>
+                    <Typography>
+                      {
+                        dashboardReducer.dashboard[item] && dashboardReducer.dashboard[item].FunctionName
+                      }
                     </Typography>
                   </MuiExpansionPanelDetails>
                 </MuiExpansionPanel>
