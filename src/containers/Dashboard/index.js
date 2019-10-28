@@ -6,6 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Sidebar from 'components/Sidebar';
+import Diagram from 'containers/Diagram';
 
 // Expansion Panel
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -30,6 +31,9 @@ const useStyles = makeStyles(theme => ({
   box: {
     flexGrow: 1,
     padding: theme.spacing(2),
+  },
+  details: {
+    flexDirection: 'column',
   },
   toolbar: theme.mixins.toolbar,
 }));
@@ -80,7 +84,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
                   >
                     <Typography>{item}</Typography>
                   </MuiExpansionPanelSummary>
-                  <MuiExpansionPanelDetails>
+                  <MuiExpansionPanelDetails className={classes.details}>
                     <Typography>
                       {
                         dashboardReducer.dashboard[item] && 
@@ -90,6 +94,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
                           FunctionName: ${dashboardReducer.dashboard[item].FunctionName}`
                       }
                     </Typography>
+                    <Diagram />
                   </MuiExpansionPanelDetails>
                 </MuiExpansionPanel>
               )
