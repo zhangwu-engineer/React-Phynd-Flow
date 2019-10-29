@@ -40,14 +40,16 @@ class Diagram extends React.Component {
         mappingElements = this.generateFunctionMapping(source);
         break;
       case 'Column':
-        mappingElements = this.generateColumnMapping(source);
+      case 'Constant':
+      case 'HL7':
+        mappingElements = this.generateSingleMapping(source);
         break;
       default: break;
     }
     return mappingElements;
   }
 
-  generateColumnMapping(source) {
+  generateSingleMapping(source) {
     const elements = [
       {
         data: {
