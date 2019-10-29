@@ -1,22 +1,76 @@
 import React from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 
+const DIGRAM_CONF = {
+  startX: 200,
+  startY: 100,
+  nodeWidth: 'label',
+  nodeHeight: 'label',
+  nodePadding: 50,
+  diagramWidth: '100%',
+  diagramHeight: 300,
+};
+
 class Diagram extends React.Component {
-  componentDidMount(){
+
+  state = {
+    elements: []
+  };
+
+  componentWillReceiveProps(props) {
+    switch (props.source.MappingFieldType) {
+      case 'Function':
+        this.generateFunctionMapping(props.source);
+        break;
+      default: break;
+    }
+  }
+
+  componentDidMount() {
     this.cy.on('click', function(e) {
       console.log(e);
     });
   }
-  render(){
+
+  generateFunctionMapping(source) {
     const elements = [
-      { data: { id: 'group1', label: 'Group 1' }, position: { x: 120, y: 120 }, classes: 'entity' },
-      { data: { id: 'one', label: 'Node 1', parent: 'group1' }, position: { x: 120, y: 120 }, classes: 'node' },
-      { data: { id: 'three', label: 'Node 3', parent: 'group1' }, position: { x: 120, y: 220 }, classes: 'node' },
-      { data: { id: 'two', label: 'Node 2' }, position: { x: 300, y: 120 }, classes: 'node'},
       {
-        data: { source: 'one', target: 'two', label: 'Edge from Node1 to Node2' },
+        data: {
+          id: 'field',
+          label: `Function: ${source.FunctionName}`,
+        },
+        classes: 'entity',
+      },
+      {
+        data: {
+          id: 'sourceParameter',
+          label: 'SourceParameter',
+          parent: 'field',
+        },
+        position: { x: DIGRAM_CONF.startX, y: DIGRAM_CONF.startY },
+        classes: 'node',
+      },
+      {
+        data: {
+          id: 'targetParameter',
+          label: `${source.FunctionParameter && source.FunctionParameter.MappingFieldType}: ${source.FunctionParameter && source.FunctionParameter.ColumnIdentifier}`,
+        },
+        position: { x: DIGRAM_CONF.startX + 300, y: DIGRAM_CONF.startY },
+        classes: 'node',
+      },
+      {
+        data: {
+          source: 'sourceParameter',
+          target: 'targetParameter',
+        },
       },
     ];
+    this.setState({ elements });
+  }
+
+  render(){
+    const { elements } = this.state;
+
     return (
       <CytoscapeComponent
         cy={(cy) => { this.cy = cy }}
@@ -28,21 +82,25 @@ class Diagram extends React.Component {
               'font-weight': 'bold',
               'background-opacity': 0.075,
               'content': 'data(label)',
-              'padding': 30,
+              'padding': DIGRAM_CONF.nodePadding,
               'text-valign': 'top',
+              'text-halign': 'center',
+              'text-margin-y': 30,
             }
           },
           {
             selector: '.node',
             style: {
-              width: 100,
-              height: 30,
+              width: 'label',
+              height: 'label',
               'background-color': 'white',
               'label': 'data(label)',
               'border-style': 'solid',
               'border-width': '1',
               'border-color': 'black',
+              'text-halign': 'center',
               'text-valign': 'center',
+              'padding': 15,
               'shape': 'rectangle',
             }
           },
@@ -56,7 +114,12 @@ class Diagram extends React.Component {
             }
           }
         ]}
-        style={ { width: '100%', height: '400px' } }
+        style={
+          {
+            width: DIGRAM_CONF.diagramWidth,
+            height: DIGRAM_CONF.diagramHeight,
+          }
+        }
       />
     );
   }

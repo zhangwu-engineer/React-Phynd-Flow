@@ -96,7 +96,9 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
                         </Typography>
                     }
                     {dashboardReducer.dashboard[item] && 
-                      <Diagram />
+                      <Diagram
+                        source={dashboardReducer.dashboard[item]}
+                      />
                     }
                   </MuiExpansionPanelDetails>
                 </MuiExpansionPanel>
