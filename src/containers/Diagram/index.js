@@ -67,7 +67,7 @@ class Diagram extends React.Component {
     const elements = [
       {
         data: {
-          id: 'field',
+          id: `${source.FunctionName}`,
           label: `Function: ${source.FunctionName}`,
         },
         classes: 'entity',
@@ -76,7 +76,7 @@ class Diagram extends React.Component {
         data: {
           id: source.MappingFieldId,
           label: 'SourceParameter',
-          parent: 'field',
+          parent: `${source.FunctionName}`,
         },
         group: 'nodes',
       },
