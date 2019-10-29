@@ -10,7 +10,7 @@ const DIGRAM_CONF = {
   startY: 100,
   nodeWidth: 'label',
   nodeHeight: 'label',
-  nodePadding: 50,
+  diagramPadding: 50,
   diagramWidth: '100%',
   diagramHeight: 300,
 };
@@ -132,7 +132,7 @@ class Diagram extends React.Component {
               'height': 'label',
               'font-weight': 'bold',
               'background-opacity': 0.075,
-              'padding': DIGRAM_CONF.nodePadding,
+              'padding': DIGRAM_CONF.diagramPadding,
               'text-valign': 'top',
               'text-halign': 'center',
               'text-margin-y': 30,
@@ -152,6 +152,7 @@ class Diagram extends React.Component {
           {
             width: DIGRAM_CONF.diagramWidth,
             height: DIGRAM_CONF.diagramHeight,
+            padding: DIGRAM_CONF.diagramPadding,
           }
         }
       />
