@@ -1,5 +1,9 @@
 import React from 'react';
+import Cytoscape from 'cytoscape';
+import COSEBilkent from 'cytoscape-cose-bilkent';
 import CytoscapeComponent from 'react-cytoscapejs';
+
+Cytoscape.use(COSEBilkent);
 
 const DIGRAM_CONF = {
   startX: 200,
@@ -17,19 +21,26 @@ class Diagram extends React.Component {
     elements: []
   };
 
-  componentWillReceiveProps(props) {
-    switch (props.source.MappingFieldType) {
-      case 'Function':
-        this.generateFunctionMapping(props.source);
-        break;
-      default: break;
-    }
-  }
-
   componentDidMount() {
     this.cy.on('click', function(e) {
       console.log(e);
     });
+  }
+
+  componentWillReceiveProps(props) {
+    this.generateMapping(props.source);
+  }
+
+  generateMapping(source) {
+    let elementsToAdd;
+    switch (source.MappingFieldType) {
+      case 'Function':
+          elementsToAdd = this.generateFunctionMapping(source);
+        break;
+      default: break;
+    }
+    const joined = this.state.elements.concat(elementsToAdd);
+    this.setState({ elements: joined });
   }
 
   generateFunctionMapping(source) {
@@ -43,56 +54,53 @@ class Diagram extends React.Component {
       },
       {
         data: {
-          id: 'sourceParameter',
+          id: source.MappingFieldId,
           label: 'SourceParameter',
           parent: 'field',
         },
-        position: { x: DIGRAM_CONF.startX, y: DIGRAM_CONF.startY },
-        classes: 'node',
+        group: 'nodes',
       },
       {
         data: {
-          id: 'targetParameter',
+          id: source.FunctionParameter.MappingFieldId,
           label: `${source.FunctionParameter && source.FunctionParameter.MappingFieldType}: ${source.FunctionParameter && source.FunctionParameter.ColumnIdentifier}`,
         },
-        position: { x: DIGRAM_CONF.startX + 300, y: DIGRAM_CONF.startY },
-        classes: 'node',
+        group: 'nodes',
       },
       {
         data: {
-          source: 'sourceParameter',
-          target: 'targetParameter',
+          id: `${source.MappingFieldId}-${source.FunctionParameter.MappingFieldId}`,
+          source: source.MappingFieldId,
+          target: source.FunctionParameter.MappingFieldId,
         },
+        group: "edges",
       },
     ];
-    this.setState({ elements });
+    return elements;
   }
 
-  render(){
+  render() {
     const { elements } = this.state;
+    const layout = { 
+      name: 'cose-bilkent',
+      flow: {
+        axis: 'x',
+        minSeparation: 40,
+      },
+      avoidOverlap: true,
+    };
 
     return (
       <CytoscapeComponent
         cy={(cy) => { this.cy = cy }}
         elements={CytoscapeComponent.normalizeElements(elements)}
+        layout={layout}
         stylesheet={[
           {
-            selector: ':parent',
+            selector: 'node',
             style: {
-              'font-weight': 'bold',
-              'background-opacity': 0.075,
-              'content': 'data(label)',
-              'padding': DIGRAM_CONF.nodePadding,
-              'text-valign': 'top',
-              'text-halign': 'center',
-              'text-margin-y': 30,
-            }
-          },
-          {
-            selector: '.node',
-            style: {
-              width: 'label',
-              height: 'label',
+              'width': 'label',
+              'height': 'label',
               'background-color': 'white',
               'label': 'data(label)',
               'border-style': 'solid',
@@ -102,6 +110,19 @@ class Diagram extends React.Component {
               'text-valign': 'center',
               'padding': 15,
               'shape': 'rectangle',
+            }
+          },
+          {
+            selector: ':parent',
+            style: {
+              'width': 'label',
+              'height': 'label',
+              'font-weight': 'bold',
+              'background-opacity': 0.075,
+              'padding': DIGRAM_CONF.nodePadding,
+              'text-valign': 'top',
+              'text-halign': 'center',
+              'text-margin-y': 30,
             }
           },
           {
