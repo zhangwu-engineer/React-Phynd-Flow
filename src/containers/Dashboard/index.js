@@ -86,16 +86,6 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
                   </MuiExpansionPanelSummary>
                   <MuiExpansionPanelDetails className={classes.details}>
                     {dashboardReducer.dashboard[item] && 
-                        <Typography>
-                          {
-                            `MappingFieldId: ${dashboardReducer.dashboard[item].MappingFieldId},
-                            MappingFieldType: ${dashboardReducer.dashboard[item].MappingFieldType},
-                            SerAttributeId: ${dashboardReducer.dashboard[item].SerAttributeId},
-                            FunctionName: ${dashboardReducer.dashboard[item].FunctionName}`
-                          }
-                        </Typography>
-                    }
-                    {dashboardReducer.dashboard[item] && 
                       <Diagram
                         source={dashboardReducer.dashboard[item]}
                       />
