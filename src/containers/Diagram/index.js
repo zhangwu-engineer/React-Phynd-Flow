@@ -28,22 +28,40 @@ class Diagram extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    this.generateMapping(props.source);
-  }
-
-  generateMapping(source) {
-    let elementsToAdd;
-    switch (source.MappingFieldType) {
-      case 'Function':
-          elementsToAdd = this.generateFunctionMapping(source);
-        break;
-      default: break;
-    }
+    const elementsToAdd = this.generateMapping(props.source);
     const joined = this.state.elements.concat(elementsToAdd);
     this.setState({ elements: joined });
   }
 
+  generateMapping(source) {
+    let mappingElements = [];
+    switch (source.MappingFieldType) {
+      case 'Function':
+        mappingElements = this.generateFunctionMapping(source);
+        break;
+      case 'Column':
+        mappingElements = this.generateColumnMapping(source);
+        break;
+      default: break;
+    }
+    return mappingElements;
+  }
+
+  generateColumnMapping(source) {
+    const elements = [
+      {
+        data: {
+          id: source.MappingFieldId,
+          label: `${source.MappingFieldType}: ${source.ColumnIdentifier}`,
+        },
+        group: 'nodes',
+      },
+    ];
+    return elements;
+  }
+
   generateFunctionMapping(source) {
+    const nextMappingField = this.generateMapping(source.FunctionParameter);
     const elements = [
       {
         data: {
@@ -62,13 +80,6 @@ class Diagram extends React.Component {
       },
       {
         data: {
-          id: source.FunctionParameter.MappingFieldId,
-          label: `${source.FunctionParameter && source.FunctionParameter.MappingFieldType}: ${source.FunctionParameter && source.FunctionParameter.ColumnIdentifier}`,
-        },
-        group: 'nodes',
-      },
-      {
-        data: {
           id: `${source.MappingFieldId}-${source.FunctionParameter.MappingFieldId}`,
           source: source.MappingFieldId,
           target: source.FunctionParameter.MappingFieldId,
@@ -76,7 +87,7 @@ class Diagram extends React.Component {
         group: "edges",
       },
     ];
-    return elements;
+    return elements.concat(nextMappingField);
   }
 
   render() {
