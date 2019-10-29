@@ -10,9 +10,9 @@ const DIGRAM_CONF = {
   startY: 100,
   nodeWidth: 'label',
   nodeHeight: 'label',
-  diagramPadding: 50,
+  diagramPadding: 30,
   diagramWidth: '100%',
-  diagramHeight: 300,
+  diagramHeight: 500,
 };
 
 class Diagram extends React.Component {
@@ -71,23 +71,23 @@ class Diagram extends React.Component {
     const elements = [
       {
         data: {
-          id: `${source.FunctionName}`,
+          id: `${source.MappingFieldId}`,
           label: `Function: ${source.FunctionName}`,
         },
         classes: 'entity',
       },
       {
         data: {
-          id: source.MappingFieldId,
+          id: `source-${source.MappingFieldId}`,
           label: 'SourceParameter',
-          parent: `${source.FunctionName}`,
+          parent: `${source.MappingFieldId}`,
         },
         group: 'nodes',
       },
       {
         data: {
-          id: `${source.MappingFieldId}-${source.FunctionParameter.MappingFieldId}`,
-          source: source.MappingFieldId,
+          id: `edge-source-${source.FunctionParameter.MappingFieldId}`,
+          source: `source-${source.MappingFieldId}`,
           target: source.FunctionParameter.MappingFieldId,
         },
         group: "edges",
@@ -187,7 +187,7 @@ class Diagram extends React.Component {
               'padding': DIGRAM_CONF.diagramPadding,
               'text-valign': 'top',
               'text-halign': 'center',
-              'text-margin-y': 30,
+              'text-margin-y': 25,
             }
           },
           {
