@@ -40,21 +40,25 @@ class Diagram extends React.Component {
         mappingElements = this.generateFunctionMapping(source);
         break;
       case 'Column':
+        mappingElements = this.generateSingleMapping(source, source.ColumnIdentifier);
+        break;
       case 'Constant':
-      case 'HL7':
-        mappingElements = this.generateSingleMapping(source);
+        mappingElements = this.generateSingleMapping(source, source.ConstantValue);
+        break;
+      case 'Switch':
+        mappingElements = this.generateSwitchMapping(source);
         break;
       default: break;
     }
     return mappingElements;
   }
 
-  generateSingleMapping(source) {
+  generateSingleMapping(source, identifier) {
     const elements = [
       {
         data: {
           id: source.MappingFieldId,
-          label: `${source.MappingFieldType}: ${source.ColumnIdentifier}`,
+          label: `${source.MappingFieldType}: ${identifier}`,
         },
         group: 'nodes',
       },
@@ -90,6 +94,54 @@ class Diagram extends React.Component {
       },
     ];
     return elements.concat(nextMappingField);
+  }
+
+  generateSwitchMapping(source) {
+    const elements = [
+      {
+        data: {
+          id: `${source.MappingFieldId}`,
+          label: `Switch: `,
+        },
+        classes: 'entity',
+      },
+      {
+        data: {
+          id: `value-${source.SwitchValue.MappingFieldId}`,
+          label: 'SwitchValue',
+          parent: `${source.MappingFieldId}`,
+        },
+        group: 'nodes',
+      },
+      {
+        data: {
+          id: `default-${source.SwitchDefault.MappingFieldId}`,
+          label: 'DefaultValue',
+          parent: `${source.MappingFieldId}`,
+        },
+        group: 'nodes',
+      },
+      {
+        data: {
+          id: `edge-value-${source.SwitchValue.MappingFieldId}`,
+          source: `value-${source.SwitchValue.MappingFieldId}`,
+          target: source.SwitchValue.MappingFieldId,
+        },
+        group: "edges",
+      },
+      {
+        data: {
+          id: `edge-default-${source.SwitchDefault.MappingFieldId}`,
+          source: `default-${source.SwitchDefault.MappingFieldId}`,
+          target: source.SwitchDefault.MappingFieldId,
+        },
+        group: "edges",
+      },
+    ];
+    const switchValue = this.generateMapping(source.SwitchValue);
+    const switchDefault = this.generateMapping(source.SwitchDefault);
+
+    return elements.concat(switchDefault).concat(switchValue);
   }
 
   render() {
