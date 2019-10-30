@@ -1,9 +1,9 @@
 import React from 'react';
 import Cytoscape from 'cytoscape';
-import COSECola from 'cytoscape-cola';
+import LAYOUT from 'cytoscape-dagre';
 import CytoscapeComponent from 'react-cytoscapejs';
 
-Cytoscape.use(COSECola);
+Cytoscape.use(LAYOUT);
 
 const DIGRAM_CONF = {
   startX: 200,
@@ -22,46 +22,48 @@ class Diagram extends React.Component {
   };
 
   componentDidMount() {
-    this.cy.on('click', function(e) {
+    this.cy.on('tap', 'node', function(e) {
       console.log(e);
     });
   }
 
   componentWillReceiveProps(props) {
-    const elementsToAdd = this.generateMapping(props.source);
+    const elementsToAdd = this.generateMapping(props.source, 1, 1);
     const joined = this.state.elements.concat(elementsToAdd);
     this.setState({ elements: joined });
   }
 
-  generateMapping(source) {
+  generateMapping(source, xWeight, yWeight) {
     let mappingElements = [];
     switch (source.MappingFieldType) {
       case 'Function':
-        mappingElements = this.generateFunctionMapping(source);
+        mappingElements = this.generateFunctionMapping(source, xWeight, yWeight);
         break;
       case 'Column':
-        mappingElements = this.generateSingleMapping(source, source.ColumnIdentifier);
+        mappingElements = this.generateSingleMapping(source, source.ColumnIdentifier, xWeight, yWeight);
         break;
       case 'Constant':
-        mappingElements = this.generateSingleMapping(source, source.ConstantValue);
+        mappingElements = this.generateSingleMapping(source, source.ConstantValue, xWeight, yWeight);
         break;
       case 'Switch':
-        mappingElements = this.generateSwitchMapping(source);
+        mappingElements = this.generateSwitchMapping(source, xWeight, yWeight);
         break;
       case 'Conditional':
-        mappingElements = this.generateConditionMapping(source);
+        mappingElements = this.generateConditionMapping(source, xWeight, yWeight);
         break;
       default: break;
     }
     return mappingElements;
   }
 
-  generateSingleMapping(source, identifier) {
+  generateSingleMapping(source, identifier, xWeight, yWeight) {
     const elements = [
       {
         data: {
           id: source.MappingFieldId,
           label: `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`,
+          xWeight,
+          yWeight,
         },
         group: 'nodes',
       },
@@ -69,8 +71,8 @@ class Diagram extends React.Component {
     return elements;
   }
 
-  generateFunctionMapping(source) {
-    const nextMappingField = this.generateMapping(source.FunctionParameter);
+  generateFunctionMapping(source, xWeight, yWeight) {
+    const nextMappingField = this.generateMapping(source.FunctionParameter, xWeight+1, yWeight);
     const elements = [
       {
         data: {
@@ -84,6 +86,8 @@ class Diagram extends React.Component {
           id: `source-${source.MappingFieldId}`,
           label: 'SourceParameter',
           parent: `${source.MappingFieldId}`,
+          xWeight,
+          yWeight,
         },
         group: 'nodes',
       },
@@ -99,7 +103,7 @@ class Diagram extends React.Component {
     return elements.concat(nextMappingField);
   }
 
-  generateSwitchMapping(source) {
+  generateSwitchMapping(source, xWeight, yWeight) {
     let elements = [
       {
         data: {
@@ -194,10 +198,7 @@ class Diagram extends React.Component {
     return elements.concat(switchDefault).concat(switchValue);
   }
 
-  generateConditionMapping(source) {
-    const trueMappingField = this.generateMapping(source.TrueField);
-    const falseMappingField = this.generateMapping(source.FalseField);
-
+  generateConditionMapping(source, xWeight, yWeight) {
     const elements = [
       {
         data: {
@@ -208,9 +209,31 @@ class Diagram extends React.Component {
       },
       {
         data: {
+          id: `condition-${source.MappingFieldId}`,
+          label: 'Condition:',
+          parent: `${source.MappingFieldId}`,
+          xWeight,
+          yWeight,
+        },
+        group: 'nodes',
+      },
+      {
+        data: {
           id: `true-${source.MappingFieldId}`,
           label: 'If True:',
           parent: `${source.MappingFieldId}`,
+          xWeight,
+          yWeight: yWeight+2,
+        },
+        group: 'nodes',
+      },
+      {
+        data: {
+          id: `false-${source.MappingFieldId}`,
+          label: 'If False:',
+          parent: `${source.MappingFieldId}`,
+          xWeight,
+          yWeight: yWeight+3,
         },
         group: 'nodes',
       },
@@ -224,14 +247,6 @@ class Diagram extends React.Component {
       },
       {
         data: {
-          id: `false-${source.MappingFieldId}`,
-          label: 'If False:',
-          parent: `${source.MappingFieldId}`,
-        },
-        group: 'nodes',
-      },
-      {
-        data: {
           id: `edge-false-${source.FalseField.MappingFieldId}`,
           source: `false-${source.MappingFieldId}`,
           target: source.FalseField.MappingFieldId,
@@ -240,17 +255,10 @@ class Diagram extends React.Component {
       },
     ];
 
-    const field1MappingField = this.generateMapping(source.Condition.Field1);
-    const field2MappingField = this.generateMapping(source.Condition.Field2);
+    const trueMappingField = this.generateMapping(source.TrueField, xWeight+1, yWeight+2);
+    const falseMappingField = this.generateMapping(source.FalseField, xWeight+1, yWeight+3);
+
     let fields = [
-      {
-        data: {
-          id: `condition-${source.MappingFieldId}`,
-          label: 'Condition:',
-          parent: `${source.MappingFieldId}`,
-        },
-        group: 'nodes',
-      },
       {
         data: {
           id: `fields-${source.MappingFieldId}`,
@@ -262,6 +270,8 @@ class Diagram extends React.Component {
           id: `field1-${source.MappingFieldId}`,
           label: 'Field 1',
           parent: `fields-${source.MappingFieldId}`,
+          xWeight: xWeight+1,
+          yWeight,
         },
         group: 'nodes',
       },
@@ -270,6 +280,8 @@ class Diagram extends React.Component {
           id: `field2-${source.MappingFieldId}`,
           label: 'Field 2',
           parent: `fields-${source.MappingFieldId}`,
+          xWeight: xWeight+1,
+          yWeight: yWeight+1,
         },
         group: 'nodes',
       },
@@ -298,7 +310,11 @@ class Diagram extends React.Component {
         group: 'edges',
       },
     ];
-    fields = fields.concat(field1MappingField).concat(field2MappingField);
+
+    const field1MappingField = this.generateMapping(source.Condition.Field1, xWeight+2, yWeight);
+    const field2MappingField = this.generateMapping(source.Condition.Field2, xWeight+2, yWeight+1);
+    fields = fields.concat(field1MappingField);
+    fields = fields.concat(field2MappingField);
 
     return elements.concat(fields).concat(trueMappingField).concat(falseMappingField);
   }
@@ -306,9 +322,18 @@ class Diagram extends React.Component {
   render() {
     const { elements } = this.state;
     const layout = { 
-      name: 'cola',
-      flow: { axis: 'x', minSeparation: 40 },
-      avoidOverlap: true,
+      name: 'preset',
+      transform: function(node, pos) { 
+        // if (node._private.data.wei === 'Primary')
+        //   // return {x: pos.y, y: 200 };
+        //   return pos;
+        if (node._private.data.xWeight && node._private.data.yWeight)
+          return {
+            x: node._private.data.xWeight * 300,
+            y: node._private.data.yWeight * 100,
+          };
+        return pos;
+      },
     };
 
     return (
