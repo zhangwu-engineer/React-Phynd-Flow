@@ -97,7 +97,7 @@ class Diagram extends React.Component {
   }
 
   generateSwitchMapping(source) {
-    const elements = [
+    let elements = [
       {
         data: {
           id: `${source.MappingFieldId}`,
@@ -112,6 +112,21 @@ class Diagram extends React.Component {
           parent: `${source.MappingFieldId}`,
         },
         group: 'nodes',
+      },
+      {
+        data: {
+          id: `case-source-${source.MappingFieldId}`,
+          label: 'Cases',
+          parent: `${source.MappingFieldId}`,
+        },
+        group: 'nodes',
+      },
+      {
+        data: {
+          id: `case-target-${source.MappingFieldId}`,
+          label: 'Cases',
+        },
+        classes: 'entity',
       },
       {
         data: {
@@ -132,6 +147,14 @@ class Diagram extends React.Component {
       {
         data: {
           id: `edge-default-${source.SwitchDefault.MappingFieldId}`,
+          source: `case-source-${source.MappingFieldId}`,
+          target: `case-target-${source.MappingFieldId}`,
+        },
+        group: "edges",
+      },
+      {
+        data: {
+          id: `edge-case-${source.SwitchDefault.MappingFieldId}`,
           source: `default-${source.SwitchDefault.MappingFieldId}`,
           target: source.SwitchDefault.MappingFieldId,
         },
@@ -140,6 +163,30 @@ class Diagram extends React.Component {
     ];
     const switchValue = this.generateMapping(source.SwitchValue);
     const switchDefault = this.generateMapping(source.SwitchDefault);
+
+    source.Cases.map(caseItem => {
+      const nextMappingField = this.generateMapping(caseItem.Value);
+      const wrapper = [
+        {
+          data: {
+            id: `wrap-${caseItem.Value.MappingFieldId}`,
+            label: `${caseItem.Key}`,
+            parent: `case-target-${source.MappingFieldId}`,
+          },
+          group: 'nodes',
+        },
+        {
+          data: {
+            id: `edge-each-case-${caseItem.Value.MappingFieldId}`,
+            source: `wrap-${caseItem.Value.MappingFieldId}`,
+            target: caseItem.Value.MappingFieldId,
+          },
+          group: "edges",
+        },
+      ];
+      elements = elements.concat(wrapper.concat(nextMappingField));
+      return wrapper;
+    });
 
     return elements.concat(switchDefault).concat(switchValue);
   }
