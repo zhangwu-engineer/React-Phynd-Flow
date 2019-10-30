@@ -1,9 +1,9 @@
 import React from 'react';
 import Cytoscape from 'cytoscape';
-import COSEBilkent from 'cytoscape-cose-bilkent';
+import COSECola from 'cytoscape-cola';
 import CytoscapeComponent from 'react-cytoscapejs';
 
-Cytoscape.use(COSEBilkent);
+Cytoscape.use(COSECola);
 
 const DIGRAM_CONF = {
   startX: 200,
@@ -147,11 +147,8 @@ class Diagram extends React.Component {
   render() {
     const { elements } = this.state;
     const layout = { 
-      name: 'cose-bilkent',
-      flow: {
-        axis: 'x',
-        minSeparation: 40,
-      },
+      name: 'cola',
+      flow: { axis: 'x', minSeparation: 40 },
       avoidOverlap: true,
     };
 
