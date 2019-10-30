@@ -48,6 +48,9 @@ class Diagram extends React.Component {
       case 'Switch':
         mappingElements = this.generateSwitchMapping(source);
         break;
+      case 'Conditional':
+        mappingElements = this.generateConditionMapping(source);
+        break;
       default: break;
     }
     return mappingElements;
@@ -189,6 +192,115 @@ class Diagram extends React.Component {
     });
 
     return elements.concat(switchDefault).concat(switchValue);
+  }
+
+  generateConditionMapping(source) {
+    const trueMappingField = this.generateMapping(source.TrueField);
+    const falseMappingField = this.generateMapping(source.FalseField);
+
+    const elements = [
+      {
+        data: {
+          id: `${source.MappingFieldId}`,
+          label: `Conditional: `,
+        },
+        classes: 'entity',
+      },
+      {
+        data: {
+          id: `true-${source.MappingFieldId}`,
+          label: 'If True:',
+          parent: `${source.MappingFieldId}`,
+        },
+        group: 'nodes',
+      },
+      {
+        data: {
+          id: `edge-true-${source.TrueField.MappingFieldId}`,
+          source: `true-${source.MappingFieldId}`,
+          target: source.TrueField.MappingFieldId,
+        },
+        group: 'edges',
+      },
+      {
+        data: {
+          id: `false-${source.MappingFieldId}`,
+          label: 'If False:',
+          parent: `${source.MappingFieldId}`,
+        },
+        group: 'nodes',
+      },
+      {
+        data: {
+          id: `edge-false-${source.FalseField.MappingFieldId}`,
+          source: `false-${source.MappingFieldId}`,
+          target: source.FalseField.MappingFieldId,
+        },
+        group: 'edges',
+      },
+    ];
+
+    const field1MappingField = this.generateMapping(source.Condition.Field1);
+    const field2MappingField = this.generateMapping(source.Condition.Field2);
+    let fields = [
+      {
+        data: {
+          id: `condition-${source.MappingFieldId}`,
+          label: 'Condition:',
+          parent: `${source.MappingFieldId}`,
+        },
+        group: 'nodes',
+      },
+      {
+        data: {
+          id: `fields-${source.MappingFieldId}`,
+        },
+        classes: 'entity',
+      },
+      {
+        data: {
+          id: `field1-${source.MappingFieldId}`,
+          label: 'Field 1',
+          parent: `fields-${source.MappingFieldId}`,
+        },
+        group: 'nodes',
+      },
+      {
+        data: {
+          id: `field2-${source.MappingFieldId}`,
+          label: 'Field 2',
+          parent: `fields-${source.MappingFieldId}`,
+        },
+        group: 'nodes',
+      },
+      {
+        data: {
+          id: `edge-fields-${source.MappingFieldId}`,
+          source: `condition-${source.MappingFieldId}`,
+          target: `fields-${source.MappingFieldId}`,
+        },
+        group: 'edges',
+      },
+      {
+        data: {
+          id: `edge-field1-${source.MappingFieldId}`,
+          source: `field1-${source.MappingFieldId}`,
+          target: source.Condition.Field1.MappingFieldId,
+        },
+        group: 'edges',
+      },
+      {
+        data: {
+          id: `edge-field2-${source.MappingFieldId}`,
+          source: `field2-${source.MappingFieldId}`,
+          target: source.Condition.Field2.MappingFieldId,
+        },
+        group: 'edges',
+      },
+    ];
+    fields = fields.concat(field1MappingField).concat(field2MappingField);
+
+    return elements.concat(fields).concat(trueMappingField).concat(falseMappingField);
   }
 
   render() {
