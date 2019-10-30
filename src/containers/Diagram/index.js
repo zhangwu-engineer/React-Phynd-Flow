@@ -90,7 +90,7 @@ class Diagram extends React.Component {
           source: `source-${source.MappingFieldId}`,
           target: source.FunctionParameter.MappingFieldId,
         },
-        group: "edges",
+        group: 'edges',
       },
     ];
     return elements.concat(nextMappingField);
@@ -142,7 +142,7 @@ class Diagram extends React.Component {
           source: `value-${source.SwitchValue.MappingFieldId}`,
           target: source.SwitchValue.MappingFieldId,
         },
-        group: "edges",
+        group: 'edges',
       },
       {
         data: {
@@ -150,7 +150,7 @@ class Diagram extends React.Component {
           source: `case-source-${source.MappingFieldId}`,
           target: `case-target-${source.MappingFieldId}`,
         },
-        group: "edges",
+        group: 'edges',
       },
       {
         data: {
@@ -158,7 +158,7 @@ class Diagram extends React.Component {
           source: `default-${source.SwitchDefault.MappingFieldId}`,
           target: source.SwitchDefault.MappingFieldId,
         },
-        group: "edges",
+        group: 'edges',
       },
     ];
     const switchValue = this.generateMapping(source.SwitchValue);
@@ -181,7 +181,7 @@ class Diagram extends React.Component {
             source: `wrap-${caseItem.Value.MappingFieldId}`,
             target: caseItem.Value.MappingFieldId,
           },
-          group: "edges",
+          group: 'edges',
         },
       ];
       elements = elements.concat(wrapper.concat(nextMappingField));
