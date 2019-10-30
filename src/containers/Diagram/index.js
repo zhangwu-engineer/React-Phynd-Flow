@@ -61,7 +61,7 @@ class Diagram extends React.Component {
       {
         data: {
           id: source.MappingFieldId,
-          label: `${source.MappingFieldType}: ${identifier}`,
+          label: `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`,
         },
         group: 'nodes',
       },
