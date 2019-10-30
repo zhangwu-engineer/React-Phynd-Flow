@@ -12,7 +12,7 @@ const DIGRAM_CONF = {
   nodeHeight: 'label',
   diagramPadding: 30,
   diagramWidth: '100%',
-  diagramHeight: 500,
+  diagramHeight: 600,
 };
 
 class Diagram extends React.Component {
@@ -323,6 +323,7 @@ class Diagram extends React.Component {
     const { elements } = this.state;
     const layout = { 
       name: 'preset',
+      fit: false,
       transform: function(node, pos) { 
         // if (node._private.data.wei === 'Primary')
         //   // return {x: pos.y, y: 200 };
