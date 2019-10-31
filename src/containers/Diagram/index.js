@@ -5,14 +5,10 @@ import CytoscapeComponent from 'react-cytoscapejs';
 
 Cytoscape.use(LAYOUT);
 
-const DIGRAM_CONF = {
-  startX: 200,
-  startY: 100,
-  nodeWidth: 'label',
-  nodeHeight: 'label',
-  diagramPadding: 30,
-  diagramWidth: '100%',
-  diagramHeight: 600,
+const DIAGRAM_CONF = {
+  DIAGRAM_PADDING: 30,
+  NODE_WIDTH: 300,
+  NODE_HEIGHT: 120,
 };
 
 class Diagram extends React.Component {
@@ -207,6 +203,10 @@ class Diagram extends React.Component {
   }
 
   generateConditionMapping(source, xWeight, yWeight) {
+    let addWeight = 0;
+    if (source.TrueField.MappingFieldType === 'Switch') addWeight = 2;
+    if (source.TrueField.MappingFieldType === 'Conditional') addWeight = 3;
+
     const elements = [
       {
         data: {
@@ -241,7 +241,7 @@ class Diagram extends React.Component {
           label: 'If False:',
           parent: `${source.MappingFieldId}`,
           xWeight,
-          yWeight: yWeight+3,
+          yWeight: yWeight+3+addWeight,
         },
         group: 'nodes',
       },
@@ -264,7 +264,7 @@ class Diagram extends React.Component {
     ];
 
     const trueMappingField = this.generateMapping(source.TrueField, xWeight+1, yWeight+2);
-    const falseMappingField = this.generateMapping(source.FalseField, xWeight+1, yWeight+3);
+    const falseMappingField = this.generateMapping(source.FalseField, xWeight+1, yWeight+3+addWeight);
 
     let fields = [
       {
@@ -332,18 +332,21 @@ class Diagram extends React.Component {
     const layout = { 
       name: 'preset',
       fit: false,
-      transform: function(node, pos) { 
-        // if (node._private.data.wei === 'Primary')
-        //   // return {x: pos.y, y: 200 };
-        //   return pos;
+      transform: function(node, pos) {
         if (node._private.data.xWeight && node._private.data.yWeight)
           return {
-            x: node._private.data.xWeight * 300,
-            y: node._private.data.yWeight * 100,
+            x: node._private.data.xWeight * DIAGRAM_CONF.NODE_WIDTH,
+            y: node._private.data.yWeight * DIAGRAM_CONF.NODE_HEIGHT,
           };
         return pos;
       },
     };
+    const xWeightMax = elements.length > 0 ?
+      Math.max.apply(Math, elements.map(function(o) { return o.data.xWeight ? o.data.xWeight : 0; }))
+      : 0;
+    const yWeightMax = elements.length > 0 ?
+      Math.max.apply(Math, elements.map(function(o) { return o.data.yWeight ? o.data.yWeight : 0; }))
+      : 0;
 
     return (
       <CytoscapeComponent
@@ -374,7 +377,7 @@ class Diagram extends React.Component {
               'height': 'label',
               'font-weight': 'bold',
               'background-opacity': 0.075,
-              'padding': DIGRAM_CONF.diagramPadding,
+              'padding': DIAGRAM_CONF.DIAGRAM_PADDING,
               'text-valign': 'top',
               'text-halign': 'center',
               'text-margin-y': 25,
@@ -392,9 +395,8 @@ class Diagram extends React.Component {
         ]}
         style={
           {
-            width: DIGRAM_CONF.diagramWidth,
-            height: DIGRAM_CONF.diagramHeight,
-            padding: DIGRAM_CONF.diagramPadding,
+            width: (xWeightMax + 1) * DIAGRAM_CONF.NODE_WIDTH,
+            height: (yWeightMax + 1.5) * DIAGRAM_CONF.NODE_HEIGHT,
           }
         }
       />

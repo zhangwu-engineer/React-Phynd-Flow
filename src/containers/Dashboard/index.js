@@ -33,6 +33,9 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
   },
   details: {
+    width: 'calc(100vw - 290px)',
+    maxHeight: 600,
+    overflow: 'scroll',
     flexDirection: 'column',
   },
   toolbar: theme.mixins.toolbar,
