@@ -117,6 +117,18 @@ class Diagram extends React.Component {
           id: `value-${source.SwitchValue.MappingFieldId}`,
           label: 'SwitchValue',
           parent: `${source.MappingFieldId}`,
+          xWeight,
+          yWeight,
+        },
+        group: 'nodes',
+      },
+      {
+        data: {
+          id: `default-${source.SwitchDefault.MappingFieldId}`,
+          label: 'DefaultValue',
+          parent: `${source.MappingFieldId}`,
+          xWeight,
+          yWeight: yWeight+1,
         },
         group: 'nodes',
       },
@@ -125,6 +137,8 @@ class Diagram extends React.Component {
           id: `case-source-${source.MappingFieldId}`,
           label: 'Cases',
           parent: `${source.MappingFieldId}`,
+          xWeight,
+          yWeight: yWeight+2,
         },
         group: 'nodes',
       },
@@ -134,14 +148,6 @@ class Diagram extends React.Component {
           label: 'Cases',
         },
         classes: 'entity',
-      },
-      {
-        data: {
-          id: `default-${source.SwitchDefault.MappingFieldId}`,
-          label: 'DefaultValue',
-          parent: `${source.MappingFieldId}`,
-        },
-        group: 'nodes',
       },
       {
         data: {
@@ -168,17 +174,19 @@ class Diagram extends React.Component {
         group: 'edges',
       },
     ];
-    const switchValue = this.generateMapping(source.SwitchValue);
-    const switchDefault = this.generateMapping(source.SwitchDefault);
+    const switchValue = this.generateMapping(source.SwitchValue, xWeight+1, yWeight);
+    const switchDefault = this.generateMapping(source.SwitchDefault, xWeight+1, yWeight+1);
 
-    source.Cases.map(caseItem => {
-      const nextMappingField = this.generateMapping(caseItem.Value);
+    source.Cases.map((caseItem, index) => {
+      const nextMappingField = this.generateMapping(caseItem.Value, xWeight+3, yWeight+index);
       const wrapper = [
         {
           data: {
             id: `wrap-${caseItem.Value.MappingFieldId}`,
             label: `${caseItem.Key}`,
             parent: `case-target-${source.MappingFieldId}`,
+            xWeight: xWeight+2,
+            yWeight: yWeight+index,
           },
           group: 'nodes',
         },
