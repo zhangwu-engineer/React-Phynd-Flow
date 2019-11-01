@@ -209,16 +209,16 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
   return elements.concat(fields).concat(trueMappingField).concat(falseMappingField);
 };
 
-let cyListener;
 
 const Diagram = ({ source }) => {
   useEffect(() => {
-    if (cyListener) {
-      cyListener.on('tap', 'node', function(e) {
-        console.log(e);
-      });
-    }
-  }, []);
+    cyListener.on('tap', 'node', function(e) {
+      console.log(e);
+    });
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  []);
+  let cyListener;
   const elements = generateMapping(source, 1, 1);
   const layout = {
     name: 'preset',
