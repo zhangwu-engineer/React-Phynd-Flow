@@ -80,17 +80,25 @@ class Diagram extends React.Component {
     return mappingElements;
   }
 
+  generateNode(id, label, parent, xWeight, yWeight) {
+    const nodeElement = {
+      data: {
+        id,
+        label,
+        xWeight,
+        yWeight,
+      },
+      group: 'nodes',
+    };
+    if (parent) {
+      nodeElement.data.parent = parent;
+    }
+    return nodeElement;
+  }
+
   generateSingleMapping(source, identifier, xWeight, yWeight) {
     const elements = [
-      {
-        data: {
-          id: source.MappingFieldId,
-          label: `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`,
-          xWeight,
-          yWeight,
-        },
-        group: 'nodes',
-      },
+      this.generateNode(source.MappingFieldId, `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`, null, xWeight, yWeight),
     ];
     return elements;
   }
@@ -105,16 +113,7 @@ class Diagram extends React.Component {
         },
         classes: 'entity',
       },
-      {
-        data: {
-          id: `source-${source.MappingFieldId}`,
-          label: 'SourceParameter',
-          parent: `${source.MappingFieldId}`,
-          xWeight,
-          yWeight,
-        },
-        group: 'nodes',
-      },
+      this.generateNode(`source-${source.MappingFieldId}`, 'SourceParameter', null, xWeight, yWeight),
       {
         data: {
           id: `edge-source-${source.FunctionParameter.MappingFieldId}`,
@@ -136,36 +135,9 @@ class Diagram extends React.Component {
         },
         classes: 'entity',
       },
-      {
-        data: {
-          id: `value-${source.SwitchValue.MappingFieldId}`,
-          label: 'SwitchValue',
-          parent: `${source.MappingFieldId}`,
-          xWeight,
-          yWeight,
-        },
-        group: 'nodes',
-      },
-      {
-        data: {
-          id: `default-${source.SwitchDefault.MappingFieldId}`,
-          label: 'DefaultValue',
-          parent: `${source.MappingFieldId}`,
-          xWeight,
-          yWeight: yWeight+1,
-        },
-        group: 'nodes',
-      },
-      {
-        data: {
-          id: `case-source-${source.MappingFieldId}`,
-          label: 'Cases',
-          parent: `${source.MappingFieldId}`,
-          xWeight,
-          yWeight: yWeight+2,
-        },
-        group: 'nodes',
-      },
+      this.generateNode(`value-${source.SwitchValue.MappingFieldId}`, 'SwitchValue', `${source.MappingFieldId}`, xWeight, yWeight),
+      this.generateNode(`default-${source.SwitchDefault.MappingFieldId}`, 'DefaultValue', `${source.MappingFieldId}`, xWeight, yWeight+1),
+      this.generateNode(`case-source-${source.MappingFieldId}`, 'Cases', `${source.MappingFieldId}`, xWeight, yWeight+2),
       {
         data: {
           id: `case-target-${source.MappingFieldId}`,
@@ -204,16 +176,7 @@ class Diagram extends React.Component {
     source.Cases.map((caseItem, index) => {
       const nextMappingField = this.generateMapping(caseItem.Value, xWeight+3, yWeight+index);
       const wrapper = [
-        {
-          data: {
-            id: `wrap-${caseItem.Value.MappingFieldId}`,
-            label: `${caseItem.Key}`,
-            parent: `case-target-${source.MappingFieldId}`,
-            xWeight: xWeight+2,
-            yWeight: yWeight+index,
-          },
-          group: 'nodes',
-        },
+        this.generateNode(`wrap-${caseItem.Value.MappingFieldId}`, `${caseItem.Key}`, `case-target-${source.MappingFieldId}`, xWeight+2, yWeight+index),
         {
           data: {
             id: `edge-each-case-${caseItem.Value.MappingFieldId}`,
@@ -243,36 +206,9 @@ class Diagram extends React.Component {
         },
         classes: 'entity',
       },
-      {
-        data: {
-          id: `condition-${source.MappingFieldId}`,
-          label: 'Condition:',
-          parent: `${source.MappingFieldId}`,
-          xWeight,
-          yWeight,
-        },
-        group: 'nodes',
-      },
-      {
-        data: {
-          id: `true-${source.MappingFieldId}`,
-          label: 'If True:',
-          parent: `${source.MappingFieldId}`,
-          xWeight,
-          yWeight: yWeight+2,
-        },
-        group: 'nodes',
-      },
-      {
-        data: {
-          id: `false-${source.MappingFieldId}`,
-          label: 'If False:',
-          parent: `${source.MappingFieldId}`,
-          xWeight,
-          yWeight: yWeight+3+addWeight,
-        },
-        group: 'nodes',
-      },
+      this.generateNode(`condition-${source.MappingFieldId}`, 'Condition:', `${source.MappingFieldId}`, xWeight, yWeight),
+      this.generateNode(`true-${source.MappingFieldId}`, 'If True:', `${source.MappingFieldId}`, xWeight, yWeight+2),
+      this.generateNode(`false-${source.MappingFieldId}`, 'If False:', `${source.MappingFieldId}`, xWeight, yWeight+3+addWeight),
       {
         data: {
           id: `edge-true-${source.TrueField.MappingFieldId}`,
@@ -301,26 +237,8 @@ class Diagram extends React.Component {
         },
         classes: 'entity',
       },
-      {
-        data: {
-          id: `field1-${source.MappingFieldId}`,
-          label: 'Field 1',
-          parent: `fields-${source.MappingFieldId}`,
-          xWeight: xWeight+1,
-          yWeight,
-        },
-        group: 'nodes',
-      },
-      {
-        data: {
-          id: `field2-${source.MappingFieldId}`,
-          label: 'Field 2',
-          parent: `fields-${source.MappingFieldId}`,
-          xWeight: xWeight+1,
-          yWeight: yWeight+1,
-        },
-        group: 'nodes',
-      },
+      this.generateNode(`field1-${source.MappingFieldId}`, 'Field 1', `fields-${source.MappingFieldId}`, xWeight+1, yWeight),
+      this.generateNode(`field2-${source.MappingFieldId}`, 'Field 2', `fields-${source.MappingFieldId}`, xWeight+1, yWeight+1),
       {
         data: {
           id: `edge-fields-${source.MappingFieldId}`,
