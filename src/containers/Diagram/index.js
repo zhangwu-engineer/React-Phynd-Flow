@@ -106,6 +106,17 @@ class Diagram extends React.Component {
     };
   }
 
+  generateEdge(id, source, target) {
+    return {
+      data: {
+        id,
+        source,
+        target,
+      },
+      classes: 'edges',
+    };
+  }
+
   generateSingleMapping(source, identifier, xWeight, yWeight) {
     const elements = [
       this.generateNode(source.MappingFieldId, `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`, null, xWeight, yWeight),
@@ -118,14 +129,7 @@ class Diagram extends React.Component {
     const elements = [
       this.generateEntity(`${source.MappingFieldId}`, `Function: ${source.FunctionName}`),
       this.generateNode(`source-${source.MappingFieldId}`, 'SourceParameter', `${source.MappingFieldId}`, xWeight, yWeight),
-      {
-        data: {
-          id: `edge-source-${source.FunctionParameter.MappingFieldId}`,
-          source: `source-${source.MappingFieldId}`,
-          target: source.FunctionParameter.MappingFieldId,
-        },
-        group: 'edges',
-      },
+      this.generateEdge(`edge-source-${source.FunctionParameter.MappingFieldId}`, `source-${source.MappingFieldId}`, source.FunctionParameter.MappingFieldId),
     ];
     return elements.concat(nextMappingField);
   }
@@ -137,30 +141,9 @@ class Diagram extends React.Component {
       this.generateNode(`default-${source.SwitchDefault.MappingFieldId}`, 'DefaultValue', `${source.MappingFieldId}`, xWeight, yWeight+1),
       this.generateNode(`case-source-${source.MappingFieldId}`, 'Cases', `${source.MappingFieldId}`, xWeight, yWeight+2),
       this.generateEntity(`case-target-${source.MappingFieldId}`, 'Cases'),
-      {
-        data: {
-          id: `edge-value-${source.SwitchValue.MappingFieldId}`,
-          source: `value-${source.SwitchValue.MappingFieldId}`,
-          target: source.SwitchValue.MappingFieldId,
-        },
-        group: 'edges',
-      },
-      {
-        data: {
-          id: `edge-default-${source.SwitchDefault.MappingFieldId}`,
-          source: `case-source-${source.MappingFieldId}`,
-          target: `case-target-${source.MappingFieldId}`,
-        },
-        group: 'edges',
-      },
-      {
-        data: {
-          id: `edge-case-${source.SwitchDefault.MappingFieldId}`,
-          source: `default-${source.SwitchDefault.MappingFieldId}`,
-          target: source.SwitchDefault.MappingFieldId,
-        },
-        group: 'edges',
-      },
+      this.generateEdge(`edge-value-${source.SwitchValue.MappingFieldId}`, `value-${source.SwitchValue.MappingFieldId}`, source.SwitchValue.MappingFieldId),
+      this.generateEdge(`edge-default-${source.SwitchDefault.MappingFieldId}`, `case-source-${source.MappingFieldId}`, `case-target-${source.MappingFieldId}`),
+      this.generateEdge(`edge-case-${source.SwitchDefault.MappingFieldId}`, `default-${source.SwitchDefault.MappingFieldId}`, source.SwitchDefault.MappingFieldId),
     ];
     const switchValue = this.generateMapping(source.SwitchValue, xWeight+1, yWeight);
     const switchDefault = this.generateMapping(source.SwitchDefault, xWeight+1, yWeight+1);
@@ -169,14 +152,7 @@ class Diagram extends React.Component {
       const nextMappingField = this.generateMapping(caseItem.Value, xWeight+3, yWeight+index);
       const wrapper = [
         this.generateNode(`wrap-${caseItem.Value.MappingFieldId}`, `${caseItem.Key}`, `case-target-${source.MappingFieldId}`, xWeight+2, yWeight+index),
-        {
-          data: {
-            id: `edge-each-case-${caseItem.Value.MappingFieldId}`,
-            source: `wrap-${caseItem.Value.MappingFieldId}`,
-            target: caseItem.Value.MappingFieldId,
-          },
-          group: 'edges',
-        },
+        this.generateEdge(`edge-each-case-${caseItem.Value.MappingFieldId}`, `wrap-${caseItem.Value.MappingFieldId}`, caseItem.Value.MappingFieldId),
       ];
       elements = elements.concat(wrapper.concat(nextMappingField));
       return wrapper;
@@ -195,22 +171,8 @@ class Diagram extends React.Component {
       this.generateNode(`condition-${source.MappingFieldId}`, 'Condition:', `${source.MappingFieldId}`, xWeight, yWeight),
       this.generateNode(`true-${source.MappingFieldId}`, 'If True:', `${source.MappingFieldId}`, xWeight, yWeight+2),
       this.generateNode(`false-${source.MappingFieldId}`, 'If False:', `${source.MappingFieldId}`, xWeight, yWeight+3+addWeight),
-      {
-        data: {
-          id: `edge-true-${source.TrueField.MappingFieldId}`,
-          source: `true-${source.MappingFieldId}`,
-          target: source.TrueField.MappingFieldId,
-        },
-        group: 'edges',
-      },
-      {
-        data: {
-          id: `edge-false-${source.FalseField.MappingFieldId}`,
-          source: `false-${source.MappingFieldId}`,
-          target: source.FalseField.MappingFieldId,
-        },
-        group: 'edges',
-      },
+      this.generateEdge(`edge-true-${source.TrueField.MappingFieldId}`, `true-${source.MappingFieldId}`, source.TrueField.MappingFieldId),
+      this.generateEdge(`edge-false-${source.FalseField.MappingFieldId}`, `false-${source.MappingFieldId}`, source.FalseField.MappingFieldId),
     ];
 
     const trueMappingField = this.generateMapping(source.TrueField, xWeight+1, yWeight+2);
@@ -220,30 +182,9 @@ class Diagram extends React.Component {
       this.generateEntity(`fields-${source.MappingFieldId}`, ''),
       this.generateNode(`field1-${source.MappingFieldId}`, 'Field 1', `fields-${source.MappingFieldId}`, xWeight+1, yWeight),
       this.generateNode(`field2-${source.MappingFieldId}`, 'Field 2', `fields-${source.MappingFieldId}`, xWeight+1, yWeight+1),
-      {
-        data: {
-          id: `edge-fields-${source.MappingFieldId}`,
-          source: `condition-${source.MappingFieldId}`,
-          target: `fields-${source.MappingFieldId}`,
-        },
-        group: 'edges',
-      },
-      {
-        data: {
-          id: `edge-field1-${source.MappingFieldId}`,
-          source: `field1-${source.MappingFieldId}`,
-          target: source.Condition.Field1.MappingFieldId,
-        },
-        group: 'edges',
-      },
-      {
-        data: {
-          id: `edge-field2-${source.MappingFieldId}`,
-          source: `field2-${source.MappingFieldId}`,
-          target: source.Condition.Field2.MappingFieldId,
-        },
-        group: 'edges',
-      },
+      this.generateEdge(`edge-fields-${source.MappingFieldId}`, `condition-${source.MappingFieldId}`, `fields-${source.MappingFieldId}`),
+      this.generateEdge(`edge-field1-${source.MappingFieldId}`, `field1-${source.MappingFieldId}`, source.Condition.Field1.MappingFieldId),
+      this.generateEdge(`edge-field2-${source.MappingFieldId}`, `field2-${source.MappingFieldId}`, source.Condition.Field2.MappingFieldId),
     ];
 
     const field1MappingField = this.generateMapping(source.Condition.Field1, xWeight+2, yWeight);
