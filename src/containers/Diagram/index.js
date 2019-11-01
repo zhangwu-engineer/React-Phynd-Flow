@@ -73,7 +73,9 @@ const generateMapping = (source, xWeight, yWeight) => {
     case 'Conditional':
       mappingElements = generateConditionMapping(source, xWeight, yWeight);
       break;
-    default: break;
+    default:
+      mappingElements = generateSingleMapping(source, 'N/A', xWeight, yWeight);
+      break;
   }
   return mappingElements;
 };
