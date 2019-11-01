@@ -39,6 +39,173 @@ const edgeStyle = {
   'curve-style': 'bezier',
 };
 
+const stylesheet=[
+  {
+    selector: 'node',
+    style: nodeStyle,
+  },
+  {
+    selector: ':parent',
+    style: parentEntityStyle,
+  },
+  {
+    selector: 'edge',
+    style: edgeStyle,
+  }
+];
+
+const generateMapping = (source, xWeight, yWeight) => {
+  let mappingElements = [];
+  switch (source.MappingFieldType) {
+    case 'Function':
+      mappingElements = generateFunctionMapping(source, xWeight, yWeight);
+      break;
+    case 'Column':
+      mappingElements = generateSingleMapping(source, source.ColumnIdentifier, xWeight, yWeight);
+      break;
+    case 'Constant':
+      mappingElements = generateSingleMapping(source, source.ConstantValue, xWeight, yWeight);
+      break;
+    case 'Switch':
+      mappingElements = generateSwitchMapping(source, xWeight, yWeight);
+      break;
+    case 'Conditional':
+      mappingElements = generateConditionMapping(source, xWeight, yWeight);
+      break;
+    default: break;
+  }
+  return mappingElements;
+};
+
+const generateNode = (id, label, parent, xWeight, yWeight) => {
+  const nodeElement = {
+    data: {
+      id,
+      label,
+      xWeight,
+      yWeight,
+    },
+    group: 'nodes',
+  };
+  if (parent) {
+    nodeElement.data.parent = parent;
+  }
+  return nodeElement;
+};
+
+const generateEntity = (id, label) => {
+  return {
+    data: {
+      id,
+      label,
+    },
+    classes: 'entity',
+  };
+};
+
+const generateEdge = (id, source, target) => {
+  return {
+    data: {
+      id,
+      source,
+      target,
+    },
+    classes: 'edges',
+  };
+};
+
+const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
+  const elements = [
+    generateNode(source.MappingFieldId, `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`, null, xWeight, yWeight),
+  ];
+  return elements;
+};
+
+const generateFunctionMapping = (source, xWeight, yWeight) => {
+  const nextMappingField = generateMapping(source.FunctionParameter, xWeight+1, yWeight);
+  const currentId = source.MappingFieldId;
+  const functionId = source.FunctionParameter.MappingFieldId;
+
+  const elements = [
+    generateEntity(`${currentId}`, `Function: ${source.FunctionName}`),
+    generateNode(`source-${currentId}`, 'SourceParameter', `${currentId}`, xWeight, yWeight),
+    generateEdge(`edge-source-${functionId}`, `source-${currentId}`, functionId),
+  ];
+  return elements.concat(nextMappingField);
+};
+
+const generateSwitchMapping = (source, xWeight, yWeight) => {
+  const currentId = source.MappingFieldId;
+  const switchId = source.SwitchValue.MappingFieldId;
+  const defaultId = source.SwitchDefault.MappingFieldId;
+
+  let elements = [
+    generateEntity(`${currentId}`, 'Switch:'),
+    generateNode(`value-${switchId}`, 'SwitchValue', `${currentId}`, xWeight, yWeight),
+    generateNode(`default-${defaultId}`, 'DefaultValue', `${currentId}`, xWeight, yWeight+1),
+    generateNode(`case-source-${currentId}`, 'Cases', `${currentId}`, xWeight, yWeight+2),
+    generateEntity(`case-target-${currentId}`, 'Cases'),
+    generateEdge(`edge-value-${switchId}`, `value-${switchId}`, switchId),
+    generateEdge(`edge-default-${defaultId}`, `case-source-${currentId}`, `case-target-${currentId}`),
+    generateEdge(`edge-case-${defaultId}`, `default-${defaultId}`, defaultId),
+  ];
+
+  const switchValue = generateMapping(source.SwitchValue, xWeight+1, yWeight);
+  const switchDefault = generateMapping(source.SwitchDefault, xWeight+1, yWeight+1);
+
+  source.Cases.map((caseItem, index) => {
+    const nextMappingField = generateMapping(caseItem.Value, xWeight+3, yWeight+index);
+    const valueId = caseItem.Value.MappingFieldId;
+    const wrapper = [
+      generateNode(`wrap-${valueId}`, `${caseItem.Key}`, `case-target-${currentId}`, xWeight+2, yWeight+index),
+      generateEdge(`edge-each-case-${valueId}`, `wrap-${valueId}`, valueId),
+    ];
+    elements = elements.concat(wrapper.concat(nextMappingField));
+    return wrapper;
+  });
+
+  return elements.concat(switchDefault).concat(switchValue);
+};
+
+const generateConditionMapping = (source, xWeight, yWeight) => {
+  let addWeight = 0;
+  if (source.TrueField.MappingFieldType === 'Switch') addWeight = 2;
+  if (source.TrueField.MappingFieldType === 'Conditional') addWeight = 3;
+  const currentId = source.MappingFieldId;
+  const trueId = source.TrueField.MappingFieldId;
+  const falseId = source.FalseField.MappingFieldId;
+
+  const elements = [
+    generateEntity(`${currentId}`, 'Conditional:'),
+    generateNode(`condition-${currentId}`, 'Condition:', `${currentId}`, xWeight, yWeight),
+    generateNode(`true-${currentId}`, 'If True:', `${currentId}`, xWeight, yWeight+2),
+    generateNode(`false-${currentId}`, 'If False:', `${currentId}`, xWeight, yWeight+3+addWeight),
+    generateEdge(`edge-true-${trueId}`, `true-${currentId}`, trueId),
+    generateEdge(`edge-false-${falseId}`, `false-${currentId}`, falseId),
+  ];
+
+  const trueMappingField = generateMapping(source.TrueField, xWeight+1, yWeight+2);
+  const falseMappingField = generateMapping(source.FalseField, xWeight+1, yWeight+3+addWeight);
+  const field1 = source.Condition.Field1;
+  const field2 = source.Condition.Field2;
+
+  let fields = [
+    generateEntity(`fields-${currentId}`, ''),
+    generateNode(`field1-${currentId}`, 'Field 1', `fields-${currentId}`, xWeight+1, yWeight),
+    generateNode(`field2-${currentId}`, 'Field 2', `fields-${currentId}`, xWeight+1, yWeight+1),
+    generateEdge(`edge-fields-${currentId}`, `condition-${currentId}`, `fields-${currentId}`),
+    generateEdge(`edge-field1-${currentId}`, `field1-${currentId}`, field1.MappingFieldId),
+    generateEdge(`edge-field2-${currentId}`, `field2-${currentId}`, field2.MappingFieldId),
+  ];
+
+  const field1MappingField = generateMapping(field1, xWeight+2, yWeight);
+  const field2MappingField = generateMapping(field2, xWeight+2, yWeight+1);
+  fields = fields.concat(field1MappingField);
+  fields = fields.concat(field2MappingField);
+
+  return elements.concat(fields).concat(trueMappingField).concat(falseMappingField);
+};
+
 class Diagram extends React.Component {
 
   state = {
@@ -52,147 +219,9 @@ class Diagram extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    const elementsToAdd = this.generateMapping(props.source, 1, 1);
+    const elementsToAdd = generateMapping(props.source, 1, 1);
     const joined = this.state.elements.concat(elementsToAdd);
     this.setState({ elements: joined });
-  }
-
-  generateMapping(source, xWeight, yWeight) {
-    let mappingElements = [];
-    switch (source.MappingFieldType) {
-      case 'Function':
-        mappingElements = this.generateFunctionMapping(source, xWeight, yWeight);
-        break;
-      case 'Column':
-        mappingElements = this.generateSingleMapping(source, source.ColumnIdentifier, xWeight, yWeight);
-        break;
-      case 'Constant':
-        mappingElements = this.generateSingleMapping(source, source.ConstantValue, xWeight, yWeight);
-        break;
-      case 'Switch':
-        mappingElements = this.generateSwitchMapping(source, xWeight, yWeight);
-        break;
-      case 'Conditional':
-        mappingElements = this.generateConditionMapping(source, xWeight, yWeight);
-        break;
-      default: break;
-    }
-    return mappingElements;
-  }
-
-  generateNode(id, label, parent, xWeight, yWeight) {
-    const nodeElement = {
-      data: {
-        id,
-        label,
-        xWeight,
-        yWeight,
-      },
-      group: 'nodes',
-    };
-    if (parent) {
-      nodeElement.data.parent = parent;
-    }
-    return nodeElement;
-  }
-
-  generateEntity(id, label) {
-    return {
-      data: {
-        id,
-        label,
-      },
-      classes: 'entity',
-    };
-  }
-
-  generateEdge(id, source, target) {
-    return {
-      data: {
-        id,
-        source,
-        target,
-      },
-      classes: 'edges',
-    };
-  }
-
-  generateSingleMapping(source, identifier, xWeight, yWeight) {
-    const elements = [
-      this.generateNode(source.MappingFieldId, `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`, null, xWeight, yWeight),
-    ];
-    return elements;
-  }
-
-  generateFunctionMapping(source, xWeight, yWeight) {
-    const nextMappingField = this.generateMapping(source.FunctionParameter, xWeight+1, yWeight);
-    const elements = [
-      this.generateEntity(`${source.MappingFieldId}`, `Function: ${source.FunctionName}`),
-      this.generateNode(`source-${source.MappingFieldId}`, 'SourceParameter', `${source.MappingFieldId}`, xWeight, yWeight),
-      this.generateEdge(`edge-source-${source.FunctionParameter.MappingFieldId}`, `source-${source.MappingFieldId}`, source.FunctionParameter.MappingFieldId),
-    ];
-    return elements.concat(nextMappingField);
-  }
-
-  generateSwitchMapping(source, xWeight, yWeight) {
-    let elements = [
-      this.generateEntity(`${source.MappingFieldId}`, 'Switch:'),
-      this.generateNode(`value-${source.SwitchValue.MappingFieldId}`, 'SwitchValue', `${source.MappingFieldId}`, xWeight, yWeight),
-      this.generateNode(`default-${source.SwitchDefault.MappingFieldId}`, 'DefaultValue', `${source.MappingFieldId}`, xWeight, yWeight+1),
-      this.generateNode(`case-source-${source.MappingFieldId}`, 'Cases', `${source.MappingFieldId}`, xWeight, yWeight+2),
-      this.generateEntity(`case-target-${source.MappingFieldId}`, 'Cases'),
-      this.generateEdge(`edge-value-${source.SwitchValue.MappingFieldId}`, `value-${source.SwitchValue.MappingFieldId}`, source.SwitchValue.MappingFieldId),
-      this.generateEdge(`edge-default-${source.SwitchDefault.MappingFieldId}`, `case-source-${source.MappingFieldId}`, `case-target-${source.MappingFieldId}`),
-      this.generateEdge(`edge-case-${source.SwitchDefault.MappingFieldId}`, `default-${source.SwitchDefault.MappingFieldId}`, source.SwitchDefault.MappingFieldId),
-    ];
-    const switchValue = this.generateMapping(source.SwitchValue, xWeight+1, yWeight);
-    const switchDefault = this.generateMapping(source.SwitchDefault, xWeight+1, yWeight+1);
-
-    source.Cases.map((caseItem, index) => {
-      const nextMappingField = this.generateMapping(caseItem.Value, xWeight+3, yWeight+index);
-      const wrapper = [
-        this.generateNode(`wrap-${caseItem.Value.MappingFieldId}`, `${caseItem.Key}`, `case-target-${source.MappingFieldId}`, xWeight+2, yWeight+index),
-        this.generateEdge(`edge-each-case-${caseItem.Value.MappingFieldId}`, `wrap-${caseItem.Value.MappingFieldId}`, caseItem.Value.MappingFieldId),
-      ];
-      elements = elements.concat(wrapper.concat(nextMappingField));
-      return wrapper;
-    });
-
-    return elements.concat(switchDefault).concat(switchValue);
-  }
-
-  generateConditionMapping(source, xWeight, yWeight) {
-    let addWeight = 0;
-    if (source.TrueField.MappingFieldType === 'Switch') addWeight = 2;
-    if (source.TrueField.MappingFieldType === 'Conditional') addWeight = 3;
-
-    const elements = [
-      this.generateEntity(`${source.MappingFieldId}`, 'Conditional:'),
-      this.generateNode(`condition-${source.MappingFieldId}`, 'Condition:', `${source.MappingFieldId}`, xWeight, yWeight),
-      this.generateNode(`true-${source.MappingFieldId}`, 'If True:', `${source.MappingFieldId}`, xWeight, yWeight+2),
-      this.generateNode(`false-${source.MappingFieldId}`, 'If False:', `${source.MappingFieldId}`, xWeight, yWeight+3+addWeight),
-      this.generateEdge(`edge-true-${source.TrueField.MappingFieldId}`, `true-${source.MappingFieldId}`, source.TrueField.MappingFieldId),
-      this.generateEdge(`edge-false-${source.FalseField.MappingFieldId}`, `false-${source.MappingFieldId}`, source.FalseField.MappingFieldId),
-    ];
-
-    const trueMappingField = this.generateMapping(source.TrueField, xWeight+1, yWeight+2);
-    const falseMappingField = this.generateMapping(source.FalseField, xWeight+1, yWeight+3+addWeight);
-
-    let fields = [
-      this.generateEntity(`fields-${source.MappingFieldId}`, ''),
-      this.generateNode(`field1-${source.MappingFieldId}`, 'Field 1', `fields-${source.MappingFieldId}`, xWeight+1, yWeight),
-      this.generateNode(`field2-${source.MappingFieldId}`, 'Field 2', `fields-${source.MappingFieldId}`, xWeight+1, yWeight+1),
-      this.generateEdge(`edge-fields-${source.MappingFieldId}`, `condition-${source.MappingFieldId}`, `fields-${source.MappingFieldId}`),
-      this.generateEdge(`edge-field1-${source.MappingFieldId}`, `field1-${source.MappingFieldId}`, source.Condition.Field1.MappingFieldId),
-      this.generateEdge(`edge-field2-${source.MappingFieldId}`, `field2-${source.MappingFieldId}`, source.Condition.Field2.MappingFieldId),
-    ];
-
-    const field1MappingField = this.generateMapping(source.Condition.Field1, xWeight+2, yWeight);
-    const field2MappingField = this.generateMapping(source.Condition.Field2, xWeight+2, yWeight+1);
-    fields = fields.concat(field1MappingField);
-    fields = fields.concat(field2MappingField);
-
-    return elements.concat(fields).concat(trueMappingField).concat(falseMappingField);
   }
 
   render() {
@@ -221,20 +250,7 @@ class Diagram extends React.Component {
         cy={(cy) => { this.cy = cy }}
         elements={CytoscapeComponent.normalizeElements(elements)}
         layout={layout}
-        stylesheet={[
-          {
-            selector: 'node',
-            style: nodeStyle,
-          },
-          {
-            selector: ':parent',
-            style: parentEntityStyle,
-          },
-          {
-            selector: 'edge',
-            style: edgeStyle,
-          }
-        ]}
+        stylesheet={stylesheet}
         style={
           {
             width: (xWeightMax + 1) * DIAGRAM_CONF.NODE_WIDTH,
