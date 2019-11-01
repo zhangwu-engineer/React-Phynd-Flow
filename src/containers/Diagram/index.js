@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
+import hoc from '../Dashboard/hoc';
 
 const DIAGRAM_CONF = {
   DIAGRAM_PADDING: 30,
@@ -206,60 +207,50 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
   return elements.concat(fields).concat(trueMappingField).concat(falseMappingField);
 };
 
-class Diagram extends React.Component {
+let cyListener;
 
-  state = {
-    elements: []
+const Diagram = ({ source }) => {
+  useEffect(() => {
+    if (cyListener) {
+      cyListener.on('tap', 'node', function(e) {
+        console.log(e);
+      });
+    }
+  }, []);
+  const elements = generateMapping(source, 1, 1);
+  const layout = {
+    name: 'preset',
+    fit: false,
+    transform: function(node, pos) {
+      if (node._private.data.xWeight && node._private.data.yWeight)
+        return {
+          x: node._private.data.xWeight * DIAGRAM_CONF.NODE_WIDTH,
+          y: node._private.data.yWeight * DIAGRAM_CONF.NODE_HEIGHT,
+        };
+      return pos;
+    },
   };
+  const xWeightMax = elements.length > 0 ?
+    Math.max.apply(Math, elements.map(function(o) { return o.data.xWeight ? o.data.xWeight : 0; }))
+    : 0;
+  const yWeightMax = elements.length > 0 ?
+    Math.max.apply(Math, elements.map(function(o) { return o.data.yWeight ? o.data.yWeight : 0; }))
+    : 0;
 
-  componentDidMount() {
-    this.cy.on('tap', 'node', function(e) {
-      console.log(e);
-    });
-  }
-
-  componentWillReceiveProps(props) {
-    const elementsToAdd = generateMapping(props.source, 1, 1);
-    const joined = this.state.elements.concat(elementsToAdd);
-    this.setState({ elements: joined });
-  }
-
-  render() {
-    const { elements } = this.state;
-    const layout = { 
-      name: 'preset',
-      fit: false,
-      transform: function(node, pos) {
-        if (node._private.data.xWeight && node._private.data.yWeight)
-          return {
-            x: node._private.data.xWeight * DIAGRAM_CONF.NODE_WIDTH,
-            y: node._private.data.yWeight * DIAGRAM_CONF.NODE_HEIGHT,
-          };
-        return pos;
-      },
-    };
-    const xWeightMax = elements.length > 0 ?
-      Math.max.apply(Math, elements.map(function(o) { return o.data.xWeight ? o.data.xWeight : 0; }))
-      : 0;
-    const yWeightMax = elements.length > 0 ?
-      Math.max.apply(Math, elements.map(function(o) { return o.data.yWeight ? o.data.yWeight : 0; }))
-      : 0;
-
-    return (
-      <CytoscapeComponent
-        cy={(cy) => { this.cy = cy }}
-        elements={CytoscapeComponent.normalizeElements(elements)}
-        layout={layout}
-        stylesheet={stylesheet}
-        style={
-          {
-            width: (xWeightMax + 1) * DIAGRAM_CONF.NODE_WIDTH,
-            height: (yWeightMax + 1.5) * DIAGRAM_CONF.NODE_HEIGHT,
-          }
+  return (
+    <CytoscapeComponent
+      cy={(cy) => { cyListener=cy }}
+      elements={CytoscapeComponent.normalizeElements(elements)}
+      layout={layout}
+      stylesheet={stylesheet}
+      style={
+        {
+          width: (xWeightMax + 1) * DIAGRAM_CONF.NODE_WIDTH,
+          height: (yWeightMax + 1.5) * DIAGRAM_CONF.NODE_HEIGHT,
         }
-      />
-    );
-  }
+      }
+    />
+  );
 }
 
-export default Diagram;
+export default hoc(Diagram);
