@@ -1,9 +1,6 @@
 import React from 'react';
 import Cytoscape from 'cytoscape';
-import LAYOUT from 'cytoscape-dagre';
 import CytoscapeComponent from 'react-cytoscapejs';
-
-Cytoscape.use(LAYOUT);
 
 const DIAGRAM_CONF = {
   DIAGRAM_PADDING: 30,
