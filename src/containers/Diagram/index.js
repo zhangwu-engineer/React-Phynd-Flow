@@ -1,11 +1,42 @@
 import React from 'react';
-import Cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
 
 const DIAGRAM_CONF = {
   DIAGRAM_PADDING: 30,
   NODE_WIDTH: 300,
   NODE_HEIGHT: 120,
+};
+
+const nodeStyle = {
+  'width': 'label',
+  'height': 'label',
+  'background-color': 'white',
+  'label': 'data(label)',
+  'border-style': 'solid',
+  'border-width': '1',
+  'border-color': 'black',
+  'text-halign': 'center',
+  'text-valign': 'center',
+  'padding': 15,
+  'shape': 'rectangle',
+};
+
+const parentEntityStyle = {
+  'width': 'label',
+  'height': 'label',
+  'font-weight': 'bold',
+  'background-opacity': 0.075,
+  'padding': DIAGRAM_CONF.DIAGRAM_PADDING,
+  'text-valign': 'top',
+  'text-halign': 'center',
+  'text-margin-y': 25,
+};
+
+const edgeStyle = {
+  'arrow-scale': 1,
+  'target-arrow-shape': 'triangle',
+  'target-arrow-color': 'black',
+  'curve-style': 'bezier',
 };
 
 class Diagram extends React.Component {
@@ -353,41 +384,15 @@ class Diagram extends React.Component {
         stylesheet={[
           {
             selector: 'node',
-            style: {
-              'width': 'label',
-              'height': 'label',
-              'background-color': 'white',
-              'label': 'data(label)',
-              'border-style': 'solid',
-              'border-width': '1',
-              'border-color': 'black',
-              'text-halign': 'center',
-              'text-valign': 'center',
-              'padding': 15,
-              'shape': 'rectangle',
-            }
+            style: nodeStyle,
           },
           {
             selector: ':parent',
-            style: {
-              'width': 'label',
-              'height': 'label',
-              'font-weight': 'bold',
-              'background-opacity': 0.075,
-              'padding': DIAGRAM_CONF.DIAGRAM_PADDING,
-              'text-valign': 'top',
-              'text-halign': 'center',
-              'text-margin-y': 25,
-            }
+            style: parentEntityStyle,
           },
           {
             selector: 'edge',
-            style: {
-              'arrow-scale': 1,
-              'target-arrow-shape': 'triangle',
-              'target-arrow-color': 'black',
-              'curve-style': 'bezier',
-            }
+            style: edgeStyle,
           }
         ]}
         style={
