@@ -232,7 +232,7 @@ const generateCombinationMapping = (source, xWeight, yWeight) => {
   const field2 = source.Field2;
 
   const elements = [
-    generateEntity(currentId, ''),
+    generateEntity(currentId, 'Combination'),
     generateNode(`field1-${currentId}`, 'Field 1', currentId, xWeight, yWeight),
     generateNode(`field2-${currentId}`, 'Field 2', currentId, xWeight, yWeight+1+addWeight),
     generateEdge(`edge-field1-${currentId}`, `field1-${currentId}`, field1.MappingFieldId),
