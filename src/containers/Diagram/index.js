@@ -67,14 +67,17 @@ const generateMapping = (source, xWeight, yWeight) => {
     case 'Constant':
       mappingElements = generateSingleMapping(source, source.ConstantValue, xWeight, yWeight);
       break;
-    case 'HL7':
-      mappingElements = generateSingleMapping(source, source.SegmentReference, xWeight, yWeight);
+    case 'HL7Segment':
+      mappingElements = generateSingleMapping(source, source.HL7Segment, xWeight, yWeight);
       break;
     case 'Switch':
       mappingElements = generateSwitchMapping(source, xWeight, yWeight);
       break;
     case 'Conditional':
       mappingElements = generateConditionMapping(source, xWeight, yWeight);
+      break;
+    case 'Combination':
+      mappingElements = generateCombinationMapping(source, xWeight, yWeight);
       break;
     default:
       mappingElements = generateSingleMapping(source, 'N/A', xWeight, yWeight);
@@ -119,6 +122,15 @@ const generateEdge = (id, source, target) => {
     classes: 'edges',
   };
 };
+
+const getAdditionalWeight = (type) => {
+  switch (type) {
+    case 'Combination': return 1;
+    case 'Switch': return 2;
+    case 'Conditional': return 3;
+    default: return 0;
+  }
+}
 
 const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
   const elements = [
@@ -174,9 +186,7 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
 };
 
 const generateConditionMapping = (source, xWeight, yWeight) => {
-  let addWeight = 0;
-  if (source.TrueField.MappingFieldType === 'Switch') addWeight = 2;
-  if (source.TrueField.MappingFieldType === 'Conditional') addWeight = 3;
+  const addWeight = getAdditionalWeight(source.TrueField.MappingFieldType);
   const currentId = source.MappingFieldId;
   const trueId = source.TrueField.MappingFieldId;
   const falseId = source.FalseField.MappingFieldId;
@@ -212,6 +222,25 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
   return elements.concat(fields).concat(trueMappingField).concat(falseMappingField);
 };
 
+const generateCombinationMapping = (source, xWeight, yWeight) => {
+  const addWeight = getAdditionalWeight(source.Field1.MappingFieldType);
+  const currentId = source.MappingFieldId;
+  const field1 = source.Field1;
+  const field2 = source.Field2;
+
+  const elements = [
+    generateEntity(currentId, ''),
+    generateNode(`field1-${currentId}`, 'Field 1', currentId, xWeight, yWeight),
+    generateNode(`field2-${currentId}`, 'Field 2', currentId, xWeight, yWeight+1+addWeight),
+    generateEdge(`edge-field1-${currentId}`, `field1-${currentId}`, field1.MappingFieldId),
+    generateEdge(`edge-field2-${currentId}`, `field2-${currentId}`, field2.MappingFieldId),
+  ];
+
+  const field1MappingField = generateMapping(field1, xWeight+2, yWeight);
+  const field2MappingField = generateMapping(field2, xWeight+1, yWeight+1+addWeight);
+
+  return elements.concat(field1MappingField).concat(field2MappingField);
+};
 
 const Diagram = ({ source }) => {
   useEffect(() => {
