@@ -67,6 +67,9 @@ const generateMapping = (source, xWeight, yWeight) => {
     case 'Constant':
       mappingElements = generateSingleMapping(source, source.ConstantValue, xWeight, yWeight);
       break;
+    case 'HL7':
+      mappingElements = generateSingleMapping(source, source.SegmentReference, xWeight, yWeight);
+      break;
     case 'Switch':
       mappingElements = generateSwitchMapping(source, xWeight, yWeight);
       break;
