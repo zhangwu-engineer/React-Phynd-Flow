@@ -79,6 +79,9 @@ const generateMapping = (source, xWeight, yWeight) => {
     case 'Combination':
       mappingElements = generateCombinationMapping(source, xWeight, yWeight);
       break;
+    case 'Regex':
+      mappingElements = generateRegexMapping(source, xWeight, yWeight);
+      break;
     default:
       mappingElements = generateSingleMapping(source, 'N/A', xWeight, yWeight);
       break;
@@ -240,6 +243,20 @@ const generateCombinationMapping = (source, xWeight, yWeight) => {
   const field2MappingField = generateMapping(field2, xWeight+1, yWeight+1+addWeight);
 
   return elements.concat(field1MappingField).concat(field2MappingField);
+};
+
+const generateRegexMapping = (source, xWeight, yWeight) => {
+  const currentId = source.MappingFieldId;
+
+  const elements = [
+    generateEntity(currentId, 'Regex'),
+    generateNode(`info-${currentId}`, `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: "${source.RegexGroup}"`, currentId, xWeight, yWeight),
+    generateNode(`source-${currentId}`, 'Source:', currentId, xWeight, yWeight+1),
+    generateEdge(`edge-source-${currentId}`, `source-${currentId}`, source.Source.MappingFieldId),
+  ];
+  const sourceMappingField = generateMapping(source.Source, xWeight+1, yWeight+1);
+
+  return elements.concat(sourceMappingField);
 };
 
 const Diagram = ({ source }) => {
