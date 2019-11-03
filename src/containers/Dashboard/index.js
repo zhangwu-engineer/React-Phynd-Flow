@@ -44,6 +44,7 @@ const useStyles = makeStyles(theme => ({
 const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(null);
+  const [isModalShown, setModalShown] = React.useState(false);
 
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -88,8 +89,9 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
                     <Typography>{item}</Typography>
                   </MuiExpansionPanelSummary>
                   <MuiExpansionPanelDetails className={classes.details}>
-                    {dashboardReducer.dashboard[item] && <Diagram source={dashboardReducer.dashboard[item]} />}
+                    {dashboardReducer.dashboard[item] && <Diagram source={dashboardReducer.dashboard[item]} triggerModal={(e, flag) => setModalShown(flag)} />}
                     {!dashboardReducer.dashboard[item] && <Typography />}
+                    {isModalShown && 'Modal'}
                   </MuiExpansionPanelDetails>
                 </MuiExpansionPanel>
               )

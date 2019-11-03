@@ -286,10 +286,11 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
   return elements.concat(sourceMappingField);
 };
 
-const Diagram = ({ source }) => {
+const Diagram = ({ source, triggerModal }) => {
   useEffect(() => {
-    cyListener.on('tap', 'node', function(e) {
-      console.log(e);
+    cyListener.on('tap', function(e) {
+      const isModalShown = e.target._private.group === 'nodes' ? true : false;
+      triggerModal(e.target._private, isModalShown);
     });
   },
   // eslint-disable-next-line react-hooks/exhaustive-deps
