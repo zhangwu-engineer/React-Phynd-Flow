@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Sidebar from 'components/Sidebar';
 import Diagram from 'containers/Diagram';
+import NodeDialog from 'containers/Dialog';
 
 // Expansion Panel
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -91,13 +92,13 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
                   <MuiExpansionPanelDetails className={classes.details}>
                     {dashboardReducer.dashboard[item] && <Diagram source={dashboardReducer.dashboard[item]} triggerModal={(e, flag) => setModalShown(flag)} />}
                     {!dashboardReducer.dashboard[item] && <Typography />}
-                    {isModalShown && 'Modal'}
                   </MuiExpansionPanelDetails>
                 </MuiExpansionPanel>
               )
             }
           </Box>
         </Typography>
+        <NodeDialog isModalShown={isModalShown} triggerModal={(e, flag) => setModalShown(flag)} />
       </main>
     </div>
   );
