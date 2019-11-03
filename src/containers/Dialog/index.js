@@ -82,8 +82,8 @@ const NodeDialog = ({ isModalShown, triggerModal }) => {
       <DialogContent>
         <Grid container spacing={2} className={classes.dialogContent}>
           {Object.keys(IconsList).map(key =>
-            <Grid item xs={4} onClick={() => setActiveCard(key)}>
-              <NodeCard cardName={key} key={key} activeCard={activeCard} />
+            <Grid item xs={4} key={key} onClick={() => setActiveCard(key)}>
+              <NodeCard cardName={key} activeCard={activeCard} />
             </Grid>
           )}
         </Grid>
