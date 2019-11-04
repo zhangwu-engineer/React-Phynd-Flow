@@ -4,8 +4,9 @@ import hoc from '../Dashboard/hoc';
 
 const DIAGRAM_CONF = {
   DIAGRAM_PADDING: 30,
-  NODE_WIDTH: 300,
+  NODE_WIDTH: 320,
   NODE_HEIGHT: 120,
+  NODE_INNER_WIDTH: 220,
 };
 
 const nodeStyle = {
@@ -18,6 +19,8 @@ const nodeStyle = {
   'border-color': 'black',
   'text-halign': 'center',
   'text-valign': 'center',
+  'text-max-width': DIAGRAM_CONF.NODE_INNER_WIDTH,
+  'text-wrap': 'wrap',
   'padding': 15,
   'shape': 'rectangle',
 };
