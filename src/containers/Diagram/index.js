@@ -156,8 +156,8 @@ const generateFunctionMapping = (source, xWeight, yWeight) => {
   const functionId = source.FunctionParameter.MappingFieldId;
 
   const elements = [
-    generateEntity(`${currentId}`, `Function: ${source.FunctionName}`, xWeight, yWeight),
-    generateNode(`source-${currentId}`, 'SourceParameter', `${currentId}`, xWeight, yWeight),
+    generateEntity(currentId, `Function: ${source.FunctionName}`, xWeight, yWeight),
+    generateNode(`source-${currentId}`, 'SourceParameter', currentId, xWeight, yWeight),
     generateEdge(`edge-source-${functionId}`, `source-${currentId}`, functionId),
   ];
   return elements.concat(nextMappingField);
@@ -169,10 +169,10 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
   const defaultId = source.SwitchDefault.MappingFieldId;
 
   let elements = [
-    generateEntity(`${currentId}`, 'Switch:', xWeight, yWeight),
-    generateNode(`value-${switchId}`, 'SwitchValue', `${currentId}`, xWeight, yWeight),
-    generateNode(`default-${defaultId}`, 'DefaultValue', `${currentId}`, xWeight, yWeight+1),
-    generateNode(`case-source-${currentId}`, 'Cases', `${currentId}`, xWeight, yWeight+2),
+    generateEntity(currentId, 'Switch:', xWeight, yWeight),
+    generateNode(`value-${switchId}`, 'SwitchValue', currentId, xWeight, yWeight),
+    generateNode(`default-${defaultId}`, 'DefaultValue', currentId, xWeight, yWeight+1),
+    generateNode(`case-source-${currentId}`, 'Cases', currentId, xWeight, yWeight+2),
     generateEntity(`case-target-${currentId}`, 'Cases', xWeight, yWeight),
     generateEdge(`edge-value-${switchId}`, `value-${switchId}`, switchId),
     generateEdge(`edge-default-${defaultId}`, `case-source-${currentId}`, `case-target-${currentId}`),
@@ -203,10 +203,10 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
   const falseId = source.FalseField.MappingFieldId;
 
   const elements = [
-    generateEntity(`${currentId}`, 'Conditional:', xWeight, yWeight),
-    generateNode(`condition-${currentId}`, 'Condition:', `${currentId}`, xWeight, yWeight),
-    generateNode(`true-${currentId}`, 'If True:', `${currentId}`, xWeight, yWeight+2),
-    generateNode(`false-${currentId}`, 'If False:', `${currentId}`, xWeight, yWeight+3+addWeight),
+    generateEntity(currentId, 'Conditional:', xWeight, yWeight),
+    generateNode(`condition-${currentId}`, 'Condition:', currentId, xWeight, yWeight),
+    generateNode(`true-${currentId}`, 'If True:', currentId, xWeight, yWeight+2),
+    generateNode(`false-${currentId}`, 'If False:', currentId, xWeight, yWeight+3+addWeight),
     generateEdge(`edge-true-${trueId}`, `true-${currentId}`, trueId),
     generateEdge(`edge-false-${falseId}`, `false-${currentId}`, falseId),
   ];
