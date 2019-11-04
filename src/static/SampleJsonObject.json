@@ -199,10 +199,54 @@
 		"SerAttributeId": null,
 		"ConstantValue": "1"
 	},
-	"DateOfBirth": null,
-	"SecondaryFirstName": null,
-	"SecondaryMiddleName": null,
-	"SecondaryLastName": null,
+	"DateOfBirth": {
+		"MappingFieldId": 175542,
+		"MappingFieldType": "HL7Segment",
+		"SerAttributeId": null,
+		"HL7Segment": "PID-7"
+	},
+	"SecondaryFirstName": {
+		"MappingFieldId": 185544,
+		"MappingFieldType": "Regex",
+		"SerAttributeId": null,
+		"RegexPattern": "([^ ]+) ([^ ]+) ([^ ]+)",
+		"RegexFlags": "g",
+		"RegexGroup": 1,
+		"Source": {
+			"MappingFieldId": 185543,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column202"
+		}
+	},
+	"SecondaryMiddleName": {
+		"MappingFieldId": 185545,
+		"MappingFieldType": "Regex",
+		"SerAttributeId": null,
+		"RegexPattern": "([^ ]+) ([^ ]+) ([^ ]+)",
+		"RegexFlags": "g",
+		"RegexGroup": 2,
+		"Source": {
+			"MappingFieldId": 185546,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column202"
+		}
+	},
+	"SecondaryLastName": {
+		"MappingFieldId": 185547,
+		"MappingFieldType": "Regex",
+		"SerAttributeId": null,
+		"RegexPattern": "([^ ]+) ([^ ]+) ([^ ]+)",
+		"RegexFlags": "g",
+		"RegexGroup": 3,
+		"Source": {
+			"MappingFieldId": 185548,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column202"
+		}
+	},
 	"SecondarySuffix": null,
 	"ProviderStatus": null,
 	"Ethnicity": null,
@@ -400,7 +444,39 @@
 			"ConstantValue": "0"
 		}
 	},
-	"FullName": null,
+	"FullName": {
+		"MappingFieldId": 185669,
+		"MappingFieldType":"Combination",
+		"SerAttributeId":null,
+		"Field1": {
+			"MappingFieldId": 185670,
+			"MappingFieldType": "Regex",
+			"SerAttributeId": null,
+			"RegexPattern": "([^ ]+) ([^ ]+) ([^ ]+)",
+			"RegexFlags": "g",
+			"RegexGroup": 1,
+			"Source": {
+				"MappingFieldId": 185671,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column202"
+			}
+		},
+		"Field2":{
+			"MappingFieldId": 185672,
+			"MappingFieldType": "Regex",
+			"SerAttributeId": null,
+			"RegexPattern": "([^ ]+) ([^ ]+) ([^ ]+)",
+			"RegexFlags": "g",
+			"RegexGroup": 3,
+			"Source": {
+				"MappingFieldId": 185673,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column202"
+			}
+		}
+	},
 	"AddressMaps": [{
 		"Line1": {
 			"MappingFieldId": 165922,
