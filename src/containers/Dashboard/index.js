@@ -80,7 +80,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
         >
           <Box className={classes.box}>
             {
-              fieldsReducer.fields[getNameFromID(match.params.entity)] && fieldsReducer.fields[getNameFromID(match.params.entity)].map((item, index) =>
+              fieldsReducer.fields && fieldsReducer.fields[getNameFromID(match.params.entity)] && fieldsReducer.fields[getNameFromID(match.params.entity)].map((item, index) =>
                 <MuiExpansionPanel square key={index} expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
                   <MuiExpansionPanelSummary
                     aria-controls={`panel${index}d-content`}
