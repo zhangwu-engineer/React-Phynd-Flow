@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
 import hoc from '../Dashboard/hoc';
 
 const DIAGRAM_CONF = {
@@ -62,7 +63,7 @@ const stylesheet=[
 ];
 
 const useStyles = makeStyles(theme => ({
-  button: {
+  fab: {
     position: 'fixed',
     textTransform: 'none',
   },
@@ -299,7 +300,7 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
   return elements.concat(sourceMappingField);
 };
 
-const Diagram = ({ source, triggerModal }) => {
+const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
   useEffect(() => {
     cyListener.on('tap', function(e) {
       const isModalShown = e.target._private.group === 'nodes' ? true : false;
@@ -308,6 +309,8 @@ const Diagram = ({ source, triggerModal }) => {
   },
   // eslint-disable-next-line react-hooks/exhaustive-deps
   []);
+
+
   let cyListener;
   const elements = generateMapping(source, 1, 1);
   const layout = {
@@ -328,8 +331,15 @@ const Diagram = ({ source, triggerModal }) => {
 
   const classes = useStyles();
 
+  const diagramRef = React.useRef();
+  useImperativeHandle(ref, () => ({
+    createNew: () => {
+      console.log(123);
+    }
+  }))
+
   return (
-    <Grid>
+    <Grid ref={diagramRef}>
       <CytoscapeComponent
         cy={(cy) => { cyListener=cy }}
         elements={CytoscapeComponent.normalizeElements(elements)}
@@ -342,12 +352,12 @@ const Diagram = ({ source, triggerModal }) => {
           }
         }
       />
-      <Button variant="contained" color="primary" className={classes.button} onClick={() => triggerModal(null, true)}>
-        New Element
-      </Button>
+      <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => triggerModal(elementId, true)}>
+        <AddIcon />
+      </Fab>
     </Grid>
     
   );
-}
+});
 
 export default hoc(Diagram);

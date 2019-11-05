@@ -45,11 +45,14 @@ const useStyles = makeStyles(theme => ({
 const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(null);
+  const [activePanel, setActivePanel] = React.useState(null);
   const [isModalShown, setModalShown] = React.useState(false);
 
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
+
+  const fieldsList = fieldsReducer.fields && fieldsReducer.fields[getNameFromID(match.params.entity)] && fieldsReducer.fields[getNameFromID(match.params.entity)];
 
   return (
     <div className={classes.root}>
@@ -80,7 +83,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
         >
           <Box className={classes.box}>
             {
-              fieldsReducer.fields && fieldsReducer.fields[getNameFromID(match.params.entity)] && fieldsReducer.fields[getNameFromID(match.params.entity)].map((item, index) =>
+              fieldsList && fieldsList.map((item, index) =>
                 <MuiExpansionPanel square key={index} expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
                   <MuiExpansionPanelSummary
                     aria-controls={`panel${index}d-content`}
@@ -90,7 +93,16 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
                     <Typography>{item}</Typography>
                   </MuiExpansionPanelSummary>
                   <MuiExpansionPanelDetails className={classes.details}>
-                    {dashboardReducer.dashboard[item] && <Diagram source={dashboardReducer.dashboard[item]} triggerModal={(e, flag) => setModalShown(flag)} />}
+                    {dashboardReducer.dashboard[item] && 
+                      <Diagram
+                        elementId={index}
+                        source={dashboardReducer.dashboard[item]}
+                        triggerModal={(panel, flag) => {
+                          setModalShown(flag);
+                          setActivePanel(panel);
+                        }}
+                      />
+                    }
                     {!dashboardReducer.dashboard[item] && <Typography />}
                   </MuiExpansionPanelDetails>
                 </MuiExpansionPanel>
@@ -98,7 +110,13 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
             }
           </Box>
         </Typography>
-        <NodeDialog isModalShown={isModalShown} triggerModal={(e, flag) => setModalShown(flag)} />
+        <NodeDialog
+          isModalShown={isModalShown}
+          hideModal={() => setModalShown(false)}
+          setNewElement={(element) => {
+            console.log(activePanel, element);
+          }}
+        />
       </main>
     </div>
   );

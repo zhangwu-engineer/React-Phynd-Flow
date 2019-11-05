@@ -71,11 +71,11 @@ const NodeCard = ({ cardName, activeCard }) => {
   )
 }
 
-const NodeDialog = ({ isModalShown, triggerModal }) => {
+const NodeDialog = ({ isModalShown, hideModal, setNewElement }) => {
   const classes = useStyles();
   const [activeCard, setActiveCard] = React.useState(null);
   const closeModal = () => {
-    triggerModal(null, false);
+    hideModal();
   }
 
   return (
@@ -91,12 +91,18 @@ const NodeDialog = ({ isModalShown, triggerModal }) => {
       <DialogContent>
         <Grid container spacing={2} className={classes.dialogContent}>
           {Object.keys(IconsList).map(key =>
-            <Grid item xs={4} key={key} onClick={() => setActiveCard(key)}>
+            <Grid
+              item xs={4}
+              key={key}
+              onClick={() => {
+                setActiveCard(key);
+              }}
+            >
               <NodeCard cardName={key} activeCard={activeCard} />
             </Grid>
           )}
           <Grid container className={classes.buttonGroup}>
-            <Button variant="contained" color="primary" className={classes.button} onClick={() => triggerModal(null, true)}>
+            <Button variant="contained" color="primary" className={classes.button} onClick={() => setNewElement(activeCard)} >
               Create
             </Button>
             <Button variant="contained" color="primary" className={classes.button} onClick={closeModal}>
