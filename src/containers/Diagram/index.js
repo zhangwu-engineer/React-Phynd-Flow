@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 import hoc from '../Dashboard/hoc';
 
 const DIAGRAM_CONF = {
@@ -57,6 +60,13 @@ const stylesheet=[
     style: edgeStyle,
   }
 ];
+
+const useStyles = makeStyles(theme => ({
+  button: {
+    position: 'fixed',
+    textTransform: 'none',
+  },
+}));
 
 const generateMapping = (source, xWeight, yWeight) => {
   let mappingElements = [];
@@ -315,23 +325,28 @@ const Diagram = ({ source, triggerModal }) => {
   const xWeightMax = elements.length > 0 ?
     Math.max.apply(Math, elements.map(function(o) { return o.data.xWeight ? o.data.xWeight : 0; }))
     : 0;
-  const yWeightMax = elements.length > 0 ?
-    Math.max.apply(Math, elements.map(function(o) { return o.data.yWeight ? o.data.yWeight : 0; }))
-    : 0;
+
+  const classes = useStyles();
 
   return (
-    <CytoscapeComponent
-      cy={(cy) => { cyListener=cy }}
-      elements={CytoscapeComponent.normalizeElements(elements)}
-      layout={layout}
-      stylesheet={stylesheet}
-      style={
-        {
-          width: (xWeightMax + 1) * DIAGRAM_CONF.NODE_WIDTH,
-          height: (yWeightMax + 1.5) * DIAGRAM_CONF.NODE_HEIGHT,
+    <Grid>
+      <CytoscapeComponent
+        cy={(cy) => { cyListener=cy }}
+        elements={CytoscapeComponent.normalizeElements(elements)}
+        layout={layout}
+        stylesheet={stylesheet}
+        style={
+          {
+            width: (xWeightMax + 1) * DIAGRAM_CONF.NODE_WIDTH,
+            height: 500,
+          }
         }
-      }
-    />
+      />
+      <Button variant="contained" color="primary" className={classes.button} onClick={() => triggerModal(null, true)}>
+        New Element
+      </Button>
+    </Grid>
+    
   );
 }
 
