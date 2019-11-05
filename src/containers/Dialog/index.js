@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import { FaQuestion, FaColumns, FaPlus, FaCode, FaList, FaWindowMinimize, FaAngleUp, FaAlignJustify } from "react-icons/fa";
 import { AiOutlineScissor } from "react-icons/ai";
 import hoc from '../Dashboard/hoc';
@@ -24,9 +25,6 @@ const IconsList = {
 };
 
 const useStyles = makeStyles(theme => ({
-  dialogContent: {
-    paddingBottom: 24,
-  },
   cardContent: {
     paddingTop: 12,
     paddingBottom: 12,
@@ -44,7 +42,18 @@ const useStyles = makeStyles(theme => ({
   },
   cardIcon: {
     fontSize: 36,
-  }
+  },
+  buttonGroup: {
+    paddingTop: 12,
+    paddingBottom: 20,
+    paddingLeft: 8,
+    paddingRight: 8,
+    justifyContent: 'flex-end',
+  },
+  button: {
+    textTransform: 'none',
+    marginLeft: 20,
+  },
 }));
 
 const NodeCard = ({ cardName, activeCard }) => {
@@ -86,6 +95,14 @@ const NodeDialog = ({ isModalShown, triggerModal }) => {
               <NodeCard cardName={key} activeCard={activeCard} />
             </Grid>
           )}
+          <Grid container className={classes.buttonGroup}>
+            <Button variant="contained" color="primary" className={classes.button} onClick={() => triggerModal(null, true)}>
+              Create
+            </Button>
+            <Button variant="contained" color="primary" className={classes.button} onClick={closeModal}>
+              Close
+            </Button>
+          </Grid>
         </Grid>
       </DialogContent>
     </Dialog>
