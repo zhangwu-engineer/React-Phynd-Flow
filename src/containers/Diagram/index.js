@@ -68,6 +68,36 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const generateInitialSource = (type) => {
+  const source = {};
+  switch (type) {
+    case 'Function':      
+      break;
+    case 'Column':
+      break;
+    case 'Constant':
+      source.MappingFieldId = 'constant1';
+      source.MappingFieldType = type;
+      source.ConstantValue = 'N/A';
+      break;
+    case 'HL7Segment':
+      break;
+    case 'Switch':
+      break;
+    case 'Conditional':
+      break;
+    case 'Combination':
+      break;
+    case 'Regex':
+      break;
+    case 'Iteration':
+      break;
+    default:
+      break;
+  }
+  return source;
+};
+
 const generateMapping = (source, xWeight, yWeight) => {
   let mappingElements = [];
   switch (source.MappingFieldType) {
@@ -300,18 +330,20 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
 };
 
 const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
+  const [elements, setElements] = React.useState([]);
+
   useEffect(() => {
     cyListener.on('tap', function(e) {
       const isModalShown = e.target._private.group === 'nodes' ? true : false;
       triggerModal(e.target._private, isModalShown);
     });
+    if (source) setElements(generateMapping(source, 1, 1));
   },
   // eslint-disable-next-line react-hooks/exhaustive-deps
   []);
 
 
   let cyListener;
-  const elements = source ? generateMapping(source, 1, 1) : [];
   const layout = {
     name: 'preset',
     fit: false,
@@ -335,9 +367,9 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
 
   useImperativeHandle(ref, () => ({
     validate: (element) => {
-      console.log('Finally', element);
+      setElements(generateMapping(generateInitialSource(element), 1, 1));
     }
-  }))
+  }));
 
   return (
     <Grid>

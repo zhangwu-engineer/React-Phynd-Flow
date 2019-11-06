@@ -13,7 +13,7 @@ import { AiOutlineScissor } from "react-icons/ai";
 import hoc from '../Dashboard/hoc';
 
 const IconsList = {
-  Condition: FaWindowMinimize,
+  Constant: FaWindowMinimize,
   Column: FaColumns,
   HL7: FaAngleUp,
   Conditional: FaQuestion,
