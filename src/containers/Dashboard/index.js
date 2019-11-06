@@ -8,14 +8,12 @@ import Typography from '@material-ui/core/Typography';
 import Sidebar from 'components/Sidebar';
 import Diagram from 'containers/Diagram';
 import NodeDialog from 'containers/Dialog';
-
 // Expansion Panel
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
 import {
   a11yProps,
   getNameFromID
@@ -41,6 +39,49 @@ const useStyles = makeStyles(theme => ({
   },
   toolbar: theme.mixins.toolbar,
 }));
+
+const refs = [];
+const PanelItem = ({ item, index }) => {
+  return (
+    <MuiExpansionPanel square key={index} expanded={item.expanded === `panel${index}`} onChange={item.handleChange(`panel${index}`)}>
+      <MuiExpansionPanelSummary
+        aria-controls={`panel${index}d-content`}
+        id={`panel${index}d-header`}
+        expandIcon={item.dashboardReducer.dashboard[item.item] && <ExpandMoreIcon />}
+      >
+        <Typography>{item.item}</Typography>
+      </MuiExpansionPanelSummary>
+      <MuiExpansionPanelDetails className={item.classes.details}>
+        {item.dashboardReducer.dashboard[item.item] && 
+          <Diagram
+            ref={item.ref}
+            elementId={index}
+            source={item.dashboardReducer.dashboard[item.item]}
+            triggerModal={(panel, flag) => {
+              item.setModalShown(flag);
+              item.setActivePanel(panel);
+            }}
+          />
+        }
+        {!item.dashboardReducer.dashboard[item.item] && <Typography />}
+      </MuiExpansionPanelDetails>
+    </MuiExpansionPanel>
+  );
+};
+
+const Panel = ({ items, ...props }) => {
+  const itemsList = items.map((item, index) => {
+    refs[index] = React.createRef();
+    return { item, ref: refs[index], ...props }
+  });
+  return (
+    <Box>
+      {
+        itemsList.map((item, index) => <PanelItem item={item} index={index} key={index} />)
+      }
+    </Box>
+  );
+};
 
 const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
   const classes = useStyles();
@@ -81,40 +122,23 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
           aria-labelledby={`scrollable-auto-tab-${0}`}
           // {...other}
         >
-          <Box className={classes.box}>
-            {
-              fieldsList && fieldsList.map((item, index) =>
-                <MuiExpansionPanel square key={index} expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)}>
-                  <MuiExpansionPanelSummary
-                    aria-controls={`panel${index}d-content`}
-                    id={`panel${index}d-header`}
-                    expandIcon={<ExpandMoreIcon />}
-                  >
-                    <Typography>{item}</Typography>
-                  </MuiExpansionPanelSummary>
-                  <MuiExpansionPanelDetails className={classes.details}>
-                    {dashboardReducer.dashboard[item] && 
-                      <Diagram
-                        elementId={index}
-                        source={dashboardReducer.dashboard[item]}
-                        triggerModal={(panel, flag) => {
-                          setModalShown(flag);
-                          setActivePanel(panel);
-                        }}
-                      />
-                    }
-                    {!dashboardReducer.dashboard[item] && <Typography />}
-                  </MuiExpansionPanelDetails>
-                </MuiExpansionPanel>
-              )
-            }
-          </Box>
+          {fieldsList && 
+            <Panel
+              items={fieldsList}
+              classes={classes}
+              expanded={expanded}
+              dashboardReducer={dashboardReducer}
+              setModalShown={setModalShown}
+              setActivePanel={setActivePanel}
+              handleChange={handleChange}
+            />
+          }
         </Typography>
         <NodeDialog
           isModalShown={isModalShown}
           hideModal={() => setModalShown(false)}
           setNewElement={(element) => {
-            console.log(activePanel, element);
+            refs[activePanel].current.validate(element);
           }}
         />
       </main>

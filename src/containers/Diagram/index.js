@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
-import hoc from '../Dashboard/hoc';
 
 const DIAGRAM_CONF = {
   DIAGRAM_PADDING: 30,
@@ -333,8 +332,8 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
 
   const diagramRef = React.useRef();
   useImperativeHandle(ref, () => ({
-    createNew: () => {
-      console.log(123);
+    validate: (element) => {
+      console.log('Finally', element);
     }
   }))
 
@@ -360,4 +359,4 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
   );
 });
 
-export default hoc(Diagram);
+export default Diagram;
