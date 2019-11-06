@@ -32,8 +32,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
   },
   details: {
-    width: 'calc(100vw - 290px)',
-    height: 600,
+    width: 'calc(100vw - 252px)',
     overflow: 'scroll',
     flexDirection: 'column',
   },
@@ -42,6 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 const refs = [];
 const PanelItem = ({ item, index }) => {
+  const source = item.dashboardReducer.dashboard[item.item];
   return (
     <MuiExpansionPanel square key={index} expanded={item.expanded === `panel${index}`} onChange={item.handleChange(`panel${index}`)}>
       <MuiExpansionPanelSummary
@@ -52,18 +52,15 @@ const PanelItem = ({ item, index }) => {
         <Typography>{item.item}</Typography>
       </MuiExpansionPanelSummary>
       <MuiExpansionPanelDetails className={item.classes.details}>
-        {item.dashboardReducer.dashboard[item.item] && 
-          <Diagram
-            ref={item.ref}
-            elementId={index}
-            source={item.dashboardReducer.dashboard[item.item]}
-            triggerModal={(panel, flag) => {
-              item.setModalShown(flag);
-              item.setActivePanel(panel);
-            }}
-          />
-        }
-        {!item.dashboardReducer.dashboard[item.item] && <Typography />}
+        <Diagram
+          ref={item.ref}
+          elementId={index}
+          source={source}
+          triggerModal={(panel, flag) => {
+            item.setModalShown(flag);
+            item.setActivePanel(panel);
+          }}
+        />
       </MuiExpansionPanelDetails>
     </MuiExpansionPanel>
   );
@@ -122,17 +119,15 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
           aria-labelledby={`scrollable-auto-tab-${0}`}
           // {...other}
         >
-          {fieldsList && 
-            <Panel
-              items={fieldsList}
-              classes={classes}
-              expanded={expanded}
-              dashboardReducer={dashboardReducer}
-              setModalShown={setModalShown}
-              setActivePanel={setActivePanel}
-              handleChange={handleChange}
-            />
-          }
+          <Panel
+            items={fieldsList}
+            classes={classes}
+            expanded={expanded}
+            dashboardReducer={dashboardReducer}
+            setModalShown={setModalShown}
+            setActivePanel={setActivePanel}
+            handleChange={handleChange}
+          />
         </Typography>
         <NodeDialog
           isModalShown={isModalShown}

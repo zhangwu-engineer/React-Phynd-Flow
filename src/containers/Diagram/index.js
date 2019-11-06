@@ -63,7 +63,7 @@ const stylesheet=[
 
 const useStyles = makeStyles(theme => ({
   fab: {
-    position: 'fixed',
+    position: 'absolute',
     textTransform: 'none',
   },
 }));
@@ -311,7 +311,7 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
 
 
   let cyListener;
-  const elements = generateMapping(source, 1, 1);
+  const elements = source ? generateMapping(source, 1, 1) : [];
   const layout = {
     name: 'preset',
     fit: false,
@@ -327,10 +327,12 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
   const xWeightMax = elements.length > 0 ?
     Math.max.apply(Math, elements.map(function(o) { return o.data.xWeight ? o.data.xWeight : 0; }))
     : 0;
+  const yWeightMax = elements.length > 0 ?
+    Math.max.apply(Math, elements.map(function(o) { return o.data.yWeight ? o.data.yWeight : 0; }))
+    : 0;
 
   const classes = useStyles();
 
-  const diagramRef = React.useRef();
   useImperativeHandle(ref, () => ({
     validate: (element) => {
       console.log('Finally', element);
@@ -338,7 +340,10 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
   }))
 
   return (
-    <Grid ref={diagramRef}>
+    <Grid>
+      <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => triggerModal(elementId, true)}>
+        <AddIcon />
+      </Fab>
       <CytoscapeComponent
         cy={(cy) => { cyListener=cy }}
         elements={CytoscapeComponent.normalizeElements(elements)}
@@ -347,13 +352,11 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
         style={
           {
             width: (xWeightMax + 1) * DIAGRAM_CONF.NODE_WIDTH,
-            height: 500,
+            height: Math.min(500, (yWeightMax + 1) * DIAGRAM_CONF.NODE_HEIGHT),
+            marginTop: 60,
           }
         }
       />
-      <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => triggerModal(elementId, true)}>
-        <AddIcon />
-      </Fab>
     </Grid>
     
   );
