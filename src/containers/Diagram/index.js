@@ -85,6 +85,10 @@ const generateInitialSource = (type) => {
     case 'Switch':
       break;
     case 'Conditional':
+        source.MappingFieldId = 'conditional1';
+        source.MappingFieldType = type;
+        source.TrueField = {};
+        source.FalseField = {};
       break;
     case 'Combination':
       break;
@@ -129,7 +133,6 @@ const generateMapping = (source, xWeight, yWeight) => {
       mappingElements = generateIterationMapping(source, xWeight, yWeight);
       break;
     default:
-      mappingElements = generateSingleMapping(source, 'N/A', xWeight, yWeight);
       break;
   }
   return mappingElements;
@@ -237,10 +240,10 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
 };
 
 const generateConditionMapping = (source, xWeight, yWeight) => {
-  const addWeight = getAdditionalWeight(source.TrueField.MappingFieldType);
+  const addWeight = source.TrueField && getAdditionalWeight(source.TrueField.MappingFieldType);
   const currentId = source.MappingFieldId;
-  const trueId = source.TrueField.MappingFieldId;
-  const falseId = source.FalseField.MappingFieldId;
+  const trueId = source.TrueField && source.TrueField.MappingFieldId;
+  const falseId = source.FalseField && source.FalseField.MappingFieldId;
 
   const elements = [
     generateEntity(currentId, 'Conditional:', xWeight, yWeight),
@@ -253,22 +256,25 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
 
   const trueMappingField = generateMapping(source.TrueField, xWeight+1, yWeight+2);
   const falseMappingField = generateMapping(source.FalseField, xWeight+1, yWeight+3+addWeight);
-  const field1 = source.Condition.Field1;
-  const field2 = source.Condition.Field2;
+
+  const field1 = source.Condition && source.Condition.Field1;
+  const field2 = source.Condition && source.Condition.Field2;
 
   let fields = [
     generateEntity(`fields-${currentId}`, '', xWeight, yWeight),
     generateNode(`field1-${currentId}`, 'Field 1', `fields-${currentId}`, xWeight+1, yWeight),
     generateNode(`field2-${currentId}`, 'Field 2', `fields-${currentId}`, xWeight+1, yWeight+1),
     generateEdge(`edge-fields-${currentId}`, `condition-${currentId}`, `fields-${currentId}`),
-    generateEdge(`edge-field1-${currentId}`, `field1-${currentId}`, field1.MappingFieldId),
-    generateEdge(`edge-field2-${currentId}`, `field2-${currentId}`, field2.MappingFieldId),
   ];
 
-  const field1MappingField = generateMapping(field1, xWeight+2, yWeight);
-  const field2MappingField = generateMapping(field2, xWeight+2, yWeight+1);
-  fields = fields.concat(field1MappingField);
-  fields = fields.concat(field2MappingField);
+  if (field1 && field2) {
+    fields.push(generateEdge(`edge-field1-${currentId}`, `field1-${currentId}`, field1.MappingFieldId));
+    fields.push(generateEdge(`edge-field2-${currentId}`, `field2-${currentId}`, field2.MappingFieldId));
+    const field1MappingField = generateMapping(field1, xWeight+2, yWeight);
+    const field2MappingField = generateMapping(field2, xWeight+2, yWeight+1);
+    fields = fields.concat(field1MappingField);
+    fields = fields.concat(field2MappingField);
+  }
 
   return elements.concat(fields).concat(trueMappingField).concat(falseMappingField);
 };
@@ -335,7 +341,7 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
   useEffect(() => {
     cyListener.on('tap', function(e) {
       const isModalShown = e.target._private.group === 'nodes' ? true : false;
-      triggerModal(e.target._private, isModalShown);
+      triggerModal(elementId, isModalShown, e.target._private);
     });
     if (source) setElements(generateMapping(source, 1, 1));
   },
@@ -373,7 +379,7 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
 
   return (
     <Grid>
-      <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => triggerModal(elementId, true)}>
+      <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => triggerModal(elementId, true, null)}>
         <AddIcon />
       </Fab>
       <CytoscapeComponent
