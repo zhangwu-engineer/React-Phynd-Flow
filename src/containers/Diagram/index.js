@@ -379,9 +379,11 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
 
   return (
     <Grid>
-      <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => triggerModal(elementId, true, null)}>
-        <AddIcon />
-      </Fab>
+      {elements.length === 0 &&
+        <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => triggerModal(elementId, true, null)}>
+          <AddIcon />
+        </Fab>
+      }
       <CytoscapeComponent
         cy={(cy) => { cyListener=cy }}
         elements={CytoscapeComponent.normalizeElements(elements)}
