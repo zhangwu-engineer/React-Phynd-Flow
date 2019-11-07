@@ -89,6 +89,8 @@ const generateInitialSource = (type) => {
         source.MappingFieldType = type;
         source.TrueField = {};
         source.FalseField = {};
+        source.Condition = {};
+        source.Condition.ConditionId = 'condition1'; 
       break;
     case 'Combination':
       break;
@@ -244,6 +246,7 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
   const currentId = source.MappingFieldId;
   const trueId = source.TrueField && source.TrueField.MappingFieldId;
   const falseId = source.FalseField && source.FalseField.MappingFieldId;
+  const conditionId = source.Condition && source.Condition.ConditionId;
 
   const elements = [
     generateEntity(currentId, 'Conditional:', xWeight, yWeight),
@@ -261,10 +264,10 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
   const field2 = source.Condition && source.Condition.Field2;
 
   let fields = [
-    generateEntity(`fields-${currentId}`, '', xWeight, yWeight),
-    generateNode(`field1-${currentId}`, 'Field 1', `fields-${currentId}`, xWeight+1, yWeight),
-    generateNode(`field2-${currentId}`, 'Field 2', `fields-${currentId}`, xWeight+1, yWeight+1),
-    generateEdge(`edge-fields-${currentId}`, `condition-${currentId}`, `fields-${currentId}`),
+    generateEntity(conditionId, '', xWeight, yWeight),
+    generateNode(`field1-${currentId}`, 'Field 1', conditionId, xWeight+1, yWeight),
+    generateNode(`field2-${currentId}`, 'Field 2', conditionId, xWeight+1, yWeight+1),
+    generateEdge(`edge-fields-${currentId}`, `condition-${currentId}`, conditionId),
   ];
 
   if (field1 && field2) {
