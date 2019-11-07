@@ -102,7 +102,7 @@ const NodeDialog = ({ isModalShown, hideModal, setNewElement }) => {
             </Grid>
           )}
           <Grid container className={classes.buttonGroup}>
-            <Button variant="contained" color="primary" className={classes.button} onClick={() => setNewElement(activeCard)} >
+            <Button variant="contained" color="primary" className={classes.button} onClick={() => { setNewElement(activeCard); hideModal(); }} >
               Create
             </Button>
             <Button variant="contained" color="primary" className={classes.button} onClick={closeModal}>
