@@ -136,9 +136,8 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
           isModalShown={isModalShown}
           hideModal={() => setModalShown(false)}
           setNewElement={(element) => {
-            console.log(activeParent);
             if (refs[activePanel])
-              refs[activePanel].current.validate(element);
+              refs[activePanel].current.validate(element, activeParent);
           }}
         />
       </main>

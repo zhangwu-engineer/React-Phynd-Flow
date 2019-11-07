@@ -375,8 +375,12 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
   const classes = useStyles();
 
   useImperativeHandle(ref, () => ({
-    validate: (element) => {
-      setElements(generateMapping(generateInitialSource(element), 1, 1));
+    validate: (element, parent) => {
+      if (parent) {
+        console.log('parent is active');
+      } else {
+        setElements(generateMapping(generateInitialSource(element), 1, 1));
+      }
     }
   }));
 
