@@ -56,9 +56,10 @@ const PanelItem = ({ item, index }) => {
           ref={item.ref}
           elementId={index}
           source={source}
-          triggerModal={(panel, flag) => {
+          triggerModal={(panel, flag, parent) => {
             item.setModalShown(flag);
             item.setActivePanel(panel);
+            item.setActiveParent(parent);
           }}
         />
       </MuiExpansionPanelDetails>
@@ -84,6 +85,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(null);
   const [activePanel, setActivePanel] = React.useState(null);
+  const [activeParent, setActiveParent] = React.useState(null);
   const [isModalShown, setModalShown] = React.useState(false);
 
   const handleChange = panel => (event, newExpanded) => {
@@ -126,6 +128,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
             dashboardReducer={dashboardReducer}
             setModalShown={setModalShown}
             setActivePanel={setActivePanel}
+            setActiveParent={setActiveParent}
             handleChange={handleChange}
           />
         </Typography>
@@ -133,6 +136,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
           isModalShown={isModalShown}
           hideModal={() => setModalShown(false)}
           setNewElement={(element) => {
+            console.log(activeParent);
             if (refs[activePanel])
               refs[activePanel].current.validate(element);
           }}
