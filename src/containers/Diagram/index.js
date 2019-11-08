@@ -68,7 +68,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const generateInitialSource = (type) => {
+const generateInitialSource = (type, parent) => {
   let source = {};
   switch (type) {
     case 'Function':      
@@ -76,7 +76,7 @@ const generateInitialSource = (type) => {
     case 'Column':
       break;
     case 'Constant':
-      source.MappingFieldId = 'constant1';
+      source.MappingFieldId = `constant-${parent ? parent.data.id : ''}${Math.random()}`;
       source.MappingFieldType = type;
       source.ConstantValue = 'N/A';
       break;
@@ -86,21 +86,17 @@ const generateInitialSource = (type) => {
       break;
     case 'Conditional':
       source = {
-        MappingFieldId: 'conditional1',
+        MappingFieldId: `conditional-${parent ? parent.data.id : ''}${Math.random()}`,
         MappingFieldType: type,
         TrueField: {
-
         },
         FalseField: {
-
         },
         Condition: {
-          ConditionId: 'condition1',
+          ConditionId: `condition-${parent ? parent.data.id : ''}${Math.random()}`,
           Field1: {
-
           },
           Field2: {
-
           },
         }
       };
@@ -119,6 +115,7 @@ const generateInitialSource = (type) => {
 
 const generateMapping = (source, xWeight, yWeight) => {
   let mappingElements = [];
+  if (!source) return [];
   switch (source.MappingFieldType) {
     case 'Function':
       mappingElements = generateFunctionMapping(source, xWeight, yWeight);
@@ -396,24 +393,25 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
       if (parent) {
         const propertyToFind = parent.data.parentType === 'condition' ? 'ConditionId' : 'MappingFieldId';
         const findByProperty = (obj, val)=> {
-          var result;
-          for (var p in obj) {
-              if (obj[propertyToFind] === parseInt(val)) {
-                  obj.Field1 = generateInitialSource((element), 1, 1);
-              } else {
-                  if (typeof obj[p] === 'object') {
-                      result = findByProperty(obj[p], val);
-                      if (result) {
-                          return result;
-                      }
-                  }
+          let result;
+          for (let p in obj) {
+            if (obj[propertyToFind] === parseInt(val)) {
+              obj.Field1 = generateInitialSource(element, parent);
+              obj.Field2 = generateInitialSource(element, parent);
+            } else {
+              if (typeof obj[p] === 'object') {
+                result = findByProperty(obj[p], val);
+                if (result) {
+                    return result;
+                }
               }
+            }
           }
         };
         findByProperty(source, parent.data.parent);
         setElements(generateMapping(source, 1, 1));
       } else {
-        setElements(generateMapping(generateInitialSource(element), 1, 1));
+        setElements(generateMapping(generateInitialSource(element, parent), 1, 1));
       }
     }
   }));
