@@ -350,7 +350,7 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
   return elements.concat(sourceMappingField);
 };
 
-const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
+const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashboard }, ref) => {
   const [elements, setElements] = React.useState([]);
 
   useEffect(() => {
@@ -358,12 +358,10 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
       const isModalShown = e.target._private.group === 'nodes' ? true : false;
       triggerModal(elementId, isModalShown, e.target._private);
     });
-    if (source) {
-      setElements(generateMapping(source, 1, 1));
-    }
+    source && setElements(generateMapping(source, 1, 1));
   },
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  []);
+  [source]);
 
 
   let cyListener;
@@ -409,9 +407,9 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
           }
         };
         findByProperty(source, parent.data.parent);
-        setElements(generateMapping(source, 1, 1));
+        updateDashboard(source);
       } else {
-        setElements(generateMapping(generateInitialSource(element, parent), 1, 1));
+        updateDashboard(generateInitialSource(element, parent));
       }
     }
   }));

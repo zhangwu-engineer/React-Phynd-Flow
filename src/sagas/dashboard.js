@@ -17,6 +17,17 @@ function* getDashboardDataRequest({ payload }) {
   }
 }
 
+function* updateDashboardDataRequest({ payload }) {
+  try {
+    const data = payload.data;
+    yield put(actions.updateDashboardDataSuccess({ data, message: 'Providers have been fetched' }))
+  } catch (e) {
+    console.error(e)
+    yield put(actions.updateDashboardDataFailure({ message: e.message }))
+  }
+}
+
 export default function* () {
   yield takeEvery(constants.GET_DASHBOARD_DATA_REQUEST, getDashboardDataRequest)
+  yield takeEvery(constants.UPDATE_DASHBOARD_DATA_REQUEST, updateDashboardDataRequest)
 }

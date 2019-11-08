@@ -40,14 +40,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const refs = [];
-const PanelItem = ({ item, index }) => {
-  const source = item.dashboardReducer.dashboard[item.item];
+const PanelItem = ({ item, index, dashboardReducer }) => {
+  if (!dashboardReducer.dashboard) return <div />;
+  const source = dashboardReducer.dashboard[item.item];
   return (
     <MuiExpansionPanel square key={index} expanded={item.expanded === `panel${index}`} onChange={item.handleChange(`panel${index}`)}>
       <MuiExpansionPanelSummary
         aria-controls={`panel${index}d-content`}
         id={`panel${index}d-header`}
-        expandIcon={item.dashboardReducer.dashboard[item.item] && <ExpandMoreIcon />}
+        expandIcon={dashboardReducer.dashboard[item.item] && <ExpandMoreIcon />}
       >
         <Typography>{item.item}</Typography>
       </MuiExpansionPanelSummary>
@@ -57,6 +58,11 @@ const PanelItem = ({ item, index }) => {
           ref={item.ref}
           elementId={index}
           source={source}
+          updateDashboard={payload => {
+            const dashboardSource = dashboardReducer.dashboard;
+            dashboardSource[item.item] = payload;
+            item.updateDashboard(dashboardSource);
+          }}
           triggerModal={(panel, flag, parent) => {
             item.setModalShown(flag);
             item.setActivePanel(panel);
@@ -68,7 +74,7 @@ const PanelItem = ({ item, index }) => {
   );
 };
 
-const Panel = ({ items, ...props }) => {
+const Panel = ({ items, dashboardReducer, ...props }) => {
   const itemsList = items.map((item, index) => {
     refs[index] = React.createRef();
     return { item, ref: refs[index], ...props }
@@ -76,13 +82,13 @@ const Panel = ({ items, ...props }) => {
   return (
     <Box>
       {
-        itemsList.map((item, index) => <PanelItem item={item} index={index} key={index} />)
+        itemsList.map((item, index) => <PanelItem item={item} index={index} key={index} dashboardReducer={dashboardReducer} />)
       }
     </Box>
   );
 };
 
-const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
+const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, updateDashboard }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(null);
   const [activePanel, setActivePanel] = React.useState(null);
@@ -130,6 +136,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData }) => {
             setModalShown={setModalShown}
             setActivePanel={setActivePanel}
             setActiveParent={setActiveParent}
+            updateDashboard={(payload) => updateDashboard(payload)}
             handleChange={handleChange}
           />
         </Typography>

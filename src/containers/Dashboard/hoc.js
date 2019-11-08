@@ -11,12 +11,16 @@ const hoc = (Dashboard) => {
     constructor(props) {
       super(props);
 
-      props.getDashboardDataRequest();
+      // props.getDashboardDataRequest();
       props.getFieldsPerEntityRequest();
     }
 
     componentDidMount() {
       window.scrollTo(0,0);
+    }
+
+    updateDashboard = data => {
+      this.props.updateDashboardDataRequest({ data });
     }
 
     render() {
@@ -26,6 +30,7 @@ const hoc = (Dashboard) => {
           fieldsReducer={this.props.fieldsReducer}
           classes={this.props.classes}
           width={this.props.width}
+          updateDashboard={this.updateDashboard}
           {...this.props}
         />
       )
@@ -50,6 +55,7 @@ export default (Dashboard) => {
 
   const mapDispatchToProps = {
     getDashboardDataRequest: actions.getDashboardDataRequest,
+    updateDashboardDataRequest: actions.updateDashboardDataRequest,
     getFieldsPerEntityRequest: actions.getFieldsPerEntityRequest,
   }
 
