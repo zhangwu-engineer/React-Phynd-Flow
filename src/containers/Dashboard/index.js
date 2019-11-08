@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const refs = [];
-const PanelItem = ({ item, index }) => {
+const PanelItem = ({ item, index, sourceMap }) => {
   const source = item.dashboardReducer.dashboard[item.item];
   return (
     <MuiExpansionPanel square key={index} expanded={item.expanded === `panel${index}`} onChange={item.handleChange(`panel${index}`)}>
@@ -53,9 +53,11 @@ const PanelItem = ({ item, index }) => {
       </MuiExpansionPanelSummary>
       <MuiExpansionPanelDetails className={item.classes.details}>
         <Diagram
+          item={item.item}
           ref={item.ref}
           elementId={index}
           source={source}
+          sourceMap={sourceMap}
           triggerModal={(panel, flag, parent) => {
             item.setModalShown(flag);
             item.setActivePanel(panel);
@@ -67,7 +69,7 @@ const PanelItem = ({ item, index }) => {
   );
 };
 
-const Panel = ({ items, ...props }) => {
+const Panel = ({ items, sourceMap, ...props }) => {
   const itemsList = items.map((item, index) => {
     refs[index] = React.createRef();
     return { item, ref: refs[index], ...props }
@@ -75,7 +77,7 @@ const Panel = ({ items, ...props }) => {
   return (
     <Box>
       {
-        itemsList.map((item, index) => <PanelItem item={item} index={index} key={index} />)
+        itemsList.map((item, index) => <PanelItem item={item} index={index} sourceMap={sourceMap} key={index} />)
       }
     </Box>
   );

@@ -69,7 +69,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const generateInitialSource = (type) => {
-  const source = {};
+  let source = {};
   switch (type) {
     case 'Function':      
       break;
@@ -85,12 +85,25 @@ const generateInitialSource = (type) => {
     case 'Switch':
       break;
     case 'Conditional':
-        source.MappingFieldId = 'conditional1';
-        source.MappingFieldType = type;
-        source.TrueField = {};
-        source.FalseField = {};
-        source.Condition = {};
-        source.Condition.ConditionId = 'condition1'; 
+      source = {
+        MappingFieldId: 'conditional1',
+        MappingFieldType: type,
+        TrueField: {
+
+        },
+        FalseField: {
+
+        },
+        Condition: {
+          ConditionId: 'condition1',
+          Field1: {
+
+          },
+          Field2: {
+
+          },
+        }
+      };
       break;
     case 'Combination':
       break;
@@ -140,11 +153,12 @@ const generateMapping = (source, xWeight, yWeight) => {
   return mappingElements;
 };
 
-const generateNode = (id, label, parent, xWeight, yWeight) => {
+const generateNode = (id, label, parent, parentType, xWeight, yWeight) => {
   const nodeElement = {
     data: {
       id,
       label,
+      parentType,
       xWeight,
       yWeight,
     },
@@ -190,7 +204,7 @@ const getAdditionalWeight = (type) => {
 
 const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
   const elements = [
-    generateNode(source.MappingFieldId, `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`, null, xWeight, yWeight),
+    generateNode(source.MappingFieldId, `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`, null, null, xWeight, yWeight),
   ];
   return elements;
 };
@@ -202,7 +216,7 @@ const generateFunctionMapping = (source, xWeight, yWeight) => {
 
   const elements = [
     generateEntity(currentId, `Function: ${source.FunctionName}`, xWeight, yWeight),
-    generateNode(`source-${currentId}`, 'SourceParameter', currentId, xWeight, yWeight),
+    generateNode(`source-${currentId}`, 'SourceParameter', currentId, 'function-source', xWeight, yWeight),
     generateEdge(`edge-source-${functionId}`, `source-${currentId}`, functionId),
   ];
   return elements.concat(nextMappingField);
@@ -215,9 +229,9 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
 
   let elements = [
     generateEntity(currentId, 'Switch:', xWeight, yWeight),
-    generateNode(`value-${switchId}`, 'SwitchValue', currentId, xWeight, yWeight),
-    generateNode(`default-${defaultId}`, 'DefaultValue', currentId, xWeight, yWeight+1),
-    generateNode(`case-source-${currentId}`, 'Cases', currentId, xWeight, yWeight+2),
+    generateNode(`value-${switchId}`, 'SwitchValue', currentId, 'switch-entity', xWeight, yWeight),
+    generateNode(`default-${defaultId}`, 'DefaultValue', currentId, 'switch-entity', xWeight, yWeight+1),
+    generateNode(`case-source-${currentId}`, 'Cases', currentId, 'switch-entity', xWeight, yWeight+2),
     generateEntity(`case-target-${currentId}`, 'Cases', xWeight, yWeight),
     generateEdge(`edge-value-${switchId}`, `value-${switchId}`, switchId),
     generateEdge(`edge-default-${defaultId}`, `case-source-${currentId}`, `case-target-${currentId}`),
@@ -231,7 +245,7 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
     const nextMappingField = generateMapping(caseItem.Value, xWeight+3, yWeight+index);
     const valueId = caseItem.Value.MappingFieldId;
     const wrapper = [
-      generateNode(`wrap-${valueId}`, `${caseItem.Key}`, `case-target-${currentId}`, xWeight+2, yWeight+index),
+      generateNode(`wrap-${valueId}`, `${caseItem.Key}`, `case-target-${currentId}`, 'cases-entity', xWeight+2, yWeight+index),
       generateEdge(`edge-each-case-${valueId}`, `wrap-${valueId}`, valueId),
     ];
     elements = elements.concat(wrapper.concat(nextMappingField));
@@ -250,9 +264,9 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
 
   const elements = [
     generateEntity(currentId, 'Conditional:', xWeight, yWeight),
-    generateNode(`condition-${currentId}`, 'Condition:', currentId, xWeight, yWeight),
-    generateNode(`true-${currentId}`, 'If True:', currentId, xWeight, yWeight+2),
-    generateNode(`false-${currentId}`, 'If False:', currentId, xWeight, yWeight+3+addWeight),
+    generateNode(`condition-${currentId}`, 'Condition:', currentId, 'conditional-entity', xWeight, yWeight),
+    generateNode(`true-${currentId}`, 'If True:', currentId, 'conditional-entity', xWeight, yWeight+2),
+    generateNode(`false-${currentId}`, 'If False:', currentId, 'conditional-entity', xWeight, yWeight+3+addWeight),
     generateEdge(`edge-true-${trueId}`, `true-${currentId}`, trueId),
     generateEdge(`edge-false-${falseId}`, `false-${currentId}`, falseId),
   ];
@@ -265,20 +279,21 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
 
   let fields = [
     generateEntity(conditionId, '', xWeight, yWeight),
-    generateNode(`field1-${currentId}`, 'Field 1', conditionId, xWeight+1, yWeight),
-    generateNode(`field2-${currentId}`, 'Field 2', conditionId, xWeight+1, yWeight+1),
+    generateNode(`field1-${conditionId}`, 'Field 1', conditionId, 'condition', xWeight+1, yWeight),
+    generateNode(`field2-${conditionId}`, 'Field 2', conditionId, 'condition', xWeight+1, yWeight+1),
     generateEdge(`edge-fields-${currentId}`, `condition-${currentId}`, conditionId),
   ];
 
-  if (field1 && field2) {
-    fields.push(generateEdge(`edge-field1-${currentId}`, `field1-${currentId}`, field1.MappingFieldId));
-    fields.push(generateEdge(`edge-field2-${currentId}`, `field2-${currentId}`, field2.MappingFieldId));
+  if (field1) {
     const field1MappingField = generateMapping(field1, xWeight+2, yWeight);
-    const field2MappingField = generateMapping(field2, xWeight+2, yWeight+1);
     fields = fields.concat(field1MappingField);
-    fields = fields.concat(field2MappingField);
+    fields.push(generateEdge(`edge-field1-${conditionId}`, `field1-${conditionId}`, field1.MappingFieldId));
   }
-
+  if (field2) {
+    const field2MappingField = generateMapping(field2, xWeight+2, yWeight+1);
+    fields = fields.concat(field2MappingField);
+    fields.push(generateEdge(`edge-field2-${conditionId}`, `field2-${conditionId}`, field2.MappingFieldId));
+  }
   return elements.concat(fields).concat(trueMappingField).concat(falseMappingField);
 };
 
@@ -294,8 +309,8 @@ const generateCombinationMapping = (source, xWeight, yWeight) => {
     const addWeight = getAdditionalWeight(field1.MappingFieldType);
   
     const fields = [
-      generateNode(`field1-${currentId}`, 'Field 1', currentId, xWeight, yWeight),
-      generateNode(`field2-${currentId}`, 'Field 2', currentId, xWeight, yWeight+1+addWeight),
+      generateNode(`field1-${currentId}`, 'Field 1', currentId, 'combination', xWeight, yWeight),
+      generateNode(`field2-${currentId}`, 'Field 2', currentId, 'combination', xWeight, yWeight+1+addWeight),
       generateEdge(`edge-field1-${currentId}`, `field1-${currentId}`, field1.MappingFieldId),
       generateEdge(`edge-field2-${currentId}`, `field2-${currentId}`, field2.MappingFieldId),
     ];
@@ -315,8 +330,8 @@ const generateRegexMapping = (source, xWeight, yWeight) => {
 
   const elements = [
     generateEntity(currentId, 'Regex', xWeight, yWeight),
-    generateNode(`info-${currentId}`, `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: "${source.RegexGroup}"`, currentId, xWeight, yWeight),
-    generateNode(`source-${currentId}`, 'Source:', currentId, xWeight, yWeight+1),
+    generateNode(`info-${currentId}`, `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: "${source.RegexGroup}"`, currentId, 'regex', xWeight, yWeight),
+    generateNode(`source-${currentId}`, 'Source:', currentId, 'regex', xWeight, yWeight+1),
     generateEdge(`edge-source-${currentId}`, `source-${currentId}`, source.Source.MappingFieldId),
   ];
   const sourceMappingField = generateMapping(source.Source, xWeight+1, yWeight+1);
@@ -329,8 +344,8 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
 
   const elements = [
     generateEntity(currentId, 'Iteration', xWeight, yWeight),
-    generateNode(`info-${currentId}`, `Delimiter: "${source.Iterator.Delimiter}", Index: "${source.Iterator.Index}"`, currentId, xWeight, yWeight),
-    generateNode(`source-${source.Iterator.IteratorId}`, 'Source:', currentId, xWeight, yWeight+1),
+    generateNode(`info-${currentId}`, `Delimiter: "${source.Iterator.Delimiter}", Index: "${source.Iterator.Index}"`, currentId, 'iteration', xWeight, yWeight),
+    generateNode(`source-${source.Iterator.IteratorId}`, 'Source:', currentId, 'iteration', xWeight, yWeight+1),
     generateEdge(`edge-source-${currentId}`, `source-${source.Iterator.IteratorId}`, source.Iterator.Source.MappingFieldId),
   ];
   const sourceMappingField = generateMapping(source.Iterator.Source, xWeight+1, yWeight+1);
@@ -346,7 +361,9 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
       const isModalShown = e.target._private.group === 'nodes' ? true : false;
       triggerModal(elementId, isModalShown, e.target._private);
     });
-    if (source) setElements(generateMapping(source, 1, 1));
+    if (source) {
+      setElements(generateMapping(source, 1, 1));
+    }
   },
   // eslint-disable-next-line react-hooks/exhaustive-deps
   []);
@@ -366,10 +383,10 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
     },
   };
   const xWeightMax = elements.length > 0 ?
-    Math.max.apply(Math, elements.map(function(o) { return o.data.xWeight ? o.data.xWeight : 0; }))
+    Math.max.apply(Math, elements.map(function(o) { return o.data && o.data.xWeight ? o.data.xWeight : 0; }))
     : 0;
   const yWeightMax = elements.length > 0 ?
-    Math.max.apply(Math, elements.map(function(o) { return o.data.yWeight ? o.data.yWeight : 0; }))
+    Math.max.apply(Math, elements.map(function(o) { return o.data && o.data.yWeight ? o.data.yWeight : 0; }))
     : 0;
 
   const classes = useStyles();
@@ -377,7 +394,24 @@ const Diagram = forwardRef(({ source, elementId, triggerModal }, ref) => {
   useImperativeHandle(ref, () => ({
     validate: (element, parent) => {
       if (parent) {
-        console.log('parent is active');
+        const propertyToFind = parent.data.parentType === 'condition' ? 'ConditionId' : 'MappingFieldId';
+        const findByProperty = (obj, val)=> {
+          var result;
+          for (var p in obj) {
+              if (obj[propertyToFind] === parseInt(val)) {
+                  obj.Field1 = generateInitialSource((element), 1, 1);
+              } else {
+                  if (typeof obj[p] === 'object') {
+                      result = findByProperty(obj[p], val);
+                      if (result) {
+                          return result;
+                      }
+                  }
+              }
+          }
+        };
+        findByProperty(source, parent.data.parent);
+        setElements(generateMapping(source, 1, 1));
       } else {
         setElements(generateMapping(generateInitialSource(element), 1, 1));
       }
