@@ -393,7 +393,7 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
         const findByProperty = (obj, val)=> {
           let result;
           for (let p in obj) {
-            if (obj[propertyToFind] === parseInt(val)) {
+            if (obj[propertyToFind] === parseInt(val) || obj[propertyToFind] === val) {
               obj.Field1 = generateInitialSource(element, parent);
               obj.Field2 = generateInitialSource(element, parent);
             } else {
@@ -407,6 +407,7 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
           }
         };
         findByProperty(source, parent.data.parent);
+        setElements(generateMapping(source, 1, 1));
         updateDashboard(source);
       } else {
         updateDashboard(generateInitialSource(element, parent));
