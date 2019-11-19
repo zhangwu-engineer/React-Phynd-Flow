@@ -74,26 +74,32 @@ const generateInitialSource = (type, parent) => {
     case 'Function':      
       break;
     case 'Column':
+        source.MappingFieldId = `column-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
+        source.MappingFieldType = type;
+        source.ColumnIdentifier = 'N/A';
       break;
     case 'Constant':
-      source.MappingFieldId = `constant-${parent ? parent.data.id : ''}${Math.random()}`;
+      source.MappingFieldId = `constant-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
       source.MappingFieldType = type;
       source.ConstantValue = 'N/A';
       break;
-    case 'HL7Segment':
+    case 'HL7':
+      source.MappingFieldId = `hl7-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
+      source.MappingFieldType = type;
+      source.HL7Segment = 'N/A';
       break;
     case 'Switch':
       break;
     case 'Conditional':
       source = {
-        MappingFieldId: `conditional-${parent ? parent.data.id : ''}${Math.random()}`,
+        MappingFieldId: `conditional-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         TrueField: {
         },
         FalseField: {
         },
         Condition: {
-          ConditionId: `condition-${parent ? parent.data.id : ''}${Math.random()}`,
+          ConditionId: `condition-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
           Field1: {
           },
           Field2: {
@@ -126,7 +132,7 @@ const generateMapping = (source, xWeight, yWeight) => {
     case 'Constant':
       mappingElements = generateSingleMapping(source, source.ConstantValue, xWeight, yWeight);
       break;
-    case 'HL7Segment':
+    case 'HL7':
       mappingElements = generateSingleMapping(source, source.HL7Segment, xWeight, yWeight);
       break;
     case 'Switch':
