@@ -490,7 +490,7 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
           for (let p in obj) {
             if (Array.isArray(obj[p])) {
               for (let ca in obj[p]) {
-                if (`wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
+                if (obj[p][ca]['Value'] && `wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
                   obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } });
                   return obj;
                 }
