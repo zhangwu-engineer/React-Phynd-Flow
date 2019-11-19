@@ -21,7 +21,7 @@ const IconsList = {
   Regex: AiOutlineScissor,
   Iteration: FaList,
   Function: FaCode,
-  Swith: FaAlignJustify,
+  Switch: FaAlignJustify,
 };
 
 const useStyles = makeStyles(theme => ({

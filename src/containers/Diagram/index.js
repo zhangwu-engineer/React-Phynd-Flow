@@ -93,6 +93,15 @@ const generateInitialSource = (type, parent) => {
       source.HL7Segment = 'N/A';
       break;
     case 'Switch':
+      source = {
+        MappingFieldId: `swtich-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
+        MappingFieldType: type,
+        SwitchDefault: {
+        },
+        SwitchValue: {
+        },
+        Cases: [],
+      };
       break;
     case 'Conditional':
       source = {
@@ -112,14 +121,14 @@ const generateInitialSource = (type, parent) => {
       };
       break;
     case 'Combination':
-        source = {
-          MappingFieldId: `combination-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
-          MappingFieldType: type,
-          Field1: {
-          },
-          Field2: {
-          },
-        };
+      source = {
+        MappingFieldId: `combination-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
+        MappingFieldType: type,
+        Field1: {
+        },
+        Field2: {
+        },
+      };
       break;
     case 'Regex':
       source.MappingFieldId = `regex-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
@@ -247,10 +256,10 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
 
   let elements = [
     generateEntity(currentId, 'Switch:', xWeight, yWeight),
-    generateNode(`value-${switchId}`, 'SwitchValue', currentId, 'switch-entity', xWeight, yWeight),
-    generateNode(`default-${defaultId}`, 'DefaultValue', currentId, 'switch-entity', xWeight, yWeight+1),
+    generateNode(`value-${switchId}`, 'SwitchValue', currentId, 'switch-value', xWeight, yWeight),
+    generateNode(`default-${defaultId}`, 'DefaultValue', currentId, 'switch-default', xWeight, yWeight+1),
     generateNode(`case-source-${currentId}`, 'Cases', currentId, 'switch-entity', xWeight, yWeight+2),
-    generateEntity(`case-target-${currentId}`, 'Cases', xWeight, yWeight),
+    generateEntity(`case-target-${currentId}`, 'Cases', xWeight+2, yWeight),
     generateEdge(`edge-value-${switchId}`, `value-${switchId}`, switchId),
     generateEdge(`edge-default-${defaultId}`, `case-source-${currentId}`, `case-target-${currentId}`),
     generateEdge(`edge-case-${defaultId}`, `default-${defaultId}`, defaultId),
@@ -410,6 +419,23 @@ const getPropertyToMap = (type) => {
         name: 'Source',
       };
       break;
+    case 'switch-value':
+      propertyToMap = {
+        id: 'MappingFieldId',
+        name: 'SwitchValue',
+      };
+      break;
+    case 'switch-default':
+      propertyToMap = {
+        id: 'MappingFieldId',
+        name: 'SwitchDefault',
+      };
+      break;
+    case 'cases-entity':
+      propertyToMap = {
+        id: 'MappingFieldId',
+      };
+      break;
     default:
       propertyToMap = {
         id: 'MappingFieldId',
@@ -462,12 +488,20 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
         const propertyToFind = getPropertyToMap(parent.data.parentType);
         const findByProperty = (obj, val)=> {
           for (let p in obj) {
+            if (Array.isArray(obj[p])) {
+              for (let ca in obj[p]) {
+                if (`wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
+                  obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } });
+                  return obj;
+                }
+              }
+            }
             if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
               obj[propertyToFind.name] = generateInitialSource(element, parent);
               return obj;
             } else {
               if (typeof obj[p] === 'object') {
-                const result = findByProperty(obj[p], val);
+                findByProperty(obj[p], val);
               }
             }
           }
