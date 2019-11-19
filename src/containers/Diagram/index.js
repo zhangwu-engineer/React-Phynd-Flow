@@ -222,6 +222,7 @@ const generateEdge = (id, source, target) => {
 
 const getAdditionalWeight = (type) => {
   switch (type) {
+    case 'Regex': return 1;
     case 'Combination': return 1;
     case 'Switch': return 2;
     case 'Conditional': return 3;
@@ -253,26 +254,28 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
   const currentId = source.MappingFieldId;
   const switchId = source.SwitchValue.MappingFieldId;
   const defaultId = source.SwitchDefault.MappingFieldId;
+  const addWeight1 = source.SwitchValue && getAdditionalWeight(source.SwitchValue.MappingFieldType);
+  const addWeight2 = source.SwitchValue && getAdditionalWeight(source.SwitchDefault.MappingFieldType);
 
   let elements = [
     generateEntity(currentId, 'Switch:', xWeight, yWeight),
     generateNode(`value-${switchId}`, 'SwitchValue', currentId, 'switch-value', xWeight, yWeight),
-    generateNode(`default-${defaultId}`, 'DefaultValue', currentId, 'switch-default', xWeight, yWeight+1),
-    generateNode(`case-source-${currentId}`, 'Cases', currentId, 'switch-entity', xWeight, yWeight+2),
-    generateEntity(`case-target-${currentId}`, 'Cases', xWeight+2, yWeight),
+    generateNode(`default-${defaultId}`, 'DefaultValue', currentId, 'switch-default', xWeight, yWeight+1+addWeight1),
+    generateNode(`case-source-${currentId}`, 'Cases', currentId, 'switch-entity', xWeight, yWeight+2+addWeight1+addWeight2),
+    generateEntity(`case-target-${currentId}`, 'Cases', xWeight+2, yWeight+addWeight1+addWeight2),
     generateEdge(`edge-value-${switchId}`, `value-${switchId}`, switchId),
     generateEdge(`edge-default-${defaultId}`, `case-source-${currentId}`, `case-target-${currentId}`),
     generateEdge(`edge-case-${defaultId}`, `default-${defaultId}`, defaultId),
   ];
 
   const switchValue = generateMapping(source.SwitchValue, xWeight+1, yWeight);
-  const switchDefault = generateMapping(source.SwitchDefault, xWeight+1, yWeight+1);
+  const switchDefault = generateMapping(source.SwitchDefault, xWeight+1, yWeight+1+addWeight1);
 
   source.Cases.map((caseItem, index) => {
-    const nextMappingField = generateMapping(caseItem.Value, xWeight+3, yWeight+index);
+    const nextMappingField = generateMapping(caseItem.Value, xWeight+3, yWeight+index+addWeight1+addWeight2);
     const valueId = caseItem.Value.MappingFieldId;
     const wrapper = [
-      generateNode(`wrap-${valueId}`, `${caseItem.Key}`, `case-target-${currentId}`, 'cases-entity', xWeight+2, yWeight+index),
+      generateNode(`wrap-${valueId}`, `${caseItem.Key}`, `case-target-${currentId}`, 'cases-entity', xWeight+2, yWeight+index+addWeight1+addWeight2),
       generateEdge(`edge-each-case-${valueId}`, `wrap-${valueId}`, valueId),
     ];
     elements = elements.concat(wrapper.concat(nextMappingField));
@@ -312,7 +315,7 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
   ];
 
   if (field1) {
-    const field1MappingField = generateMapping(field1, xWeight+2, yWeight);
+    const field1MappingField = generateMapping(field1, xWeight+3, yWeight);
     fields = fields.concat(field1MappingField);
     fields.push(generateEdge(`edge-field1-${conditionId}`, `field1-${conditionId}`, field1.MappingFieldId));
   }
