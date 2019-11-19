@@ -112,6 +112,14 @@ const generateInitialSource = (type, parent) => {
       };
       break;
     case 'Combination':
+        source = {
+          MappingFieldId: `combination-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
+          MappingFieldType: type,
+          Field1: {
+          },
+          Field2: {
+          },
+        };
       break;
     case 'Regex':
       source.MappingFieldId = `regex-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
@@ -319,8 +327,8 @@ const generateCombinationMapping = (source, xWeight, yWeight) => {
     const addWeight = getAdditionalWeight(field1.MappingFieldType);
   
     const fields = [
-      generateNode(`field1-${currentId}`, 'Field 1', currentId, 'combination', xWeight, yWeight),
-      generateNode(`field2-${currentId}`, 'Field 2', currentId, 'combination', xWeight, yWeight+1+addWeight),
+      generateNode(`field1-${currentId}`, 'Field 1', currentId, 'combination1', xWeight, yWeight),
+      generateNode(`field2-${currentId}`, 'Field 2', currentId, 'combination2', xWeight, yWeight+1+addWeight),
       generateEdge(`edge-field1-${currentId}`, `field1-${currentId}`, field1.MappingFieldId),
       generateEdge(`edge-field2-${currentId}`, `field2-${currentId}`, field2.MappingFieldId),
     ];
@@ -375,6 +383,18 @@ const getPropertyToMap = (type) => {
     case 'condition2':
       propertyToMap = {
         id: 'ConditionId',
+        name: 'Field2',
+      };
+      break;
+    case 'combination1':
+      propertyToMap = {
+        id: 'MappingFieldId',
+        name: 'Field1',
+      };
+      break;
+    case 'combination2':
+      propertyToMap = {
+        id: 'MappingFieldId',
         name: 'Field2',
       };
       break;
