@@ -71,12 +71,16 @@ const useStyles = makeStyles(theme => ({
 const generateInitialSource = (type, parent) => {
   let source = {};
   switch (type) {
-    case 'Function':      
+    case 'Function':
+      source.MappingFieldId = `function-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
+      source.MappingFieldType = type;
+      source.FunctionName = 'N/A';
+      source.FunctionParameter = {};
       break;
     case 'Column':
-        source.MappingFieldId = `column-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
-        source.MappingFieldType = type;
-        source.ColumnIdentifier = 'N/A';
+      source.MappingFieldId = `column-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
+      source.MappingFieldType = type;
+      source.ColumnIdentifier = 'N/A';
       break;
     case 'Constant':
       source.MappingFieldId = `constant-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
@@ -282,8 +286,8 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
 
   let fields = [
     generateEntity(conditionId, '', xWeight, yWeight),
-    generateNode(`field1-${conditionId}`, 'Field 1', conditionId, 'condition', xWeight+1, yWeight),
-    generateNode(`field2-${conditionId}`, 'Field 2', conditionId, 'condition', xWeight+1, yWeight+1),
+    generateNode(`field1-${conditionId}`, 'Field 1', conditionId, 'condition1', xWeight+1, yWeight),
+    generateNode(`field2-${conditionId}`, 'Field 2', conditionId, 'condition2', xWeight+1, yWeight+1),
     generateEdge(`edge-fields-${currentId}`, `condition-${currentId}`, conditionId),
   ];
 
@@ -356,6 +360,37 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
   return elements.concat(sourceMappingField);
 };
 
+const getPropertyToMap = (type) => {
+  let propertyToMap = {};
+  switch(type) {
+    case 'condition1':
+      propertyToMap = {
+        id: 'ConditionId',
+        name: 'Field1',
+      };
+      break;
+    case 'condition2':
+      propertyToMap = {
+        id: 'ConditionId',
+        name: 'Field2',
+      };
+      break;
+    case 'function-source':
+      propertyToMap = {
+        id: 'MappingFieldId',
+        name: 'FunctionParameter',
+      };
+      break;
+    default:
+      propertyToMap = {
+        id: 'MappingFieldId',
+        name: 'Value',
+      };
+      break;
+  }
+  return propertyToMap;
+}
+
 const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashboard }, ref) => {
   const [elements, setElements] = React.useState([]);
 
@@ -395,16 +430,15 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
   useImperativeHandle(ref, () => ({
     validate: (element, parent) => {
       if (parent) {
-        const propertyToFind = parent.data.parentType === 'condition' ? 'ConditionId' : 'MappingFieldId';
+        const propertyToFind = getPropertyToMap(parent.data.parentType);
         const findByProperty = (obj, val)=> {
-          let result;
           for (let p in obj) {
-            if (obj[propertyToFind] === parseInt(val) || obj[propertyToFind] === val) {
-              obj.Field1 = generateInitialSource(element, parent);
+            if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
+              obj[propertyToFind.name] = generateInitialSource(element, parent);
               return obj;
             } else {
               if (typeof obj[p] === 'object') {
-                result = findByProperty(obj[p], val);
+                const result = findByProperty(obj[p], val);
               }
             }
           }
