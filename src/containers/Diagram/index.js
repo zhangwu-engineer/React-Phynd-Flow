@@ -395,25 +395,25 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
           for (let p in obj) {
             if (obj[propertyToFind] === parseInt(val) || obj[propertyToFind] === val) {
               obj.Field1 = generateInitialSource(element, parent);
-              obj.Field2 = generateInitialSource(element, parent);
+              return obj;
             } else {
               if (typeof obj[p] === 'object') {
                 result = findByProperty(obj[p], val);
-                if (result) {
-                    return result;
-                }
               }
             }
           }
         };
         findByProperty(source, parent.data.parent);
-        setElements(generateMapping(source, 1, 1));
-        updateDashboard(source);
+        setElements([]);
+        setTimeout(() => {
+          setElements(generateMapping(source, 1, 1));
+        }, 0);
+        // 
       } else {
         updateDashboard(generateInitialSource(element, parent));
       }
     }
-  }));
+  }), [elements]);
 
   return (
     <Grid>
