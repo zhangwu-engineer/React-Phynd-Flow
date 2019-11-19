@@ -292,8 +292,8 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
   const elements = [
     generateEntity(currentId, 'Conditional:', xWeight, yWeight),
     generateNode(`condition-${currentId}`, 'Condition:', currentId, 'conditional-entity', xWeight, yWeight),
-    generateNode(`true-${currentId}`, 'If True:', currentId, 'conditional-entity', xWeight, yWeight+2),
-    generateNode(`false-${currentId}`, 'If False:', currentId, 'conditional-entity', xWeight, yWeight+3+addWeight),
+    generateNode(`true-${currentId}`, 'If True:', currentId, 'conditional-true', xWeight, yWeight+2),
+    generateNode(`false-${currentId}`, 'If False:', currentId, 'conditional-false', xWeight, yWeight+3+addWeight),
     generateEdge(`edge-true-${trueId}`, `true-${currentId}`, trueId),
     generateEdge(`edge-false-${falseId}`, `false-${currentId}`, falseId),
   ];
@@ -393,6 +393,18 @@ const getPropertyToMap = (type) => {
       propertyToMap = {
         id: 'ConditionId',
         name: 'Field2',
+      };
+      break;
+    case 'conditional-true':
+      propertyToMap = {
+        id: 'MappingFieldId',
+        name: 'TrueField',
+      };
+      break;
+    case 'conditional-false':
+      propertyToMap = {
+        id: 'MappingFieldId',
+        name: 'FalseField',
       };
       break;
     case 'combination1':
