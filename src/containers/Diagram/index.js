@@ -114,6 +114,9 @@ const generateInitialSource = (type, parent) => {
     case 'Combination':
       break;
     case 'Regex':
+      source.MappingFieldId = `regex-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
+      source.MappingFieldType = type;
+      source.Source = {};
       break;
     case 'Iteration':
       break;
@@ -337,8 +340,8 @@ const generateRegexMapping = (source, xWeight, yWeight) => {
 
   const elements = [
     generateEntity(currentId, 'Regex', xWeight, yWeight),
-    generateNode(`info-${currentId}`, `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: "${source.RegexGroup}"`, currentId, 'regex', xWeight, yWeight),
-    generateNode(`source-${currentId}`, 'Source:', currentId, 'regex', xWeight, yWeight+1),
+    generateNode(`info-${currentId}`, `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: "${source.RegexGroup}"`, currentId, 'regex-info', xWeight, yWeight),
+    generateNode(`source-${currentId}`, 'Source:', currentId, 'regex-source', xWeight, yWeight+1),
     generateEdge(`edge-source-${currentId}`, `source-${currentId}`, source.Source.MappingFieldId),
   ];
   const sourceMappingField = generateMapping(source.Source, xWeight+1, yWeight+1);
@@ -379,6 +382,12 @@ const getPropertyToMap = (type) => {
       propertyToMap = {
         id: 'MappingFieldId',
         name: 'FunctionParameter',
+      };
+      break;
+    case 'regex-source':
+      propertyToMap = {
+        id: 'MappingFieldId',
+        name: 'Source',
       };
       break;
     default:
