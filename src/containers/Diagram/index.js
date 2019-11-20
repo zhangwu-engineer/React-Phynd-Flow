@@ -552,7 +552,7 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
         setTimeout(() => {
           setElements(generateMapping(source, 1, 1));
         }, 0);
-        // 
+        updateDashboard(source);
       } else {
         updateDashboard(generateInitialSource(element, parent));
       }
