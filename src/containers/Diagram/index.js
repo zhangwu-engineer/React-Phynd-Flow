@@ -74,23 +74,23 @@ const generateInitialSource = (type, parent, inputValue) => {
     case 'Function':
       source.MappingFieldId = `function-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
       source.MappingFieldType = type;
-      source.FunctionName = inputValue ? inputValue : 'N/A';
+      source.FunctionName = inputValue;
       source.FunctionParameter = {};
       break;
     case 'Column':
       source.MappingFieldId = `column-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
       source.MappingFieldType = type;
-      source.ColumnIdentifier = inputValue ? inputValue : 'N/A';
+      source.ColumnIdentifier = inputValue;
       break;
     case 'Constant':
       source.MappingFieldId = `constant-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
       source.MappingFieldType = type;
-      source.ConstantValue = inputValue ? inputValue : 'N/A';
+      source.ConstantValue = inputValue;
       break;
     case 'HL7':
       source.MappingFieldId = `hl7-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
       source.MappingFieldType = type;
-      source.HL7Segment = inputValue ? inputValue : 'N/A';
+      source.HL7Segment = inputValue;
       break;
     case 'Switch':
       source = {

@@ -114,7 +114,7 @@ const NodeDialog = ({ isModalShown, hideModal, setNewElement }) => {
     setValue(newValue);
   };
 
-  const [inputValue, setInputValue] = React.useState('');
+  const [inputValue, setInputValue] = React.useState('N/A');
   const handleInputChange = event => {
     setInputValue(event.target.value);
   };
