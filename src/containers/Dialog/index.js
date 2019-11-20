@@ -151,7 +151,11 @@ const NodeDialog = ({ isModalShown, hideModal, setNewElement }) => {
                 item xs={4}
                 key={key}
                 onClick={() => {
-                  setActiveCard(key);
+                  if (activeCard !== key) {
+                    setActiveCard(key);
+                  } else {
+                    setActiveCard(null);
+                  }
                 }}
               >
                 <NodeCard cardName={key} activeCard={activeCard} />
