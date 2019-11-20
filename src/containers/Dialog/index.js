@@ -11,6 +11,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import { FaQuestion, FaColumns, FaPlus, FaCode, FaList, FaWindowMinimize, FaAngleUp, FaAlignJustify } from "react-icons/fa";
 import { AiOutlineScissor } from "react-icons/ai";
 import hoc from '../Dashboard/hoc';
@@ -36,6 +37,10 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: 0,
   },
   dialogContent: {
+    paddingTop: 20,
+    paddingBottom: 12,
+  },
+  tabContent: {
     paddingTop: 20,
     paddingBottom: 12,
   },
@@ -109,6 +114,11 @@ const NodeDialog = ({ isModalShown, hideModal, setNewElement }) => {
     setValue(newValue);
   };
 
+  const [inputValue, setInputValue] = React.useState('');
+  const handleInputChange = event => {
+    setInputValue(event.target.value);
+  };
+
   return (
     <Dialog
       open={isModalShown}
@@ -119,7 +129,7 @@ const NodeDialog = ({ isModalShown, hideModal, setNewElement }) => {
       <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>
         <Typography>Choose Mapping Field</Typography>
       </DialogTitle>
-      <DialogContent>
+      <DialogContent className={classes.dialogContent}>
         <AppBar position="static" color="default">
           <Tabs
             value={value}
@@ -135,7 +145,7 @@ const NodeDialog = ({ isModalShown, hideModal, setNewElement }) => {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          <Grid container spacing={2} className={classes.dialogContent}>
+          <Grid container spacing={2} className={classes.tabContent}>
             {Object.keys(IconsList).map(key =>
               <Grid
                 item xs={4}
@@ -149,11 +159,15 @@ const NodeDialog = ({ isModalShown, hideModal, setNewElement }) => {
             )}
           </Grid>
         </TabPanel>
-        <TabPanel value={value} index={1}>
-          Details
+        <TabPanel value={value} index={1} className={classes.tabContent}>
+          <TextField
+            label="Input Value"
+            value={inputValue}
+            onChange={handleInputChange}
+          />
         </TabPanel>
         <Grid container className={classes.buttonGroup}>
-          <Button variant="contained" color="primary" className={classes.button} onClick={() => { setNewElement(activeCard); hideModal(); }} >
+          <Button variant="contained" color="primary" className={classes.button} onClick={() => { setNewElement(activeCard, inputValue); hideModal(); }} >
             Save
           </Button>
           <Button variant="contained" color="primary" className={classes.button} onClick={closeModal}>

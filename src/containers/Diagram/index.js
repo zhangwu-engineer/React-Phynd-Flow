@@ -68,29 +68,29 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const generateInitialSource = (type, parent) => {
+const generateInitialSource = (type, parent, inputValue) => {
   let source = {};
   switch (type) {
     case 'Function':
       source.MappingFieldId = `function-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
       source.MappingFieldType = type;
-      source.FunctionName = 'N/A';
+      source.FunctionName = inputValue ? inputValue : 'N/A';
       source.FunctionParameter = {};
       break;
     case 'Column':
       source.MappingFieldId = `column-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
       source.MappingFieldType = type;
-      source.ColumnIdentifier = 'N/A';
+      source.ColumnIdentifier = inputValue ? inputValue : 'N/A';
       break;
     case 'Constant':
       source.MappingFieldId = `constant-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
       source.MappingFieldType = type;
-      source.ConstantValue = 'N/A';
+      source.ConstantValue = inputValue ? inputValue : 'N/A';
       break;
     case 'HL7':
       source.MappingFieldId = `hl7-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
       source.MappingFieldType = type;
-      source.HL7Segment = 'N/A';
+      source.HL7Segment = inputValue ? inputValue : 'N/A';
       break;
     case 'Switch':
       source = {
@@ -498,7 +498,7 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
   const classes = useStyles();
 
   useImperativeHandle(ref, () => ({
-    validate: (element, parent) => {
+    validate: (element, parent, inputValue) => {
       if (parent) {
         const propertyToFind = getPropertyToMap(parent.data.parentType);
         const findByProperty = (obj, val)=> {
@@ -506,13 +506,13 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
             if (Array.isArray(obj[p])) {
               for (let ca in obj[p]) {
                 if (obj[p][ca]['Value'] && `wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
-                  obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } });
+                  obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } }, inputValue);
                   return obj;
                 }
               }
             }
             if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
-              obj[propertyToFind.name] = generateInitialSource(element, parent);
+              obj[propertyToFind.name] = generateInitialSource(element, parent, inputValue);
               return obj;
             } else {
               if (typeof obj[p] === 'object') {
