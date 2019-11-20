@@ -11,7 +11,7 @@ const hoc = (Dashboard) => {
     constructor(props) {
       super(props);
 
-      // props.getDashboardDataRequest();
+      props.getDashboardDataRequest();
       props.getFieldsPerEntityRequest();
     }
 
