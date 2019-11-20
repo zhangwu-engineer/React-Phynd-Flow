@@ -451,6 +451,26 @@ const getPropertyToMap = (type) => {
         id: 'MappingFieldId',
       };
       break;
+    case 'Constant':
+      propertyToMap = {
+        name: 'ConstantValue',
+      };
+      break;
+    case 'Column':
+      propertyToMap = {
+        name: 'ColumnIdentifier',
+      };
+      break;
+    case 'HL7':
+      propertyToMap = {
+        name: 'HL7Segment',
+      };
+      break;
+    case 'Function':
+      propertyToMap = {
+        name: 'FunctionName',
+      };
+      break;
     default:
       propertyToMap = {
         id: 'MappingFieldId',
@@ -512,8 +532,14 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
               }
             }
             if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
-              obj[propertyToFind.name] = generateInitialSource(element, parent, inputValue);
-              return obj;
+              if (element) {
+                obj[propertyToFind.name] = generateInitialSource(element, parent, inputValue);
+                return obj;
+              } else {
+                const propertyToUpdate = getPropertyToMap(obj[propertyToFind.name]['MappingFieldType']);
+                obj[propertyToFind.name][propertyToUpdate.name] = inputValue;
+                return obj;
+              }
             } else {
               if (typeof obj[p] === 'object') {
                 findByProperty(obj[p], val);

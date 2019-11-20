@@ -44,6 +44,10 @@ const useStyles = makeStyles(theme => ({
     paddingTop: 20,
     paddingBottom: 12,
   },
+  tabInputContent: {
+    paddingTop: 40,
+    paddingBottom: 40,
+  },
   cardInactive: {
     border: '2px solid transparent',
   },
@@ -163,7 +167,7 @@ const NodeDialog = ({ isModalShown, hideModal, setNewElement }) => {
             )}
           </Grid>
         </TabPanel>
-        <TabPanel value={value} index={1} className={classes.tabContent}>
+        <TabPanel value={value} index={1} className={classes.tabInputContent}>
           <TextField
             label="Input Value"
             value={inputValue}
