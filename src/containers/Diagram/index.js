@@ -217,6 +217,7 @@ const generateEntity = (id, label, xWeight, yWeight) => {
       label,
       xWeight,
       yWeight,
+      entity: label,
     },
     classes: 'entity',
   };
@@ -501,14 +502,17 @@ const getPropertyToMap = (type) => {
   return propertyToMap;
 }
 
-const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashboard }, ref) => {
+const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCaseKeyModal, updateDashboard }, ref) => {
   const [elements, setElements] = React.useState([]);
 
   useEffect(() => {
     cyListener.on('tap', function(e) {
       const isModalShown = e.target._private.group === 'nodes' ? true : false;
-      if ((e.target._private.edges && e.target._private.edges.length === 0) || e.target._private.parent)
+      if (e.target._private.data.entity && e.target._private.data.entity === 'Cases') {
+        triggerCaseKeyModal(elementId, isModalShown, e.target._private);
+      } else if ((e.target._private.edges && e.target._private.edges.length === 0) || e.target._private.parent) {
         triggerModal(elementId, isModalShown, e.target._private);
+      }
     });
     source && setElements(generateMapping(source, 1, 1));
   },
@@ -583,6 +587,9 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
       } else {
         updateDashboard(generateInitialSource(element, parent, inputValue));
       }
+    },
+    validateCaseKey: (parent, inputKeyValue) => {
+      console.log(parent, inputKeyValue);
     }
   }), [elements]);
 

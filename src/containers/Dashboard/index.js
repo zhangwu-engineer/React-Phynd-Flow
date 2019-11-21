@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Sidebar from 'components/Sidebar';
 import Diagram from 'containers/Diagram';
 import NodeDialog from 'containers/Dialog';
+import CaseKeyDialog from 'containers/CaseKeyDialog';
 // Expansion Panel
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -68,6 +69,11 @@ const PanelItem = ({ item, index, dashboardReducer }) => {
             item.setActivePanel(panel);
             item.setActiveParent(parent);
           }}
+          triggerCaseKeyModal={(panel, flag, parent) => {
+            item.setCaseKeyModalShown(flag);
+            item.setActivePanel(panel);
+            item.setActiveParent(parent);
+          }}
         />
       </MuiExpansionPanelDetails>
     </MuiExpansionPanel>
@@ -94,6 +100,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
   const [activePanel, setActivePanel] = React.useState(null);
   const [activeParent, setActiveParent] = React.useState(null);
   const [isModalShown, setModalShown] = React.useState(false);
+  const [isCaseKeyModalShown, setCaseKeyModalShown] = React.useState(false);
 
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -134,6 +141,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
             expanded={expanded}
             dashboardReducer={dashboardReducer}
             setModalShown={setModalShown}
+            setCaseKeyModalShown={setCaseKeyModalShown}
             setActivePanel={setActivePanel}
             setActiveParent={setActiveParent}
             updateDashboard={(payload) => updateDashboard(payload)}
@@ -146,6 +154,14 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           setNewElement={(element, inputValue) => {
             if (refs[activePanel])
               refs[activePanel].current.validate(element, activeParent, inputValue);
+          }}
+        />
+        <CaseKeyDialog
+          isModalShown={isCaseKeyModalShown}
+          hideModal={() => setCaseKeyModalShown(false)}
+          setNewCase={(inputKeyValue) => {
+            if (refs[activePanel])
+              refs[activePanel].current.validateCaseKey(activeParent, inputKeyValue);
           }}
         />
       </main>
