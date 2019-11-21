@@ -571,10 +571,8 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
                 obj[propertyToFind.name][propertyToUpdate.name] = inputValue.primary;
                 return obj;
               }
-            } else {
-              if (typeof obj[p] === 'object') {
-                findByProperty(obj[p], val);
-              }
+            } else if (typeof obj[p] === 'object') {
+              findByProperty(obj[p], val);
             }
           }
         };
@@ -589,7 +587,24 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
       }
     },
     validateCaseKey: (parent, inputKeyValue) => {
-      console.log(parent, inputKeyValue);
+      const findByProperty = (obj, val)=> {
+        for (let p in obj) {
+          if (Array.isArray(obj[p]) && p === 'Cases' && `case-target-${obj['MappingFieldId']}` === val) {
+            obj[p].push({
+              Key: inputKeyValue,
+              Value: {},
+            });
+          } else if (typeof obj[p] === 'object') {
+            findByProperty(obj[p], val);
+          }
+        }
+      };
+      findByProperty(source, parent.data.id);
+      setElements([]);
+      setTimeout(() => {
+        setElements(generateMapping(source, 1, 1));
+      }, 0);
+      updateDashboard(source);
     }
   }), [elements]);
 
