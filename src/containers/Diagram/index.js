@@ -576,7 +576,7 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
         }, 0);
         updateDashboard(source);
       } else {
-        updateDashboard(generateInitialSource(element, parent));
+        updateDashboard(generateInitialSource(element, parent, inputValue));
       }
     }
   }), [elements]);
