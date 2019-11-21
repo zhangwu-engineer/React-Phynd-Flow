@@ -22,7 +22,6 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: 12,
   },
   tabInputContent: {
-    paddingTop: 40,
     paddingBottom: 40,
   },
   buttonGroup: {
