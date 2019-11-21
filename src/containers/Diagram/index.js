@@ -246,7 +246,7 @@ const getAdditionalWeight = (type) => {
 
 const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
   const elements = [
-    generateNode(source.MappingFieldId, `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`, null, null, xWeight, yWeight),
+    generateNode(source.MappingFieldId, `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`, null, source.MappingFieldType, xWeight, yWeight),
   ];
   return elements;
 };
@@ -507,7 +507,8 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
   useEffect(() => {
     cyListener.on('tap', function(e) {
       const isModalShown = e.target._private.group === 'nodes' ? true : false;
-      triggerModal(elementId, isModalShown, e.target._private);
+      if (e.target._private.edges.length === 0 || e.target._private.parent)
+        triggerModal(elementId, isModalShown, e.target._private);
     });
     source && setElements(generateMapping(source, 1, 1));
   },
@@ -551,7 +552,11 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
                 }
               }
             }
-            if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
+            if (!val) {
+              const obj2 = generateInitialSource(element, parent, inputValue);
+              for (var attrname in obj2) { obj[attrname] = obj2[attrname]; }
+              return obj;
+            } else if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
               if (element) {
                 obj[propertyToFind.name] = generateInitialSource(element, parent, inputValue);
                 if (parent.data.parentType === 'iteration-source')
