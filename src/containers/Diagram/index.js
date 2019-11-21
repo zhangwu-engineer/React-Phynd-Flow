@@ -507,7 +507,7 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
   useEffect(() => {
     cyListener.on('tap', function(e) {
       const isModalShown = e.target._private.group === 'nodes' ? true : false;
-      if (e.target._private.edges.length === 0 || e.target._private.parent)
+      if ((e.target._private.edges && e.target._private.edges.length === 0) || e.target._private.parent)
         triggerModal(elementId, isModalShown, e.target._private);
     });
     source && setElements(generateMapping(source, 1, 1));
