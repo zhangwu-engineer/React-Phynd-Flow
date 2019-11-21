@@ -74,23 +74,23 @@ const generateInitialSource = (type, parent, inputValue) => {
     case 'Function':
       source.MappingFieldId = `function-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
       source.MappingFieldType = type;
-      source.FunctionName = inputValue;
+      source.FunctionName = inputValue.primary;
       source.FunctionParameter = {};
       break;
     case 'Column':
       source.MappingFieldId = `column-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
       source.MappingFieldType = type;
-      source.ColumnIdentifier = inputValue;
+      source.ColumnIdentifier = inputValue.primary;
       break;
     case 'Constant':
       source.MappingFieldId = `constant-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
       source.MappingFieldType = type;
-      source.ConstantValue = inputValue;
+      source.ConstantValue = inputValue.primary;
       break;
     case 'HL7':
       source.MappingFieldId = `hl7-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
       source.MappingFieldType = type;
-      source.HL7Segment = inputValue;
+      source.HL7Segment = inputValue.primary;
       break;
     case 'Switch':
       source = {
@@ -133,6 +133,9 @@ const generateInitialSource = (type, parent, inputValue) => {
     case 'Regex':
       source.MappingFieldId = `regex-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
       source.MappingFieldType = type;
+      source.RegexPattern = inputValue.primary;
+      source.RegexFlags = inputValue.secondary;
+      source.RegexGroup = inputValue.tertiary;
       source.Source = {};
       break;
     case 'Iteration':
@@ -140,7 +143,10 @@ const generateInitialSource = (type, parent, inputValue) => {
         MappingFieldId: `iteration-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         Iterator: {
+          IteratorId: `iterator-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
           Source: {},
+          Delimiter: inputValue.primary,
+          Index: inputValue.secondary,
         },
       };
       break;
@@ -553,7 +559,7 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
                 return obj;
               } else {
                 const propertyToUpdate = getPropertyToMap(obj[propertyToFind.name]['MappingFieldType']);
-                obj[propertyToFind.name][propertyToUpdate.name] = inputValue;
+                obj[propertyToFind.name][propertyToUpdate.name] = inputValue.primary;
                 return obj;
               }
             } else {

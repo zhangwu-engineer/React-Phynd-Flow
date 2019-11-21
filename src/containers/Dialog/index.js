@@ -107,6 +107,30 @@ const NodeCard = ({ cardName, activeCard }) => {
   )
 }
 
+const getPrimaryFieldLabel = (cardType) => {
+  switch (cardType) {
+    case 'Function': return 'Function Name';
+    case 'Iteration': return 'Delimiter';
+    case 'Regex': return 'Pattern';
+    default: return 'Input Value';
+  }
+}
+
+const getSecondaryFieldLabel = (cardType) => {
+  switch (cardType) {
+    case 'Iteration': return 'Index';
+    case 'Regex': return 'Flags';
+    default: return null;
+  }
+}
+
+const getTertiaryFieldLabel = (cardType) => {
+  switch (cardType) {
+    case 'Regex': return 'Group';
+    default: return null;
+  }
+}
+
 const NodeDialog = ({ isModalShown, hideModal, setNewElement }) => {
   const classes = useStyles();
   const [activeCard, setActiveCard] = React.useState(null);
@@ -118,9 +142,19 @@ const NodeDialog = ({ isModalShown, hideModal, setNewElement }) => {
     setValue(newValue);
   };
 
-  const [inputValue, setInputValue] = React.useState('N/A');
-  const handleInputChange = event => {
-    setInputValue(event.target.value);
+  const [inputPrimaryValue, setInputPrimaryValue] = React.useState('');
+  const handlePrimaryInputChange = event => {
+    setInputPrimaryValue(event.target.value);
+  };
+
+  const [inputSecondaryValue, setInputSecondaryValue] = React.useState('');
+  const handleSecondaryInputChange = event => {
+    setInputSecondaryValue(event.target.value);
+  };
+
+  const [inputTertiaryValue, setInputTertiaryValue] = React.useState('');
+  const handleTertiaryInputChange = event => {
+    setInputTertiaryValue(event.target.value);
   };
 
   return (
@@ -169,13 +203,42 @@ const NodeDialog = ({ isModalShown, hideModal, setNewElement }) => {
         </TabPanel>
         <TabPanel value={value} index={1} className={classes.tabInputContent}>
           <TextField
-            label="Input Value"
-            value={inputValue}
-            onChange={handleInputChange}
-          />
+            label={getPrimaryFieldLabel(activeCard)}
+            value={inputPrimaryValue}
+            onChange={handlePrimaryInputChange}
+          /><br />
+          {getSecondaryFieldLabel(activeCard) &&
+            <TextField
+              label={getSecondaryFieldLabel(activeCard)}
+              value={inputSecondaryValue}
+              onChange={handleSecondaryInputChange}
+            />
+          }<br />
+          {getTertiaryFieldLabel(activeCard) &&
+            <TextField
+              label={getTertiaryFieldLabel(activeCard)}
+              value={inputTertiaryValue}
+              onChange={handleTertiaryInputChange}
+            />
+          }
         </TabPanel>
         <Grid container className={classes.buttonGroup}>
-          <Button variant="contained" color="primary" className={classes.button} onClick={() => { setNewElement(activeCard, inputValue); hideModal(); }} >
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            onClick={() => {
+              setNewElement(
+                activeCard,
+                {
+                  primary: inputPrimaryValue,
+                  secondary: inputSecondaryValue,
+                  tertiary: inputTertiaryValue,
+                }
+              );
+              hideModal();
+            }}
+          >
             Save
           </Button>
           <Button variant="contained" color="primary" className={classes.button} onClick={closeModal}>
