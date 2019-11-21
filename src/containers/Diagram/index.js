@@ -136,6 +136,13 @@ const generateInitialSource = (type, parent, inputValue) => {
       source.Source = {};
       break;
     case 'Iteration':
+      source = {
+        MappingFieldId: `iteration-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
+        MappingFieldType: type,
+        Iterator: {
+          Source: {},
+        },
+      };
       break;
     default:
       break;
@@ -223,6 +230,7 @@ const generateEdge = (id, source, target) => {
 const getAdditionalWeight = (type) => {
   switch (type) {
     case 'Regex': return 1;
+    case 'Iteration': return 1;
     case 'Combination': return 1;
     case 'Switch': return 2;
     case 'Conditional': return 3;
@@ -375,7 +383,7 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
   const elements = [
     generateEntity(currentId, 'Iteration', xWeight, yWeight),
     generateNode(`info-${currentId}`, `Delimiter: "${source.Iterator.Delimiter}", Index: "${source.Iterator.Index}"`, currentId, 'iteration', xWeight, yWeight),
-    generateNode(`source-${source.Iterator.IteratorId}`, 'Source:', currentId, 'iteration', xWeight, yWeight+1),
+    generateNode(`source-${source.Iterator.IteratorId}`, 'Source:', currentId, 'iteration-source', xWeight, yWeight+1),
     generateEdge(`edge-source-${currentId}`, `source-${source.Iterator.IteratorId}`, source.Iterator.Source.MappingFieldId),
   ];
   const sourceMappingField = generateMapping(source.Iterator.Source, xWeight+1, yWeight+1);
@@ -428,6 +436,12 @@ const getPropertyToMap = (type) => {
         name: 'FunctionParameter',
       };
       break;
+    case 'iteration-source':
+      propertyToMap = {
+        id: 'MappingFieldId',
+        name: 'Source',
+      };
+      break;   
     case 'regex-source':
       propertyToMap = {
         id: 'MappingFieldId',
@@ -534,6 +548,8 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, updateDashb
             if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
               if (element) {
                 obj[propertyToFind.name] = generateInitialSource(element, parent, inputValue);
+                if (parent.data.parentType === 'iteration-source')
+                  obj['Iterator'][propertyToFind.name] = generateInitialSource(element, parent, inputValue);
                 return obj;
               } else {
                 const propertyToUpdate = getPropertyToMap(obj[propertyToFind.name]['MappingFieldType']);
