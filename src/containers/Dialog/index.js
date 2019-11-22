@@ -112,7 +112,10 @@ const getPrimaryFieldLabel = (cardType) => {
     case 'Function': return 'Function Name';
     case 'Iteration': return 'Delimiter';
     case 'Regex': return 'Pattern';
-    default: return 'Input Value';
+    case 'Constant': return 'Constant Value';
+    case 'Column': return 'Column Name';
+    case 'HL7': return 'HL7 Value';
+    default: return null;
   }
 }
 
@@ -182,7 +185,7 @@ const NodeDialog = ({ isModalShown, activeParent, hideModal, setNewElement }) =>
             aria-label="scrollable auto tabs example"
           >
             <Tab label="Category" />
-            <Tab label="Details" />
+            {getPrimaryFieldLabel(activeCard) && <Tab label="Details" />}
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
@@ -205,11 +208,13 @@ const NodeDialog = ({ isModalShown, activeParent, hideModal, setNewElement }) =>
           </Grid>
         </TabPanel>
         <TabPanel value={value} index={1} className={classes.tabInputContent}>
-          <TextField
-            label={getPrimaryFieldLabel(activeCard)}
-            value={inputPrimaryValue}
-            onChange={handlePrimaryInputChange}
-          /><br />
+          {getPrimaryFieldLabel(activeCard) &&
+            <TextField
+              label={getPrimaryFieldLabel(activeCard)}
+              value={inputPrimaryValue}
+              onChange={handlePrimaryInputChange}
+            />
+          }<br />
           {getSecondaryFieldLabel(activeCard, activeParent) &&
             <TextField
               label={getSecondaryFieldLabel(activeCard, activeParent)}
