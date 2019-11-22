@@ -116,7 +116,10 @@ const getPrimaryFieldLabel = (cardType) => {
   }
 }
 
-const getSecondaryFieldLabel = (cardType) => {
+const getSecondaryFieldLabel = (cardType, activeParent) => {
+  if (activeParent && activeParent.data.parentType === 'cases-entity') {
+    return 'Key Name';
+  }
   switch (cardType) {
     case 'Iteration': return 'Index';
     case 'Regex': return 'Flags';
@@ -131,7 +134,7 @@ const getTertiaryFieldLabel = (cardType) => {
   }
 }
 
-const NodeDialog = ({ isModalShown, hideModal, setNewElement }) => {
+const NodeDialog = ({ isModalShown, activeParent, hideModal, setNewElement }) => {
   const classes = useStyles();
   const [activeCard, setActiveCard] = React.useState(null);
   const closeModal = () => {
@@ -207,9 +210,9 @@ const NodeDialog = ({ isModalShown, hideModal, setNewElement }) => {
             value={inputPrimaryValue}
             onChange={handlePrimaryInputChange}
           /><br />
-          {getSecondaryFieldLabel(activeCard) &&
+          {getSecondaryFieldLabel(activeCard, activeParent) &&
             <TextField
-              label={getSecondaryFieldLabel(activeCard)}
+              label={getSecondaryFieldLabel(activeCard, activeParent)}
               value={inputSecondaryValue}
               onChange={handleSecondaryInputChange}
             />

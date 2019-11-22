@@ -552,6 +552,9 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
               for (let ca in obj[p]) {
                 if (obj[p][ca]['Value'] && `wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
                   obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } }, inputValue);
+                  if (inputValue.secondary) {
+                    obj[p][ca]['Key'] = inputValue.secondary;
+                  }
                   return obj;
                 }
               }

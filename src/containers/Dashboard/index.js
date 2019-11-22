@@ -151,6 +151,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
         <NodeDialog
           isModalShown={isModalShown}
           hideModal={() => setModalShown(false)}
+          activeParent={activeParent}
           setNewElement={(element, inputValue) => {
             if (refs[activePanel])
               refs[activePanel].current.validate(element, activeParent, inputValue);
