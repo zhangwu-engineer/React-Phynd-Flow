@@ -284,17 +284,23 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
 
   let elements = [
     generateEntity(currentId, 'Switch:', xWeight, yWeight),
-    generateNode(`value-${switchId}`, 'SwitchValue', currentId, 'switch-value', xWeight, yWeight),
-    generateNode(`default-${defaultId}`, 'DefaultValue', currentId, 'switch-default', xWeight, yWeight+1+addWeight1),
+    generateNode(`value-${currentId}`, 'SwitchValue', currentId, 'switch-value', xWeight, yWeight),
+    generateNode(`default-${currentId}`, 'DefaultValue', currentId, 'switch-default', xWeight, yWeight+1+addWeight1),
     generateNode(`case-source-${currentId}`, 'Cases', currentId, 'switch-entity', xWeight, yWeight+2+addWeight1+addWeight2),
     generateEntity(`case-target-${currentId}`, 'Cases', xWeight+2, yWeight+2+addWeight1+addWeight2),
-    generateEdge(`edge-value-${switchId}`, `value-${switchId}`, switchId),
-    generateEdge(`edge-default-${defaultId}`, `case-source-${currentId}`, `case-target-${currentId}`),
-    generateEdge(`edge-case-${defaultId}`, `default-${defaultId}`, defaultId),
+    generateEdge(`edge-case-${currentId}`, `case-source-${currentId}`, `case-target-${currentId}`),
   ];
 
-  const switchValue = generateMapping(source.SwitchValue, xWeight+1, yWeight);
-  const switchDefault = generateMapping(source.SwitchDefault, xWeight+1, yWeight+1+addWeight1);
+  if (switchId) {
+    const switchValue = generateMapping(source.SwitchValue, xWeight+1, yWeight);
+    elements.push(generateEdge(`edge-value-${switchId}`, `value-${currentId}`, switchId));
+    elements = elements.concat(switchValue);
+  }
+  if (defaultId) {
+    const switchDefault = generateMapping(source.SwitchDefault, xWeight+1, yWeight+1+addWeight1);
+    elements.push(generateEdge(`edge-default-${defaultId}`, `default-${currentId}`, defaultId));
+    elements = elements.concat(switchDefault);
+  }
 
   source.Cases.map((caseItem, index) => {
     const nextMappingField = generateMapping(caseItem.Value, xWeight+3, yWeight+2+index+addWeight1+addWeight2);
@@ -307,7 +313,7 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
     return wrapper;
   });
 
-  return elements.concat(switchDefault).concat(switchValue);
+  return elements;
 };
 
 const generateConditionMapping = (source, xWeight, yWeight) => {
