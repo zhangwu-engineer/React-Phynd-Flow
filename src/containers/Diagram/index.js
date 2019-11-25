@@ -102,7 +102,7 @@ const generateInitialSource = (type, parent, inputValue) => {
       break;
     case 'Switch':
       source = {
-        MappingFieldId: `swtich-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
+        MappingFieldId: `switch-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         SwitchDefault: {
         },
