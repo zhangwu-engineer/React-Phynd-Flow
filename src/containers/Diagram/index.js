@@ -277,7 +277,7 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
     generateNode(`value-${switchId}`, 'SwitchValue', currentId, 'switch-value', xWeight, yWeight),
     generateNode(`default-${defaultId}`, 'DefaultValue', currentId, 'switch-default', xWeight, yWeight+1+addWeight1),
     generateNode(`case-source-${currentId}`, 'Cases', currentId, 'switch-entity', xWeight, yWeight+2+addWeight1+addWeight2),
-    generateEntity(`case-target-${currentId}`, 'Cases', xWeight+2, yWeight+addWeight1+addWeight2),
+    generateEntity(`case-target-${currentId}`, 'Cases', xWeight+2, yWeight+2+addWeight1+addWeight2),
     generateEdge(`edge-value-${switchId}`, `value-${switchId}`, switchId),
     generateEdge(`edge-default-${defaultId}`, `case-source-${currentId}`, `case-target-${currentId}`),
     generateEdge(`edge-case-${defaultId}`, `default-${defaultId}`, defaultId),
@@ -287,10 +287,10 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
   const switchDefault = generateMapping(source.SwitchDefault, xWeight+1, yWeight+1+addWeight1);
 
   source.Cases.map((caseItem, index) => {
-    const nextMappingField = generateMapping(caseItem.Value, xWeight+3, yWeight+index+addWeight1+addWeight2);
+    const nextMappingField = generateMapping(caseItem.Value, xWeight+3, yWeight+2+index+addWeight1+addWeight2);
     const valueId = caseItem.Value.MappingFieldId;
     const wrapper = [
-      generateNode(`wrap-${valueId}`, `${caseItem.Key}`, `case-target-${currentId}`, 'cases-entity', xWeight+2, yWeight+index+addWeight1+addWeight2),
+      generateNode(`wrap-${valueId}`, `${caseItem.Key}`, `case-target-${currentId}`, 'cases-entity', xWeight+2, yWeight+2+index+addWeight1+addWeight2),
       generateEdge(`edge-each-case-${valueId}`, `wrap-${valueId}`, valueId),
     ];
     elements = elements.concat(wrapper.concat(nextMappingField));
