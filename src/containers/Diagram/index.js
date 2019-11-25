@@ -585,7 +585,7 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
                 if (parent.data.parentType === 'iteration-source')
                   obj['Iterator'][propertyToFind.name] = generateInitialSource(element, parent, inputValue);
                 return obj;
-              } else {
+              } else if (obj[propertyToFind.name]['MappingFieldType']) {
                 const propertyToUpdate = getPropertyToMap(obj[propertyToFind.name]['MappingFieldType']);
                 obj[propertyToFind.name][propertyToUpdate.name] = inputValue.primary;
                 return obj;
