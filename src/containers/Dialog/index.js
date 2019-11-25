@@ -74,6 +74,9 @@ const useStyles = makeStyles(theme => ({
     textTransform: 'none',
     marginLeft: 20,
   },
+  resize:{
+    fontSize: 20
+  },
 }));
 
 function TabPanel(props) {
@@ -176,21 +179,6 @@ const NodeDialog = ({ isModalShown, activeParent, hideModal, setNewElement }) =>
         <Typography><CloseIcon onClick={closeModal} /></Typography>
       </Grid>
       <DialogContent className={classes.dialogContent}>
-        <AppBar position="static" color="default">
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="scrollable"
-            scrollButtons="auto"
-            aria-label="scrollable auto tabs example"
-          >
-            <Tab label="Category" />
-            {getPrimaryFieldLabel(activeCard) && <Tab label="Details" />}
-          </Tabs>
-        </AppBar>
-        <TabPanel value={value} index={0}>
           <Grid container spacing={2} className={classes.tabContent}>
             {Object.keys(IconsList).map(key =>
               <Grid
@@ -208,30 +196,57 @@ const NodeDialog = ({ isModalShown, activeParent, hideModal, setNewElement }) =>
               </Grid>
             )}
           </Grid>
-        </TabPanel>
-        <TabPanel value={value} index={1} className={classes.tabInputContent}>
-          {getPrimaryFieldLabel(activeCard) &&
-            <TextField
-              label={getPrimaryFieldLabel(activeCard)}
-              value={inputPrimaryValue}
-              onChange={handlePrimaryInputChange}
-            />
-          }<br />
-          {getSecondaryFieldLabel(activeCard, activeParent) &&
-            <TextField
-              label={getSecondaryFieldLabel(activeCard, activeParent)}
-              value={inputSecondaryValue}
-              onChange={handleSecondaryInputChange}
-            />
-          }<br />
-          {getTertiaryFieldLabel(activeCard) &&
-            <TextField
-              label={getTertiaryFieldLabel(activeCard)}
-              value={inputTertiaryValue}
-              onChange={handleTertiaryInputChange}
-            />
-          }
-        </TabPanel>
+        {getPrimaryFieldLabel(activeCard) &&
+          <TextField
+            label={getPrimaryFieldLabel(activeCard)}
+            value={inputPrimaryValue}
+            onChange={handlePrimaryInputChange}
+            InputProps={{
+              classes: {
+                input: classes.resize,
+              },
+            }}
+            InputLabelProps={{
+              classes: {
+                root: classes.resize,
+              }
+            }}
+          />
+        }<br />
+        {getSecondaryFieldLabel(activeCard, activeParent) &&
+          <TextField
+            label={getSecondaryFieldLabel(activeCard, activeParent)}
+            value={inputSecondaryValue}
+            onChange={handleSecondaryInputChange}
+            InputProps={{
+              classes: {
+                input: classes.resize,
+              },
+            }}
+            InputLabelProps={{
+              classes: {
+                root: classes.resize,
+              }
+            }}
+          />
+        }<br />
+        {getTertiaryFieldLabel(activeCard) &&
+          <TextField
+            label={getTertiaryFieldLabel(activeCard)}
+            value={inputTertiaryValue}
+            onChange={handleTertiaryInputChange}
+            InputProps={{
+              classes: {
+                input: classes.resize,
+              },
+            }}
+            InputLabelProps={{
+              classes: {
+                root: classes.resize,
+              }
+            }}
+          />
+        }
         <Grid container className={classes.buttonGroup}>
           <Button
             variant="contained"
