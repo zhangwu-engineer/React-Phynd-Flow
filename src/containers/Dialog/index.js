@@ -12,6 +12,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import CloseIcon from '@material-ui/icons/Close';
 import { FaQuestion, FaColumns, FaPlus, FaCode, FaList, FaWindowMinimize, FaAngleUp, FaAlignJustify } from "react-icons/fa";
 import { AiOutlineScissor } from "react-icons/ai";
 import hoc from '../Dashboard/hoc';
@@ -34,6 +35,7 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: 12,
   },
   dialogTitle: {
+    padding: 20,
     paddingBottom: 0,
   },
   dialogContent: {
@@ -41,7 +43,6 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: 12,
   },
   tabContent: {
-    paddingTop: 20,
     paddingBottom: 12,
   },
   tabInputContent: {
@@ -170,9 +171,10 @@ const NodeDialog = ({ isModalShown, activeParent, hideModal, setNewElement }) =>
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>
+      <Grid container justify="space-between" alignItems="center" className={classes.dialogTitle}>
         <Typography>Choose Mapping Field</Typography>
-      </DialogTitle>
+        <Typography><CloseIcon onClick={closeModal} /></Typography>
+      </Grid>
       <DialogContent className={classes.dialogContent}>
         <AppBar position="static" color="default">
           <Tabs
@@ -248,9 +250,6 @@ const NodeDialog = ({ isModalShown, activeParent, hideModal, setNewElement }) =>
             }}
           >
             Save
-          </Button>
-          <Button variant="contained" color="primary" className={classes.button} onClick={closeModal}>
-            Close
           </Button>
         </Grid>
       </DialogContent>
