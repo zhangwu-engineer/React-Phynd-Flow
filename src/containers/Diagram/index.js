@@ -72,25 +72,33 @@ const generateInitialSource = (type, parent, inputValue) => {
   let source = {};
   switch (type) {
     case 'Function':
-      source.MappingFieldId = `function-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
-      source.MappingFieldType = type;
-      source.FunctionName = inputValue.primary;
-      source.FunctionParameter = {};
+      source = {
+        MappingFieldId: `function-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
+        MappingFieldType: type,
+        FunctionName: inputValue.primary,
+        FunctionParameter: {},
+      };
       break;
     case 'Column':
-      source.MappingFieldId = `column-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
-      source.MappingFieldType = type;
-      source.ColumnIdentifier = inputValue.primary;
+      source = {
+        MappingFieldId: `column-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
+        MappingFieldType: type,
+        ColumnIdentifier: inputValue.primary,
+      };
       break;
     case 'Constant':
-      source.MappingFieldId = `constant-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
-      source.MappingFieldType = type;
-      source.ConstantValue = inputValue.primary;
+      source = {
+        MappingFieldId: `constant-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
+        MappingFieldType: type,
+        ConstantValue: inputValue.primary,
+      };
       break;
     case 'HL7':
-      source.MappingFieldId = `hl7-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
-      source.MappingFieldType = type;
-      source.HL7Segment = inputValue.primary;
+      source = {
+        MappingFieldId: `hl7-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
+        MappingFieldType: type,
+        HL7Segment: inputValue.primary,
+      };
       break;
     case 'Switch':
       source = {
@@ -131,12 +139,14 @@ const generateInitialSource = (type, parent, inputValue) => {
       };
       break;
     case 'Regex':
-      source.MappingFieldId = `regex-${parent ? parent.data.id : ''}-${Math.random()*10000}`;
-      source.MappingFieldType = type;
-      source.RegexPattern = inputValue.primary;
-      source.RegexFlags = inputValue.secondary;
-      source.RegexGroup = inputValue.tertiary;
-      source.Source = {};
+      source = {
+        MappingFieldId: `regex-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
+        MappingFieldType: type,
+        RegexPattern: inputValue.primary,
+        RegexFlags: inputValue.secondary,
+        RegexGroup: inputValue.tertiary,
+        Source: {},
+      };
       break;
     case 'Iteration':
       source = {
