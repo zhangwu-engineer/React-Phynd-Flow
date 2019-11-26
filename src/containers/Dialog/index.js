@@ -75,23 +75,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`scrollable-auto-tabpanel-${index}`}
-      aria-labelledby={`scrollable-auto-tab-${index}`}
-      {...other}
-    >
-      {children}
-    </Typography>
-  );
-}
-
 const NodeCard = ({ cardName, activeCard }) => {
   const classes = useStyles();
   const CardIcon = IconsList[cardName];
@@ -144,10 +127,6 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
   const closeModal = () => {
     hideModal();
   }
-  const [value, setValue] = React.useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   const [inputPrimaryValue, setInputPrimaryValue] = React.useState('');
   const handlePrimaryInputChange = event => {
