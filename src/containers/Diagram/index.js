@@ -307,18 +307,20 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
     elements = elements.concat(switchDefault);
   }
 
+  let addWeight = addWeight1 + addWeight2;
   source.Cases.map((caseItem, index) => {
-    const nextMappingField = generateMapping(caseItem.Value, xWeight+3, yWeight+2+index+addWeight1+addWeight2);
+    const nextMappingField = generateMapping(caseItem.Value, xWeight+3, yWeight+2+index+addWeight);
     const valueId = caseItem.Value.MappingFieldId;
     const valueType = caseItem.Value.MappingFieldType;
     const caseKeyDetails = getDataDetails(caseItem.Value);
     if (caseKeyDetails) caseKeyDetails.secondary = caseItem.Key;
 
     const wrapper = [
-      generateNode(`wrap-${valueId}`, `${caseItem.Key}`, `case-target-${currentId}`, 'cases-entity', valueType, caseKeyDetails, xWeight+2, yWeight+2+index+addWeight1+addWeight2),
+      generateNode(`wrap-${valueId}`, `${caseItem.Key}`, `case-target-${currentId}`, 'cases-entity', valueType, caseKeyDetails, xWeight+2, yWeight+2+index+addWeight),
       generateEdge(`edge-each-case-${valueId}`, `wrap-${valueId}`, valueId),
     ];
     elements = elements.concat(wrapper.concat(nextMappingField));
+    addWeight += getAdditionalWeight(caseItem.Value.MappingFieldType);
     return wrapper;
   });
 
