@@ -389,7 +389,7 @@ const generateCombinationMapping = (source, xWeight, yWeight) => {
       generateEdge(`edge-field2-${currentId}`, `field2-${currentId}`, field2.MappingFieldId),
     ];
 
-    const field1MappingField = generateMapping(field1, xWeight+2, yWeight);
+    const field1MappingField = generateMapping(field1, xWeight+1, yWeight);
     const field2MappingField = generateMapping(field2, xWeight+1, yWeight+1+addWeight);
 
     elements = elements.concat(fields);
