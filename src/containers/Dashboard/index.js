@@ -68,11 +68,15 @@ const PanelItem = ({ item, index, dashboardReducer }) => {
             item.setModalShown(flag);
             item.setActivePanel(panel);
             item.setActiveParent(parent);
+            item.setActiveCard(null);
           }}
           triggerCaseKeyModal={(panel, flag, parent) => {
             item.setCaseKeyModalShown(flag);
             item.setActivePanel(panel);
             item.setActiveParent(parent);
+          }}
+          selectCard={card => {
+            item.setActiveCard(card);
           }}
         />
       </MuiExpansionPanelDetails>
@@ -99,6 +103,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
   const [expanded, setExpanded] = React.useState(null);
   const [activePanel, setActivePanel] = React.useState(null);
   const [activeParent, setActiveParent] = React.useState(null);
+  const [activeCard, setActiveCard] = React.useState(null);
   const [isModalShown, setModalShown] = React.useState(false);
   const [isCaseKeyModalShown, setCaseKeyModalShown] = React.useState(false);
 
@@ -144,6 +149,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
             setCaseKeyModalShown={setCaseKeyModalShown}
             setActivePanel={setActivePanel}
             setActiveParent={setActiveParent}
+            setActiveCard={setActiveCard}
             updateDashboard={(payload) => updateDashboard(payload)}
             handleChange={handleChange}
           />
@@ -152,6 +158,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           isModalShown={isModalShown}
           hideModal={() => setModalShown(false)}
           activeParent={activeParent}
+          currentCard={activeCard}
           setNewElement={(element, inputValue) => {
             if (refs[activePanel])
               refs[activePanel].current.validate(element, activeParent, inputValue);

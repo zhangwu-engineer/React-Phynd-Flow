@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
@@ -137,9 +137,13 @@ const getTertiaryFieldLabel = (cardType) => {
   }
 }
 
-const NodeDialog = ({ isModalShown, activeParent, hideModal, setNewElement }) => {
+const NodeDialog = ({ isModalShown, activeParent, currentCard, hideModal, setNewElement }) => {
   const classes = useStyles();
   const [activeCard, setActiveCard] = React.useState(null);
+  useEffect(() => {
+    if (activeCard === null)
+      setActiveCard(currentCard);
+  });
   const closeModal = () => {
     hideModal();
   }
