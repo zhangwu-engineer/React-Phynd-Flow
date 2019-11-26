@@ -311,8 +311,11 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
     const nextMappingField = generateMapping(caseItem.Value, xWeight+3, yWeight+2+index+addWeight1+addWeight2);
     const valueId = caseItem.Value.MappingFieldId;
     const valueType = caseItem.Value.MappingFieldType;
+    const caseKeyDetails = getDataDetails(caseItem.Value);
+    if (caseKeyDetails) caseKeyDetails.secondary = caseItem.Key;
+
     const wrapper = [
-      generateNode(`wrap-${valueId}`, `${caseItem.Key}`, `case-target-${currentId}`, 'cases-entity', valueType, getDataDetails(nextMappingField), xWeight+2, yWeight+2+index+addWeight1+addWeight2),
+      generateNode(`wrap-${valueId}`, `${caseItem.Key}`, `case-target-${currentId}`, 'cases-entity', valueType, caseKeyDetails, xWeight+2, yWeight+2+index+addWeight1+addWeight2),
       generateEdge(`edge-each-case-${valueId}`, `wrap-${valueId}`, valueId),
     ];
     elements = elements.concat(wrapper.concat(nextMappingField));
@@ -529,18 +532,38 @@ const getDataDetails = (nextField) => {
     case 'Constant':
       return {
         primary: nextField.ConstantValue,
+        secondary: '',
+        tertiary: '',
       };
     case 'Column':
       return {
         primary: nextField.ColumnIdentifier,
+        secondary: '',
+        tertiary: '',
       };
     case 'HL7':
       return {
         primary: nextField.HL7Segment,
+        secondary: '',
+        tertiary: '',
       };
     case 'Function':
       return {
         primary: nextField.FunctionName,
+        secondary: '',
+        tertiary: '',
+      };
+    case 'Regex':
+      return {
+        primary: nextField.RegexPattern,
+        secondary: nextField.RegexFlags,
+        tertiary: nextField.RegexGroup,
+      };
+    case 'Iteration':
+      return {
+        primary: nextField.Iterator.Delimiter,
+        secondary: nextField.Iterator.Index,
+        tertiary: '',
       };
     default:
       return null;

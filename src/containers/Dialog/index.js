@@ -169,6 +169,9 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
       setActiveCard(currentCard);
     }
     setInputPrimaryValue(currentDetails ? currentDetails.primary : '');
+    setInputSecondaryValue(currentDetails ? currentDetails.secondary : '');
+    setInputTertiaryValue(currentDetails ? currentDetails.tertiary : '');
+
   }, [currentDetails]);
 
   return (
