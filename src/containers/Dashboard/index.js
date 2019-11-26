@@ -68,15 +68,13 @@ const PanelItem = ({ item, index, dashboardReducer }) => {
             item.setModalShown(flag);
             item.setActivePanel(panel);
             item.setActiveParent(parent);
-            item.setActiveCard(null);
+            item.setActiveCard(parent ? parent.data.nextType : null);
+            item.setActiveDetails(parent && parent.data.dataDetails);
           }}
           triggerCaseKeyModal={(panel, flag, parent) => {
             item.setCaseKeyModalShown(flag);
             item.setActivePanel(panel);
             item.setActiveParent(parent);
-          }}
-          selectCard={card => {
-            item.setActiveCard(card);
           }}
         />
       </MuiExpansionPanelDetails>
@@ -104,6 +102,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
   const [activePanel, setActivePanel] = React.useState(null);
   const [activeParent, setActiveParent] = React.useState(null);
   const [activeCard, setActiveCard] = React.useState(null);
+  const [activeDetails, setActiveDetails] = React.useState(null);
   const [isModalShown, setModalShown] = React.useState(false);
   const [isCaseKeyModalShown, setCaseKeyModalShown] = React.useState(false);
 
@@ -150,6 +149,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
             setActivePanel={setActivePanel}
             setActiveParent={setActiveParent}
             setActiveCard={setActiveCard}
+            setActiveDetails={setActiveDetails}
             updateDashboard={(payload) => updateDashboard(payload)}
             handleChange={handleChange}
           />
@@ -159,6 +159,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           hideModal={() => setModalShown(false)}
           activeParent={activeParent}
           currentCard={activeCard}
+          currentDetails={activeDetails}
           setNewElement={(element, inputValue) => {
             if (refs[activePanel])
               refs[activePanel].current.validate(element, activeParent, inputValue);

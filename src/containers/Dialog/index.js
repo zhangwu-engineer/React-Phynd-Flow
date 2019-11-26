@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: 12,
   },
   tabContent: {
-    paddingBottom: 12,
+    paddingBottom: 20,
   },
   tabInputContent: {
     paddingTop: 40,
@@ -137,13 +137,10 @@ const getTertiaryFieldLabel = (cardType) => {
   }
 }
 
-const NodeDialog = ({ isModalShown, activeParent, currentCard, hideModal, setNewElement }) => {
+const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, hideModal, setNewElement }) => {
   const classes = useStyles();
   const [activeCard, setActiveCard] = React.useState(null);
-  useEffect(() => {
-    if (activeCard === null)
-      setActiveCard(currentCard);
-  });
+
   const closeModal = () => {
     hideModal();
   }
@@ -167,6 +164,13 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, hideModal, setNew
     setInputTertiaryValue(event.target.value);
   };
 
+  useEffect(() => {
+    if (activeCard !== currentCard) {
+      setActiveCard(currentCard);
+    }
+    setInputPrimaryValue(currentDetails ? currentDetails.primary : '');
+  }, [currentDetails]);
+
   return (
     <Dialog
       open={isModalShown}
@@ -179,74 +183,80 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, hideModal, setNew
         <Typography><CloseIcon onClick={closeModal} /></Typography>
       </Grid>
       <DialogContent className={classes.dialogContent}>
-          <Grid container spacing={2} className={classes.tabContent}>
-            {Object.keys(IconsList).map(key =>
-              <Grid
-                item xs={4}
-                key={key}
-                onClick={() => {
-                  if (activeCard !== key) {
-                    setActiveCard(key);
-                  } else {
-                    setActiveCard(null);
-                  }
-                }}
-              >
-                <NodeCard cardName={key} activeCard={activeCard} />
-              </Grid>
-            )}
-          </Grid>
-        {getPrimaryFieldLabel(activeCard) &&
-          <TextField
-            label={getPrimaryFieldLabel(activeCard)}
-            value={inputPrimaryValue}
-            onChange={handlePrimaryInputChange}
-            InputProps={{
-              classes: {
-                input: classes.resize,
-              },
-            }}
-            InputLabelProps={{
-              classes: {
-                root: classes.resize,
-              }
-            }}
-          />
-        }<br />
-        {getSecondaryFieldLabel(activeCard, activeParent) &&
-          <TextField
-            label={getSecondaryFieldLabel(activeCard, activeParent)}
-            value={inputSecondaryValue}
-            onChange={handleSecondaryInputChange}
-            InputProps={{
-              classes: {
-                input: classes.resize,
-              },
-            }}
-            InputLabelProps={{
-              classes: {
-                root: classes.resize,
-              }
-            }}
-          />
-        }<br />
-        {getTertiaryFieldLabel(activeCard) &&
-          <TextField
-            label={getTertiaryFieldLabel(activeCard)}
-            value={inputTertiaryValue}
-            onChange={handleTertiaryInputChange}
-            InputProps={{
-              classes: {
-                input: classes.resize,
-              },
-            }}
-            InputLabelProps={{
-              classes: {
-                root: classes.resize,
-              }
-            }}
-          />
-        }
+        <Grid container spacing={2} className={classes.tabContent}>
+          {Object.keys(IconsList).map(key =>
+            <Grid
+              item xs={4}
+              key={key}
+              onClick={() => {
+                if (activeCard !== key) {
+                  setActiveCard(key);
+                } else {
+                  setActiveCard(null);
+                }
+              }}
+            >
+              <NodeCard cardName={key} activeCard={activeCard} />
+            </Grid>
+          )}
+        </Grid>
+        <Grid item>
+          {getPrimaryFieldLabel(activeCard) &&
+            <TextField
+              label={getPrimaryFieldLabel(activeCard)}
+              value={inputPrimaryValue}
+              onChange={handlePrimaryInputChange}
+              InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.resize,
+                }
+              }}
+            />
+          }
+        </Grid>
+        <Grid item>
+          {getSecondaryFieldLabel(activeCard, activeParent) &&
+            <TextField
+              label={getSecondaryFieldLabel(activeCard, activeParent)}
+              value={inputSecondaryValue}
+              onChange={handleSecondaryInputChange}
+              InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.resize,
+                }
+              }}
+            />
+          }
+        </Grid>
+        <Grid item>
+          {getTertiaryFieldLabel(activeCard) &&
+            <TextField
+              label={getTertiaryFieldLabel(activeCard)}
+              value={inputTertiaryValue}
+              onChange={handleTertiaryInputChange}
+              InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.resize,
+                }
+              }}
+            />
+          }
+        </Grid>
         <Grid container className={classes.buttonGroup}>
           <Button
             variant="contained"
@@ -261,7 +271,7 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, hideModal, setNew
                   tertiary: inputTertiaryValue,
                 }
               );
-              hideModal();
+              closeModal();
             }}
           >
             Save
