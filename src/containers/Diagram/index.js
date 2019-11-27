@@ -167,40 +167,29 @@ const generateInitialSource = (type, parent, inputValue) => {
 };
 
 const generateMapping = (source, xWeight, yWeight) => {
-  let mappingElements = [];
   if (!source) return [];
   switch (source.MappingFieldType) {
     case 'Function':
-      mappingElements = generateFunctionMapping(source, xWeight, yWeight);
-      break;
+      return generateFunctionMapping(source, xWeight, yWeight);
     case 'Column':
-      mappingElements = generateSingleMapping(source, source.ColumnIdentifier, xWeight, yWeight);
-      break;
+      return generateSingleMapping(source, source.ColumnIdentifier, xWeight, yWeight);
     case 'Constant':
-      mappingElements = generateSingleMapping(source, source.ConstantValue, xWeight, yWeight);
-      break;
+      return generateSingleMapping(source, source.ConstantValue, xWeight, yWeight);
     case 'HL7':
-      mappingElements = generateSingleMapping(source, source.HL7Segment, xWeight, yWeight);
-      break;
+      return generateSingleMapping(source, source.HL7Segment, xWeight, yWeight);
     case 'Switch':
-      mappingElements = generateSwitchMapping(source, xWeight, yWeight);
-      break;
+      return generateSwitchMapping(source, xWeight, yWeight);
     case 'Conditional':
-      mappingElements = generateConditionMapping(source, xWeight, yWeight);
-      break;
+      return generateConditionMapping(source, xWeight, yWeight);
     case 'Combination':
-      mappingElements = generateCombinationMapping(source, xWeight, yWeight);
-      break;
+      return generateCombinationMapping(source, xWeight, yWeight);
     case 'Regex':
-      mappingElements = generateRegexMapping(source, xWeight, yWeight);
-      break;
+      return generateRegexMapping(source, xWeight, yWeight);
     case 'Iteration':
-      mappingElements = generateIterationMapping(source, xWeight, yWeight);
-      break;
+      return generateIterationMapping(source, xWeight, yWeight);
     default:
-      break;
+      return [];
   }
-  return mappingElements;
 };
 
 const generateNode = (id, label, parent, parentType, nextType, dataDetails, xWeight, yWeight) => {
