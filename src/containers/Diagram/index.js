@@ -69,39 +69,34 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const generateInitialSource = (type, parent, inputValue) => {
-  let source = {};
   switch (type) {
     case 'Function':
-      source = {
+      return {
         MappingFieldId: `function-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         FunctionName: inputValue.primary,
         FunctionParameter: {},
       };
-      break;
     case 'Column':
-      source = {
+      return {
         MappingFieldId: `column-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         ColumnIdentifier: inputValue.primary,
       };
-      break;
     case 'Constant':
-      source = {
+      return {
         MappingFieldId: `constant-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         ConstantValue: inputValue.primary,
       };
-      break;
     case 'HL7':
-      source = {
+      return {
         MappingFieldId: `hl7-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         HL7Segment: inputValue.primary,
       };
-      break;
     case 'Switch':
-      source = {
+      return {
         MappingFieldId: `switch-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         SwitchDefault: {
@@ -110,9 +105,8 @@ const generateInitialSource = (type, parent, inputValue) => {
         },
         Cases: [],
       };
-      break;
     case 'Conditional':
-      source = {
+      return {
         MappingFieldId: `conditional-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         TrueField: {
@@ -127,9 +121,8 @@ const generateInitialSource = (type, parent, inputValue) => {
           },
         }
       };
-      break;
     case 'Combination':
-      source = {
+      return {
         MappingFieldId: `combination-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         Field1: {
@@ -137,9 +130,8 @@ const generateInitialSource = (type, parent, inputValue) => {
         Field2: {
         },
       };
-      break;
     case 'Regex':
-      source = {
+      return {
         MappingFieldId: `regex-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         RegexPattern: inputValue.primary,
@@ -147,9 +139,8 @@ const generateInitialSource = (type, parent, inputValue) => {
         RegexGroup: inputValue.tertiary,
         Source: {},
       };
-      break;
     case 'Iteration':
-      source = {
+      return {
         MappingFieldId: `iteration-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         Iterator: {
@@ -159,11 +150,9 @@ const generateInitialSource = (type, parent, inputValue) => {
           Index: inputValue.secondary,
         },
       };
-      break;
     default:
-      break;
+      return {};
   }
-  return source;
 };
 
 const generateMapping = (source, xWeight, yWeight) => {
