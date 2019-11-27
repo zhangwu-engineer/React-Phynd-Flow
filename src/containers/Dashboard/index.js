@@ -70,6 +70,12 @@ const PanelItem = ({ item, index, dashboardReducer }) => {
             item.setActiveParent(parent);
             item.setActiveCard(parent ? parent.data.nextType : null);
             item.setActiveDetails(parent && parent.data.dataDetails);
+            if (parent && parent.data.parentType === 'cases-entity') {
+              item.setActiveDetails({
+                ...parent.data.dataDetails,
+                fourth: parent.data.label,
+              });
+            }
           }}
           triggerCaseKeyModal={(panel, flag, parent) => {
             item.setCaseKeyModalShown(flag);

@@ -102,10 +102,7 @@ const getPrimaryFieldLabel = (cardType) => {
   }
 }
 
-const getSecondaryFieldLabel = (cardType, activeParent) => {
-  if (activeParent && activeParent.data.parentType === 'cases-entity') {
-    return 'Key Name';
-  }
+const getSecondaryFieldLabel = (cardType) => {
   switch (cardType) {
     case 'Iteration': return 'Index';
     case 'Regex': return 'Flags';
@@ -118,6 +115,13 @@ const getTertiaryFieldLabel = (cardType) => {
     case 'Regex': return 'Group';
     default: return null;
   }
+}
+
+const getFourthFieldLabel = (activeParent) => {
+  if (activeParent && activeParent.data.parentType === 'cases-entity') {
+    return 'Key Name';
+  }
+  return null;
 }
 
 const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, hideModal, setNewElement }) => {
@@ -143,6 +147,11 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
     setInputTertiaryValue(event.target.value);
   };
 
+  const [inputFourthValue, setInputFourthValue] = React.useState('');
+  const handleFourthInputChange = event => {
+    setInputFourthValue(event.target.value);
+  };
+
   useEffect(() => {
     if (activeCard !== currentCard) {
       setActiveCard(currentCard);
@@ -150,6 +159,7 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
     setInputPrimaryValue(currentDetails ? currentDetails.primary : '');
     setInputSecondaryValue(currentDetails ? currentDetails.secondary : '');
     setInputTertiaryValue(currentDetails ? currentDetails.tertiary : '');
+    setInputFourthValue(currentDetails ? currentDetails.fourth : '');
 
   }, [currentDetails]);
 
@@ -186,7 +196,7 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
           {getPrimaryFieldLabel(activeCard) &&
             <TextField
               label={getPrimaryFieldLabel(activeCard)}
-              value={inputPrimaryValue}
+              value={inputPrimaryValue || ''}
               onChange={handlePrimaryInputChange}
               InputProps={{
                 classes: {
@@ -202,10 +212,10 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
           }
         </Grid>
         <Grid item>
-          {getSecondaryFieldLabel(activeCard, activeParent) &&
+          {getSecondaryFieldLabel(activeCard) &&
             <TextField
               label={getSecondaryFieldLabel(activeCard, activeParent)}
-              value={inputSecondaryValue}
+              value={inputSecondaryValue || ''}
               onChange={handleSecondaryInputChange}
               InputProps={{
                 classes: {
@@ -224,8 +234,27 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
           {getTertiaryFieldLabel(activeCard) &&
             <TextField
               label={getTertiaryFieldLabel(activeCard)}
-              value={inputTertiaryValue}
+              value={inputTertiaryValue || ''}
               onChange={handleTertiaryInputChange}
+              InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.resize,
+                }
+              }}
+            />
+          }
+        </Grid>
+        <Grid item>
+          {getFourthFieldLabel(activeParent) &&
+            <TextField
+              label={getFourthFieldLabel(activeParent)}
+              value={inputFourthValue || ''}
+              onChange={handleFourthInputChange}
               InputProps={{
                 classes: {
                   input: classes.resize,
@@ -251,6 +280,7 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
                   primary: inputPrimaryValue,
                   secondary: inputSecondaryValue,
                   tertiary: inputTertiaryValue,
+                  fourth: inputFourthValue,
                 }
               );
               closeModal();

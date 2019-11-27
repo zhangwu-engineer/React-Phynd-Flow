@@ -313,7 +313,7 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
     const valueId = caseItem.Value.MappingFieldId;
     const valueType = caseItem.Value.MappingFieldType;
     const caseKeyDetails = getDataDetails(caseItem.Value);
-    if (caseKeyDetails) caseKeyDetails.secondary = caseItem.Key;
+    if (caseKeyDetails) caseKeyDetails.fourth = caseItem.Key;
 
     const wrapper = [
       generateNode(`wrap-${valueId}`, `${caseItem.Key}`, `case-target-${currentId}`, 'cases-entity', valueType, caseKeyDetails, xWeight+2, yWeight+2+index+addWeight),
@@ -538,36 +538,42 @@ const getDataDetails = (nextField) => {
         primary: nextField.ConstantValue,
         secondary: '',
         tertiary: '',
+        fourth: '',
       };
     case 'Column':
       return {
         primary: nextField.ColumnIdentifier,
         secondary: '',
         tertiary: '',
+        fourth: '',
       };
     case 'HL7':
       return {
         primary: nextField.HL7Segment,
         secondary: '',
         tertiary: '',
+        fourth: '',
       };
     case 'Function':
       return {
         primary: nextField.FunctionName,
         secondary: '',
         tertiary: '',
+        fourth: '',
       };
     case 'Regex':
       return {
         primary: nextField.RegexPattern,
         secondary: nextField.RegexFlags,
         tertiary: nextField.RegexGroup,
+        fourth: '',
       };
     case 'Iteration':
       return {
         primary: nextField.Iterator.Delimiter,
         secondary: nextField.Iterator.Index,
         tertiary: '',
+        fourth: '',
       };
     default:
       return null;
@@ -624,8 +630,8 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
               for (let ca in obj[p]) {
                 if (obj[p][ca]['Value'] && `wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
                   obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } }, inputValue);
-                  if (inputValue.secondary) {
-                    obj[p][ca]['Key'] = inputValue.secondary;
+                  if (inputValue.fourth) {
+                    obj[p][ca]['Key'] = inputValue.fourth;
                   }
                   return obj;
                 }
