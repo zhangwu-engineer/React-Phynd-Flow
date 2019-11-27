@@ -405,107 +405,88 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
 };
 
 const getPropertyToMap = (type) => {
-  let propertyToMap = {};
   switch(type) {
     case 'condition1':
-      propertyToMap = {
+      return {
         id: 'ConditionId',
         name: 'Field1',
       };
-      break;
     case 'condition2':
-      propertyToMap = {
+      return {
         id: 'ConditionId',
         name: 'Field2',
       };
-      break;
     case 'conditional-true':
-      propertyToMap = {
+      return {
         id: 'MappingFieldId',
         name: 'TrueField',
       };
-      break;
     case 'conditional-false':
-      propertyToMap = {
+      return {
         id: 'MappingFieldId',
         name: 'FalseField',
       };
-      break;
     case 'combination1':
-      propertyToMap = {
+      return {
         id: 'MappingFieldId',
         name: 'Field1',
       };
-      break;
     case 'combination2':
-      propertyToMap = {
+      return {
         id: 'MappingFieldId',
         name: 'Field2',
       };
-      break;
     case 'function-source':
-      propertyToMap = {
+      return {
         id: 'MappingFieldId',
         name: 'FunctionParameter',
       };
-      break;
     case 'iteration-source':
-      propertyToMap = {
+      return {
         id: 'MappingFieldId',
         name: 'Source',
       };
-      break;   
     case 'regex-source':
-      propertyToMap = {
+      return {
         id: 'MappingFieldId',
         name: 'Source',
       };
-      break;
     case 'switch-value':
-      propertyToMap = {
+      return {
         id: 'MappingFieldId',
         name: 'SwitchValue',
       };
-      break;
     case 'switch-default':
-      propertyToMap = {
+      return {
         id: 'MappingFieldId',
         name: 'SwitchDefault',
       };
-      break;
     case 'cases-entity':
-      propertyToMap = {
+      return {
         id: 'MappingFieldId',
       };
-      break;
     case 'Constant':
-      propertyToMap = {
+      return {
         name: 'ConstantValue',
       };
-      break;
     case 'Column':
-      propertyToMap = {
+      return {
         name: 'ColumnIdentifier',
       };
-      break;
     case 'HL7':
-      propertyToMap = {
+      return {
         name: 'HL7Segment',
       };
-      break;
     case 'Function':
-      propertyToMap = {
+      return {
         name: 'FunctionName',
       };
-      break;
     default:
-      propertyToMap = {
+      return {
         id: 'MappingFieldId',
         name: 'Value',
       };
-      break;
   }
-  return propertyToMap;
 }
 
 const getDataDetails = (nextField) => {
