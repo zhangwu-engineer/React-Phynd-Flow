@@ -236,10 +236,9 @@ const getAdditionalWeight = (type) => {
 }
 
 const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
-  const elements = [
+  return [
     generateNode(source.MappingFieldId, `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`, null, source.MappingFieldType, null, null, xWeight, yWeight),
   ];
-  return elements;
 };
 
 const generateFunctionMapping = (source, xWeight, yWeight) => {
