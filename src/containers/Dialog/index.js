@@ -124,7 +124,7 @@ const getFourthFieldLabel = (activeParent) => {
   return null;
 }
 
-const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, hideModal, setNewElement }) => {
+const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, hideModal, setNewElement, removeElement }) => {
   const classes = useStyles();
   const [activeCard, setActiveCard] = React.useState(null);
 
@@ -287,6 +287,17 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
             }}
           >
             Save
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            onClick={() => {
+              removeElement(activeCard);
+              closeModal();
+            }}
+          >
+            Remove
           </Button>
         </Grid>
       </DialogContent>
