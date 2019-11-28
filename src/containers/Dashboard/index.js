@@ -170,6 +170,10 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
             if (refs[activePanel])
               refs[activePanel].current.validate(element, activeParent, inputValue);
           }}
+          removeElement={(element) => {
+            if (refs[activePanel])
+              refs[activePanel].current.remove(element, activeParent);
+          }}
         />
         <CaseKeyDialog
           isModalShown={isCaseKeyModalShown}
