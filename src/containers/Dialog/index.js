@@ -47,9 +47,11 @@ const useStyles = makeStyles(theme => ({
   },
   cardInactive: {
     border: '2px solid transparent',
+    cursor: 'pointer',
   },
   cardActive: {
     border: '2px solid #577399',
+    cursor: 'pointer',
   },
   cardTitle: {
     fontSize: 14,
