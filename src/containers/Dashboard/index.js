@@ -170,9 +170,9 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
             if (refs[activePanel])
               refs[activePanel].current.validate(element, activeParent, inputValue);
           }}
-          removeElement={(element) => {
+          removeElement={() => {
             if (refs[activePanel])
-              refs[activePanel].current.remove(element, activeParent);
+              refs[activePanel].current.remove();
           }}
         />
         <CaseKeyDialog

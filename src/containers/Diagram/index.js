@@ -667,7 +667,7 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
       }, 0);
       updateDashboard(source);
     },
-    remove: (element, parent) => {
+    remove: () => {
       setElements([]);
       updateDashboard({});
     },
