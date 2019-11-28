@@ -216,7 +216,7 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
         <Grid item>
           {getSecondaryFieldLabel(activeCard) &&
             <TextField
-              label={getSecondaryFieldLabel(activeCard, activeParent)}
+              label={getSecondaryFieldLabel(activeCard)}
               value={inputSecondaryValue || ''}
               onChange={handleSecondaryInputChange}
               InputProps={{
