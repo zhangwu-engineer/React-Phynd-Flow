@@ -382,7 +382,7 @@ const generateRegexMapping = (source, xWeight, yWeight) => {
 
   const elements = [
     generateEntity(currentId, 'Regex', xWeight, yWeight),
-    generateNode(`info-${currentId}`, `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: "${source.RegexGroup}"`, currentId, 'regex-info', 'regex-info', null, xWeight, yWeight+1),
+    generateNode(`info-${currentId}`, `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: "${source.RegexGroup}"`, currentId, 'regex-info', 'regex-info', null, xWeight, yWeight+getChildrenWeight(source.Source)),
     generateNode(`source-${currentId}`, 'Source:', currentId, 'regex-source', source.Source.MappingFieldType, getDataDetails(source.Source), xWeight, yWeight),
     generateEdge(`edge-source-${currentId}`, `source-${currentId}`, source.Source.MappingFieldId),
   ];
@@ -396,7 +396,7 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
 
   const elements = [
     generateEntity(currentId, 'Iteration', xWeight, yWeight),
-    generateNode(`info-${currentId}`, `Delimiter: "${source.Iterator.Delimiter}", Index: "${source.Iterator.Index}"`, currentId, 'iteration', 'iteration', null, xWeight, yWeight+1),
+    generateNode(`info-${currentId}`, `Delimiter: "${source.Iterator.Delimiter}", Index: "${source.Iterator.Index}"`, currentId, 'iteration', 'iteration', null, xWeight, yWeight+getChildrenWeight(source.Iterator.Source)),
     generateNode(`source-${source.Iterator.IteratorId}`, 'Source:', currentId, 'iteration-source', source.Iterator.Source.MappingFieldType, getDataDetails(source.Iterator.Source), xWeight, yWeight),
     generateEdge(`edge-source-${currentId}`, `source-${source.Iterator.IteratorId}`, source.Iterator.Source.MappingFieldId),
   ];
@@ -553,6 +553,8 @@ const getChildrenWeight = (field) => {
       });
       total = total + caseSum;
       return total;
+    case 'Regex': return getChildrenWeight(field.Source)+1;
+    case 'Iteration': return getChildrenWeight(field.Iterator.Source)+1;
     default:
       return 1;
   }
