@@ -305,7 +305,7 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
 };
 
 const generateConditionMapping = (source, xWeight, yWeight) => {
-  const addWeight = source.TrueField && getAdditionalWeight(source.TrueField.MappingFieldType);
+  const addWeight = source.TrueField && getChildrenWeight(source.TrueField);
   const currentId = source.MappingFieldId;
   const trueId = source.TrueField && source.TrueField.MappingFieldId;
   const falseId = source.FalseField && source.FalseField.MappingFieldId;
@@ -313,25 +313,25 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
 
   const field1 = source.Condition && source.Condition.Field1;
   const field2 = source.Condition && source.Condition.Field2;
-  const addWeightField1 = getAdditionalWeight(field1.MappingFieldType);
-  const addWeightField2 = getAdditionalWeight(field2.MappingFieldType);
+  const addWeightField1 = getChildrenWeight(field1);
+  const addWeightField2 = getChildrenWeight(field2);
 
   const elements = [
     generateEntity(currentId, 'Conditional:', xWeight, yWeight),
     generateNode(`condition-${currentId}`, 'Condition:', currentId, 'conditional-entity', 'conditional-entity', null, xWeight, yWeight),
-    generateNode(`true-${currentId}`, 'If True:', currentId, 'conditional-true', source.TrueField.MappingFieldType, getDataDetails(source.TrueField), xWeight, yWeight+2+addWeightField1+addWeightField2),
-    generateNode(`false-${currentId}`, 'If False:', currentId, 'conditional-false', source.FalseField.MappingFieldType, getDataDetails(source.FalseField), xWeight, yWeight+3+addWeight+addWeightField1+addWeightField2),
+    generateNode(`true-${currentId}`, 'If True:', currentId, 'conditional-true', source.TrueField.MappingFieldType, getDataDetails(source.TrueField), xWeight, yWeight+addWeightField1+addWeightField2),
+    generateNode(`false-${currentId}`, 'If False:', currentId, 'conditional-false', source.FalseField.MappingFieldType, getDataDetails(source.FalseField), xWeight, yWeight+addWeight+addWeightField1+addWeightField2),
     generateEdge(`edge-true-${trueId}`, `true-${currentId}`, trueId),
     generateEdge(`edge-false-${falseId}`, `false-${currentId}`, falseId),
   ];
 
-  const trueMappingField = generateMapping(source.TrueField, xWeight+1, yWeight+2+addWeightField1+addWeightField2);
-  const falseMappingField = generateMapping(source.FalseField, xWeight+1, yWeight+3+addWeight+addWeightField1+addWeightField2);
+  const trueMappingField = generateMapping(source.TrueField, xWeight+1, yWeight+addWeightField1+addWeightField2);
+  const falseMappingField = generateMapping(source.FalseField, xWeight+1, yWeight+addWeight+addWeightField1+addWeightField2);
 
   let fields = [
     generateEntity(conditionId, '', xWeight, yWeight),
     generateNode(`field1-${conditionId}`, 'Field 1', conditionId, 'condition1', field1.MappingFieldType, getDataDetails(field1), xWeight+1, yWeight),
-    generateNode(`field2-${conditionId}`, 'Field 2', conditionId, 'condition2', field2.MappingFieldType, getDataDetails(field2), xWeight+1, yWeight+1+addWeightField1),
+    generateNode(`field2-${conditionId}`, 'Field 2', conditionId, 'condition2', field2.MappingFieldType, getDataDetails(field2), xWeight+1, yWeight+addWeightField1),
     generateEdge(`edge-fields-${currentId}`, `condition-${currentId}`, conditionId),
   ];
 
@@ -341,7 +341,7 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
     fields.push(generateEdge(`edge-field1-${conditionId}`, `field1-${conditionId}`, field1.MappingFieldId));
   }
   if (field2) {
-    const field2MappingField = generateMapping(field2, xWeight+2, yWeight+1+addWeightField1);
+    const field2MappingField = generateMapping(field2, xWeight+2, yWeight+addWeightField1);
     fields = fields.concat(field2MappingField);
     fields.push(generateEdge(`edge-field2-${conditionId}`, `field2-${conditionId}`, field2.MappingFieldId));
   }
@@ -357,17 +357,17 @@ const generateCombinationMapping = (source, xWeight, yWeight) => {
   if (source.Field1) {
     const field1 = source.Field1;
     const field2 = source.Field2;
-    const addWeight = getAdditionalWeight(field1.MappingFieldType);
+    const addWeight = getChildrenWeight(field1);
   
     const fields = [
       generateNode(`field1-${currentId}`, 'Field 1', currentId, 'combination1', field1.MappingFieldType, getDataDetails(field1), xWeight, yWeight),
-      generateNode(`field2-${currentId}`, 'Field 2', currentId, 'combination2', field2.MappingFieldType, getDataDetails(field2), xWeight, yWeight+1+addWeight),
+      generateNode(`field2-${currentId}`, 'Field 2', currentId, 'combination2', field2.MappingFieldType, getDataDetails(field2), xWeight, yWeight+addWeight),
       generateEdge(`edge-field1-${currentId}`, `field1-${currentId}`, field1.MappingFieldId),
       generateEdge(`edge-field2-${currentId}`, `field2-${currentId}`, field2.MappingFieldId),
     ];
 
     const field1MappingField = generateMapping(field1, xWeight+1, yWeight);
-    const field2MappingField = generateMapping(field2, xWeight+1, yWeight+1+addWeight);
+    const field2MappingField = generateMapping(field2, xWeight+1, yWeight+addWeight);
 
     elements = elements.concat(fields);
     elements = elements.concat(field1MappingField).concat(field2MappingField);
@@ -535,6 +535,17 @@ const getDataDetails = (nextField) => {
       };
     default:
       return null;
+  }
+}
+
+const getChildrenWeight = (field) => {
+  switch (field.MappingFieldType) {
+    case 'Combination':
+      return getChildrenWeight(field.Field1)+getChildrenWeight(field.Field2);
+    case 'Conditional':
+      return getChildrenWeight(field.Condition.Field1)+getChildrenWeight(field.Condition.Field2)+getChildrenWeight(field.TrueField)+getChildrenWeight(field.FalseField);
+    default:
+      return 1;
   }
 }
 
