@@ -646,47 +646,8 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
       updateDashboard(source);
     },
     remove: (element, parent) => {
-      if (parent) {
-        const propertyToFind = getPropertyToMap(parent.data.parentType);
-        const findByProperty = (obj, val)=> {
-          for (let p in obj) {
-            if (Array.isArray(obj[p])) {
-              for (let ca in obj[p]) {
-                if (obj[p][ca]['Value'] && `wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
-                  obj[p].splice(ca, 1);
-                  return obj;
-                }
-              }
-            }
-            if (!val) {
-              for (let p in obj) {
-                obj[p] = {};
-              }
-              return obj;
-            } else if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
-              if (element) {
-                obj[propertyToFind.name] = {};
-                if (parent.data.parentType === 'iteration-source')
-                  obj['Iterator'][propertyToFind.name] = {};
-                return obj;
-              } else if (obj[propertyToFind.name] && obj[propertyToFind.name]['MappingFieldType']) {
-                obj[propertyToFind.name] = {};
-                return obj;
-              }
-            } else if (typeof obj[p] === 'object') {
-              findByProperty(obj[p], val);
-            }
-          }
-        };
-        findByProperty(source, parent.data.parent);
-        setElements([]);
-        setTimeout(() => {
-          setElements(generateMapping(source, 1, 1));
-        }, 0);
-        updateDashboard(source);
-      } else {
-        updateDashboard({});
-      }
+      setElements([]);
+      updateDashboard({});
     },
   }), [elements]);
 
