@@ -261,15 +261,16 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
   const defaultId = source.SwitchDefault.MappingFieldId;
   const switchType = source.SwitchValue.MappingFieldType;
   const defaultType = source.SwitchDefault.MappingFieldType;
-  const addWeight1 = source.SwitchValue && getAdditionalWeight(switchType);
-  const addWeight2 = source.SwitchValue && getAdditionalWeight(defaultType);
+  const addWeight1 = source.SwitchValue && getChildrenWeight(source.SwitchValue);
+  const addWeight2 = source.SwitchValue && getChildrenWeight(source.SwitchDefault);
+  const addWeight = addWeight1 + addWeight2;
 
   let elements = [
     generateEntity(currentId, 'Switch:', xWeight, yWeight),
     generateNode(`value-${currentId}`, 'SwitchValue', currentId, 'switch-value', switchType, getDataDetails(source.SwitchValue), xWeight, yWeight),
-    generateNode(`default-${currentId}`, 'DefaultValue', currentId, 'switch-default', defaultType, getDataDetails(source.SwitchDefault),  xWeight, yWeight+1+addWeight1),
-    generateNode(`case-source-${currentId}`, 'Cases', currentId, 'switch-entity', 'switch-entity', null, xWeight, yWeight+2+addWeight1+addWeight2),
-    generateEntity(`case-target-${currentId}`, 'Cases', xWeight+2, yWeight+2+addWeight1+addWeight2),
+    generateNode(`default-${currentId}`, 'DefaultValue', currentId, 'switch-default', defaultType, getDataDetails(source.SwitchDefault),  xWeight, yWeight+addWeight1),
+    generateNode(`case-source-${currentId}`, 'Cases', currentId, 'switch-entity', 'switch-entity', null, xWeight, yWeight+addWeight),
+    generateEntity(`case-target-${currentId}`, 'Cases', xWeight+2, yWeight+addWeight),
     generateEdge(`edge-case-${currentId}`, `case-source-${currentId}`, `case-target-${currentId}`),
   ];
 
@@ -279,25 +280,25 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
     elements = elements.concat(switchValue);
   }
   if (defaultId) {
-    const switchDefault = generateMapping(source.SwitchDefault, xWeight+1, yWeight+1+addWeight1);
+    const switchDefault = generateMapping(source.SwitchDefault, xWeight+1, yWeight+addWeight1);
     elements.push(generateEdge(`edge-default-${defaultId}`, `default-${currentId}`, defaultId));
     elements = elements.concat(switchDefault);
   }
 
-  let addWeight = addWeight1 + addWeight2;
+  let addCasesWeight = addWeight;
   source.Cases.map((caseItem, index) => {
-    const nextMappingField = generateMapping(caseItem.Value, xWeight+3, yWeight+2+index+addWeight);
+    const nextMappingField = generateMapping(caseItem.Value, xWeight+3, yWeight+index+addCasesWeight);
     const valueId = caseItem.Value.MappingFieldId;
     const valueType = caseItem.Value.MappingFieldType;
     const caseKeyDetails = getDataDetails(caseItem.Value);
     if (caseKeyDetails) caseKeyDetails.fourth = caseItem.Key;
 
     const wrapper = [
-      generateNode(`wrap-${valueId}`, `${caseItem.Key}`, `case-target-${currentId}`, 'cases-entity', valueType, caseKeyDetails, xWeight+2, yWeight+2+index+addWeight),
+      generateNode(`wrap-${valueId}`, `${caseItem.Key}`, `case-target-${currentId}`, 'cases-entity', valueType, caseKeyDetails, xWeight+2, yWeight+index+addCasesWeight),
       generateEdge(`edge-each-case-${valueId}`, `wrap-${valueId}`, valueId),
     ];
     elements = elements.concat(wrapper.concat(nextMappingField));
-    addWeight += getAdditionalWeight(caseItem.Value.MappingFieldType);
+    addCasesWeight += getChildrenWeight(caseItem.Value) - 1;
     return wrapper;
   });
 
@@ -541,9 +542,17 @@ const getDataDetails = (nextField) => {
 const getChildrenWeight = (field) => {
   switch (field.MappingFieldType) {
     case 'Combination':
-      return getChildrenWeight(field.Field1)+getChildrenWeight(field.Field2);
+      return getChildrenWeight(field.Field1) + getChildrenWeight(field.Field2);
     case 'Conditional':
-      return getChildrenWeight(field.Condition.Field1)+getChildrenWeight(field.Condition.Field2)+getChildrenWeight(field.TrueField)+getChildrenWeight(field.FalseField);
+      return getChildrenWeight(field.Condition.Field1) + getChildrenWeight(field.Condition.Field2)  + getChildrenWeight(field.TrueField) + getChildrenWeight(field.FalseField);
+    case 'Switch':
+      let total = getChildrenWeight(field.SwitchValue) + getChildrenWeight(field.SwitchDefault);
+      let caseSum = 1;
+      field.Cases.forEach(c => {
+        caseSum += getChildrenWeight(c.Value);
+      });
+      total = total + caseSum;
+      return total;
     default:
       return 1;
   }
