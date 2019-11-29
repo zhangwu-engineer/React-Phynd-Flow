@@ -280,25 +280,27 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
           }
         </Grid>
         <Grid container className={classes.buttonGroup}>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            onClick={() => {
-              setNewElement(
-                activeCard,
-                {
-                  primary: inputPrimaryValue,
-                  secondary: inputSecondaryValue,
-                  tertiary: inputTertiaryValue,
-                  fourth: inputFourthValue,
-                }
-              );
-              closeModal();
-            }}
-          >
-            Save
-          </Button>
+          {activeCard &&
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={() => {
+                setNewElement(
+                  activeCard,
+                  {
+                    primary: inputPrimaryValue,
+                    secondary: inputSecondaryValue,
+                    tertiary: inputTertiaryValue,
+                    fourth: inputFourthValue,
+                  }
+                );
+                closeModal();
+              }}
+            >
+              Save
+            </Button>
+          }
           {isRemovable(activeParent) &&
             <Button
               variant="contained"
