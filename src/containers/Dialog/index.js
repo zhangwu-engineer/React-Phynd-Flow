@@ -127,10 +127,9 @@ const getFourthFieldLabel = (activeParent) => {
 }
 
 const isRemovable = (parent) => {
+  const primaryModels = ['Constant', 'Column', 'HL7', 'Switch', 'Regex', 'Iteration', 'Conditional', 'Combination', 'Function'];
   if (parent) {
-    if (!parent.data.parentType) return true;
-    if (parent.data.parentType === 'Column' || parent.data.parentType === 'Constant' || parent.data.parentType === 'HL7') return true;
-    return false;
+    if (parent && parent.edges.length === 0 && primaryModels.indexOf(parent.data.parentType) > -1) return true;
   }
   return false;
 }

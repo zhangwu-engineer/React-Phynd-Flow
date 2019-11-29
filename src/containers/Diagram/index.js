@@ -200,12 +200,12 @@ const generateNode = (id, label, parent, parentType, nextType, dataDetails, xWei
   return nodeElement;
 };
 
-const generateEntity = (id, label, primaryType, dataDetails, xWeight, yWeight) => {
+const generateEntity = (id, label, parentType, dataDetails, xWeight, yWeight) => {
   return {
     data: {
       id,
       label,
-      primaryType,
+      parentType,
       dataDetails,
       xWeight,
       yWeight,
