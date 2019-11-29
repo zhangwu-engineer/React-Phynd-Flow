@@ -687,9 +687,9 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
         stylesheet={stylesheet}
         style={
           {
-            width: (xWeightMax + 1) * DIAGRAM_CONF.NODE_WIDTH,
-            height: Math.min(500, (yWeightMax + 1) * DIAGRAM_CONF.NODE_HEIGHT),
-            marginTop: 60,
+            width: (xWeightMax + 0.5) * DIAGRAM_CONF.NODE_WIDTH,
+            height: yWeightMax === 0 ? 200 : Math.min(window.innerHeight - 200, (yWeightMax + 1) * DIAGRAM_CONF.NODE_HEIGHT),
+            marginTop: yWeightMax === 0 ? 60 : 0,
           }
         }
       />

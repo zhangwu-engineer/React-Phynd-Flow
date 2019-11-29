@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
   },
   details: {
-    width: 'calc(100vw - 252px)',
+    width: 'calc(100vw - 260px)',
     overflow: 'scroll',
     flexDirection: 'column',
   },
