@@ -224,17 +224,6 @@ const generateEdge = (id, source, target) => {
   };
 };
 
-const getAdditionalWeight = (type) => {
-  switch (type) {
-    case 'Regex': return 1;
-    case 'Iteration': return 1;
-    case 'Combination': return 1;
-    case 'Switch': return 2;
-    case 'Conditional': return 3;
-    default: return 0;
-  }
-}
-
 const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
   return [
     generateNode(source.MappingFieldId, `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`, null, source.MappingFieldType, null, null, xWeight, yWeight),
@@ -551,7 +540,7 @@ const getChildrenWeight = (field) => {
       field.Cases.forEach(c => {
         caseSum += getChildrenWeight(c.Value);
       });
-      total = total + caseSum;
+      total = total + (caseSum === 1 ? 1 : caseSum - 1);
       return total;
     case 'Regex': return getChildrenWeight(field.Source)+1;
     case 'Iteration': return getChildrenWeight(field.Iterator.Source)+1;
