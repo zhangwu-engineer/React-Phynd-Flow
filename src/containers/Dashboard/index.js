@@ -68,14 +68,20 @@ const PanelItem = ({ item, index, dashboardReducer }) => {
             item.setModalShown(flag);
             item.setActivePanel(panel);
             item.setActiveParent(parent);
-            item.setActiveCard(parent ? parent.data.nextType : null);
-            item.setActiveDetails(parent && parent.data.dataDetails);
             if (parent && parent.data.parentType === 'cases-entity') {
               item.setActiveDetails({
                 ...parent.data.dataDetails,
                 fourth: parent.data.label,
               });
             }
+            if (parent && !parent.data.parent) {
+              item.setActiveCard(parent.data.primaryType);
+              item.setActiveDetails(parent.data.dataDetails);
+            } else {
+              item.setActiveCard(parent ? parent.data.nextType : null);
+              item.setActiveDetails(parent && parent.data.dataDetails);
+            }
+            console.log(panel, flag, parent);
           }}
           triggerCaseKeyModal={(panel, flag, parent) => {
             item.setCaseKeyModalShown(flag);

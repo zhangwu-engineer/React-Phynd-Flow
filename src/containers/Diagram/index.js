@@ -200,11 +200,13 @@ const generateNode = (id, label, parent, parentType, nextType, dataDetails, xWei
   return nodeElement;
 };
 
-const generateEntity = (id, label, xWeight, yWeight) => {
+const generateEntity = (id, label, primaryType, dataDetails, xWeight, yWeight) => {
   return {
     data: {
       id,
       label,
+      primaryType,
+      dataDetails,
       xWeight,
       yWeight,
       entity: label,
@@ -226,7 +228,7 @@ const generateEdge = (id, source, target) => {
 
 const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
   return [
-    generateNode(source.MappingFieldId, `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`, null, source.MappingFieldType, null, null, xWeight, yWeight),
+    generateNode(source.MappingFieldId, `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`, null, source.MappingFieldType, null, getDataDetails(source), xWeight, yWeight),
   ];
 };
 
@@ -237,7 +239,7 @@ const generateFunctionMapping = (source, xWeight, yWeight) => {
   const functionType = source.FunctionParameter.MappingFieldType;
 
   const elements = [
-    generateEntity(currentId, `Function: ${source.FunctionName}`, xWeight, yWeight),
+    generateEntity(currentId, `Function: ${source.FunctionName}`, 'Function', getDataDetails(source), xWeight, yWeight),
     generateNode(`source-${currentId}`, 'SourceParameter', currentId, 'function-source', functionType, getDataDetails(source.FunctionParameter), xWeight, yWeight),
     generateEdge(`edge-source-${functionId}`, `source-${currentId}`, functionId),
   ];
@@ -255,11 +257,11 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
   const addWeight = addWeight1 + addWeight2;
 
   let elements = [
-    generateEntity(currentId, 'Switch:', xWeight, yWeight),
+    generateEntity(currentId, 'Switch:', 'Switch', null, xWeight, yWeight),
     generateNode(`value-${currentId}`, 'SwitchValue', currentId, 'switch-value', switchType, getDataDetails(source.SwitchValue), xWeight, yWeight),
     generateNode(`default-${currentId}`, 'DefaultValue', currentId, 'switch-default', defaultType, getDataDetails(source.SwitchDefault),  xWeight, yWeight+addWeight1),
     generateNode(`case-source-${currentId}`, 'Cases', currentId, 'switch-entity', 'switch-entity', null, xWeight, yWeight+addWeight),
-    generateEntity(`case-target-${currentId}`, 'Cases', xWeight+1, yWeight+addWeight),
+    generateEntity(`case-target-${currentId}`, 'Cases', 'Cases', null, xWeight+1, yWeight+addWeight),
     generateEdge(`edge-case-${currentId}`, `case-source-${currentId}`, `case-target-${currentId}`),
   ];
 
@@ -307,7 +309,7 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
   const addWeightField2 = getChildrenWeight(field2);
 
   const elements = [
-    generateEntity(currentId, 'Conditional:', xWeight, yWeight),
+    generateEntity(currentId, 'Conditional:', 'Conditional', null, xWeight, yWeight),
     generateNode(`condition-${currentId}`, 'Condition:', currentId, 'conditional-entity', 'conditional-entity', null, xWeight, yWeight),
     generateNode(`true-${currentId}`, 'If True:', currentId, 'conditional-true', source.TrueField.MappingFieldType, getDataDetails(source.TrueField), xWeight, yWeight+addWeightField1+addWeightField2),
     generateNode(`false-${currentId}`, 'If False:', currentId, 'conditional-false', source.FalseField.MappingFieldType, getDataDetails(source.FalseField), xWeight, yWeight+addWeight+addWeightField1+addWeightField2),
@@ -319,7 +321,7 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
   const falseMappingField = generateMapping(source.FalseField, xWeight+1, yWeight+addWeight+addWeightField1+addWeightField2);
 
   let fields = [
-    generateEntity(conditionId, '', xWeight, yWeight),
+    generateEntity(conditionId, '', 'Fields', null, xWeight, yWeight),
     generateNode(`field1-${conditionId}`, 'Field 1', conditionId, 'condition1', field1.MappingFieldType, getDataDetails(field1), xWeight+1, yWeight),
     generateNode(`field2-${conditionId}`, 'Field 2', conditionId, 'condition2', field2.MappingFieldType, getDataDetails(field2), xWeight+1, yWeight+addWeightField1),
     generateEdge(`edge-fields-${currentId}`, `condition-${currentId}`, conditionId),
@@ -341,7 +343,7 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
 const generateCombinationMapping = (source, xWeight, yWeight) => {
   const currentId = source.MappingFieldId;
   let elements = [
-    generateEntity(currentId, 'Combination', xWeight, yWeight)
+    generateEntity(currentId, 'Combination', 'Combination', null, xWeight, yWeight)
   ];
 
   if (source.Field1) {
@@ -370,7 +372,7 @@ const generateRegexMapping = (source, xWeight, yWeight) => {
   const currentId = source.MappingFieldId;
 
   const elements = [
-    generateEntity(currentId, 'Regex', xWeight, yWeight),
+    generateEntity(currentId, 'Regex', 'Regex', getDataDetails(source), xWeight, yWeight),
     generateNode(`info-${currentId}`, `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: "${source.RegexGroup}"`, currentId, 'regex-info', 'regex-info', null, xWeight, yWeight+getChildrenWeight(source.Source)),
     generateNode(`source-${currentId}`, 'Source:', currentId, 'regex-source', source.Source.MappingFieldType, getDataDetails(source.Source), xWeight, yWeight),
     generateEdge(`edge-source-${currentId}`, `source-${currentId}`, source.Source.MappingFieldId),
@@ -384,7 +386,7 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
   const currentId = source.MappingFieldId;
 
   const elements = [
-    generateEntity(currentId, 'Iteration', xWeight, yWeight),
+    generateEntity(currentId, 'Iteration', 'Iteration', getDataDetails(source), xWeight, yWeight),
     generateNode(`info-${currentId}`, `Delimiter: "${source.Iterator.Delimiter}", Index: "${source.Iterator.Index}"`, currentId, 'iteration', 'iteration', null, xWeight, yWeight+getChildrenWeight(source.Iterator.Source)),
     generateNode(`source-${source.Iterator.IteratorId}`, 'Source:', currentId, 'iteration-source', source.Iterator.Source.MappingFieldType, getDataDetails(source.Iterator.Source), xWeight, yWeight),
     generateEdge(`edge-source-${currentId}`, `source-${source.Iterator.IteratorId}`, source.Iterator.Source.MappingFieldId),
