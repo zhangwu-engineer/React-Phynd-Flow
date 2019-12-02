@@ -255,15 +255,15 @@ const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
 };
 
 const generateFunctionMapping = (source, xWeight, yWeight) => {
-  const nextMappingField = generateMapping(source.FunctionParameter, xWeight+1, yWeight+1);
+  const nextMappingField = generateMapping(source.FunctionParameter, xWeight+1, yWeight);
   const currentId = source.MappingFieldId;
   const functionId = source.FunctionParameter.MappingFieldId;
   const functionType = source.FunctionParameter.MappingFieldType;
 
   const elements = [
     generateEntity(currentId, `Function:`, 'Function', getDataDetails(source), xWeight, yWeight),
-    generateNode(`info-${currentId}`, `Name: ${source.FunctionName}`, currentId, 'function-info', 'function-info', null, xWeight, yWeight),
-    generateNode(`source-${currentId}`, 'SourceParameter', currentId, 'function-source', functionType, getDataDetails(source.FunctionParameter), xWeight, yWeight+1),
+    generateNode(`info-${currentId}`, `Name: ${source.FunctionName}`, currentId, 'function-info', 'function-info', null, xWeight, yWeight+1),
+    generateNode(`source-${currentId}`, 'SourceParameter', currentId, 'function-source', functionType, getDataDetails(source.FunctionParameter), xWeight, yWeight),
     generateEdge(`edge-source-${functionId}`, `source-${currentId}`, functionId),
   ];
   return elements.concat(nextMappingField);
@@ -396,11 +396,11 @@ const generateRegexMapping = (source, xWeight, yWeight) => {
 
   const elements = [
     generateEntity(currentId, 'Regex', 'Regex', getDataDetails(source), xWeight, yWeight),
-    generateNode(`info-${currentId}`, `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: "${source.RegexGroup}"`, currentId, 'regex-info', 'regex-info', null, xWeight, yWeight),
-    generateNode(`source-${currentId}`, 'Source:', currentId, 'regex-source', source.Source.MappingFieldType, getDataDetails(source.Source), xWeight, yWeight+1),
+    generateNode(`info-${currentId}`, `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: "${source.RegexGroup}"`, currentId, 'regex-info', 'regex-info', null, xWeight, yWeight+1),
+    generateNode(`source-${currentId}`, 'Source:', currentId, 'regex-source', source.Source.MappingFieldType, getDataDetails(source.Source), xWeight, yWeight),
     generateEdge(`edge-source-${currentId}`, `source-${currentId}`, source.Source.MappingFieldId),
   ];
-  const sourceMappingField = generateMapping(source.Source, xWeight+1, yWeight+1);
+  const sourceMappingField = generateMapping(source.Source, xWeight+1, yWeight);
 
   return elements.concat(sourceMappingField);
 };
@@ -410,11 +410,11 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
 
   const elements = [
     generateEntity(currentId, 'Iteration', 'Iteration', getDataDetails(source), xWeight, yWeight),
-    generateNode(`info-${currentId}`, `Delimiter: "${source.Iterator.Delimiter}", Index: "${source.Iterator.Index}"`, currentId, 'iteration', 'iteration', null, xWeight, yWeight),
-    generateNode(`source-${source.Iterator.IteratorId}`, 'Source:', currentId, 'iteration-source', source.Iterator.Source.MappingFieldType, getDataDetails(source.Iterator.Source), xWeight, yWeight+1),
+    generateNode(`info-${currentId}`, `Delimiter: "${source.Iterator.Delimiter}", Index: "${source.Iterator.Index}"`, currentId, 'iteration', 'iteration', null, xWeight, yWeight+1),
+    generateNode(`source-${source.Iterator.IteratorId}`, 'Source:', currentId, 'iteration-source', source.Iterator.Source.MappingFieldType, getDataDetails(source.Iterator.Source), xWeight, yWeight),
     generateEdge(`edge-source-${currentId}`, `source-${source.Iterator.IteratorId}`, source.Iterator.Source.MappingFieldId),
   ];
-  const sourceMappingField = generateMapping(source.Iterator.Source, xWeight+1, yWeight+1);
+  const sourceMappingField = generateMapping(source.Iterator.Source, xWeight+1, yWeight);
 
   return elements.concat(sourceMappingField);
 };
@@ -612,7 +612,6 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
       if (e.target._private.data.entity && e.target._private.data.entity === 'Cases') {
         triggerCaseKeyModal(elementId, isModalShown, e.target._private);
       } else if (checkNodeEditable(e.target._private)) {
-        console.log(e.target._private, '-=-=');
         triggerModal(elementId, isModalShown, e.target._private);
       }
     });
