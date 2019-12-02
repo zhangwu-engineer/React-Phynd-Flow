@@ -48,6 +48,9 @@ const useStyles = makeStyles(theme => ({
   cardInactive: {
     border: '2px solid transparent',
     cursor: 'pointer',
+    '&:hover': {
+      border: '1px solid #577399',
+    }
   },
   cardActive: {
     border: '2px solid #577399',
