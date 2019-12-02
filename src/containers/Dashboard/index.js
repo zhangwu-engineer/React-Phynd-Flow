@@ -41,14 +41,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const refs = [];
-const PanelItem = ({ item, index, dashboardReducer }) => {
+const PanelItem = ({ item, index, panelIndex, dashboardReducer }) => {
   if (!dashboardReducer.dashboard) return <div />;
   const source = dashboardReducer.dashboard[item.item];
   return (
-    <MuiExpansionPanel square key={index} expanded={item.expanded === `panel${index}`} onChange={item.handleChange(`panel${index}`)}>
+    <MuiExpansionPanel square key={index} expanded={item.expanded === `panel${index}${panelIndex}`} onChange={item.handleChange(`panel${index}${panelIndex}`)}>
       <MuiExpansionPanelSummary
         aria-controls={`panel${index}d-content`}
-        id={`panel${index}d-header`}
+        id={`panel${index}${panelIndex}d-header`}
         expandIcon={!dashboardReducer.dashboard[item.item] && <AddIcon />}
       >
         <Typography>{item.item}</Typography>
@@ -93,7 +93,7 @@ const PanelItem = ({ item, index, dashboardReducer }) => {
   );
 };
 
-const Panel = ({ items, dashboardReducer, ...props }) => {
+const Panel = ({ items, panelIndex, dashboardReducer, ...props }) => {
   const itemsList = items.map((item, index) => {
     refs[index] = React.createRef();
     return { item, ref: refs[index], ...props }
@@ -101,7 +101,7 @@ const Panel = ({ items, dashboardReducer, ...props }) => {
   return (
     <Box>
       {
-        itemsList.map((item, index) => <PanelItem item={item} index={index} key={index} dashboardReducer={dashboardReducer} />)
+        itemsList.map((item, index) => <PanelItem item={item} index={index} panelIndex={panelIndex} key={index} dashboardReducer={dashboardReducer} />)
       }
     </Box>
   );
@@ -122,6 +122,16 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
   };
 
   const fieldsList = fieldsReducer.fields && fieldsReducer.fields[getNameFromID(match.params.entity)] && fieldsReducer.fields[getNameFromID(match.params.entity)];
+  let dashboardList = [dashboardReducer];
+  if (match.params.entity !== 'provider-details') {
+    const mapData = dashboardReducer.dashboard['AddressMaps'];
+    if (Array.isArray(mapData)) {
+      dashboardList = [];
+      mapData.forEach(m => dashboardList.push({
+        dashboard: m,
+      }));
+    }
+  }
 
   return (
     <div className={classes.root}>
@@ -150,20 +160,23 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           aria-labelledby={`scrollable-auto-tab-${0}`}
           // {...other}
         >
-          <Panel
-            items={fieldsList}
-            classes={classes}
-            expanded={expanded}
-            dashboardReducer={dashboardReducer}
-            setModalShown={setModalShown}
-            setCaseKeyModalShown={setCaseKeyModalShown}
-            setActivePanel={setActivePanel}
-            setActiveParent={setActiveParent}
-            setActiveCard={setActiveCard}
-            setActiveDetails={setActiveDetails}
-            updateDashboard={(payload) => updateDashboard(payload)}
-            handleChange={handleChange}
-          />
+          {dashboardList.map((dashboardItem, index) =>
+            <Panel
+              items={fieldsList}
+              panelIndex={index}
+              classes={classes}
+              expanded={expanded}
+              dashboardReducer={dashboardItem}
+              setModalShown={setModalShown}
+              setCaseKeyModalShown={setCaseKeyModalShown}
+              setActivePanel={setActivePanel}
+              setActiveParent={setActiveParent}
+              setActiveCard={setActiveCard}
+              setActiveDetails={setActiveDetails}
+              updateDashboard={(payload) => updateDashboard(payload)}
+              handleChange={handleChange}
+            />
+          )}
         </Typography>
         <NodeDialog
           isModalShown={isModalShown}
