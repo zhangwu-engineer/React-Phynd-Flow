@@ -100,8 +100,12 @@ const generateInitialSource = (type, parent, inputValue) => {
         MappingFieldId: `switch-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         SwitchDefault: {
+          MappingFieldId: null,
+          MappingFieldType: null,
         },
         SwitchValue: {
+          MappingFieldId: null,
+          MappingFieldType: null,
         },
         Cases: [],
       };
@@ -110,14 +114,22 @@ const generateInitialSource = (type, parent, inputValue) => {
         MappingFieldId: `conditional-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         TrueField: {
+          MappingFieldId: null,
+          MappingFieldType: null,
         },
         FalseField: {
+          MappingFieldId: null,
+          MappingFieldType: null,
         },
         Condition: {
           ConditionId: `condition-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
           Field1: {
+            MappingFieldId: null,
+            MappingFieldType: null,
           },
           Field2: {
+            MappingFieldId: null,
+            MappingFieldType: null,
           },
         }
       };
@@ -126,8 +138,12 @@ const generateInitialSource = (type, parent, inputValue) => {
         MappingFieldId: `combination-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         Field1: {
+          MappingFieldId: null,
+          MappingFieldType: null,
         },
         Field2: {
+          MappingFieldId: null,
+          MappingFieldType: null,
         },
       };
     case 'Regex':
@@ -137,7 +153,10 @@ const generateInitialSource = (type, parent, inputValue) => {
         RegexPattern: inputValue.primary,
         RegexFlags: inputValue.secondary,
         RegexGroup: inputValue.tertiary,
-        Source: {},
+        Source: {
+          MappingFieldId: null,
+          MappingFieldType: null,
+        },
       };
     case 'Iteration':
       return {
@@ -145,7 +164,10 @@ const generateInitialSource = (type, parent, inputValue) => {
         MappingFieldType: type,
         Iterator: {
           IteratorId: `iterator-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
-          Source: {},
+          Source: {
+            MappingFieldId: null,
+            MappingFieldType: null,
+          },
           Delimiter: inputValue.primary,
           Index: inputValue.secondary,
         },
@@ -473,6 +495,17 @@ const getPropertyToMap = (type) => {
       return {
         name: 'FunctionName',
       };
+    case 'Regex':
+      return {
+        name: 'RegexPattern', 
+        name1: 'RegexFlags',
+        name2: 'RegexGroup',
+      }
+    case 'Iteration':
+      return {
+        name: 'Iterator.Delimiter',
+        name1: 'Iterator.Index',
+      }
     default:
       return {
         id: 'MappingFieldId',
@@ -531,23 +564,25 @@ const getDataDetails = (nextField) => {
 }
 
 const getChildrenWeight = (field) => {
-  switch (field.MappingFieldType) {
-    case 'Combination':
-      return getChildrenWeight(field.Field1) + getChildrenWeight(field.Field2);
-    case 'Conditional':
-      return getChildrenWeight(field.Condition.Field1) + getChildrenWeight(field.Condition.Field2)  + getChildrenWeight(field.TrueField) + getChildrenWeight(field.FalseField);
-    case 'Switch':
-      let total = getChildrenWeight(field.SwitchValue) + getChildrenWeight(field.SwitchDefault);
-      let caseSum = 1;
-      field.Cases.forEach(c => {
-        caseSum += getChildrenWeight(c.Value);
-      });
-      total = total + (caseSum === 1 ? 1 : caseSum - 1);
-      return total;
-    case 'Regex': return getChildrenWeight(field.Source)+1;
-    case 'Iteration': return getChildrenWeight(field.Iterator.Source)+1;
-    default:
-      return 1;
+  if (field) {
+    switch (field.MappingFieldType) {
+      case 'Combination':
+        return getChildrenWeight(field.Field1) + getChildrenWeight(field.Field2);
+      case 'Conditional':
+        return getChildrenWeight(field.Condition.Field1) + getChildrenWeight(field.Condition.Field2)  + getChildrenWeight(field.TrueField) + getChildrenWeight(field.FalseField);
+      case 'Switch':
+        let total = getChildrenWeight(field.SwitchValue) + getChildrenWeight(field.SwitchDefault);
+        let caseSum = 1;
+        field.Cases.forEach(c => {
+          caseSum += getChildrenWeight(c.Value);
+        });
+        total = total + (caseSum === 1 ? 1 : caseSum - 1);
+        return total;
+      case 'Regex': return getChildrenWeight(field.Source)+1;
+      case 'Iteration': return getChildrenWeight(field.Iterator.Source)+1;
+      default:
+        return 1;
+    }
   }
 }
 
@@ -610,7 +645,17 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
             }
             if (!val) {
               const obj2 = generateInitialSource(element, parent, inputValue);
-              for (var attrname in obj2) { obj[attrname] = obj2[attrname]; }
+              if (obj['MappingFieldType'] === obj2['MappingFieldType']) {
+                for (var attrname in obj2) {
+                  const oldProperty = getPropertyToMap(obj['MappingFieldType']);
+                  const newProperty = getPropertyToMap(obj2['MappingFieldType']);
+                  obj[oldProperty.name] = obj2[newProperty.name];
+                  if (oldProperty.name1) obj[oldProperty.name1] = obj2[newProperty.name1];
+                  if (oldProperty.name2) obj[oldProperty.name2] = obj2[newProperty.name2];
+                }
+              } else {
+                Object.assign(obj, obj2);
+              }
               return obj;
             } else if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
               if (element) {
