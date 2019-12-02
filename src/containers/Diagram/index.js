@@ -255,14 +255,15 @@ const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
 };
 
 const generateFunctionMapping = (source, xWeight, yWeight) => {
-  const nextMappingField = generateMapping(source.FunctionParameter, xWeight+1, yWeight);
+  const nextMappingField = generateMapping(source.FunctionParameter, xWeight+1, yWeight+1);
   const currentId = source.MappingFieldId;
   const functionId = source.FunctionParameter.MappingFieldId;
   const functionType = source.FunctionParameter.MappingFieldType;
 
   const elements = [
-    generateEntity(currentId, `Function: ${source.FunctionName}`, 'Function', getDataDetails(source), xWeight, yWeight),
-    generateNode(`source-${currentId}`, 'SourceParameter', currentId, 'function-source', functionType, getDataDetails(source.FunctionParameter), xWeight, yWeight),
+    generateEntity(currentId, `Function:`, 'Function', getDataDetails(source), xWeight, yWeight),
+    generateNode(`info-${currentId}`, `Name: ${source.FunctionName}`, currentId, 'function-info', 'function-info', null, xWeight, yWeight),
+    generateNode(`source-${currentId}`, 'SourceParameter', currentId, 'function-source', functionType, getDataDetails(source.FunctionParameter), xWeight, yWeight+1),
     generateEdge(`edge-source-${functionId}`, `source-${currentId}`, functionId),
   ];
   return elements.concat(nextMappingField);
@@ -580,6 +581,7 @@ const getChildrenWeight = (field) => {
         return total;
       case 'Regex': return getChildrenWeight(field.Source)+1;
       case 'Iteration': return getChildrenWeight(field.Iterator.Source)+1;
+      case 'Function': return getChildrenWeight(field.FunctionParameter)+1;
       default:
         return 1;
     }
