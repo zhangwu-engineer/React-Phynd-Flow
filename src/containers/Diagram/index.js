@@ -588,6 +588,21 @@ const getChildrenWeight = (field) => {
   }
 }
 
+const checkNodeEditable = (node) => {
+  if ((node.edges && node.edges.length === 0) || node.parent) {
+    if (
+      node.data.parentType === 'conditional-entity' ||
+      node.data.parentType === 'switch-entity' ||
+      node.data.parentType === 'regex-info' ||
+      node.data.parentType === 'function-info' ||
+      node.data.parentType === 'iteration-info'
+    )
+      return false;
+    return true;
+  }
+  return false;
+}
+
 const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCaseKeyModal, updateDashboard }, ref) => {
   const [elements, setElements] = React.useState([]);
 
@@ -596,7 +611,8 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
       const isModalShown = e.target._private.group === 'nodes' ? true : false;
       if (e.target._private.data.entity && e.target._private.data.entity === 'Cases') {
         triggerCaseKeyModal(elementId, isModalShown, e.target._private);
-      } else if ((e.target._private.edges && e.target._private.edges.length === 0) || e.target._private.parent) {
+      } else if (checkNodeEditable(e.target._private)) {
+        console.log(e.target._private, '-=-=');
         triggerModal(elementId, isModalShown, e.target._private);
       }
     });
