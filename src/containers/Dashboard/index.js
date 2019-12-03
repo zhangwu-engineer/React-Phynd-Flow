@@ -17,7 +17,8 @@ import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
   a11yProps,
-  getNameFromID
+  getNameFromID,
+  getNameFromEntity
 } from 'utils/helper';
 import hoc from './hoc';
 
@@ -41,14 +42,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const refs = [];
-const PanelItem = ({ item, index, panelIndex, dashboardReducer }) => {
+const PanelItem = ({ item, index, dashboardReducer }) => {
   if (!dashboardReducer.dashboard) return <div />;
   const source = dashboardReducer.dashboard[item.item];
   return (
-    <MuiExpansionPanel square key={index} expanded={item.expanded === `panel${index}${panelIndex}`} onChange={item.handleChange(`panel${index}${panelIndex}`)}>
+    <MuiExpansionPanel square key={index} expanded={item.expanded === `panel${index}`} onChange={item.handleChange(`panel${index}`)}>
       <MuiExpansionPanelSummary
         aria-controls={`panel${index}d-content`}
-        id={`panel${index}${panelIndex}d-header`}
+        id={`panel${index}d-header`}
         expandIcon={dashboardReducer.dashboard[item.item] && <ExpandMoreIcon />}
       >
         <Typography>{item.item}</Typography>
@@ -93,15 +94,15 @@ const PanelItem = ({ item, index, panelIndex, dashboardReducer }) => {
   );
 };
 
-const Panel = ({ items, panelIndex, dashboardReducer, ...props }) => {
+const Panel = ({ items, startPoint, dashboardReducer, ...props }) => {
   const itemsList = items.map((item, index) => {
-    refs[index] = React.createRef();
-    return { item, ref: refs[index], ...props }
+    refs[startPoint+index] = React.createRef();
+    return { item, ref: refs[startPoint+index], ...props }
   });
   return (
     <Box>
       {
-        itemsList.map((item, index) => <PanelItem item={item} index={index} panelIndex={panelIndex} key={index} dashboardReducer={dashboardReducer} />)
+        itemsList.map((item, index) => <PanelItem item={item} index={startPoint+index} key={startPoint+index} dashboardReducer={dashboardReducer} />)
       }
     </Box>
   );
@@ -122,14 +123,16 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
   };
 
   const fieldsList = fieldsReducer.fields && fieldsReducer.fields[getNameFromID(match.params.entity)] && fieldsReducer.fields[getNameFromID(match.params.entity)];
-  let dashboardList = [dashboardReducer];
+  let dashboardList = dashboardReducer;
+  let dashboardArrayLength = 0;
   if (match.params.entity !== 'provider-details') {
-    const mapData = dashboardReducer.dashboard['AddressMaps'];
+    const mapData = dashboardReducer.dashboard[getNameFromEntity(match.params.entity)];
     if (Array.isArray(mapData)) {
       dashboardList = [];
       mapData.forEach(m => dashboardList.push({
         dashboard: m,
       }));
+      dashboardArrayLength = Object.keys(mapData[0]).length;
     }
   }
 
@@ -160,13 +163,13 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           aria-labelledby={`scrollable-auto-tab-${0}`}
           // {...other}
         >
-          {dashboardList.map((dashboardItem, index) =>
+          {!Array.isArray(dashboardList) &&
             <Panel
+              startPoint={0}
               items={fieldsList}
-              panelIndex={index}
               classes={classes}
               expanded={expanded}
-              dashboardReducer={dashboardItem}
+              dashboardReducer={dashboardReducer}
               setModalShown={setModalShown}
               setCaseKeyModalShown={setCaseKeyModalShown}
               setActivePanel={setActivePanel}
@@ -176,6 +179,37 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
               updateDashboard={(payload) => updateDashboard(payload)}
               handleChange={handleChange}
             />
+          }
+          {Array.isArray(dashboardList) && dashboardList.map((dashboardItem, index) =>
+            <MuiExpansionPanel square key={index}>
+              <MuiExpansionPanelSummary
+                aria-controls={`panel-array${index}d-content`}
+                id={`panel-array${index}`}
+              >
+                <Typography>{index+1}</Typography>
+              </MuiExpansionPanelSummary>
+              <MuiExpansionPanelDetails>
+                <Panel
+                  startPoint={parseInt(dashboardArrayLength*index)}
+                  items={fieldsList}
+                  classes={classes}
+                  expanded={expanded}
+                  dashboardReducer={dashboardItem}
+                  setModalShown={setModalShown}
+                  setCaseKeyModalShown={setCaseKeyModalShown}
+                  setActivePanel={setActivePanel}
+                  setActiveParent={setActiveParent}
+                  setActiveCard={setActiveCard}
+                  setActiveDetails={setActiveDetails}
+                  updateDashboard={(payload) => {
+                    const dashboardSource = Object.assign({}, dashboardReducer);
+                    dashboardSource.dashboard[getNameFromEntity(match.params.entity)][index] = payload;
+                    updateDashboard(dashboardSource.dashboard);
+                  }}
+                  handleChange={handleChange}
+                />
+              </MuiExpansionPanelDetails>
+            </MuiExpansionPanel>
           )}
         </Typography>
         <NodeDialog
