@@ -11,7 +11,6 @@ import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
 import { FaQuestion, FaColumns, FaPlus, FaCode, FaList, FaWindowMinimize, FaAngleUp, FaAlignJustify } from "react-icons/fa";
 import { AiOutlineScissor } from "react-icons/ai";
-import hoc from '../Dashboard/hoc';
 
 const IconsList = {
   Constant: FaWindowMinimize,
@@ -322,4 +321,4 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
   );
 }
 
-export default hoc(NodeDialog);
+export default NodeDialog;
