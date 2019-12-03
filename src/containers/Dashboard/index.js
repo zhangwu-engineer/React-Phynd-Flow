@@ -55,40 +55,42 @@ const PanelItem = ({ item, panelName, index, dashboardReducer }) => {
         <Typography>{item.item}</Typography>
       </MuiExpansionPanelSummary>
       <MuiExpansionPanelDetails className={item.classes.details}>
-        <Diagram
-          item={item.item}
-          ref={item.ref}
-          elementId={index}
-          source={source}
-          updateDashboard={payload => {
-            const dashboardSource = dashboardReducer.dashboard;
-            dashboardSource[item.item] = payload;
-            item.updateDashboard(dashboardSource);
-          }}
-          triggerModal={(panel, flag, parent) => {
-            item.setModalShown(flag);
-            item.setActivePanel(panel);
-            item.setActiveParent(parent);
-            if (parent && parent.data.parentType === 'cases-entity') {
-              item.setActiveDetails({
-                ...parent.data.dataDetails,
-                fourth: parent.data.label,
-              });
-            }
-            if (parent && !parent.data.parent) {
-              item.setActiveCard(parent.data.parentType);
-              item.setActiveDetails(parent.data.dataDetails);
-            } else {
-              item.setActiveCard(parent ? parent.data.nextType : null);
-              item.setActiveDetails(parent && parent.data.dataDetails);
-            }
-          }}
-          triggerCaseKeyModal={(panel, flag, parent) => {
-            item.setCaseKeyModalShown(flag);
-            item.setActivePanel(panel);
-            item.setActiveParent(parent);
-          }}
-        />
+        {item.expanded === `${panelName}-${index}` &&
+          <Diagram
+            item={item.item}
+            ref={item.ref}
+            elementId={index}
+            source={source}
+            updateDashboard={payload => {
+              const dashboardSource = dashboardReducer.dashboard;
+              dashboardSource[item.item] = payload;
+              item.updateDashboard(dashboardSource);
+            }}
+            triggerModal={(panel, flag, parent) => {
+              item.setModalShown(flag);
+              item.setActivePanel(panel);
+              item.setActiveParent(parent);
+              if (parent && parent.data.parentType === 'cases-entity') {
+                item.setActiveDetails({
+                  ...parent.data.dataDetails,
+                  fourth: parent.data.label,
+                });
+              }
+              if (parent && !parent.data.parent) {
+                item.setActiveCard(parent.data.parentType);
+                item.setActiveDetails(parent.data.dataDetails);
+              } else {
+                item.setActiveCard(parent ? parent.data.nextType : null);
+                item.setActiveDetails(parent && parent.data.dataDetails);
+              }
+            }}
+            triggerCaseKeyModal={(panel, flag, parent) => {
+              item.setCaseKeyModalShown(flag);
+              item.setActivePanel(panel);
+              item.setActiveParent(parent);
+            }}
+          />
+        }
       </MuiExpansionPanelDetails>
     </MuiExpansionPanel>
   );
