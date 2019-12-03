@@ -42,14 +42,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const refs = [];
-const PanelItem = ({ item, index, dashboardReducer }) => {
+const PanelItem = ({ item, panelName, index, dashboardReducer }) => {
   if (!dashboardReducer.dashboard) return <div />;
   const source = dashboardReducer.dashboard[item.item];
   return (
-    <MuiExpansionPanel square key={index} expanded={item.expanded === `panel${index}`} onChange={item.handleChange(`panel${index}`)}>
+    <MuiExpansionPanel square key={index} expanded={item.expanded === `${panelName}-${index}`} onChange={item.handleChange(`${panelName}-${index}`)}>
       <MuiExpansionPanelSummary
-        aria-controls={`panel${index}d-content`}
-        id={`panel${index}d-header`}
+        aria-controls={`${panelName}-${index}d-content`}
+        id={`${panelName}-${index}d-header`}
         expandIcon={source && <ExpandMoreIcon />}
       >
         <Typography>{item.item}</Typography>
@@ -94,7 +94,7 @@ const PanelItem = ({ item, index, dashboardReducer }) => {
   );
 };
 
-const Panel = ({ items, startPoint, dashboardReducer, ...props }) => {
+const Panel = ({ items, startPoint, panelName, dashboardReducer, ...props }) => {
   const itemsList = items.map((item, index) => {
     refs[startPoint+index] = React.createRef();
     return { item, ref: refs[startPoint+index], ...props }
@@ -102,7 +102,7 @@ const Panel = ({ items, startPoint, dashboardReducer, ...props }) => {
   return (
     <Box>
       {
-        itemsList.map((item, index) => <PanelItem item={item} index={startPoint+index} key={startPoint+index} dashboardReducer={dashboardReducer} />)
+        itemsList.map((item, index) => <PanelItem item={item} panelName={panelName} index={startPoint+index} key={startPoint+index} dashboardReducer={dashboardReducer} />)
       }
     </Box>
   );
@@ -187,6 +187,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           {!Array.isArray(dashboardList) &&
             <Panel
               startPoint={0}
+              panelName={match.params.entity}
               items={fieldsList}
               classes={classes}
               expanded={expanded}
@@ -213,6 +214,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
               <MuiExpansionPanelDetails>
                 <Panel
                   startPoint={parseInt(dashboardItem.startPoint)}
+                  panelName={match.params.entity}
                   items={fieldsList}
                   classes={classes}
                   expanded={expanded}
