@@ -8,6 +8,11 @@ export const getNameFromID = id => `${id}`.split('-').map(item => item.charAt(0)
 export const getNameFromEntity = entity => {
   switch (entity) {
     case 'addresses': return 'AddressMaps';
+    case 'licenses': return 'LicenseMaps';
+    case 'specialties': return 'SpecialtyMaps';
+    case 'qualifications': return 'ProviderTrainingMaps';
+    case 'custom-fields': return 'CustomFieldToExtractProvider';
+    case 'languages': return 'ProviderLanguageMaps';
     default: return 'NoMap';
   }
 }

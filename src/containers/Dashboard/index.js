@@ -132,7 +132,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
       mapData.forEach(m => dashboardList.push({
         dashboard: m,
       }));
-      dashboardArrayLength = Object.keys(mapData[0]).length;
+      dashboardArrayLength = mapData.length === 0 ? 0 : Object.keys(mapData[0]).length;
     }
   }
 
@@ -185,6 +185,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
               <MuiExpansionPanelSummary
                 aria-controls={`panel-array${index}d-content`}
                 id={`panel-array${index}`}
+                expandIcon={dashboardItem && <ExpandMoreIcon />}
               >
                 <Typography>{index+1}</Typography>
               </MuiExpansionPanelSummary>
