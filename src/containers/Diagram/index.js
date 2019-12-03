@@ -665,13 +665,11 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
             if (!val) {
               const obj2 = generateInitialSource(element, parent, inputValue);
               if (obj['MappingFieldType'] === obj2['MappingFieldType']) {
-                for (var attrname in obj2) {
-                  const oldProperty = getPropertyToMap(obj['MappingFieldType']);
-                  const newProperty = getPropertyToMap(obj2['MappingFieldType']);
-                  obj[oldProperty.name] = obj2[newProperty.name];
-                  if (oldProperty.name1) obj[oldProperty.name1] = obj2[newProperty.name1];
-                  if (oldProperty.name2) obj[oldProperty.name2] = obj2[newProperty.name2];
-                }
+                const oldProperty = getPropertyToMap(obj['MappingFieldType']);
+                const newProperty = getPropertyToMap(obj2['MappingFieldType']);
+                obj[oldProperty.name] = obj2[newProperty.name];
+                if (oldProperty.name1) obj[oldProperty.name1] = obj2[newProperty.name1];
+                if (oldProperty.name2) obj[oldProperty.name2] = obj2[newProperty.name2];
               } else {
                 Object.assign(obj, obj2);
               }
