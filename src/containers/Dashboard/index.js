@@ -50,7 +50,7 @@ const PanelItem = ({ item, index, dashboardReducer }) => {
       <MuiExpansionPanelSummary
         aria-controls={`panel${index}d-content`}
         id={`panel${index}d-header`}
-        expandIcon={dashboardReducer.dashboard[item.item] && <ExpandMoreIcon />}
+        expandIcon={source && <ExpandMoreIcon />}
       >
         <Typography>{item.item}</Typography>
       </MuiExpansionPanelSummary>
@@ -124,15 +124,36 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
 
   const fieldsList = fieldsReducer.fields && fieldsReducer.fields[getNameFromID(match.params.entity)] && fieldsReducer.fields[getNameFromID(match.params.entity)];
   let dashboardList = dashboardReducer;
-  let dashboardArrayLength = 0;
   if (match.params.entity !== 'provider-details') {
-    const mapData = dashboardReducer.dashboard[getNameFromEntity(match.params.entity)];
-    if (Array.isArray(mapData)) {
-      dashboardList = [];
-      mapData.forEach(m => dashboardList.push({
-        dashboard: m,
-      }));
-      dashboardArrayLength = mapData.length === 0 ? 0 : Object.keys(mapData[0]).length;
+    if (match.params.entity !== 'contacts') {
+      const mapData = dashboardReducer.dashboard[getNameFromEntity(match.params.entity)];
+      if (Array.isArray(mapData)) {
+        dashboardList = [];
+        let startPoint = 0;
+        mapData.forEach(m => {
+          dashboardList.push({
+            dashboard: m,
+            startPoint,
+          });
+          startPoint += parseInt(Object.keys(m).length);
+        });
+      }
+    } else {
+      const addressMapData = dashboardReducer.dashboard['AddressMaps'];
+      if (Array.isArray(addressMapData)) {
+        dashboardList = [];
+        let startPoint = 0;
+        addressMapData.forEach((am, index) => {
+          am.ContactMaps.forEach(cm => {
+            dashboardList.push({
+              dashboard: cm,
+              startPoint,
+              addressIndex: index,
+            });
+            startPoint += parseInt(Object.keys(cm).length);
+          });
+        });
+      }
     }
   }
 
@@ -191,7 +212,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
               </MuiExpansionPanelSummary>
               <MuiExpansionPanelDetails>
                 <Panel
-                  startPoint={parseInt(dashboardArrayLength*index)}
+                  startPoint={parseInt(dashboardItem.startPoint)}
                   items={fieldsList}
                   classes={classes}
                   expanded={expanded}
@@ -204,7 +225,11 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
                   setActiveDetails={setActiveDetails}
                   updateDashboard={(payload) => {
                     const dashboardSource = Object.assign({}, dashboardReducer);
-                    dashboardSource.dashboard[getNameFromEntity(match.params.entity)][index] = payload;
+                    if (match.params.entity !== 'contacts') {
+                      dashboardSource.dashboard[getNameFromEntity(match.params.entity)][index] = payload;
+                    } else if (dashboardItem.arrayIndex) {
+                      dashboardSource.dashboard['AddressMaps'][dashboardItem.arrayIndex]['ContactMaps'][index] = payload;
+                    }
                     updateDashboard(dashboardSource.dashboard);
                   }}
                   handleChange={handleChange}
