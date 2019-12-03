@@ -116,7 +116,7 @@ const getSecondaryFieldLabel = (cardType) => {
 
 const getTertiaryFieldLabel = (cardType) => {
   switch (cardType) {
-    case 'Regex': return 'Group';
+    case 'Regex': return 'Group Number';
     default: return null;
   }
 }
@@ -247,6 +247,7 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
             <TextField
               label={getTertiaryFieldLabel(activeCard)}
               value={inputTertiaryValue || ''}
+              type="number"
               onChange={handleTertiaryInputChange}
               InputProps={{
                 classes: {
