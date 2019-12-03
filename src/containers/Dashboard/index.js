@@ -14,7 +14,7 @@ import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
-import AddIcon from '@material-ui/icons/Add';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
   a11yProps,
   getNameFromID
@@ -49,7 +49,7 @@ const PanelItem = ({ item, index, panelIndex, dashboardReducer }) => {
       <MuiExpansionPanelSummary
         aria-controls={`panel${index}d-content`}
         id={`panel${index}${panelIndex}d-header`}
-        expandIcon={!dashboardReducer.dashboard[item.item] && <AddIcon />}
+        expandIcon={dashboardReducer.dashboard[item.item] && <ExpandMoreIcon />}
       >
         <Typography>{item.item}</Typography>
       </MuiExpansionPanelSummary>
