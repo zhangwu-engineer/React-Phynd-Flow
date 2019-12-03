@@ -398,7 +398,7 @@ const generateRegexMapping = (source, xWeight, yWeight) => {
 
   const elements = [
     generateEntity(currentId, 'Regex', 'Regex', getDataDetails(source), xWeight, yWeight),
-    generateNode(`info-${currentId}`, `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: "${source.RegexGroup}"`, currentId, 'regex-info', 'regex-info', null, xWeight, yWeight),
+    generateNode(`info-${currentId}`, `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: ${source.RegexGroup}`, currentId, 'regex-info', 'regex-info', null, xWeight, yWeight),
     generateNode(`source-${currentId}`, 'Source:', currentId, 'regex-source', source.Source.MappingFieldType, getDataDetails(source.Source), xWeight, yWeight+1),
     generateEdge(`edge-source-${currentId}`, `source-${currentId}`, source.Source.MappingFieldId),
   ];
