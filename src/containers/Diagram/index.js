@@ -65,6 +65,8 @@ const useStyles = makeStyles(theme => ({
   fab: {
     position: 'absolute',
     textTransform: 'none',
+    marginLeft: 'calc(50% - 28px)',
+    marginTop: 50,
   },
 }));
 
@@ -741,8 +743,8 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
         style={
           {
             width: Math.max(window.innerWidth - 300, (xWeightMax + 0.5) * DIAGRAM_CONF.NODE_WIDTH),
-            height: yWeightMax === 0 ? 200 : Math.min(window.innerHeight - 200, (yWeightMax + 1) * DIAGRAM_CONF.NODE_HEIGHT),
-            marginTop: yWeightMax === 0 ? 60 : 0,
+            height: yWeightMax === 0 ? 50 : Math.min(window.innerHeight - 200, (yWeightMax + 1) * DIAGRAM_CONF.NODE_HEIGHT),
+            marginTop: yWeightMax === 0 ? 100 : 0,
           }
         }
       />
