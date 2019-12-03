@@ -5,3 +5,9 @@ export const a11yProps = index => ({
 
 export const getIDFromName = name => `${name}`.toLowerCase().replace(' ', '-')
 export const getNameFromID = id => `${id}`.split('-').map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(' ');
+export const getNameFromEntity = entity => {
+  switch (entity) {
+    case 'addresses': return 'AddressMaps';
+    default: return 'NoMap';
+  }
+}
