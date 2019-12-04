@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Sidebar from 'components/Sidebar';
 import Diagram from 'containers/Diagram';
-import NodeDialog from 'containers/Dialog';
+import NodeDialog from 'containers/Dialog/category';
 import CaseKeyDialog from 'containers/CaseKeyDialog';
 // Expansion Panel
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
