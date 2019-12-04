@@ -77,7 +77,9 @@ const generateInitialSource = (type, parent, inputValue) => {
         MappingFieldId: `function-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
         FunctionName: inputValue.primary,
-        FunctionParameter: {},
+        FunctionParameter: {
+          MappingFieldType: null,
+        },
       };
     case 'Column':
       return {
@@ -676,7 +678,16 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
               return obj;
             } else if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
               if (element) {
-                obj[propertyToFind.name] = generateInitialSource(element, parent, inputValue);
+                const obj2 = generateInitialSource(element, parent, inputValue);
+                if (obj[propertyToFind.name] && obj[propertyToFind.name]['MappingFieldType'] === obj2['MappingFieldType']) {
+                  const oldProperty = getPropertyToMap(obj[propertyToFind.name]['MappingFieldType']);
+                  const newProperty = getPropertyToMap(obj2['MappingFieldType']);
+                  obj[propertyToFind.name][oldProperty.name] = obj2[newProperty.name];
+                  if (oldProperty.name1) obj[propertyToFind.name][oldProperty.name1] = obj2[newProperty.name1];
+                  if (oldProperty.name2) obj[propertyToFind.name][oldProperty.name2] = obj2[newProperty.name2];
+                } else {
+                  obj[propertyToFind.name] = obj2;
+                }
                 if (parent.data.parentType === 'iteration-source')
                   obj['Iterator'][propertyToFind.name] = generateInitialSource(element, parent, inputValue);
                 return obj;
