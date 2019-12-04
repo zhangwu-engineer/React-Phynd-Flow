@@ -7,7 +7,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
 import { FaQuestion, FaColumns, FaPlus, FaCode, FaList, FaWindowMinimize, FaAngleUp, FaAlignJustify } from "react-icons/fa";
 import { AiOutlineScissor } from "react-icons/ai";
@@ -94,40 +93,6 @@ const NodeCard = ({ cardName, activeCard }) => {
   )
 }
 
-const getPrimaryFieldLabel = (cardType) => {
-  switch (cardType) {
-    case 'Function': return 'Function Name';
-    case 'Iteration': return 'Delimiter';
-    case 'Regex': return 'Pattern';
-    case 'Constant': return 'Constant Value';
-    case 'Column': return 'Column Name';
-    case 'HL7': return 'HL7 Value';
-    default: return null;
-  }
-}
-
-const getSecondaryFieldLabel = (cardType) => {
-  switch (cardType) {
-    case 'Iteration': return 'Index';
-    case 'Regex': return 'Flags';
-    default: return null;
-  }
-}
-
-const getTertiaryFieldLabel = (cardType) => {
-  switch (cardType) {
-    case 'Regex': return 'Group Number';
-    default: return null;
-  }
-}
-
-const getFourthFieldLabel = (activeParent) => {
-  if (activeParent && activeParent.data.parentType === 'cases-entity') {
-    return 'Key Name';
-  }
-  return null;
-}
-
 const isRemovable = (parent) => {
   const primaryModels = ['Constant', 'Column', 'HL7', 'Switch', 'Regex', 'Iteration', 'Conditional', 'Combination', 'Function'];
   if (parent) {
@@ -136,7 +101,7 @@ const isRemovable = (parent) => {
   return false;
 }
 
-const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, hideModal, setNewElement, removeElement }) => {
+const CategoryDialog = ({ isModalShown, activeParent, currentCard, currentDetails, hideModal, setNewElement, removeElement }) => {
   const classes = useStyles();
   const [activeCard, setActiveCard] = React.useState(null);
 
@@ -144,35 +109,10 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
     hideModal();
   }
 
-  const [inputPrimaryValue, setInputPrimaryValue] = React.useState('');
-  const handlePrimaryInputChange = event => {
-    setInputPrimaryValue(event.target.value);
-  };
-
-  const [inputSecondaryValue, setInputSecondaryValue] = React.useState('');
-  const handleSecondaryInputChange = event => {
-    setInputSecondaryValue(event.target.value);
-  };
-
-  const [inputTertiaryValue, setInputTertiaryValue] = React.useState('');
-  const handleTertiaryInputChange = event => {
-    setInputTertiaryValue(event.target.value);
-  };
-
-  const [inputFourthValue, setInputFourthValue] = React.useState('');
-  const handleFourthInputChange = event => {
-    setInputFourthValue(event.target.value);
-  };
-
   useEffect(() => {
     if (activeCard !== currentCard) {
       setActiveCard(currentCard);
     }
-    setInputPrimaryValue(currentDetails ? currentDetails.primary : '');
-    setInputSecondaryValue(currentDetails ? currentDetails.secondary : '');
-    setInputTertiaryValue(currentDetails ? currentDetails.tertiary : '');
-    setInputFourthValue(currentDetails ? currentDetails.fourth : '');
-
   }, [currentDetails]);
 
   return (
@@ -202,83 +142,6 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
             </Grid>
           )}
         </Grid>
-        <Grid item>
-          {getPrimaryFieldLabel(activeCard) &&
-            <TextField
-              label={getPrimaryFieldLabel(activeCard)}
-              value={inputPrimaryValue || ''}
-              onChange={handlePrimaryInputChange}
-              InputProps={{
-                classes: {
-                  input: classes.resize,
-                },
-              }}
-              InputLabelProps={{
-                classes: {
-                  root: classes.resize,
-                }
-              }}
-            />
-          }
-        </Grid>
-        <Grid item>
-          {getSecondaryFieldLabel(activeCard) &&
-            <TextField
-              label={getSecondaryFieldLabel(activeCard)}
-              value={inputSecondaryValue || ''}
-              onChange={handleSecondaryInputChange}
-              InputProps={{
-                classes: {
-                  input: classes.resize,
-                },
-              }}
-              InputLabelProps={{
-                classes: {
-                  root: classes.resize,
-                }
-              }}
-            />
-          }
-        </Grid>
-        <Grid item>
-          {getTertiaryFieldLabel(activeCard) &&
-            <TextField
-              label={getTertiaryFieldLabel(activeCard)}
-              value={inputTertiaryValue || ''}
-              type="number"
-              onChange={handleTertiaryInputChange}
-              InputProps={{
-                classes: {
-                  input: classes.resize,
-                },
-              }}
-              InputLabelProps={{
-                classes: {
-                  root: classes.resize,
-                }
-              }}
-            />
-          }
-        </Grid>
-        <Grid item>
-          {getFourthFieldLabel(activeParent) &&
-            <TextField
-              label={getFourthFieldLabel(activeParent)}
-              value={inputFourthValue || ''}
-              onChange={handleFourthInputChange}
-              InputProps={{
-                classes: {
-                  input: classes.resize,
-                },
-              }}
-              InputLabelProps={{
-                classes: {
-                  root: classes.resize,
-                }
-              }}
-            />
-          }
-        </Grid>
         <Grid container className={classes.buttonGroup}>
           {isRemovable(activeParent) &&
             <Button
@@ -299,4 +162,4 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
   );
 }
 
-export default NodeDialog;
+export default CategoryDialog;
