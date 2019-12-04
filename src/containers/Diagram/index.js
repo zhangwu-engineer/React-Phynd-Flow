@@ -508,8 +508,8 @@ const getPropertyToMap = (type) => {
       }
     case 'Iteration':
       return {
-        name: 'Iterator.Delimiter',
-        name1: 'Iterator.Index',
+        name: 'Delimiter',
+        name1: 'Index',
       }
     default:
       return {
@@ -672,9 +672,15 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
                 // Update only entity details
                 const oldProperty = getPropertyToMap(obj['MappingFieldType']);
                 const newProperty = getPropertyToMap(obj2['MappingFieldType']);
-                obj[oldProperty.name] = obj2[newProperty.name];
-                if (oldProperty.name1) obj[oldProperty.name1] = obj2[newProperty.name1];
-                if (oldProperty.name2) obj[oldProperty.name2] = obj2[newProperty.name2];
+                if (parent.data.parentType === 'Iteration') {
+                  obj['Iterator'][oldProperty.name] = obj2['Iterator'][newProperty.name];
+                  if (oldProperty.name1) obj['Iterator'][oldProperty.name1] = obj2['Iterator'][newProperty.name1];
+                  if (oldProperty.name2) obj['Iterator'][oldProperty.name2] = obj2['Iterator'][newProperty.name2];
+                } else {
+                  obj[oldProperty.name] = obj2[newProperty.name];
+                  if (oldProperty.name1) obj[oldProperty.name1] = obj2[newProperty.name1];
+                  if (oldProperty.name2) obj[oldProperty.name2] = obj2[newProperty.name2];
+                }
               } else {
                 // Replace the primary entity with another category model.
                 Object.assign(obj, obj2);
