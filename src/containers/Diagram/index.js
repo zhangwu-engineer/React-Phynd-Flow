@@ -653,6 +653,7 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
         const propertyToFind = getPropertyToMap(parent.data.parentType);
         const findByProperty = (obj, val)=> {
           for (let p in obj) {
+            // Case Key Value Update
             if (Array.isArray(obj[p])) {
               for (let ca in obj[p]) {
                 if (obj[p][ca]['Value'] && `wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
@@ -665,18 +666,22 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
               }
             }
             if (!val) {
+              // Primary Entity Update.
               const obj2 = generateInitialSource(element, parent, inputValue);
               if (obj['MappingFieldType'] === obj2['MappingFieldType']) {
+                // Update only entity details
                 const oldProperty = getPropertyToMap(obj['MappingFieldType']);
                 const newProperty = getPropertyToMap(obj2['MappingFieldType']);
                 obj[oldProperty.name] = obj2[newProperty.name];
                 if (oldProperty.name1) obj[oldProperty.name1] = obj2[newProperty.name1];
                 if (oldProperty.name2) obj[oldProperty.name2] = obj2[newProperty.name2];
               } else {
+                // Replace the primary entity with another category model.
                 Object.assign(obj, obj2);
               }
               return obj;
             } else if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
+              // Internal Entities Update.
               if (element) {
                 const obj2 = generateInitialSource(element, parent, inputValue);
                 if (obj[propertyToFind.name] && obj[propertyToFind.name]['MappingFieldType'] === obj2['MappingFieldType']) {
@@ -686,13 +691,16 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
                   if (oldProperty.name1) obj[propertyToFind.name][oldProperty.name1] = obj2[newProperty.name1];
                   if (oldProperty.name2) obj[propertyToFind.name][oldProperty.name2] = obj2[newProperty.name2];
                 } else {
+                  // Replace the internal entity with another category model.
                   obj[propertyToFind.name] = obj2;
                 }
                 if (parent.data.parentType === 'iteration-source') {
+                  // Different field structure of Iteration.
                   obj['Iterator'][propertyToFind.name] = generateInitialSource(element, parent, inputValue);
                 }
                 return obj;
               } else if (obj[propertyToFind.name] && obj[propertyToFind.name]['MappingFieldType']) {
+                // No active card is selected.
                 const propertyToUpdate = getPropertyToMap(obj[propertyToFind.name]['MappingFieldType']);
                 obj[propertyToFind.name][propertyToUpdate.name] = inputValue.primary;
                 return obj;
