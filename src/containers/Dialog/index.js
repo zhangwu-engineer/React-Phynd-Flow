@@ -193,11 +193,9 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
               item xs={4}
               key={key}
               onClick={() => {
-                if (activeCard !== key) {
-                  setActiveCard(key);
-                } else {
-                  setActiveCard(null);
-                }
+                setActiveCard(key);
+                setNewElement(key);
+                closeModal();
               }}
             >
               <NodeCard cardName={key} activeCard={activeCard} />
@@ -282,27 +280,6 @@ const NodeDialog = ({ isModalShown, activeParent, currentCard, currentDetails, h
           }
         </Grid>
         <Grid container className={classes.buttonGroup}>
-          {activeCard &&
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              onClick={() => {
-                setNewElement(
-                  activeCard,
-                  {
-                    primary: inputPrimaryValue,
-                    secondary: inputSecondaryValue,
-                    tertiary: inputTertiaryValue,
-                    fourth: inputFourthValue,
-                  }
-                );
-                closeModal();
-              }}
-            >
-              Save
-            </Button>
-          }
           {isRemovable(activeParent) &&
             <Button
               variant="contained"

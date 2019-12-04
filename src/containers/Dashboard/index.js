@@ -248,9 +248,9 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           activeParent={activeParent}
           currentCard={activeCard}
           currentDetails={activeDetails}
-          setNewElement={(element, inputValue) => {
+          setNewElement={(element) => {
             if (refs[activePanel])
-              refs[activePanel].current.validate(element, activeParent, inputValue);
+              refs[activePanel].current.validateNew(element, activeParent);
           }}
           removeElement={() => {
             if (refs[activePanel])
