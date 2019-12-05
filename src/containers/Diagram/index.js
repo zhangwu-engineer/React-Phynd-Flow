@@ -70,13 +70,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const generateInitialSource = (type, parent) => {
+const generateInitialSource = (type, parent, inputValue) => {
   switch (type) {
     case 'Function':
       return {
         MappingFieldId: `function-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
-        FunctionName: 'N/A',
+        FunctionName: inputValue.primary,
         FunctionParameter: {
           MappingFieldType: null,
         },
@@ -85,19 +85,19 @@ const generateInitialSource = (type, parent) => {
       return {
         MappingFieldId: `column-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
-        ColumnIdentifier: 'N/A',
+        ColumnIdentifier: inputValue.primary,
       };
     case 'Constant':
       return {
         MappingFieldId: `constant-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
-        ConstantValue: 'N/A',
+        ConstantValue: inputValue.primary,
       };
     case 'HL7':
       return {
         MappingFieldId: `hl7-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
-        HL7Segment: 'N/A',
+        HL7Segment: inputValue.primary,
       };
     case 'Switch':
       return {
@@ -154,9 +154,9 @@ const generateInitialSource = (type, parent) => {
       return {
         MappingFieldId: `regex-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
         MappingFieldType: type,
-        RegexPattern: 'N/A',
-        RegexFlags: 'N/A',
-        RegexGroup: 'N/A',
+        RegexPattern: inputValue.primary,
+        RegexFlags: inputValue.secondary,
+        RegexGroup: inputValue.tertiary,
         Source: {
           MappingFieldId: null,
           MappingFieldType: null,
@@ -172,8 +172,8 @@ const generateInitialSource = (type, parent) => {
             MappingFieldId: null,
             MappingFieldType: null,
           },
-          Delimiter: 'N/A',
-          Index: 'N/A',
+          Delimiter: inputValue.primary,
+          Index: inputValue.secondary,
         },
       };
     default:
@@ -266,8 +266,8 @@ const generateFunctionMapping = (source, xWeight, yWeight) => {
 
   const elements = [
     generateEntity(currentId, `Function:`, 'Function', getDataDetails(source), xWeight, yWeight),
-    generateNode(`info-${currentId}`, `Name: ${source.FunctionName}`, currentId, 'function-info', 'function-info', null, xWeight, yWeight),
-    generateNode(`source-${currentId}`, 'SourceParameter', currentId, 'function-source', functionType, getDataDetails(source.FunctionParameter), xWeight, yWeight+1),
+    generateNode(`info-${currentId}`, `Name: ${source.FunctionName}`, currentId, 'function-info', source.MappingFieldType, getDataDetails(source), xWeight, yWeight),
+    generateNode(`source-${currentId}`, 'SourceParameter', currentId, 'function-source', functionType,  null, xWeight, yWeight+1),
     generateEdge(`edge-source-${functionId}`, `source-${currentId}`, functionId),
   ];
   return elements.concat(nextMappingField);
@@ -400,8 +400,8 @@ const generateRegexMapping = (source, xWeight, yWeight) => {
 
   const elements = [
     generateEntity(currentId, 'Regex', 'Regex', getDataDetails(source), xWeight, yWeight),
-    generateNode(`info-${currentId}`, `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: ${source.RegexGroup}`, currentId, 'regex-info', 'regex-info', null, xWeight, yWeight),
-    generateNode(`source-${currentId}`, 'Source:', currentId, 'regex-source', source.Source.MappingFieldType, getDataDetails(source.Source), xWeight, yWeight+1),
+    generateNode(`info-${currentId}`, `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: ${source.RegexGroup}`, currentId, 'regex-info', source.MappingFieldType, getDataDetails(source), xWeight, yWeight),
+    generateNode(`source-${currentId}`, 'Source:', currentId, 'regex-source', source.Source.MappingFieldType, null, xWeight, yWeight+1),
     generateEdge(`edge-source-${currentId}`, `source-${currentId}`, source.Source.MappingFieldId),
   ];
   const sourceMappingField = generateMapping(source.Source, xWeight+1, yWeight+1);
@@ -414,8 +414,8 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
 
   const elements = [
     generateEntity(currentId, 'Iteration', 'Iteration', getDataDetails(source), xWeight, yWeight),
-    generateNode(`info-${currentId}`, `Delimiter: "${source.Iterator.Delimiter}", Index: "${source.Iterator.Index}"`, currentId, 'iteration', 'iteration', null, xWeight, yWeight),
-    generateNode(`source-${source.Iterator.IteratorId}`, 'Source:', currentId, 'iteration-source', source.Iterator.Source.MappingFieldType, getDataDetails(source.Iterator.Source), xWeight, yWeight+1),
+    generateNode(`info-${currentId}`, `Delimiter: "${source.Iterator.Delimiter}", Index: "${source.Iterator.Index}"`, currentId, 'iteration-info', source.MappingFieldType, getDataDetails(source), xWeight, yWeight),
+    generateNode(`source-${source.Iterator.IteratorId}`, 'Source:', currentId, 'iteration-source', source.Iterator.Source.MappingFieldType, null, xWeight, yWeight+1),
     generateEdge(`edge-source-${currentId}`, `source-${source.Iterator.IteratorId}`, source.Iterator.Source.MappingFieldId),
   ];
   const sourceMappingField = generateMapping(source.Iterator.Source, xWeight+1, yWeight+1);
@@ -460,12 +460,27 @@ const getPropertyToMap = (type) => {
         id: 'MappingFieldId',
         name: 'FunctionParameter',
       };
+    case 'function-info':
+      return {
+        id: 'MappingFieldId',
+        name: 'FunctionName',
+      };
     case 'iteration-source':
       return {
         id: 'MappingFieldId',
         name: 'Source',
       };
+    case 'iteration-info':
+      return {
+        id: 'MappingFieldId',
+        name: 'Source',
+      };
     case 'regex-source':
+      return {
+        id: 'MappingFieldId',
+        name: 'Source',
+      };
+    case 'regex-info':
       return {
         id: 'MappingFieldId',
         name: 'Source',
@@ -486,18 +501,22 @@ const getPropertyToMap = (type) => {
       };
     case 'Constant':
       return {
+        id: 'MappingFieldId',
         name: 'ConstantValue',
       };
     case 'Column':
       return {
+        id: 'MappingFieldId',
         name: 'ColumnIdentifier',
       };
     case 'HL7':
       return {
+        id: 'MappingFieldId',
         name: 'HL7Segment',
       };
     case 'Function':
       return {
+        id: 'MappingFieldId',
         name: 'FunctionName',
       };
     case 'Regex':
@@ -592,7 +611,7 @@ const getChildrenWeight = (field) => {
   }
 }
 
-const checkNodeEditable = (node) => {
+const checkCategoryEditable = (node) => {
   if ((node.edges && node.edges.length === 0) || node.parent) {
     if (
       node.data.parentType === 'conditional-entity' ||
@@ -607,7 +626,20 @@ const checkNodeEditable = (node) => {
   return false;
 }
 
-const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCaseKeyModal, updateDashboard }, ref) => {
+const checkNodeEditable = (node) => {
+  if (
+    node.data.parentType === 'Constant' ||
+    node.data.parentType === 'Column' ||
+    node.data.parentType === 'HL7' ||
+    node.data.parentType === 'regex-info' ||
+    node.data.parentType === 'function-info' ||
+    node.data.parentType === 'iteration-info'
+  )
+    return true;
+  return false;
+}
+
+const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerDetailsModal, triggerCaseKeyModal, updateDashboard }, ref) => {
   const [elements, setElements] = React.useState([]);
 
   useEffect(() => {
@@ -616,8 +648,10 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
       if (e.target._private.data.entity && e.target._private.data.entity === 'Cases') {
         triggerCaseKeyModal(elementId, isModalShown, e.target._private);
       } else if (checkNodeEditable(e.target._private)) {
+        triggerDetailsModal(elementId, isModalShown, e.target._private);
+      } else if (checkCategoryEditable(e.target._private)) {
         triggerModal(elementId, isModalShown, e.target._private);
-      }
+      } 
     });
     source && setElements(generateMapping(source, 1, 1));
   },
@@ -653,21 +687,9 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
         const propertyToFind = getPropertyToMap(parent.data.parentType);
         const findByProperty = (obj, val)=> {
           for (let p in obj) {
-            // Case Key Value Update
-            if (Array.isArray(obj[p])) {
-              for (let ca in obj[p]) {
-                if (obj[p][ca]['Value'] && `wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
-                  obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } });
-                  if (inputValue.fourth) {
-                    obj[p][ca]['Key'] = inputValue.fourth;
-                  }
-                  return obj;
-                }
-              }
-            }
             if (!val) {
               // Primary Entity Update.
-              const obj2 = generateInitialSource(element, parent);
+              const obj2 = generateInitialSource(element, parent, inputValue);
               if (obj['MappingFieldType'] === obj2['MappingFieldType']) {
                 // Update only entity details
                 const oldProperty = getPropertyToMap(obj['MappingFieldType']);
@@ -681,52 +703,43 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
                   if (oldProperty.name1) obj[oldProperty.name1] = obj2[newProperty.name1];
                   if (oldProperty.name2) obj[oldProperty.name2] = obj2[newProperty.name2];
                 }
-              } else {
-                // Replace the primary entity with another category model.
-                Object.assign(obj, obj2);
               }
               return obj;
             } else if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
               // Internal Entities Update.
-              if (element) {
-                const obj2 = generateInitialSource(element, parent);
-                if (obj[propertyToFind.name] && obj[propertyToFind.name]['MappingFieldType'] === obj2['MappingFieldType']) {
-                  const oldProperty = getPropertyToMap(obj[propertyToFind.name]['MappingFieldType']);
-                  const newProperty = getPropertyToMap(obj2['MappingFieldType']);
-                  obj[propertyToFind.name][oldProperty.name] = obj2[newProperty.name];
-                  if (oldProperty.name1) obj[propertyToFind.name][oldProperty.name1] = obj2[newProperty.name1];
-                  if (oldProperty.name2) obj[propertyToFind.name][oldProperty.name2] = obj2[newProperty.name2];
-                } else {
-                  // Replace the internal entity with another category model.
-                  obj[propertyToFind.name] = obj2;
-                }
-                if (parent.data.parentType === 'iteration-source') {
-                  // Different field structure of Iteration.
-                  obj['Iterator'][propertyToFind.name] = generateInitialSource(element, parent);
-                }
-                return obj;
-              } else if (obj[propertyToFind.name] && obj[propertyToFind.name]['MappingFieldType']) {
-                // No active card is selected.
-                const propertyToUpdate = getPropertyToMap(obj[propertyToFind.name]['MappingFieldType']);
-                obj[propertyToFind.name][propertyToUpdate.name] = inputValue.primary;
-                return obj;
+              const oldProperty = getPropertyToMap(obj['MappingFieldType']);
+              if (parent.data.parentType === 'iteration-info') {
+                obj['Iterator'][oldProperty.name] = inputValue.primary;
+                if (oldProperty.name1) obj['Iterator'][oldProperty.name1] = inputValue.secondary;
+                if (oldProperty.name2) obj['Iterator'][oldProperty.name2] = inputValue.tertiary;
+              } else {
+                obj[oldProperty.name] = inputValue.primary;
+                if (oldProperty.name1) obj[oldProperty.name1] = inputValue.secondary;
+                if (oldProperty.name2) obj[oldProperty.name2] = inputValue.tertiary;
               }
+              return obj;
             } else if (typeof obj[p] === 'object') {
               findByProperty(obj[p], val);
             }
           }
         };
-        findByProperty(source, parent.data.parent);
+        findByProperty(source, parent.data.parent ? parent.data.parent: parent.data.id);
         setElements([]);
         setTimeout(() => {
           setElements(generateMapping(source, 1, 1));
         }, 0);
         updateDashboard(source);
       } else {
-        updateDashboard(generateInitialSource(element, parent,));
+        updateDashboard(generateInitialSource(element, parent, inputValue));
       }
     },
     validateNew: (element, parent) => {
+      const defaultInput = {
+        primary: 'N/A',
+        secondary: 'N/A',
+        tertiary: 'N/A',
+        fourth: 'N/A',
+      };
       if (parent) {
         const propertyToFind = getPropertyToMap(parent.data.parentType);
         const findByProperty = (obj, val)=> {
@@ -735,28 +748,25 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
             if (Array.isArray(obj[p])) {
               for (let ca in obj[p]) {
                 if (obj[p][ca]['Value'] && `wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
-                  obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } });
+                  obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } }, defaultInput);
                   return obj;
                 }
               }
             }
             if (!val) {
               // Primary Entity Update.
-              const obj2 = generateInitialSource(element, parent);
+              const obj2 = generateInitialSource(element, parent, defaultInput);
               Object.assign(obj, obj2);
               return obj;
             } else if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
-              // Internal Entities Update.
-              if (element) {
-                // Replace the internal entity with another category model.
-                const obj2 = generateInitialSource(element, parent);
-                obj[propertyToFind.name] = obj2;
-                if (parent.data.parentType === 'iteration-source') {
-                  // Different field structure of Iteration.
-                  obj['Iterator'][propertyToFind.name] = generateInitialSource(element, parent);
-                }
-                return obj;
+              // Replace the internal entity with another category model.
+              const obj2 = generateInitialSource(element, parent, defaultInput);
+              obj[propertyToFind.name] = obj2;
+              if (parent.data.parentType === 'iteration-source') {
+                // Different field structure of Iteration.
+                obj['Iterator'][propertyToFind.name] = generateInitialSource(element, parent, defaultInput);
               }
+              return obj;
             } else if (typeof obj[p] === 'object') {
               findByProperty(obj[p], val);
             }
@@ -769,7 +779,7 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerCase
         }, 0);
         updateDashboard(source);
       } else {
-        updateDashboard(generateInitialSource(element, parent,));
+        updateDashboard(generateInitialSource(element, parent, defaultInput));
       }
     },
     validateCaseKey: (parent, inputKeyValue) => {

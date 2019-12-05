@@ -110,10 +110,8 @@ const CategoryDialog = ({ isModalShown, activeParent, currentCard, currentDetail
   }
 
   useEffect(() => {
-    if (activeCard !== currentCard) {
-      setActiveCard(currentCard);
-    }
-  }, [currentDetails]);
+    setActiveCard(currentCard);
+  }, [currentCard]);
 
   return (
     <Dialog

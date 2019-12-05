@@ -7,7 +7,8 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Sidebar from 'components/Sidebar';
 import Diagram from 'containers/Diagram';
-import NodeDialog from 'containers/Dialog/category';
+import CategoryDialog from 'containers/Dialog/category';
+import DetailsDialog from 'containers/Dialog/details';
 import CaseKeyDialog from 'containers/CaseKeyDialog';
 // Expansion Panel
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -67,21 +68,20 @@ const PanelItem = ({ item, panelName, index, dashboardReducer }) => {
               item.updateDashboard(dashboardSource);
             }}
             triggerModal={(panel, flag, parent) => {
-              item.setModalShown(flag);
+              item.setCategoryModalShown(flag);
               item.setActivePanel(panel);
               item.setActiveParent(parent);
-              if (parent && parent.data.parentType === 'cases-entity') {
-                item.setActiveDetails({
-                  ...parent.data.dataDetails,
-                  fourth: parent.data.label,
-                });
-              }
+              item.setActiveCard(parent ? parent.data.nextType : null);
+            }}
+            triggerDetailsModal={(panel, flag, parent) => {
+              item.setDetailsModalShown(flag);
+              item.setActivePanel(panel);
+              item.setActiveParent(parent);
+              item.setActiveDetails(parent && parent.data.dataDetails);
               if (parent && !parent.data.parent) {
                 item.setActiveCard(parent.data.parentType);
-                item.setActiveDetails(parent.data.dataDetails);
               } else {
                 item.setActiveCard(parent ? parent.data.nextType : null);
-                item.setActiveDetails(parent && parent.data.dataDetails);
               }
             }}
             triggerCaseKeyModal={(panel, flag, parent) => {
@@ -117,7 +117,8 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
   const [activeParent, setActiveParent] = React.useState(null);
   const [activeCard, setActiveCard] = React.useState(null);
   const [activeDetails, setActiveDetails] = React.useState(null);
-  const [isModalShown, setModalShown] = React.useState(false);
+  const [isCategoryModalShown, setCategoryModalShown] = React.useState(false);
+  const [isDetailsModalShown, setDetailsModalShown] = React.useState(false);
   const [isCaseKeyModalShown, setCaseKeyModalShown] = React.useState(false);
 
   const handleChange = panel => (event, newExpanded) => {
@@ -194,7 +195,8 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
               classes={classes}
               expanded={expanded}
               dashboardReducer={dashboardReducer}
-              setModalShown={setModalShown}
+              setCategoryModalShown={setCategoryModalShown}
+              setDetailsModalShown={setDetailsModalShown}
               setCaseKeyModalShown={setCaseKeyModalShown}
               setActivePanel={setActivePanel}
               setActiveParent={setActiveParent}
@@ -221,7 +223,8 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
                   classes={classes}
                   expanded={expanded}
                   dashboardReducer={dashboardItem}
-                  setModalShown={setModalShown}
+                  setCategoryModalShown={setCategoryModalShown}
+                  setDetailsModalShown={setDetailsModalShown}
                   setCaseKeyModalShown={setCaseKeyModalShown}
                   setActivePanel={setActivePanel}
                   setActiveParent={setActiveParent}
@@ -242,15 +245,30 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
             </MuiExpansionPanel>
           )}
         </Typography>
-        <NodeDialog
-          isModalShown={isModalShown}
-          hideModal={() => setModalShown(false)}
+        <CategoryDialog
+          isModalShown={isCategoryModalShown}
+          hideModal={() => setCategoryModalShown(false)}
           activeParent={activeParent}
           currentCard={activeCard}
           currentDetails={activeDetails}
           setNewElement={(element) => {
             if (refs[activePanel])
               refs[activePanel].current.validateNew(element, activeParent);
+          }}
+          removeElement={() => {
+            if (refs[activePanel])
+              refs[activePanel].current.remove();
+          }}
+        />
+        <DetailsDialog
+          isModalShown={isDetailsModalShown}
+          hideModal={() => setDetailsModalShown(false)}
+          activeParent={activeParent}
+          currentCard={activeCard}
+          currentDetails={activeDetails}
+          updateElement={(element, inputValue) => {
+            if (refs[activePanel])
+              refs[activePanel].current.validate(element, activeParent, inputValue);
           }}
           removeElement={() => {
             if (refs[activePanel])
