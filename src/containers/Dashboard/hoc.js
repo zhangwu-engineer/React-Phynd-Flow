@@ -47,10 +47,16 @@ const hoc = (Dashboard) => {
 }
 
 export default (Dashboard) => {
+  const modules = [
+    { name: 'Provider Module', link: '' },
+    { name: 'Location Module', link: '' },
+    { name: 'Network Module', link: '' },
+    { name: 'HealthPlan Module', link: '' },
+  ];
   const mapStateToProps = state => ({
     dashboardReducer: state.dashboard,
     fieldsReducer: state.fields,
-    sidebarData: state.fields.fields ? Object.keys(state.fields.fields).map(name => ({ name: name, link: getIDFromName(name) })) : {}
+    sidebarData: state.fields.fields ? modules.concat(Object.keys(state.fields.fields).map(name => ({ name: name, link: getIDFromName(name) }))) : {}
   })
 
   const mapDispatchToProps = {
