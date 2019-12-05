@@ -8,7 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
-import { FaQuestion, FaColumns, FaPlus, FaCode, FaList, FaWindowMinimize, FaAngleUp, FaAlignJustify } from "react-icons/fa";
+import { FaQuestion, FaColumns, FaPlus, FaCode, FaList, FaWindowMinimize, FaAngleUp, FaAlignJustify, FaJs } from "react-icons/fa";
 import { AiOutlineScissor } from "react-icons/ai";
 
 const IconsList = {
@@ -21,6 +21,9 @@ const IconsList = {
   Iteration: FaList,
   Function: FaCode,
   Switch: FaAlignJustify,
+  JsonProperty: FaJs,
+  JsonElement: FaJs,
+  Aggregate: FaJs,
 };
 
 const useStyles = makeStyles(theme => ({
@@ -94,7 +97,7 @@ const NodeCard = ({ cardName, activeCard }) => {
 }
 
 const isRemovable = (parent) => {
-  const primaryModels = ['Constant', 'Column', 'HL7', 'Switch', 'Regex', 'Iteration', 'Conditional', 'Combination', 'Function'];
+  const primaryModels = ['Constant', 'Column', 'HL7', 'Switch', 'Regex', 'Iteration', 'Conditional', 'Combination', 'Function', 'JsonProperty'];
   if (parent) {
     if (parent && parent.edges.length === 0 && primaryModels.indexOf(parent.data.parentType) > -1) return true;
   }

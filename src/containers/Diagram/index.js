@@ -176,6 +176,17 @@ const generateInitialSource = (type, parent, inputValue) => {
           Index: inputValue.secondary,
         },
       };
+    case 'JsonProperty':
+      return {
+        MappingFieldId: `jsonproperty-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
+        MappingFieldType: type,
+        PropertyPath: inputValue.primary,
+        Default: inputValue.secondary,
+        Source: {
+          MappingFieldId: null,
+          MappingFieldType: null,
+        }
+      };
     default:
       return {};
   }
@@ -202,6 +213,8 @@ const generateMapping = (source, xWeight, yWeight) => {
       return generateRegexMapping(source, xWeight, yWeight);
     case 'Iteration':
       return generateIterationMapping(source, xWeight, yWeight);
+    case 'JsonProperty':
+      return generateJsonPropertyMapping(source, xWeight, yWeight);
     default:
       return [];
   }
@@ -423,6 +436,21 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
   return elements.concat(sourceMappingField);
 };
 
+const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
+  const nextMappingField = generateMapping(source.Source, xWeight+1, yWeight+1);
+  const currentId = source.MappingFieldId;
+  const sourceId = source.Source.MappingFieldId;
+  const sourceType = source.Source.MappingFieldType;
+
+  const elements = [
+    generateEntity(currentId, `Json Property:`, 'JsonProperty', getDataDetails(source), xWeight, yWeight),
+    generateNode(`info-${currentId}`, `Property Path: ${source.PropertyPath}, Default: ${source.Default}`, currentId, 'jsonproperty-info', source.MappingFieldType, getDataDetails(source), xWeight, yWeight),
+    generateNode(`source-${currentId}`, 'Source', currentId, 'jsonproperty-source', sourceType,  null, xWeight, yWeight+1),
+    generateEdge(`edge-source-${sourceId}`, `source-${currentId}`, sourceId),
+  ];
+  return elements.concat(nextMappingField);
+};
+
 const getPropertyToMap = (type) => {
   switch(type) {
     case 'condition1':
@@ -485,6 +513,16 @@ const getPropertyToMap = (type) => {
         id: 'MappingFieldId',
         name: 'Source',
       };
+    case 'jsonproperty-info':
+      return {
+        id: 'MappingFieldId',
+        name: 'Source',
+      };
+    case 'jsonproperty-source':
+      return {
+        id: 'MappingFieldId',
+        name: 'Source',
+      };
     case 'switch-value':
       return {
         id: 'MappingFieldId',
@@ -529,6 +567,11 @@ const getPropertyToMap = (type) => {
       return {
         name: 'Delimiter',
         name1: 'Index',
+      }
+    case 'JsonProperty':
+      return {
+        name: 'PropertyPath',
+        name1: 'Default',
       }
     default:
       return {
@@ -582,6 +625,13 @@ const getDataDetails = (nextField) => {
         tertiary: '',
         fourth: '',
       };
+    case 'JsonProperty':
+      return {
+        primary: nextField.PropertyPath,
+        secondary: nextField.Default,
+        tertiary: '',
+        fourth: '',
+      };
     default:
       return null;
   }
@@ -605,6 +655,7 @@ const getChildrenWeight = (field) => {
       case 'Regex': return getChildrenWeight(field.Source)+1;
       case 'Iteration': return getChildrenWeight(field.Iterator.Source)+1;
       case 'Function': return getChildrenWeight(field.FunctionParameter)+1;
+      case 'JsonProperty': return getChildrenWeight(field.Source)+1;
       default:
         return 1;
     }
@@ -618,7 +669,8 @@ const checkCategoryEditable = (node) => {
       node.data.parentType === 'switch-entity' ||
       node.data.parentType === 'regex-info' ||
       node.data.parentType === 'function-info' ||
-      node.data.parentType === 'iteration-info'
+      node.data.parentType === 'iteration-info' ||
+      node.data.parentType === 'jsonproperty-info'
     )
       return false;
     return true;
@@ -633,7 +685,8 @@ const checkNodeEditable = (node) => {
     node.data.parentType === 'HL7' ||
     node.data.parentType === 'regex-info' ||
     node.data.parentType === 'function-info' ||
-    node.data.parentType === 'iteration-info'
+    node.data.parentType === 'iteration-info' ||
+    node.data.parentType === 'jsonproperty-info'
   )
     return true;
   return false;

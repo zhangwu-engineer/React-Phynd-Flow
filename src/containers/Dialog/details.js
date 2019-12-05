@@ -50,6 +50,7 @@ const getPrimaryFieldLabel = (cardType) => {
     case 'Constant': return 'Constant Value';
     case 'Column': return 'Column Name';
     case 'HL7': return 'HL7 Value';
+    case 'JsonProperty': return 'Property Path';
     default: return null;
   }
 }
@@ -58,6 +59,7 @@ const getSecondaryFieldLabel = (cardType) => {
   switch (cardType) {
     case 'Iteration': return 'Index';
     case 'Regex': return 'Flags';
+    case 'JsonProperty': return 'Default';
     default: return null;
   }
 }
