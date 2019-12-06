@@ -187,6 +187,24 @@ const generateInitialSource = (type, parent, inputValue) => {
           MappingFieldType: null,
         }
       };
+    case 'Aggregate':
+      return {
+        MappingFieldId: `aggregate-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
+        MappingFieldType: type,
+        Delimiter: inputValue.primary,
+        Iterator: {
+          IteratorId: `aggregate-iterator-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
+          Source: {
+            MappingFieldId: null,
+            MappingFieldType: null,
+          },
+          Delimiter: inputValue.secondary,
+        },
+        Iterations: {
+          MappingFieldId: null,
+          MappingFieldType: null,
+        }
+      };
     default:
       return {};
   }
@@ -215,6 +233,8 @@ const generateMapping = (source, xWeight, yWeight) => {
       return generateIterationMapping(source, xWeight, yWeight);
     case 'JsonProperty':
       return generateJsonPropertyMapping(source, xWeight, yWeight);
+    case 'Aggregate':
+      return generateAggregateMapping(source, xWeight, yWeight);
     default:
       return [];
   }
@@ -451,6 +471,28 @@ const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
   return elements.concat(nextMappingField);
 };
 
+const generateAggregateMapping = (source, xWeight, yWeight) => {
+  const currentId = source.MappingFieldId;
+
+  const elements = [
+    generateEntity(currentId, 'Aggregate', 'Aggregate', getDataDetails(source), xWeight, yWeight),
+    generateNode(`info-${currentId}`, `Delimiter: "${source.Delimiter}"`, currentId, 'aggregate-info', source.MappingFieldType, getDataDetails(source), xWeight, yWeight),
+    generateNode(`iterator-${currentId}`, 'Iterator:', currentId, 'iterator-entity', 'iterator-entity', null, xWeight, yWeight+1),
+    generateEdge(`edge-iterator-${currentId}`, `iterator-${currentId}`, source.Iterator.IteratorId),
+
+    generateEntity(source.Iterator.IteratorId, 'Iterator', 'Iteration', getDataDetails(source.Iterator), xWeight+1, yWeight+1),
+    generateNode(`info-${source.Iterator.IteratorId}`, `Delimiter: "${source.Iterator.Delimiter}"`, source.Iterator.IteratorId, 'aggregate-iterator-info', source.Iterator.Source.MappingFieldType, getDataDetails(source.Iterator), xWeight+1, yWeight+1),
+    generateNode(`source-${source.Iterator.IteratorId}`, 'Source:', source.Iterator.IteratorId, 'aggregate-iterator-source', source.Iterator.Source.MappingFieldType, null, xWeight+1, yWeight+2),
+    generateEdge(`edge-source-${currentId}`, `source-${source.Iterator.IteratorId}`, source.Iterator.Source.MappingFieldId),
+
+    generateNode(`iterations-${currentId}`, 'Iterations:', currentId, 'aggregate-iterations', source.Iterations.MappingFieldType, null, xWeight, yWeight+3),
+    generateEdge(`edge-iterations-${currentId}`, `iterations-${currentId}`, source.Iterations.MappingFieldId),
+  ];
+  const sourceMappingField = generateMapping(source.Iterator.Source, xWeight+1, yWeight+1);
+  const iterationsMappingField = generateMapping(source.Iterations, xWeight+1, yWeight+3);
+  return elements.concat(sourceMappingField).concat(iterationsMappingField);
+};
+
 const getPropertyToMap = (type) => {
   switch(type) {
     case 'condition1':
@@ -523,6 +565,21 @@ const getPropertyToMap = (type) => {
         id: 'MappingFieldId',
         name: 'Source',
       };
+    case 'aggregate-info':
+      return {
+        id: 'MappingFieldId',
+        name: 'Source',
+      };
+    case 'aggregate-iterator-source':
+      return {
+        id: 'MappingFieldId',
+        name: 'Source',
+      };
+    case 'aggregate-iterations':
+      return {
+        id: 'MappingFieldId',
+        name: 'Iterations',
+      };
     case 'switch-value':
       return {
         id: 'MappingFieldId',
@@ -572,6 +629,10 @@ const getPropertyToMap = (type) => {
       return {
         name: 'PropertyPath',
         name1: 'Default',
+      }
+    case 'Aggregate':
+      return {
+        name: 'Delimiter',
       }
     default:
       return {
@@ -632,6 +693,13 @@ const getDataDetails = (nextField) => {
         tertiary: '',
         fourth: '',
       };
+    case 'Aggregate':
+      return {
+        primary: nextField.Delimiter,
+        secondary: '',
+        tertiary: '',
+        fourth: '',
+      };
     default:
       return null;
   }
@@ -656,6 +724,7 @@ const getChildrenWeight = (field) => {
       case 'Iteration': return getChildrenWeight(field.Iterator.Source)+1;
       case 'Function': return getChildrenWeight(field.FunctionParameter)+1;
       case 'JsonProperty': return getChildrenWeight(field.Source)+1;
+      case 'Aggregate': return getChildrenWeight(field.Iterator.Source)+getChildrenWeight(field.Iterations)+2;
       default:
         return 1;
     }
@@ -670,7 +739,8 @@ const checkCategoryEditable = (node) => {
       node.data.parentType === 'regex-info' ||
       node.data.parentType === 'function-info' ||
       node.data.parentType === 'iteration-info' ||
-      node.data.parentType === 'jsonproperty-info'
+      node.data.parentType === 'jsonproperty-info' ||
+      node.data.parentType === 'aggregate-info'
     )
       return false;
     return true;
@@ -686,7 +756,8 @@ const checkNodeEditable = (node) => {
     node.data.parentType === 'regex-info' ||
     node.data.parentType === 'function-info' ||
     node.data.parentType === 'iteration-info' ||
-    node.data.parentType === 'jsonproperty-info'
+    node.data.parentType === 'jsonproperty-info' ||
+    node.data.parentType === 'aggregate-info'
   )
     return true;
   return false;
@@ -815,8 +886,9 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerDeta
               // Replace the internal entity with another category model.
               const obj2 = generateInitialSource(element, parent, defaultInput);
               obj[propertyToFind.name] = obj2;
-              if (parent.data.parentType === 'iteration-source') {
+              if (parent.data.parentType === 'iteration-source' || parent.data.parentType === 'aggregate-iterator-source') {
                 // Different field structure of Iteration.
+                console.log('-=-=-=', obj, parent.data.parentType, val);
                 obj['Iterator'][propertyToFind.name] = generateInitialSource(element, parent, defaultInput);
               }
               return obj;
