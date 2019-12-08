@@ -61,6 +61,7 @@ const getSecondaryFieldLabel = (cardType) => {
     case 'Iteration': return 'Index';
     case 'Regex': return 'Flags';
     case 'JsonProperty': return 'Default';
+    case 'AggregateIterator': return 'Iterator Delimiter';
     default: return null;
   }
 }
