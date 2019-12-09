@@ -185,7 +185,19 @@ const generateInitialSource = (type, parent, inputValue) => {
         Source: {
           MappingFieldId: null,
           MappingFieldType: null,
+        },
+        Element: {
         }
+      };
+    case 'JsonElement':
+      return {
+        MappingFieldId: `jsonelement-${parent ? parent.data.id : ''}-${Math.random()*10000}`,
+        MappingFieldType: type,
+        Source: {
+          MappingFieldId: null,
+          MappingFieldType: null,
+        },
+
       };
     case 'Aggregate':
       return {
@@ -233,6 +245,8 @@ const generateMapping = (source, xWeight, yWeight) => {
       return generateIterationMapping(source, xWeight, yWeight);
     case 'JsonProperty':
       return generateJsonPropertyMapping(source, xWeight, yWeight);
+    case 'JsonElement':
+      return generateJsonElementMapping(source, xWeight, yWeight);
     case 'Aggregate':
       return generateAggregateMapping(source, xWeight, yWeight);
     default:
@@ -471,6 +485,21 @@ const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
   return elements.concat(nextMappingField);
 };
 
+const generateJsonElementMapping = (source, xWeight, yWeight) => {
+  const nextMappingField = generateMapping(source.Source, xWeight+1, yWeight+1);
+  const currentId = source.MappingFieldId;
+  const sourceId = source.Source.MappingFieldId;
+  const sourceType = source.Source.MappingFieldType;
+
+  const elements = [
+    generateEntity(currentId, `Json Element:`, 'JsonElement', getDataDetails(source), xWeight, yWeight),
+    generateNode(`info-element-${currentId}`, 'Element Info', currentId, 'jsonelement-info', source.MappingFieldType, getDataDetails(source), xWeight, yWeight),
+    generateNode(`source-element-${currentId}`, 'Source', currentId, 'jsonelement-source', sourceType,  null, xWeight, yWeight+1),
+    generateEdge(`edge-source-${sourceId}`, `source-element-${currentId}`, sourceId),
+  ];
+  return elements.concat(nextMappingField);
+};
+
 const generateAggregateMapping = (source, xWeight, yWeight) => {
   const currentId = source.MappingFieldId;
 
@@ -560,6 +589,11 @@ const getPropertyToMap = (type) => {
         name: 'Source',
       };
     case 'jsonproperty-source':
+      return {
+        id: 'MappingFieldId',
+        name: 'Source',
+      };
+    case 'jsonelement-source':
       return {
         id: 'MappingFieldId',
         name: 'Source',
