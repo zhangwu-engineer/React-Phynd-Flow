@@ -93,7 +93,7 @@ const PanelItem = ({ item, panelName, index, dashboardReducer }) => {
 };
 
 const Panel = ({ items, startPoint, panelName, dashboardReducer, ...props }) => {
-  const itemsList = items.map((item, index) => {
+  const itemsList = items && items.map((item, index) => {
     refs[startPoint+index] = React.createRef();
     return { item, ref: refs[startPoint+index], ...props }
   });
