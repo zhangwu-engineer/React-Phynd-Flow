@@ -1,9 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Sidebar from 'components/Sidebar';
 import Diagram from 'containers/Diagram';
@@ -17,7 +14,6 @@ import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
-  a11yProps,
   getNameFromID,
   getNameFromEntity
 } from 'utils/helper';
@@ -26,6 +22,7 @@ import hoc from './hoc';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    marginTop: 112,
   },
   content: {
     flexGrow: 1,
@@ -164,22 +161,6 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
     <div className={classes.root}>
       <Sidebar data={sidebarData} />
       <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Paper square>
-          <Tabs
-            indicatorColor="primary"
-            textColor="primary"
-            variant="scrollable"
-            scrollButtons="auto"
-            aria-label="scrollable auto tabs example"
-            value={0}
-          >
-            <Tab label="Provider Module" {...a11yProps(0)} />
-            <Tab label="Location Module" {...a11yProps(1)} />
-            <Tab label="Network Module" {...a11yProps(2)} />
-            <Tab label="HealthPlan Module" {...a11yProps(3)} />
-          </Tabs>
-        </Paper>
         <Typography
           component="div"
           role="tabpanel"
