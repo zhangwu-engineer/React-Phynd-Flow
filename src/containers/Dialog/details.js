@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     textTransform: 'none',
     marginLeft: 20,
   },
-  resize:{
+  resize: {
     fontSize: 20
   },
 }));

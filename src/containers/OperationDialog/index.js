@@ -34,6 +34,9 @@ const useStyles = makeStyles(theme => ({
     textTransform: 'none',
     marginLeft: 20,
   },
+  resize: {
+    fontSize: 20
+  },
 }));
 
 const OperationDialog = ({ isModalShown, hideModal, setNewOperation }) => {
@@ -73,6 +76,16 @@ const OperationDialog = ({ isModalShown, hideModal, setNewOperation }) => {
             label="Name"
             value={inputName}
             onChange={handleNameChange}
+            InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.resize,
+                }
+              }}
           />
         </Grid>
         <Grid className={classes.tabInputContent}>
@@ -80,6 +93,16 @@ const OperationDialog = ({ isModalShown, hideModal, setNewOperation }) => {
             label="Field"
             value={inputField}
             onChange={handleFieldChange}
+            InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.resize,
+                }
+              }}
           />
         </Grid>
         <Grid className={classes.tabInputContent}>
@@ -87,6 +110,16 @@ const OperationDialog = ({ isModalShown, hideModal, setNewOperation }) => {
             label="Value"
             value={inputValue}
             onChange={handleValueChange}
+            InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.resize,
+                }
+              }}
           />
         </Grid>
         <Grid container className={classes.buttonGroup}>

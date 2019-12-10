@@ -34,6 +34,9 @@ const useStyles = makeStyles(theme => ({
     textTransform: 'none',
     marginLeft: 20,
   },
+  resize: {
+    fontSize: 20
+  },
 }));
 
 const CaseKeyDialog = ({ isModalShown, hideModal, setNewCase }) => {
@@ -63,6 +66,16 @@ const CaseKeyDialog = ({ isModalShown, hideModal, setNewCase }) => {
             label="Key Name"
             value={inputKeyValue}
             onChange={handleKeyInputChange}
+            InputProps={{
+              classes: {
+                input: classes.resize,
+              },
+            }}
+            InputLabelProps={{
+              classes: {
+                root: classes.resize,
+              }
+            }}
           />
         </Grid>
         <Grid container className={classes.buttonGroup}>
