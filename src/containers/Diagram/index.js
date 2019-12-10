@@ -506,6 +506,10 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
     generateEdge(`edge-elementobj-${currentId}`, `info-element-${currentId}`, `elementobj-entity-${currentId}`),
     generateNode(`elementobj-info-${currentId}`, `Path: "${source.Element.Path}", Limit: "${source.Element.Limit}"`, `elementobj-entity-${currentId}`, 'jsonelement-info', 'JsonElementObject', getDataDetails(source), xWeight+1, yWeight),
 
+    generateNode(`elementobj-operations-${currentId}`, 'Operations', `elementobj-entity-${currentId}`, 'jsonelement-operations', 'JsonElementObject',  null, xWeight+1, yWeight+1),
+    generateEntity(`elementoperations-entity-${currentId}`, 'Operations', 'ElementOperations', getDataDetails(source), xWeight+2, yWeight+1),
+    generateEdge(`edge-elementoperations-${currentId}`, `elementobj-operations-${currentId}`, `elementoperations-entity-${currentId}`),
+
   ];
   return elements.concat(nextMappingField);
 };
