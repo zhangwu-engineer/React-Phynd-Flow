@@ -51,6 +51,7 @@ const getPrimaryFieldLabel = (cardType) => {
     case 'Column': return 'Column Name';
     case 'HL7': return 'HL7 Value';
     case 'JsonProperty': return 'Property Path';
+    case 'JsonElementObject': return 'Path';
     case 'Aggregate': return 'Delimiter';
     default: return null;
   }
@@ -61,6 +62,7 @@ const getSecondaryFieldLabel = (cardType) => {
     case 'Iteration': return 'Index';
     case 'Regex': return 'Flags';
     case 'JsonProperty': return 'Default';
+    case 'JsonElementObject': return 'Limit';
     case 'AggregateIterator': return 'Iterator Delimiter';
     default: return null;
   }

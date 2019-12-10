@@ -200,6 +200,8 @@ const generateInitialSource = (type, parent, inputValue) => {
         Element: {
           MappingFieldId: null,
           MappingFieldType: null,
+          Path: inputValue.primary,
+          Limit: inputValue.secondary,
         },
       };
     case 'Aggregate':
@@ -496,13 +498,13 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
 
   const elements = [
     generateEntity(currentId, `Json Element:`, 'JsonElement', getDataDetails(source), xWeight, yWeight),
-    generateNode(`info-element-${currentId}`, 'Element Info', currentId, 'jsonelement-info', source.MappingFieldType, getDataDetails(source), xWeight, yWeight),
+    generateNode(`info-element-${currentId}`, 'Element Info', currentId, 'elementobj-info', source.MappingFieldType, getDataDetails(source), xWeight, yWeight),
     generateNode(`source-element-${currentId}`, 'Source', currentId, 'jsonelement-source', sourceType,  null, xWeight, yWeight+1),
     generateEdge(`edge-source-${sourceId}`, `source-element-${currentId}`, sourceId),
 
-    generateEntity(`elementobj-entity-${currentId}`, 'Element Object', 'ElementObject', getDataDetails(source.Element), xWeight+1, yWeight),
+    generateEntity(`elementobj-entity-${currentId}`, 'Element Object', 'ElementObject', getDataDetails(source), xWeight+1, yWeight),
     generateEdge(`edge-elementobj-${currentId}`, `info-element-${currentId}`, `elementobj-entity-${currentId}`),
-    generateNode(`elementobj-info-${currentId}`, 'INFO', `elementobj-entity-${currentId}`, 'elementobj-info', 'JsonElementObject', getDataDetails(source), xWeight+1, yWeight),
+    generateNode(`elementobj-info-${currentId}`, `Path: "${source.Element.Path}", Limit: "${source.Element.Limit}"`, `elementobj-entity-${currentId}`, 'jsonelement-info', 'JsonElementObject', getDataDetails(source), xWeight+1, yWeight),
 
   ];
   return elements.concat(nextMappingField);
@@ -606,6 +608,11 @@ const getPropertyToMap = (type) => {
         id: 'MappingFieldId',
         name: 'Source',
       };
+    case 'jsonelement-info':
+      return {
+        id: 'MappingFieldId',
+        name: 'Element',
+      };
     case 'aggregate-info':
       return {
         id: 'MappingFieldId',
@@ -615,6 +622,11 @@ const getPropertyToMap = (type) => {
       return {
         id: 'MappingFieldId',
         name: 'Source',
+      };
+    case 'elementobj-info':
+      return {
+        id: 'MappingFieldId',
+        name: 'Element',
       };
     case 'aggregate-iterator-source':
       return {
@@ -676,6 +688,11 @@ const getPropertyToMap = (type) => {
         name: 'PropertyPath',
         name1: 'Default',
       }
+    case 'JsonElement':
+        return {
+          name: 'Path',
+          name1: 'Limit',
+        }
     case 'Aggregate':
       return {
         name: 'Delimiter',
@@ -739,6 +756,13 @@ const getDataDetails = (nextField) => {
         tertiary: '',
         fourth: '',
       };
+    case 'JsonElement':
+        return {
+          primary: nextField.Element.Path,
+          secondary: nextField.Element.Limit,
+          tertiary: '',
+          fourth: '',
+        };
     case 'Aggregate':
       return {
         primary: nextField.Delimiter,
@@ -787,7 +811,8 @@ const checkCategoryEditable = (node) => {
       node.data.parentType === 'iteration-info' ||
       node.data.parentType === 'jsonproperty-info' ||
       node.data.parentType === 'aggregate-info' ||
-      node.data.parentType === 'aggregate-iterator-info'
+      node.data.parentType === 'aggregate-iterator-info' ||
+      node.data.parentType === 'jsonelement-info'
     )
       return false;
     return true;
@@ -805,7 +830,8 @@ const checkNodeEditable = (node) => {
     node.data.parentType === 'iteration-info' ||
     node.data.parentType === 'jsonproperty-info' ||
     node.data.parentType === 'aggregate-info' ||
-    node.data.parentType === 'aggregate-iterator-info'
+    node.data.parentType === 'aggregate-iterator-info' ||
+    node.data.parentType === 'jsonelement-info'
   )
     return true;
   return false;
@@ -893,6 +919,10 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerDeta
             } else if (`iterator-entity-${obj[propertyToFind.id]}` === val) {
               const oldProperty = getPropertyToMap(obj['MappingFieldType']);
               obj['Iterator'][oldProperty.name] = inputValue.secondary;
+            } else if (`elementobj-entity-${obj[propertyToFind.id]}` === val) {
+              const oldProperty = getPropertyToMap(obj['MappingFieldType']);
+              obj[propertyToFind.name][oldProperty.name] = inputValue.primary;
+              obj[propertyToFind.name][oldProperty.name1] = inputValue.secondary;
             } else if (typeof obj[p] === 'object') {
               findByProperty(obj[p], val);
             }
