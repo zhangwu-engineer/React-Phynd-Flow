@@ -197,7 +197,10 @@ const generateInitialSource = (type, parent, inputValue) => {
           MappingFieldId: null,
           MappingFieldType: null,
         },
-
+        Element: {
+          MappingFieldId: null,
+          MappingFieldType: null,
+        },
       };
     case 'Aggregate':
       return {
@@ -496,6 +499,11 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
     generateNode(`info-element-${currentId}`, 'Element Info', currentId, 'jsonelement-info', source.MappingFieldType, getDataDetails(source), xWeight, yWeight),
     generateNode(`source-element-${currentId}`, 'Source', currentId, 'jsonelement-source', sourceType,  null, xWeight, yWeight+1),
     generateEdge(`edge-source-${sourceId}`, `source-element-${currentId}`, sourceId),
+
+    generateEntity(`elementobj-entity-${currentId}`, 'Element Object', 'ElementObject', getDataDetails(source.Element), xWeight+1, yWeight),
+    generateEdge(`edge-elementobj-${currentId}`, `info-element-${currentId}`, `elementobj-entity-${currentId}`),
+    generateNode(`elementobj-info-${currentId}`, 'INFO', `elementobj-entity-${currentId}`, 'elementobj-info', 'JsonElementObject', getDataDetails(source), xWeight+1, yWeight),
+
   ];
   return elements.concat(nextMappingField);
 };
