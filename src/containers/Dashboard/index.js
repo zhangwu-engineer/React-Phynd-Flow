@@ -7,6 +7,8 @@ import Diagram from 'containers/Diagram';
 import CategoryDialog from 'containers/Dialog/category';
 import DetailsDialog from 'containers/Dialog/details';
 import CaseKeyDialog from 'containers/CaseKeyDialog';
+import OperationDialog from 'containers/OperationDialog';
+
 // Expansion Panel
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -86,6 +88,11 @@ const PanelItem = ({ item, panelName, index, dashboardReducer }) => {
               item.setActivePanel(panel);
               item.setActiveParent(parent);
             }}
+            triggerOperationModal={(panel, flag, parent) => {
+              item.setOperationModalShown(flag);
+              item.setActivePanel(panel);
+              item.setActiveParent(parent);
+            }}
           />
         }
       </MuiExpansionPanelDetails>
@@ -117,6 +124,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
   const [isCategoryModalShown, setCategoryModalShown] = React.useState(false);
   const [isDetailsModalShown, setDetailsModalShown] = React.useState(false);
   const [isCaseKeyModalShown, setCaseKeyModalShown] = React.useState(false);
+  const [isOperationModalShown, setOperationModalShown] = React.useState(false);
 
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -179,6 +187,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
               setCategoryModalShown={setCategoryModalShown}
               setDetailsModalShown={setDetailsModalShown}
               setCaseKeyModalShown={setCaseKeyModalShown}
+              setOperationModalShown={setOperationModalShown}
               setActivePanel={setActivePanel}
               setActiveParent={setActiveParent}
               setActiveCard={setActiveCard}
@@ -207,6 +216,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
                   setCategoryModalShown={setCategoryModalShown}
                   setDetailsModalShown={setDetailsModalShown}
                   setCaseKeyModalShown={setCaseKeyModalShown}
+                  setOperationModalShown={setOperationModalShown}
                   setActivePanel={setActivePanel}
                   setActiveParent={setActiveParent}
                   setActiveCard={setActiveCard}
@@ -262,6 +272,14 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           setNewCase={(inputKeyValue) => {
             if (refs[activePanel])
               refs[activePanel].current.validateCaseKey(activeParent, inputKeyValue);
+          }}
+        />
+        <OperationDialog
+          isModalShown={isOperationModalShown}
+          hideModal={() => setOperationModalShown(false)}
+          setNewOperation={(name, field, value) => {
+            if (refs[activePanel])
+              refs[activePanel].current.validateOperation(activeParent, name, field, value);
           }}
         />
       </main>
