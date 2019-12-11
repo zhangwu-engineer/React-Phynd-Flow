@@ -128,7 +128,7 @@ const OperationDialog = ({ isModalShown, hideModal, setNewOperation }) => {
             color="primary"
             className={classes.button}
             onClick={() => {
-                setNewOperation(inputName);
+                setNewOperation(inputName, inputField, inputValue);
               hideModal();
             }}
           >
