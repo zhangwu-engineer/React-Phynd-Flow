@@ -202,6 +202,7 @@ const generateInitialSource = (type, parent, inputValue) => {
           MappingFieldType: null,
           Path: inputValue.primary,
           Limit: inputValue.secondary,
+          Operations: [],
         },
       };
     case 'Aggregate':
@@ -507,10 +508,18 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
     generateNode(`elementobj-info-${currentId}`, `Path: "${source.Element.Path}", Limit: "${source.Element.Limit}"`, `elementobj-entity-${currentId}`, 'jsonelement-info', 'JsonElementObject', getDataDetails(source), xWeight+1, yWeight),
 
     generateNode(`elementobj-operations-${currentId}`, 'Operations', `elementobj-entity-${currentId}`, 'jsonelement-operations', 'JsonElementObject',  null, xWeight+1, yWeight+1),
-    generateEntity(`elementoperations-entity-${currentId}`, 'Operations', 'ElementOperations', getDataDetails(source), xWeight+2, yWeight+1),
+    generateEntity(`elementoperations-entity-${currentId}`, 'Operations', 'Operations', getDataDetails(source), xWeight+2, yWeight+1),
     generateEdge(`edge-elementoperations-${currentId}`, `elementobj-operations-${currentId}`, `elementoperations-entity-${currentId}`),
 
   ];
+
+  source.Element.Operations.map((operationItem, index) => {
+    const valueId = Math.random()*1000;
+
+    const newOperation = generateNode(`wrap-${valueId}`, `${operationItem.name}`, `elementoperations-entity-${currentId}`, 'cases-entity', null, null, xWeight+2, yWeight+1+index);
+    elements.push(newOperation);
+  });
+
   return elements.concat(nextMappingField);
 };
 
@@ -841,7 +850,7 @@ const checkNodeEditable = (node) => {
   return false;
 }
 
-const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerDetailsModal, triggerCaseKeyModal, updateDashboard }, ref) => {
+const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsModal, triggerCaseKeyModal, updateDashboard, triggerOperationModal }, ref) => {
   const [elements, setElements] = React.useState([]);
 
   useEffect(() => {
@@ -849,6 +858,8 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerDeta
       const isModalShown = e.target._private.group === 'nodes' ? true : false;
       if (e.target._private.data.entity && e.target._private.data.entity === 'Cases') {
         triggerCaseKeyModal(elementId, isModalShown, e.target._private);
+      } else if (e.target._private.data.entity && e.target._private.data.entity === 'Operations') {
+        triggerOperationModal(elementId, isModalShown, e.target._private);
       } else if (checkNodeEditable(e.target._private)) {
         triggerDetailsModal(elementId, isModalShown, e.target._private);
       } else if (checkCategoryEditable(e.target._private)) {
@@ -1000,6 +1011,28 @@ const Diagram = forwardRef(({ source, item, elementId, triggerModal, triggerDeta
             obj[p].push({
               Key: inputKeyValue,
               Value: {},
+            });
+          } else if (typeof obj[p] === 'object') {
+            findByProperty(obj[p], val);
+          }
+        }
+      };
+      findByProperty(source, parent.data.id);
+      setElements([]);
+      setTimeout(() => {
+        setElements(generateMapping(source, 1, 1));
+      }, 0);
+      updateDashboard(source);
+    },
+    validateOperation: (parent, name, field, value) => {
+      const findByProperty = (obj, val)=> {
+        for (let p in obj) {
+          if (p === 'Element' && `elementoperations-entity-${obj['MappingFieldId']}` === val) {
+            obj[p]['Operations'].push({
+              name,
+              field,
+              value,
+              Source: {},
             });
           } else if (typeof obj[p] === 'object') {
             findByProperty(obj[p], val);
