@@ -516,7 +516,16 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
   source.Element.Operations.map((operationItem, index) => {
     const valueId = Math.random()*1000;
 
-    const newOperation = generateNode(`wrap-${valueId}`, `${operationItem.name}`, `elementoperations-entity-${currentId}`, 'cases-entity', null, null, xWeight+2, yWeight+1+index);
+    const newOperation = generateNode(
+      `wrap-${valueId}`,
+      `Name: ${operationItem.name}, Field: ${operationItem.field}, Value: ${operationItem.value},`,
+      `elementoperations-entity-${currentId}`,
+      'cases-entity',
+      null,
+      null,
+      xWeight+2,
+      yWeight+1+index
+    );
     elements.push(newOperation);
   });
 
