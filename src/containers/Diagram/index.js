@@ -535,19 +535,85 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
   const sourceType = source.Source.MappingFieldType;
 
   const elements = [
-    generateEntity(currentId, `Json Element:`, 'JsonElement', getDataDetails(source), xWeight, yWeight),
-    generateNode(`info-element-${currentId}`, 'Element Info', currentId, 'elementobj-info', source.MappingFieldType, getDataDetails(source), xWeight, yWeight),
-    generateNode(`source-element-${currentId}`, 'Source', currentId, 'jsonelement-source', sourceType,  null, xWeight, yWeight+1),
-    generateEdge(`edge-source-${sourceId}`, `source-element-${currentId}`, sourceId),
-
-    generateEntity(`elementobj-entity-${currentId}`, 'Element Object', 'ElementObject', getDataDetails(source), xWeight+1, yWeight),
-    generateEdge(`edge-elementobj-${currentId}`, `info-element-${currentId}`, `elementobj-entity-${currentId}`),
-    generateNode(`elementobj-info-${currentId}`, `Path: "${source.Element.Path}", Limit: "${source.Element.Limit}"`, `elementobj-entity-${currentId}`, 'jsonelement-info', 'JsonElementObject', getDataDetails(source), xWeight+1, yWeight),
-
-    generateNode(`elementobj-operations-${currentId}`, 'Operations', `elementobj-entity-${currentId}`, 'jsonelement-operations', 'JsonElementObject',  null, xWeight+1, yWeight+1),
-    generateEntity(`elementoperations-entity-${currentId}`, 'Operations', 'Operations', getDataDetails(source), xWeight+2, yWeight+1),
-    generateEdge(`edge-elementoperations-${currentId}`, `elementobj-operations-${currentId}`, `elementoperations-entity-${currentId}`),
-
+    generateEntity(
+      currentId,
+      `Json Element:`,
+      'JsonElement',
+      getDataDetails(source),
+      xWeight,
+      yWeight
+    ),
+    generateNode(
+      `info-element-${currentId}`,
+      'Element Info',
+      currentId,
+      'elementobj-info',
+      source.MappingFieldType,
+      getDataDetails(source),
+      xWeight,
+      yWeight
+    ),
+    generateNode(
+      `source-element-${currentId}`,
+      'Source',
+      currentId,
+      'jsonelement-source',
+      sourceType,
+      null,
+      xWeight,
+      yWeight+1
+    ),
+    generateEdge(
+      `edge-source-${sourceId}`,
+      `source-element-${currentId}`,
+      sourceId
+    ),
+    generateEntity(
+      `elementobj-entity-${currentId}`,
+      'Element Object',
+      'ElementObject',
+      getDataDetails(source),
+      xWeight+1,
+      yWeight
+    ),
+    generateEdge(
+      `edge-elementobj-${currentId}`,
+      `info-element-${currentId}`,
+      `elementobj-entity-${currentId}`
+    ),
+    generateNode(
+      `elementobj-info-${currentId}`,
+      `Path: "${source.Element.Path}", Limit: "${source.Element.Limit}"`,
+      `elementobj-entity-${currentId}`,
+      'jsonelement-info',
+      'JsonElementObject',
+      getDataDetails(source),
+      xWeight+1,
+      yWeight
+    ),
+    generateNode(
+      `elementobj-operations-${currentId}`,
+      'Operations',
+      `elementobj-entity-${currentId}`,
+      'jsonelement-operations',
+      'JsonElementObject',
+      null,
+      xWeight+1,
+      yWeight+1
+    ),
+    generateEntity(
+      `elementoperations-entity-${currentId}`,
+      'Operations',
+      'Operations',
+      getDataDetails(source),
+      xWeight+2,
+      yWeight+1
+    ),
+    generateEdge(
+      `edge-elementoperations-${currentId}`,
+      `elementobj-operations-${currentId}`,
+      `elementoperations-entity-${currentId}`
+    ),
   ];
 
   source.Element.Operations.map((operationItem, index) => {
