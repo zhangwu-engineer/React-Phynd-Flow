@@ -318,10 +318,38 @@ const generateFunctionMapping = (source, xWeight, yWeight) => {
   const functionType = source.FunctionParameter.MappingFieldType;
 
   const elements = [
-    generateEntity(currentId, `Function:`, 'Function', getDataDetails(source), xWeight, yWeight),
-    generateNode(`info-${currentId}`, `Name: ${source.FunctionName}`, currentId, 'function-info', source.MappingFieldType, getDataDetails(source), xWeight, yWeight),
-    generateNode(`source-${currentId}`, 'SourceParameter', currentId, 'function-source', functionType,  null, xWeight, yWeight+1),
-    generateEdge(`edge-source-${functionId}`, `source-${currentId}`, functionId),
+    generateEntity(
+      currentId,
+      `Function:`,
+      'Function',
+      getDataDetails(source),
+      xWeight,
+      yWeight
+    ),
+    generateNode(
+      `info-${currentId}`,
+      `Name: ${source.FunctionName}`,
+      currentId, 'function-info',
+      source.MappingFieldType,
+      getDataDetails(source),
+      xWeight,
+      yWeight
+    ),
+    generateNode(
+      `source-${currentId}`,
+      'SourceParameter',
+      currentId,
+      'function-source',
+      functionType,
+      null,
+      xWeight, 
+      yWeight+1
+    ),
+    generateEdge(
+      `edge-source-${functionId}`,
+      `source-${currentId}`,
+      functionId
+    ),
   ];
   return elements.concat(nextMappingField);
 };
@@ -816,6 +844,11 @@ const getChildrenWeight = (field) => {
       case 'Iteration': return getChildrenWeight(field.Iterator.Source)+1;
       case 'Function': return getChildrenWeight(field.FunctionParameter)+1;
       case 'JsonProperty': return getChildrenWeight(field.Source)+1;
+      case 'JsonElement':
+        let elementTotal = 1;
+        const opSum = field.Element && field.Element.Operations.length;
+        elementTotal = elementTotal + (opSum < 2 ? 1 : opSum);
+        return elementTotal;
       case 'Aggregate': return getChildrenWeight(field.Iterator.Source)+getChildrenWeight(field.Iterations)+2;
       default:
         return 1;
