@@ -374,12 +374,57 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
   const addWeight = addWeight1 + addWeight2;
 
   let elements = [
-    generateEntity(currentId, 'Switch:', 'Switch', null, xWeight, yWeight),
-    generateNode(`value-${currentId}`, 'SwitchValue', currentId, 'switch-value', switchType, getDataDetails(source.SwitchValue), xWeight, yWeight),
-    generateNode(`default-${currentId}`, 'DefaultValue', currentId, 'switch-default', defaultType, getDataDetails(source.SwitchDefault),  xWeight, yWeight+addWeight1),
-    generateNode(`case-source-${currentId}`, 'Cases', currentId, 'switch-entity', 'switch-entity', null, xWeight, yWeight+addWeight),
-    generateEntity(`case-target-${currentId}`, 'Cases', 'Cases', null, xWeight+1, yWeight+addWeight),
-    generateEdge(`edge-case-${currentId}`, `case-source-${currentId}`, `case-target-${currentId}`),
+    generateEntity(
+      currentId,
+      'Switch:',
+      'Switch',
+      null,
+      xWeight,
+      yWeight
+    ),
+    generateNode(
+      `value-${currentId}`,
+      'SwitchValue',
+      currentId,
+      'switch-value',
+      switchType,
+      getDataDetails(source.SwitchValue),
+      xWeight,
+      yWeight
+    ),
+    generateNode(
+      `default-${currentId}`,
+      'DefaultValue',
+      currentId,
+      'switch-default',
+      defaultType,
+      getDataDetails(source.SwitchDefault),
+      xWeight,
+      yWeight+addWeight1
+    ),
+    generateNode(
+      `case-source-${currentId}`,
+      'Cases',
+      currentId,
+      'switch-entity',
+      'switch-entity',
+      null,
+      xWeight,
+      yWeight+addWeight
+    ),
+    generateEntity(
+      `case-target-${currentId}`,
+      'Cases',
+      'Cases',
+      null,
+      xWeight+1,
+      yWeight+addWeight
+    ),
+    generateEdge(
+      `edge-case-${currentId}`,
+      `case-source-${currentId}`,
+      `case-target-${currentId}`
+    ),
   ];
 
   if (switchId) {
