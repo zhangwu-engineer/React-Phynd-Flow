@@ -307,7 +307,16 @@ const generateEdge = (id, source, target) => {
 
 const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
   return [
-    generateNode(source.MappingFieldId, `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`, null, source.MappingFieldType, null, getDataDetails(source), xWeight, yWeight),
+    generateNode(
+      source.MappingFieldId,
+      `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`,
+      null,
+      source.MappingFieldType,
+      null,
+      getDataDetails(source),
+      xWeight,
+      yWeight
+    ),
   ];
 };
 
