@@ -199,7 +199,7 @@ const generateInitialSource = (type, parent, inputValue) => {
         },
         Element: {
           MappingFieldId: null,
-          MappingFieldType: null,
+          MappingFieldType: 'JsonElementObject',
           Path: inputValue.primary,
           Limit: inputValue.secondary,
           Operations: [],
@@ -793,7 +793,7 @@ const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
 };
 
 const generateJsonElementMapping = (source, xWeight, yWeight) => {
-  const nextMappingField = generateMapping(source.Source, xWeight+1, yWeight+1);
+  const nextMappingField = generateMapping(source.Source, xWeight+1, yWeight+getChildrenWeight(source.Element));
   const currentId = source.MappingFieldId;
   const sourceId = source.Source.MappingFieldId;
   const sourceType = source.Source.MappingFieldType;
@@ -825,7 +825,7 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
       sourceType,
       null,
       xWeight,
-      yWeight+1
+      yWeight+getChildrenWeight(source.Element)
     ),
     generateEdge(
       `edge-source-${sourceId}`,
@@ -1253,11 +1253,13 @@ const getChildrenWeight = (field) => {
       case 'Iteration': return getChildrenWeight(field.Iterator.Source)+1;
       case 'Function': return getChildrenWeight(field.FunctionParameter)+1;
       case 'JsonProperty': return getChildrenWeight(field.Source)+1;
-      case 'JsonElement':
+      case 'JsonElementObject':
         let elementTotal = 1;
-        const opSum = field.Element && field.Element.Operations.length;
+        const opSum = field.Operations.length;
         elementTotal = elementTotal + (opSum < 2 ? 1 : opSum);
         return elementTotal;
+      case 'JsonElement':
+        return getChildrenWeight(field.Element) + getChildrenWeight(field.Source);
       case 'Aggregate': return getChildrenWeight(field.Iterator.Source)+getChildrenWeight(field.Iterations)+2;
       default:
         return 1;
