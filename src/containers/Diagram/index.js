@@ -469,10 +469,36 @@ const generateCombinationMapping = (source, xWeight, yWeight) => {
     const addWeight = getChildrenWeight(field1);
   
     const fields = [
-      generateNode(`field1-${currentId}`, 'Field 1', currentId, 'combination1', field1.MappingFieldType, getDataDetails(field1), xWeight, yWeight),
-      generateNode(`field2-${currentId}`, 'Field 2', currentId, 'combination2', field2.MappingFieldType, getDataDetails(field2), xWeight, yWeight+addWeight),
-      generateEdge(`edge-field1-${currentId}`, `field1-${currentId}`, field1.MappingFieldId),
-      generateEdge(`edge-field2-${currentId}`, `field2-${currentId}`, field2.MappingFieldId),
+      generateNode(
+        `field1-${currentId}`,
+        'Field 1',
+        currentId,
+        'combination1',
+        field1.MappingFieldType,
+        getDataDetails(field1),
+        xWeight,
+        yWeight
+      ),
+      generateNode(
+        `field2-${currentId}`,
+        'Field 2',
+        currentId,
+        'combination2',
+        field2.MappingFieldType,
+        getDataDetails(field2),
+        xWeight,
+        yWeight+addWeight
+      ),
+      generateEdge(
+        `edge-field1-${currentId}`,
+        `field1-${currentId}`,
+        field1.MappingFieldId
+      ),
+      generateEdge(
+        `edge-field2-${currentId}`,
+        `field2-${currentId}`,
+        field2.MappingFieldId
+      ),
     ];
 
     const field1MappingField = generateMapping(field1, xWeight+1, yWeight);
