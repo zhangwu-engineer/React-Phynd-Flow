@@ -520,10 +520,39 @@ const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
   const sourceType = source.Source.MappingFieldType;
 
   const elements = [
-    generateEntity(currentId, `Json Property:`, 'JsonProperty', getDataDetails(source), xWeight, yWeight),
-    generateNode(`info-${currentId}`, `Property Path: ${source.PropertyPath}, Default: ${source.Default}`, currentId, 'jsonproperty-info', source.MappingFieldType, getDataDetails(source), xWeight, yWeight),
-    generateNode(`source-${currentId}`, 'Source', currentId, 'jsonproperty-source', sourceType,  null, xWeight, yWeight+1),
-    generateEdge(`edge-source-${sourceId}`, `source-${currentId}`, sourceId),
+    generateEntity(
+      currentId,
+      `Json Property:`,
+      'JsonProperty',
+      getDataDetails(source),
+      xWeight,
+      yWeight
+    ),
+    generateNode(
+      `info-${currentId}`,
+      `Property Path: ${source.PropertyPath}, Default: ${source.Default}`,
+      currentId,
+      'jsonproperty-info',
+      source.MappingFieldType,
+      getDataDetails(source),
+      xWeight,
+      yWeight
+    ),
+    generateNode(
+      `source-${currentId}`,
+      'Source',
+      currentId,
+      'jsonproperty-source',
+      sourceType,
+      null,
+      xWeight,
+      yWeight+1
+    ),
+    generateEdge(
+      `edge-source-${sourceId}`,
+      `source-${currentId}`,
+      sourceId
+    ),
   ];
   return elements.concat(nextMappingField);
 };
