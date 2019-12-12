@@ -503,10 +503,39 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
   const currentId = source.MappingFieldId;
 
   const elements = [
-    generateEntity(currentId, 'Iteration', 'Iteration', getDataDetails(source), xWeight, yWeight),
-    generateNode(`info-${currentId}`, `Delimiter: "${source.Iterator.Delimiter}", Index: "${source.Iterator.Index}"`, currentId, 'iteration-info', source.MappingFieldType, getDataDetails(source), xWeight, yWeight),
-    generateNode(`source-${source.Iterator.IteratorId}`, 'Source:', currentId, 'iteration-source', source.Iterator.Source.MappingFieldType, null, xWeight, yWeight+1),
-    generateEdge(`edge-source-${currentId}`, `source-${source.Iterator.IteratorId}`, source.Iterator.Source.MappingFieldId),
+    generateEntity(
+      currentId,
+      'Iteration',
+      'Iteration',
+      getDataDetails(source),
+      xWeight,
+      yWeight
+    ),
+    generateNode(
+      `info-${currentId}`,
+      `Delimiter: "${source.Iterator.Delimiter}", Index: "${source.Iterator.Index}"`,
+      currentId,
+      'iteration-info',
+      source.MappingFieldType,
+      getDataDetails(source),
+      xWeight,
+      yWeight
+    ),
+    generateNode(
+      `source-${source.Iterator.IteratorId}`,
+      'Source:',
+      currentId,
+      'iteration-source',
+      source.Iterator.Source.MappingFieldType,
+      null,
+      xWeight,
+      yWeight+1
+    ),
+    generateEdge(
+      `edge-source-${currentId}`,
+      `source-${source.Iterator.IteratorId}`,
+      source.Iterator.Source.MappingFieldId
+    ),
   ];
   const sourceMappingField = generateMapping(source.Iterator.Source, xWeight+1, yWeight+1);
 
