@@ -134,7 +134,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
   let dashboardList = dashboardReducer;
   if (match.params.entity !== 'provider-details') {
     if (match.params.entity !== 'contacts') {
-      const mapData = dashboardReducer.dashboard[getNameFromEntity(match.params.entity)];
+      const mapData = dashboardReducer.dashboard && dashboardReducer.dashboard[getNameFromEntity(match.params.entity)];
       if (Array.isArray(mapData)) {
         dashboardList = [];
         let startPoint = 0;
@@ -147,7 +147,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
         });
       }
     } else {
-      const addressMapData = dashboardReducer.dashboard['AddressMaps'];
+      const addressMapData = dashboardReducer.dashboard && dashboardReducer.dashboard['AddressMaps'];
       if (Array.isArray(addressMapData)) {
         dashboardList = [];
         let startPoint = 0;
