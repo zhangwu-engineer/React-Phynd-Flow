@@ -605,7 +605,14 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
 const generateCombinationMapping = (source, xWeight, yWeight) => {
   const currentId = source.MappingFieldId;
   let elements = [
-    generateEntity(currentId, 'Combination', 'Combination', null, xWeight, yWeight)
+    generateEntity(
+      currentId,
+      'Combination',
+      'Combination',
+      null,
+      xWeight,
+      yWeight
+    )
   ];
 
   if (source.Field1) {
