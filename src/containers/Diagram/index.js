@@ -429,12 +429,20 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
 
   if (switchId) {
     const switchValue = generateMapping(source.SwitchValue, xWeight+1, yWeight);
-    elements.push(generateEdge(`edge-value-${switchId}`, `value-${currentId}`, switchId));
+    elements.push(generateEdge(
+      `edge-value-${switchId}`,
+      `value-${currentId}`,
+      switchId
+    ));
     elements = elements.concat(switchValue);
   }
   if (defaultId) {
     const switchDefault = generateMapping(source.SwitchDefault, xWeight+1, yWeight+addWeight1);
-    elements.push(generateEdge(`edge-default-${defaultId}`, `default-${currentId}`, defaultId));
+    elements.push(generateEdge(
+      `edge-default-${defaultId}`,
+      `default-${currentId}`,
+      defaultId
+    ));
     elements = elements.concat(switchDefault);
   }
 
@@ -447,8 +455,21 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
     if (caseKeyDetails) caseKeyDetails.fourth = caseItem.Key;
 
     const wrapper = [
-      generateNode(`wrap-${valueId}`, `${caseItem.Key}`, `case-target-${currentId}`, 'cases-entity', valueType, caseKeyDetails, xWeight+1, yWeight+index+addCasesWeight),
-      generateEdge(`edge-each-case-${valueId}`, `wrap-${valueId}`, valueId),
+      generateNode(
+        `wrap-${valueId}`,
+        `${caseItem.Key}`,
+        `case-target-${currentId}`,
+        'cases-entity',
+        valueType,
+        caseKeyDetails,
+        xWeight+1,
+        yWeight+index+addCasesWeight
+      ),
+      generateEdge(
+        `edge-each-case-${valueId}`,
+        `wrap-${valueId}`,
+        valueId
+      ),
     ];
     elements = elements.concat(wrapper.concat(nextMappingField));
     addCasesWeight += getChildrenWeight(caseItem.Value) - 1;
