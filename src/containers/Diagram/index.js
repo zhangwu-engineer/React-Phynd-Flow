@@ -404,7 +404,7 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
     ),
     generateNode(
       `case-source-${currentId}`,
-      'Cases',
+      'Cases:',
       currentId,
       'switch-entity',
       'switch-entity',
@@ -866,7 +866,7 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
     ),
     generateNode(
       `elementobj-operations-${currentId}`,
-      'Operations',
+      'Operations:',
       `elementobj-entity-${currentId}`,
       'jsonelement-operations',
       'JsonElementObject',
