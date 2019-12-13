@@ -876,7 +876,7 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
     ),
     generateEntity(
       `elementoperations-entity-${currentId}`,
-      'Operations:',
+      'Operations',
       'Operations',
       getDataDetails(source),
       xWeight+2,
