@@ -451,12 +451,17 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
     const nextMappingField = generateMapping(caseItem.Value, xWeight+2, yWeight+index+addCasesWeight);
     const valueId = caseItem.Value.MappingFieldId;
     const valueType = caseItem.Value.MappingFieldType;
-    const caseKeyDetails = getDataDetails(caseItem.Value);
-    if (caseKeyDetails) caseKeyDetails.fourth = caseItem.Key;
+    let caseKeyDetails = getDataDetails(caseItem.Value);
+    const alternativeId = `case-value-${Math.random()*10000}`;
+    if (caseKeyDetails) {
+      caseKeyDetails.fourth = caseItem.Key;
+    } else {
+      caseKeyDetails = index;
+    }
 
     const wrapper = [
       generateNode(
-        `wrap-${valueId}`,
+        `wrap-${valueId ? valueId : alternativeId}`,
         `${caseItem.Key}`,
         `case-target-${currentId}`,
         'cases-entity',
@@ -464,13 +469,17 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
         caseKeyDetails,
         xWeight+1,
         yWeight+index+addCasesWeight
-      ),
-      generateEdge(
-        `edge-each-case-${valueId}`,
-        `wrap-${valueId}`,
-        valueId
-      ),
+      )
     ];
+    if (valueId) {
+      wrapper.push(
+        generateEdge(
+          `edge-each-case-${valueId}`,
+          `wrap-${valueId}`,
+          valueId ? valueId : alternativeId
+        ),
+      );
+    }
     elements = elements.concat(wrapper.concat(nextMappingField));
     addCasesWeight += getChildrenWeight(caseItem.Value) - 1;
     return wrapper;
@@ -1265,6 +1274,7 @@ const getChildrenWeight = (field) => {
         return 1;
     }
   }
+  return 1;
 }
 
 const checkCategoryEditable = (node) => {
@@ -1420,9 +1430,10 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
             // Case Key Value Update
             if (Array.isArray(obj[p])) {
               for (let ca in obj[p]) {
-                if (obj[p][ca]['Value'] && `wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
+                if (`wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
                   obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } }, defaultInput);
-                  return obj;
+                } else if (obj[p][ca]['Value'][propertyToFind.id] === null && parent.data.dataDetails === parseInt(ca)) {
+                  obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } }, defaultInput);
                 }
               }
             }
@@ -1463,7 +1474,10 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
           if (Array.isArray(obj[p]) && p === 'Cases' && `case-target-${obj['MappingFieldId']}` === val) {
             obj[p].push({
               Key: inputKeyValue,
-              Value: {},
+              Value: {
+                MappingFieldId: null,
+                MappingFieldType: null,
+              },
             });
           } else if (typeof obj[p] === 'object') {
             findByProperty(obj[p], val);
