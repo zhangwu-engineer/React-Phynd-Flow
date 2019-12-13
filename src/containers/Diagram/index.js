@@ -876,7 +876,7 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
     ),
     generateEntity(
       `elementoperations-entity-${currentId}`,
-      'Operations',
+      'Operations:',
       'Operations',
       getDataDetails(source),
       xWeight+2,
@@ -1288,7 +1288,8 @@ const checkCategoryEditable = (node) => {
       node.data.parentType === 'jsonproperty-info' ||
       node.data.parentType === 'aggregate-info' ||
       node.data.parentType === 'aggregate-iterator-info' ||
-      node.data.parentType === 'jsonelement-info'
+      node.data.parentType === 'jsonelement-info' ||
+      node.data.parentType === 'jsonelement-operations'
     )
       return false;
     return true;
