@@ -1474,7 +1474,7 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
         for (let p in obj) {
           if (Array.isArray(obj[p]) && p === 'Cases' && `case-target-${obj['MappingFieldId']}` === val) {
             obj[p].push({
-              Key: inputKeyValue,
+              Key: inputKeyValue.length > 0 ? inputKeyValue : 'N/A',
               Value: {
                 MappingFieldId: null,
                 MappingFieldType: null,
