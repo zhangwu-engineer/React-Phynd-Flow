@@ -856,7 +856,7 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
     ),
     generateNode(
       `elementobj-info-${currentId}`,
-      `Path: "${source.Element.Path}", Limit: "${source.Element.Limit}"`,
+      `Path: "${source.Element.Path}", Limit: ${source.Element.Limit}`,
       `elementobj-entity-${currentId}`,
       'jsonelement-info',
       'JsonElementObject',

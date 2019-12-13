@@ -152,6 +152,7 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
             <TextField
               label={getSecondaryFieldLabel(currentCard)}
               value={inputSecondaryValue || ''}
+              type={currentCard === 'JsonElementObject' ? 'number' : 'text'}
               onChange={handleSecondaryInputChange}
               InputProps={{
                 classes: {
