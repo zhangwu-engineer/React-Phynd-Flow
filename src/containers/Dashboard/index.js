@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -101,14 +102,14 @@ const PanelItem = ({ item, panelName, index, dashboardReducer }) => {
 };
 
 const Panel = ({ items, startPoint, panelName, dashboardReducer, ...props }) => {
-  const itemsList = items && items.map((item, index) => {
+  const itemsList = items && _.map(items, (item, index) => {
     refs[startPoint+index] = React.createRef();
     return { item, ref: refs[startPoint+index], ...props }
   });
   return (
     <Box>
       {
-        itemsList.map((item, index) => <PanelItem item={item} panelName={panelName} index={startPoint+index} key={startPoint+index} dashboardReducer={dashboardReducer} />)
+        _.map(itemsList, (item, index) => <PanelItem item={item} panelName={panelName} index={startPoint+index} key={startPoint+index} dashboardReducer={dashboardReducer} />)
       }
     </Box>
   );
@@ -138,7 +139,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
       if (Array.isArray(mapData)) {
         dashboardList = [];
         let startPoint = 0;
-        mapData.forEach(m => {
+        _.map(mapData, m => {
           dashboardList.push({
             dashboard: m,
             startPoint,
@@ -196,7 +197,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
               handleChange={handleChange}
             />
           }
-          {Array.isArray(dashboardList) && dashboardList.map((dashboardItem, index) =>
+          {Array.isArray(dashboardList) && _.map(dashboardList, (dashboardItem, index) =>
             <MuiExpansionPanel square key={index}>
               <MuiExpansionPanelSummary
                 aria-controls={`panel-array${index}d-content`}
