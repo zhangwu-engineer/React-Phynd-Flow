@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import _ from 'lodash';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
@@ -129,7 +130,7 @@ const CategoryDialog = ({ isModalShown, activeParent, currentCard, currentDetail
       </Grid>
       <DialogContent className={classes.dialogContent}>
         <Grid container spacing={2} className={classes.tabContent}>
-          {Object.keys(IconsList).map(key =>
+          {_.map(IconsList, (value, key) =>
             <Grid
               item xs={4}
               key={key}

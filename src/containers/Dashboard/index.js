@@ -144,7 +144,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
             dashboard: m,
             startPoint,
           });
-          startPoint += parseInt(Object.keys(m).length);
+          startPoint += parseInt(_.size(m));
         });
       }
     } else {
@@ -159,7 +159,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
               startPoint,
               addressIndex: index,
             });
-            startPoint += parseInt(Object.keys(cm).length);
+            startPoint += parseInt(_.size(cm));
           });
         });
       }
