@@ -1441,7 +1441,7 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
             if (!val) {
               // Primary Entity Update.
               const obj2 = generateInitialSource(element, parent, defaultInput);
-              Object.assign(obj, obj2);
+              _.assign(obj, obj2);
               return obj;
             } else if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
               // Replace the internal entity with another category model.

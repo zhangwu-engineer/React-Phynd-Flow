@@ -223,7 +223,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
                   setActiveCard={setActiveCard}
                   setActiveDetails={setActiveDetails}
                   updateDashboard={(payload) => {
-                    const dashboardSource = Object.assign({}, dashboardReducer);
+                    const dashboardSource = _.assign({}, dashboardReducer);
                     if (match.params.entity !== 'contacts') {
                       dashboardSource.dashboard[getNameFromEntity(match.params.entity)][index] = payload;
                     } else if (dashboardItem.arrayIndex) {
