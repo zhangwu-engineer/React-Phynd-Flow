@@ -448,7 +448,7 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
   }
 
   let addCasesWeight = addWeight;
-  _.map(source.Cases, function(caseItem, index) {
+  _.map(source.Cases, (caseItem, index) => {
     const nextMappingField = generateMapping(caseItem.Value, xWeight+2, yWeight+index+addCasesWeight);
     const valueId = caseItem.Value.MappingFieldId;
     const valueType = caseItem.Value.MappingFieldType;
@@ -889,7 +889,7 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
     ),
   ];
 
-  _.map(source.Element.Operations, function(operationItem, index) {
+  _.map(source.Element.Operations, (operationItem, index) => {
     const valueId = Math.random()*1000;
 
     const newOperation = generateNode(
@@ -1350,10 +1350,10 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
     },
   };
   const xWeightMax = elements.length > 0 ?
-    Math.max.apply(Math, _.map(elements, function(o) { return o.data && o.data.xWeight ? o.data.xWeight : 0; }))
+    Math.max.apply(Math, _.map(elements, o => { return o.data && o.data.xWeight ? o.data.xWeight : 0; }))
     : 0;
   const yWeightMax = elements.length > 0 ?
-    Math.max.apply(Math, _.map(elements, function(o) { return o.data && o.data.yWeight ? o.data.yWeight : 0; }))
+    Math.max.apply(Math, _.map(elements, o => { return o.data && o.data.yWeight ? o.data.yWeight : 0; }))
     : 0;
 
   const classes = useStyles();
