@@ -986,7 +986,7 @@ const generateAggregateMapping = (source, xWeight, yWeight) => {
       source.Iterations.MappingFieldType,
       null,
       xWeight,
-      yWeight+3
+      yWeight+getChildrenWeight(source.Iterator.Source)+2
     ),
     generateEdge(
       `edge-iterations-${currentId}`,
@@ -995,7 +995,7 @@ const generateAggregateMapping = (source, xWeight, yWeight) => {
     ),
   ];
   const sourceMappingField = generateMapping(source.Iterator.Source, xWeight+2, yWeight+2);
-  const iterationsMappingField = generateMapping(source.Iterations, xWeight+1, yWeight+3);
+  const iterationsMappingField = generateMapping(source.Iterations, xWeight+1, yWeight+getChildrenWeight(source.Iterator.Source)+2);
   return elements.concat(sourceMappingField).concat(iterationsMappingField);
 };
 
