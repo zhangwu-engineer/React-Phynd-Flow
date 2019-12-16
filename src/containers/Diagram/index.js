@@ -896,7 +896,7 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
       `wrap-${valueId}`,
       `Name: ${operationItem.name}, Field: ${operationItem.field}, Value: ${operationItem.value},`,
       `elementoperations-entity-${currentId}`,
-      'cases-entity',
+      'jsonelement-operations',
       null,
       null,
       xWeight+2,
