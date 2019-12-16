@@ -1431,9 +1431,9 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
             // Case Key Value Update
             if (Array.isArray(obj[p])) {
               for (let ca in obj[p]) {
-                if (`wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
+                if (obj[p][ca]['Key'] && `wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
                   obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } }, defaultInput);
-                } else if (obj[p][ca]['Value'][propertyToFind.id] === null && parent.data.dataDetails === parseInt(ca)) {
+                } else if (obj[p][ca]['Key'] && obj[p][ca]['Value'][propertyToFind.id] === null && parent.data.dataDetails === parseInt(ca)) {
                   obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } }, defaultInput);
                 }
               }
