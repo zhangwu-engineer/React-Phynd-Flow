@@ -22,6 +22,12 @@ const useStyles = makeStyles(theme => ({
 const LayoutContainer = ({ children }) => {
   const classes = useStyles();
 
+  const [activeTab, setActiveTab] = React.useState(0);
+
+  const handleChange = (event, newTab) => {
+    setActiveTab(newTab);
+  };
+
   return (
     <div>
       <AppBar position="fixed" className={classes.appBar}>
@@ -37,7 +43,8 @@ const LayoutContainer = ({ children }) => {
             variant="scrollable"
             scrollButtons="auto"
             aria-label="scrollable auto tabs example"
-            value={0}
+            value={activeTab}
+            onChange={handleChange}
           >
             <Tab label="Provider Module" {...a11yProps(0)} />
             <Tab label="Location Module" {...a11yProps(1)} />
