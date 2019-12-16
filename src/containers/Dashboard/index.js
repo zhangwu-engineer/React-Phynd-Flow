@@ -8,7 +8,7 @@ import Diagram from 'containers/Diagram';
 import CategoryDialog from 'containers/Dialog/category';
 import DetailsDialog from 'containers/Dialog/details';
 import CaseKeyDialog from 'containers/CaseKeyDialog';
-import OperationDialog from 'containers/OperationDialog';
+import OperationDialog from 'containers/Dialog/operations';
 
 // Expansion Panel
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
