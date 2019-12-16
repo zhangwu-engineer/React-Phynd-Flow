@@ -238,7 +238,7 @@ export default (theme) => ({
     },
     MuiExpansionPanelDetails: {
       root: {
-        padding: theme.padding.base,
+        padding: '4px 0px 4px 20px',
       },
     }
   }
