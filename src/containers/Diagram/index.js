@@ -1,4 +1,5 @@
 import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
+import _ from 'lodash';
 import CytoscapeComponent from 'react-cytoscapejs';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -360,7 +361,7 @@ const generateFunctionMapping = (source, xWeight, yWeight) => {
       functionId
     ),
   ];
-  return elements.concat(nextMappingField);
+  return _.concat(elements, nextMappingField);
 };
 
 const generateSwitchMapping = (source, xWeight, yWeight) => {
@@ -434,7 +435,7 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
       `value-${currentId}`,
       switchId
     ));
-    elements = elements.concat(switchValue);
+    elements = _.concat(elements, switchValue);
   }
   if (defaultId) {
     const switchDefault = generateMapping(source.SwitchDefault, xWeight+1, yWeight+addWeight1);
@@ -443,11 +444,11 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
       `default-${currentId}`,
       defaultId
     ));
-    elements = elements.concat(switchDefault);
+    elements = _.concat(elements, switchDefault);
   }
 
   let addCasesWeight = addWeight;
-  source.Cases.map((caseItem, index) => {
+  _.map(source.Cases, function(caseItem, index) {
     const nextMappingField = generateMapping(caseItem.Value, xWeight+2, yWeight+index+addCasesWeight);
     const valueId = caseItem.Value.MappingFieldId;
     const valueType = caseItem.Value.MappingFieldType;
@@ -480,7 +481,7 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
         ),
       );
     }
-    elements = elements.concat(wrapper.concat(nextMappingField));
+    elements = _.concat(elements, wrapper, nextMappingField);
     addCasesWeight += getChildrenWeight(caseItem.Value) - 1;
     return wrapper;
   });
@@ -592,7 +593,7 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
 
   if (field1) {
     const field1MappingField = generateMapping(field1, xWeight+2, yWeight);
-    fields = fields.concat(field1MappingField);
+    fields = _.concat(fields, field1MappingField);
     fields.push(generateEdge(
       `edge-field1-${conditionId}`,
       `field1-${conditionId}`,
@@ -601,14 +602,14 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
   }
   if (field2) {
     const field2MappingField = generateMapping(field2, xWeight+2, yWeight+addWeightField1);
-    fields = fields.concat(field2MappingField);
+    fields = _.concat(fields, field2MappingField);
     fields.push(generateEdge(
       `edge-field2-${conditionId}`,
       `field2-${conditionId}`,
       field2.MappingFieldId
     ));
   }
-  return elements.concat(fields).concat(trueMappingField).concat(falseMappingField);
+  return _.concat(elements, fields, trueMappingField, falseMappingField);
 };
 
 const generateCombinationMapping = (source, xWeight, yWeight) => {
@@ -665,8 +666,7 @@ const generateCombinationMapping = (source, xWeight, yWeight) => {
     const field1MappingField = generateMapping(field1, xWeight+1, yWeight);
     const field2MappingField = generateMapping(field2, xWeight+1, yWeight+addWeight);
 
-    elements = elements.concat(fields);
-    elements = elements.concat(field1MappingField).concat(field2MappingField);
+    elements = _.concat(elements, fields, field1MappingField, field2MappingField);
   }
 
   return elements;
@@ -711,7 +711,7 @@ const generateRegexMapping = (source, xWeight, yWeight) => {
   ];
   const sourceMappingField = generateMapping(source.Source, xWeight+1, yWeight+1);
 
-  return elements.concat(sourceMappingField);
+  return _.concat(elements, sourceMappingField);
 };
 
 const generateIterationMapping = (source, xWeight, yWeight) => {
@@ -754,7 +754,7 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
   ];
   const sourceMappingField = generateMapping(source.Iterator.Source, xWeight+1, yWeight+1);
 
-  return elements.concat(sourceMappingField);
+  return _.concat(elements, sourceMappingField);
 };
 
 const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
@@ -798,7 +798,7 @@ const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
       sourceId
     ),
   ];
-  return elements.concat(nextMappingField);
+  return _.concat(elements, nextMappingField);
 };
 
 const generateJsonElementMapping = (source, xWeight, yWeight) => {
@@ -889,7 +889,7 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
     ),
   ];
 
-  source.Element.Operations.map((operationItem, index) => {
+  _.map(source.Element.Operations, function(operationItem, index) {
     const valueId = Math.random()*1000;
 
     const newOperation = generateNode(
@@ -905,7 +905,7 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
     elements.push(newOperation);
   });
 
-  return elements.concat(nextMappingField);
+  return _.concat(elements, nextMappingField);
 };
 
 const generateAggregateMapping = (source, xWeight, yWeight) => {
@@ -996,7 +996,7 @@ const generateAggregateMapping = (source, xWeight, yWeight) => {
   ];
   const sourceMappingField = generateMapping(source.Iterator.Source, xWeight+2, yWeight+2);
   const iterationsMappingField = generateMapping(source.Iterations, xWeight+1, yWeight+getChildrenWeight(source.Iterator.Source)+2);
-  return elements.concat(sourceMappingField).concat(iterationsMappingField);
+  return _.concat(elements, sourceMappingField, iterationsMappingField);
 };
 
 const getPropertyToMap = (type) => {
@@ -1350,10 +1350,10 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
     },
   };
   const xWeightMax = elements.length > 0 ?
-    Math.max.apply(Math, elements.map(function(o) { return o.data && o.data.xWeight ? o.data.xWeight : 0; }))
+    Math.max.apply(Math, _.map(elements, function(o) { return o.data && o.data.xWeight ? o.data.xWeight : 0; }))
     : 0;
   const yWeightMax = elements.length > 0 ?
-    Math.max.apply(Math, elements.map(function(o) { return o.data && o.data.yWeight ? o.data.yWeight : 0; }))
+    Math.max.apply(Math, _.map(elements, function(o) { return o.data && o.data.yWeight ? o.data.yWeight : 0; }))
     : 0;
 
   const classes = useStyles();
