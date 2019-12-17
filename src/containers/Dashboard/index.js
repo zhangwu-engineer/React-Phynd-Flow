@@ -130,7 +130,7 @@ const Panel = ({ items, startPoint, panelName, dashboardReducer, ...props }) => 
   return (
     <Box>
       {
-        _.map(itemsList, (item, index) => <PanelItem item={item} panelName={panelName} index={startPoint+index} startPoint={startPoint} key={`${startPoint}+${index}`} dashboardReducer={dashboardReducer} />)
+        _.map(itemsList, (item, index) => <PanelItem item={item} panelName={panelName} index={index} startPoint={startPoint} key={`${startPoint}+${index}`} dashboardReducer={dashboardReducer} />)
       }
     </Box>
   );
