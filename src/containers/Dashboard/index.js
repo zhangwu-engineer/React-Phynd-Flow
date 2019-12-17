@@ -57,7 +57,12 @@ const PanelItem = ({ item, panelName, startPoint, index, dashboardReducer }) => 
   if (!dashboardReducer.dashboard) return <div />;
   const source = dashboardReducer.dashboard[item.item];
   return (
-    <Draggable key={`${startPoint}-${index}`} draggableId={`${index}`} index={index}>
+    <Draggable
+      key={`${startPoint}-${index}`}
+      draggableId={`${index}`}
+      index={index}
+      isDragDisabled={item.expanded === `${panelName}-${index}`}
+    >
       {(provided, snapshot) => (
         <MuiExpansionPanel
           square key={`${startPoint}--${index}`}
