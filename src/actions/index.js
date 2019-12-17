@@ -14,3 +14,7 @@ export const getFieldsPerEntityIdle = createAction(constants.GET_FIELDS_PER_ENTI
 export const getFieldsPerEntityRequest = createAction(constants.GET_FIELDS_PER_ENTITY_REQUEST)
 export const getFieldsPerEntitySuccess = createAction(constants.GET_FIELDS_PER_ENTITY_SUCCESS)
 export const getFieldsPerEntityFailure = createAction(constants.GET_FIELDS_PER_ENTITY_FAILURE)
+
+export const updateFieldsDataRequest = createAction(constants.UPDATE_FIELDS_DATA_REQUEST)
+export const updateFieldsDataSuccess = createAction(constants.UPDATE_FIELDS_DATA_SUCCESS)
+export const updateFieldsDataFailure = createAction(constants.UPDATE_FIELDS_DATA_FAILURE)
