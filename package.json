@@ -9,6 +9,7 @@
     "cytoscape-cola": "^2.3.0",
     "cytoscape-cose-bilkent": "^4.1.0",
     "react": "^16.10.2",
+    "react-beautiful-dnd": "^12.2.0",
     "react-cytoscapejs": "^1.2.0",
     "react-dom": "^16.10.2",
     "react-gojs": "^4.5.0",

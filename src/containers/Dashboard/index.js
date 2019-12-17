@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import _ from 'lodash';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -42,62 +43,82 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
 }));
 
+// a little function to help us with reordering the result
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
+
 const refs = [];
-const PanelItem = ({ item, panelName, index, dashboardReducer }) => {
+const PanelItem = ({ item, panelName, startPoint, index, dashboardReducer }) => {
   if (!dashboardReducer.dashboard) return <div />;
   const source = dashboardReducer.dashboard[item.item];
   return (
-    <MuiExpansionPanel square key={index} expanded={item.expanded === `${panelName}-${index}`} onChange={item.handleChange(`${panelName}-${index}`)}>
-      <MuiExpansionPanelSummary
-        aria-controls={`${panelName}-${index}d-content`}
-        id={`${panelName}-${index}d-header`}
-        expandIcon={source && <ExpandMoreIcon />}
-      >
-        <Typography>{item.item}</Typography>
-      </MuiExpansionPanelSummary>
-      <MuiExpansionPanelDetails className={item.classes.details}>
-        {item.expanded === `${panelName}-${index}` &&
-          <Diagram
-            item={item.item}
-            ref={item.ref}
-            elementId={index}
-            source={source}
-            updateDashboard={payload => {
-              const dashboardSource = dashboardReducer.dashboard;
-              dashboardSource[item.item] = payload;
-              item.updateDashboard(dashboardSource);
-            }}
-            triggerModal={(panel, flag, parent) => {
-              item.setCategoryModalShown(flag);
-              item.setActivePanel(panel);
-              item.setActiveParent(parent);
-              item.setActiveCard(parent ? parent.data.nextType : null);
-            }}
-            triggerDetailsModal={(panel, flag, parent) => {
-              item.setDetailsModalShown(flag);
-              item.setActivePanel(panel);
-              item.setActiveParent(parent);
-              item.setActiveDetails(parent && parent.data.dataDetails);
-              if (parent && !parent.data.parent) {
-                item.setActiveCard(parent.data.parentType);
-              } else {
-                item.setActiveCard(parent ? parent.data.nextType : null);
-              }
-            }}
-            triggerCaseKeyModal={(panel, flag, parent) => {
-              item.setCaseKeyModalShown(flag);
-              item.setActivePanel(panel);
-              item.setActiveParent(parent);
-            }}
-            triggerOperationModal={(panel, flag, parent) => {
-              item.setOperationModalShown(flag);
-              item.setActivePanel(panel);
-              item.setActiveParent(parent);
-            }}
-          />
-        }
-      </MuiExpansionPanelDetails>
-    </MuiExpansionPanel>
+    <Draggable key={`${startPoint}-${index}`} draggableId={`${index}`} index={index}>
+      {(provided, snapshot) => (
+        <MuiExpansionPanel
+          square key={`${startPoint}--${index}`}
+          expanded={item.expanded === `${panelName}-${index}`}
+          onChange={item.handleChange(`${panelName}-${index}`)}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <MuiExpansionPanelSummary
+            aria-controls={`${panelName}-${index}d-content`}
+            id={`${panelName}-${index}d-header`}
+            expandIcon={source && <ExpandMoreIcon />}
+          >
+            <Typography>{item.item}</Typography>
+          </MuiExpansionPanelSummary>
+          <MuiExpansionPanelDetails className={item.classes.details}>
+            {item.expanded === `${panelName}-${index}` &&
+              <Diagram
+                item={item.item}
+                ref={item.ref}
+                elementId={index}
+                source={source}
+                updateDashboard={payload => {
+                  const dashboardSource = dashboardReducer.dashboard;
+                  dashboardSource[item.item] = payload;
+                  item.updateDashboard(dashboardSource);
+                }}
+                triggerModal={(panel, flag, parent) => {
+                  item.setCategoryModalShown(flag);
+                  item.setActivePanel(panel);
+                  item.setActiveParent(parent);
+                  item.setActiveCard(parent ? parent.data.nextType : null);
+                }}
+                triggerDetailsModal={(panel, flag, parent) => {
+                  item.setDetailsModalShown(flag);
+                  item.setActivePanel(panel);
+                  item.setActiveParent(parent);
+                  item.setActiveDetails(parent && parent.data.dataDetails);
+                  if (parent && !parent.data.parent) {
+                    item.setActiveCard(parent.data.parentType);
+                  } else {
+                    item.setActiveCard(parent ? parent.data.nextType : null);
+                  }
+                }}
+                triggerCaseKeyModal={(panel, flag, parent) => {
+                  item.setCaseKeyModalShown(flag);
+                  item.setActivePanel(panel);
+                  item.setActiveParent(parent);
+                }}
+                triggerOperationModal={(panel, flag, parent) => {
+                  item.setOperationModalShown(flag);
+                  item.setActivePanel(panel);
+                  item.setActiveParent(parent);
+                }}
+              />
+            }
+          </MuiExpansionPanelDetails>
+        </MuiExpansionPanel>
+        )}
+    </Draggable>
   );
 };
 
@@ -109,7 +130,7 @@ const Panel = ({ items, startPoint, panelName, dashboardReducer, ...props }) => 
   return (
     <Box>
       {
-        _.map(itemsList, (item, index) => <PanelItem item={item} panelName={panelName} index={startPoint+index} key={startPoint+index} dashboardReducer={dashboardReducer} />)
+        _.map(itemsList, (item, index) => <PanelItem item={item} panelName={panelName} index={startPoint+index} startPoint={startPoint} key={`${startPoint}+${index}`} dashboardReducer={dashboardReducer} />)
       }
     </Box>
   );
@@ -117,6 +138,7 @@ const Panel = ({ items, startPoint, panelName, dashboardReducer, ...props }) => 
 
 const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, updateDashboard }) => {
   const classes = useStyles();
+  const [fieldsList, setFieldsList] = React.useState([]);
   const [expanded, setExpanded] = React.useState(null);
   const [activePanel, setActivePanel] = React.useState(null);
   const [activeParent, setActiveParent] = React.useState(null);
@@ -131,7 +153,25 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
     setExpanded(newExpanded ? panel : false);
   };
 
-  const fieldsList = fieldsReducer.fields && fieldsReducer.fields[getNameFromID(match.params.entity)] && fieldsReducer.fields[getNameFromID(match.params.entity)];
+  const onDragEnd = result => {
+    if (!result.destination) {
+      return;
+    }
+
+    const items = reorder(
+      fieldsList,
+      result.source.index,
+      result.destination.index
+    );
+
+    setFieldsList(items);
+  }
+
+  useEffect(() => {
+    const fieldsListFromReducer = fieldsReducer.fields && fieldsReducer.fields[getNameFromID(match.params.entity)] && fieldsReducer.fields[getNameFromID(match.params.entity)];
+    setFieldsList(fieldsListFromReducer);
+  }, [match.params.entity]);
+
   let dashboardList = dashboardReducer;
   if (match.params.entity !== 'provider-details') {
     if (match.params.entity !== 'contacts') {
@@ -178,63 +218,86 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           // {...other}
         >
           {!Array.isArray(dashboardList) &&
-            <Panel
-              startPoint={0}
-              panelName={match.params.entity}
-              items={fieldsList}
-              classes={classes}
-              expanded={expanded}
-              dashboardReducer={dashboardReducer}
-              setCategoryModalShown={setCategoryModalShown}
-              setDetailsModalShown={setDetailsModalShown}
-              setCaseKeyModalShown={setCaseKeyModalShown}
-              setOperationModalShown={setOperationModalShown}
-              setActivePanel={setActivePanel}
-              setActiveParent={setActiveParent}
-              setActiveCard={setActiveCard}
-              setActiveDetails={setActiveDetails}
-              updateDashboard={(payload) => updateDashboard(payload)}
-              handleChange={handleChange}
-            />
+            <DragDropContext onDragEnd={onDragEnd}>
+              <Droppable droppableId="droppable">
+                {(provided, snapshot) => (
+                  <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  >
+                    <Panel
+                      startPoint={0}
+                      panelName={match.params.entity}
+                      items={fieldsList}
+                      classes={classes}
+                      expanded={expanded}
+                      dashboardReducer={dashboardReducer}
+                      setCategoryModalShown={setCategoryModalShown}
+                      setDetailsModalShown={setDetailsModalShown}
+                      setCaseKeyModalShown={setCaseKeyModalShown}
+                      setOperationModalShown={setOperationModalShown}
+                      setActivePanel={setActivePanel}
+                      setActiveParent={setActiveParent}
+                      setActiveCard={setActiveCard}
+                      setActiveDetails={setActiveDetails}
+                      updateDashboard={(payload) => updateDashboard(payload)}
+                      handleChange={handleChange}
+                    />
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
           }
           {Array.isArray(dashboardList) && _.map(dashboardList, (dashboardItem, index) =>
-            <MuiExpansionPanel square key={index}>
-              <MuiExpansionPanelSummary
-                aria-controls={`panel-array${index}d-content`}
-                id={`panel-array${index}`}
-                expandIcon={dashboardItem && <ExpandMoreIcon />}
-              >
-                <Typography>{index+1}</Typography>
-              </MuiExpansionPanelSummary>
-              <MuiExpansionPanelDetails>
-                <Panel
-                  startPoint={parseInt(dashboardItem.startPoint)}
-                  panelName={match.params.entity}
-                  items={fieldsList}
-                  classes={classes}
-                  expanded={expanded}
-                  dashboardReducer={dashboardItem}
-                  setCategoryModalShown={setCategoryModalShown}
-                  setDetailsModalShown={setDetailsModalShown}
-                  setCaseKeyModalShown={setCaseKeyModalShown}
-                  setOperationModalShown={setOperationModalShown}
-                  setActivePanel={setActivePanel}
-                  setActiveParent={setActiveParent}
-                  setActiveCard={setActiveCard}
-                  setActiveDetails={setActiveDetails}
-                  updateDashboard={(payload) => {
-                    const dashboardSource = _.assign({}, dashboardReducer);
-                    if (match.params.entity !== 'contacts') {
-                      dashboardSource.dashboard[getNameFromEntity(match.params.entity)][index] = payload;
-                    } else if (dashboardItem.arrayIndex) {
-                      dashboardSource.dashboard['AddressMaps'][dashboardItem.arrayIndex]['ContactMaps'][index] = payload;
-                    }
-                    updateDashboard(dashboardSource.dashboard);
-                  }}
-                  handleChange={handleChange}
-                />
-              </MuiExpansionPanelDetails>
-            </MuiExpansionPanel>
+            <DragDropContext onDragEnd={onDragEnd} key={`expansion-${index}`}>
+              <Droppable droppableId="droppable">
+                {(provided, snapshot) => (
+                  <MuiExpansionPanel
+                    square
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                  >
+                    <MuiExpansionPanelSummary
+                      aria-controls={`panel-array${index}d-content`}
+                      id={`panel-array${index}`}
+                      expandIcon={dashboardItem && <ExpandMoreIcon />}
+                    >
+                      <Typography>{index+1}</Typography>
+                    </MuiExpansionPanelSummary>
+                    <MuiExpansionPanelDetails>
+                      <Panel
+                        startPoint={parseInt(dashboardItem.startPoint)}
+                        panelName={match.params.entity}
+                        items={fieldsList}
+                        classes={classes}
+                        expanded={expanded}
+                        dashboardReducer={dashboardItem}
+                        setCategoryModalShown={setCategoryModalShown}
+                        setDetailsModalShown={setDetailsModalShown}
+                        setCaseKeyModalShown={setCaseKeyModalShown}
+                        setOperationModalShown={setOperationModalShown}
+                        setActivePanel={setActivePanel}
+                        setActiveParent={setActiveParent}
+                        setActiveCard={setActiveCard}
+                        setActiveDetails={setActiveDetails}
+                        updateDashboard={(payload) => {
+                          const dashboardSource = _.assign({}, dashboardReducer);
+                          if (match.params.entity !== 'contacts') {
+                            dashboardSource.dashboard[getNameFromEntity(match.params.entity)][index] = payload;
+                          } else if (dashboardItem.arrayIndex) {
+                            dashboardSource.dashboard['AddressMaps'][dashboardItem.arrayIndex]['ContactMaps'][index] = payload;
+                          }
+                          updateDashboard(dashboardSource.dashboard);
+                        }}
+                        handleChange={handleChange}
+                      />
+                      {provided.placeholder}
+                    </MuiExpansionPanelDetails>
+                  </MuiExpansionPanel>
+                )}
+              </Droppable>
+            </DragDropContext>
           )}
         </Typography>
         <CategoryDialog
