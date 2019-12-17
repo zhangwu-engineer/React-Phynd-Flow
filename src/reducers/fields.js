@@ -48,9 +48,40 @@ const getFieldsPerEntityIdle = (state, { payload }) => update(state, {
   getFieldsData: { $set: initialState.getFieldsData },
 })
 
+const updateFieldsDataRequest = (state, { payload }) => {
+  return update(state, {
+    getFieldsData: {
+      status: { $set: constants.LOADING },
+      statusMeta: { $setStatusMeta: constants.LOADING },
+    },
+  })
+}
+
+const updateFieldsDataSuccess = (state, { payload }) => {
+  return update(state, {
+    fields: { $set: payload.data },
+    getFieldsData: {
+      message: { $set: payload.message },
+      status: { $set: constants.SUCCESS },
+      statusMeta: { $setStatusMeta: constants.SUCCESS },
+    },
+  })
+}
+
+const updateFieldsDataFailure = (state, { payload }) => update(state, {
+  getFieldsData: {
+    message: { $set: payload.message },
+    status: { $set: constants.FAILURE },
+    statusMeta: { $setStatusMeta: constants.FAILURE },
+  }
+})
+
 export default handleActions({
   [constants.GET_FIELDS_PER_ENTITY_REQUEST]: getFieldsPerEntityRequest,
   [constants.GET_FIELDS_PER_ENTITY_SUCCESS]: getFieldsPerEntitySuccess,
   [constants.GET_FIELDS_PER_ENTITY_FAILURE]: getFieldsPerEntityFailure,
   [constants.GET_FIELDS_PER_ENTITY_IDLE]: getFieldsPerEntityIdle,
+  [constants.UPDATE_FIELDS_DATA_REQUEST]: updateFieldsDataRequest,
+  [constants.UPDATE_FIELDS_DATA_SUCCESS]: updateFieldsDataSuccess,
+  [constants.UPDATE_FIELDS_DATA_FAILURE]: updateFieldsDataFailure,
 }, initialState)

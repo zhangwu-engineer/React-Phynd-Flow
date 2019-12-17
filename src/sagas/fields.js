@@ -17,6 +17,18 @@ function* getFieldsPerEntityRequest({ payload }) {
   }
 }
 
+function* updateFieldsDataRequest({ payload }) {
+  try {
+    const data = payload.data;
+    yield put(actions.updateFieldsDataSuccess({ data, message: 'Providers have been fetched' }))
+  } catch (e) {
+    console.error(e)
+    yield put(actions.updateFieldsDataFailure({ message: e.message }))
+  }
+}
+
+
 export default function* () {
-  yield takeEvery(constants.GET_FIELDS_PER_ENTITY_REQUEST, getFieldsPerEntityRequest)
+  yield takeEvery(constants.GET_FIELDS_PER_ENTITY_REQUEST, getFieldsPerEntityRequest);
+  yield takeEvery(constants.UPDATE_FIELDS_DATA_REQUEST, updateFieldsDataRequest);
 }
