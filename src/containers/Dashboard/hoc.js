@@ -24,6 +24,10 @@ const hoc = (Dashboard) => {
       this.props.updateDashboardDataRequest({ data });
     }
 
+    updateFields = data => {
+      this.props.updateFieldsDataRequest({ data });
+    }
+
     render() {
       return (
         <Dashboard
@@ -32,6 +36,7 @@ const hoc = (Dashboard) => {
           classes={this.props.classes}
           width={this.props.width}
           updateDashboard={this.updateDashboard}
+          updateFields={this.updateFields}
           {...this.props}
         />
       )
@@ -57,6 +62,7 @@ export default (Dashboard) => {
   const mapDispatchToProps = {
     getDashboardDataRequest: actions.getDashboardDataRequest,
     updateDashboardDataRequest: actions.updateDashboardDataRequest,
+    updateFieldsDataRequest: actions.updateFieldsDataRequest,
     getFieldsPerEntityRequest: actions.getFieldsPerEntityRequest,
   }
 

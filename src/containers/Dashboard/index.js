@@ -141,7 +141,7 @@ const Panel = ({ items, startPoint, panelName, dashboardReducer, ...props }) => 
   );
 };
 
-const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, updateDashboard }) => {
+const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, updateDashboard, updateFields }) => {
   const classes = useStyles();
   const [fieldsList, setFieldsList] = React.useState([]);
   const [expanded, setExpanded] = React.useState(null);
@@ -170,6 +170,9 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
     );
 
     setFieldsList(items);
+    const fieldsListFromReducer = _.assign({}, fieldsReducer);
+    fieldsListFromReducer.fields[getNameFromID(match.params.entity)] = items;
+    updateFields(fieldsListFromReducer.fields);
   }
 
   useEffect(() => {
