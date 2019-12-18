@@ -3,7 +3,7 @@ import 'services/immutability'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import { ConnectedRouter } from 'connected-react-router'
+import { HashRouter } from 'react-router-dom'
 import { PersistGate } from 'redux-persist/integration/react'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { ThemeProvider } from 'styled-components'
@@ -15,9 +15,9 @@ import * as serviceWorker from './serviceWorker';
 const AppContainer = () => (
   <MuiThemeProvider theme={muiTheme}>
     <ThemeProvider theme={styledTheme}>
-      <ConnectedRouter history={history}>
+      <HashRouter basename='/' history={history}>
         <Routes />
-      </ConnectedRouter>
+      </HashRouter>
     </ThemeProvider>
   </MuiThemeProvider>
 )
