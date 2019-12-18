@@ -25,6 +25,9 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: 12,
   },
   tabInputContent: {
+    paddingBottom: 12,
+  },
+  tabLastInputContent: {
     paddingBottom: 40,
   },
   buttonGroup: {
@@ -118,7 +121,7 @@ const OperationDialog = ({ isModalShown, hideModal, setNewOperation }) => {
               }}
           />
         </Grid>
-        <Grid className={classes.tabInputContent}>
+        <Grid className={classes.tabLastInputContent}>
           <TextField
             label="Value"
             value={inputValue}
