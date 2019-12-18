@@ -7,6 +7,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles(theme => ({
   cardContent: {
@@ -35,7 +39,16 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 20,
   },
   resize: {
-    fontSize: 20
+    fontSize: 20,
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    width: '100%',
+  },
+  select: {
+    "& div": {
+      fontSize: 20,
+    }
   },
 }));
 
@@ -72,21 +85,21 @@ const OperationDialog = ({ isModalShown, hideModal, setNewOperation }) => {
       </DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <Grid className={classes.tabInputContent}>
-          <TextField
-            label="Name"
-            value={inputName}
-            onChange={handleNameChange}
-            InputProps={{
-                classes: {
-                  input: classes.resize,
-                },
-              }}
-              InputLabelProps={{
-                classes: {
-                  root: classes.resize,
-                }
-              }}
-          />
+          <FormControl className={classes.formControl}>
+            <InputLabel className={classes.resize}>Name</InputLabel>
+            <Select
+              className={classes.select}
+              value={inputName}
+              onChange={handleNameChange}
+            >
+              <MenuItem value="SortAsc">SortAsc</MenuItem>
+              <MenuItem value="SortDesc">SortDesc</MenuItem>
+              <MenuItem value="CompareEQ">CompareEQ</MenuItem>
+              <MenuItem value="CompareGT">CompareGT</MenuItem>
+              <MenuItem value="CompareLT">CompareLT</MenuItem>
+              <MenuItem value="CompareContains">CompareContains</MenuItem>
+            </Select>
+          </FormControl>
         </Grid>
         <Grid className={classes.tabInputContent}>
           <TextField
