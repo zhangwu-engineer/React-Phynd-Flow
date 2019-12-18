@@ -1539,6 +1539,9 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
             marginTop: yWeightMax === 0 ? 100 : 0,
           }
         }
+        minZoom={0.2}
+        maxZoom={10}
+        wheelSensitivity={0.1}
       />
     </Grid>
     
