@@ -220,7 +220,6 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           role="tabpanel"
           id={`scrollable-auto-tabpanel-${0}`}
           aria-labelledby={`scrollable-auto-tab-${0}`}
-          // {...other}
         >
           {!Array.isArray(dashboardList) &&
             <DragDropContext onDragEnd={onDragEnd}>
