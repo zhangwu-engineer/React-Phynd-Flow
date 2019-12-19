@@ -188,6 +188,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
             dashboardListFromReducer.push({
               dashboard: m,
               startPoint,
+              currentName: getNameFromEntity(match.params.entity)
             });
             startPoint += parseInt(_.size(m));
           });
@@ -202,6 +203,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
               dashboardListFromReducer.push({
                 dashboard: cm,
                 startPoint,
+                currentName: 'ContactMaps',
                 addressIndex: index,
               });
               startPoint += parseInt(_.size(cm));
@@ -270,7 +272,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
                       id={`panel-array${index}`}
                       expandIcon={dashboardItem && <ExpandMoreIcon />}
                     >
-                      <Typography>{index+1}</Typography>
+                      <Typography className={classes.panelItemTitle}>{`${dashboardItem.currentName} ${index+1}`}</Typography>
                     </MuiExpansionPanelSummary>
                     <MuiExpansionPanelDetails>
                       <Panel
