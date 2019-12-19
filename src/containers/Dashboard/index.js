@@ -134,7 +134,16 @@ const Panel = ({ items, startPoint, panelName, dashboardReducer, ...props }) => 
   return (
     <Box>
       {
-        _.map(itemsList, (item, index) => <PanelItem item={item} panelName={panelName} index={index} startPoint={startPoint} key={`${startPoint}+${index}`} dashboardReducer={dashboardReducer} />)
+        _.map(itemsList, (item, index) =>
+          <PanelItem
+            item={item}
+            panelName={panelName}
+            index={index}
+            startPoint={startPoint}
+            key={`${startPoint}+${index}`}
+            dashboardReducer={dashboardReducer}
+          />
+        )
       }
     </Box>
   );
@@ -176,11 +185,15 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
   }
 
   useEffect(() => {
-    const fieldsListFromReducer = fieldsReducer.fields && fieldsReducer.fields[getNameFromID(match.params.entity)] && fieldsReducer.fields[getNameFromID(match.params.entity)];
+    const fieldsListFromReducer =
+      fieldsReducer.fields &&
+      fieldsReducer.fields[getNameFromID(match.params.entity)] &&
+      fieldsReducer.fields[getNameFromID(match.params.entity)];
     let dashboardListFromReducer = dashboardReducer;
     if (match.params.entity !== 'provider-details') {
       if (match.params.entity !== 'contacts') {
-        const mapData = dashboardReducer.dashboard && dashboardReducer.dashboard[getNameFromEntity(match.params.entity)];
+        const mapData =dashboardReducer.dashboard &&
+          dashboardReducer.dashboard[getNameFromEntity(match.params.entity)];
         if (Array.isArray(mapData)) {
           dashboardListFromReducer = [];
           let startPoint = 0;
