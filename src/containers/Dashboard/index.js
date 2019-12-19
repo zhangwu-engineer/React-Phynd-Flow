@@ -36,6 +36,9 @@ const useStyles = makeStyles(theme => ({
     overflow: 'scroll',
     flexDirection: 'column',
   },
+  panelItemTitle: {
+    fontSize: 20,
+  },
   toolbar: theme.mixins.toolbar,
 }));
 
@@ -73,7 +76,7 @@ const PanelItem = ({ item, panelName, startPoint, index, dashboardReducer }) => 
             id={`${panelName}-${index}d-header`}
             expandIcon={source && <ExpandMoreIcon />}
           >
-            <Typography>{item.item}</Typography>
+            <Typography className={item.classes.panelItemTitle}>{item.item}</Typography>
           </MuiExpansionPanelSummary>
           <MuiExpansionPanelDetails className={item.classes.details}>
             {item.expanded === `${panelName}-${index}` &&
