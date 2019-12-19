@@ -16,6 +16,9 @@ const useStyles = makeStyles(theme => ({
     width: drawerWidth,
     marginTop: 40,
   },
+  listItemText: {
+    fontSize: 20,
+  },
   toolbar: theme.mixins.toolbar,
 }));
 
@@ -36,9 +39,15 @@ const Sidebar = ({ match, data }) => {
           <ListItem button key={`navitem-${index}`} component={NavLink} to={navItem.link}>
             {
               match.params.entity === navItem.link ?
-                <ListItemText primary={navItem.name} />
+                <ListItemText
+                  primary={navItem.name}
+                  classes={{ primary: classes.listItemText }}
+                />
               :
-                <ListItemText secondary={navItem.name} />
+                <ListItemText
+                  secondary={navItem.name}
+                  classes={{ secondary: classes.listItemText }}
+                />
             }
           </ListItem>
         ))}
