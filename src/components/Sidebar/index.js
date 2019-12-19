@@ -34,7 +34,6 @@ const Sidebar = ({ match, data }) => {
       <List>
         {Array.isArray(data) && data.map((navItem, index) => (
           <ListItem button key={`navitem-${index}`} component={NavLink} to={navItem.link}>
-            {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
             {
               match.params.entity === navItem.link ?
                 <ListItemText primary={navItem.name} />
