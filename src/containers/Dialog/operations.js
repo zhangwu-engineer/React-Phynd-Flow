@@ -13,10 +13,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles(theme => ({
-  cardContent: {
-    paddingTop: 12,
-    paddingBottom: 12,
-  },
   dialogTitle: {
     paddingBottom: 0,
   },

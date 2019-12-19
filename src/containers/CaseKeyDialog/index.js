@@ -9,10 +9,6 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
-  cardContent: {
-    paddingTop: 12,
-    paddingBottom: 12,
-  },
   dialogTitle: {
     paddingBottom: 0,
   },

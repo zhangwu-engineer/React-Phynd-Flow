@@ -31,10 +31,6 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
   },
-  box: {
-    flexGrow: 1,
-    padding: theme.spacing(2),
-  },
   details: {
     width: 'calc(100vw - 279px)',
     overflow: 'scroll',

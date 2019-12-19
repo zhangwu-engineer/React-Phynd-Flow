@@ -43,10 +43,6 @@ const useStyles = makeStyles(theme => ({
   tabContent: {
     paddingBottom: 20,
   },
-  tabInputContent: {
-    paddingTop: 40,
-    paddingBottom: 40,
-  },
   cardInactive: {
     border: '2px solid transparent',
     cursor: 'pointer',
@@ -76,9 +72,6 @@ const useStyles = makeStyles(theme => ({
   button: {
     textTransform: 'none',
     marginLeft: 20,
-  },
-  resize:{
-    fontSize: 20
   },
 }));
 
