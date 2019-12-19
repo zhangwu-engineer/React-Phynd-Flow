@@ -140,6 +140,7 @@ const Panel = ({ items, startPoint, panelName, dashboardReducer, ...props }) => 
 const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, updateDashboard, updateFields }) => {
   const classes = useStyles();
   const [fieldsList, setFieldsList] = React.useState([]);
+  const [dashboardList, setDashboardList] = React.useState([]);
   const [expanded, setExpanded] = React.useState(null);
   const [activePanel, setActivePanel] = React.useState(null);
   const [activeParent, setActiveParent] = React.useState(null);
@@ -173,42 +174,42 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
 
   useEffect(() => {
     const fieldsListFromReducer = fieldsReducer.fields && fieldsReducer.fields[getNameFromID(match.params.entity)] && fieldsReducer.fields[getNameFromID(match.params.entity)];
-    setFieldsList(fieldsListFromReducer);
-  }, [match.params.entity]);
-
-  let dashboardList = dashboardReducer;
-  if (match.params.entity !== 'provider-details') {
-    if (match.params.entity !== 'contacts') {
-      const mapData = dashboardReducer.dashboard && dashboardReducer.dashboard[getNameFromEntity(match.params.entity)];
-      if (Array.isArray(mapData)) {
-        dashboardList = [];
-        let startPoint = 0;
-        _.map(mapData, m => {
-          dashboardList.push({
-            dashboard: m,
-            startPoint,
-          });
-          startPoint += parseInt(_.size(m));
-        });
-      }
-    } else {
-      const addressMapData = dashboardReducer.dashboard && dashboardReducer.dashboard['AddressMaps'];
-      if (Array.isArray(addressMapData)) {
-        dashboardList = [];
-        let startPoint = 0;
-        addressMapData.forEach((am, index) => {
-          am.ContactMaps.forEach(cm => {
-            dashboardList.push({
-              dashboard: cm,
+    let dashboardListFromReducer = dashboardReducer;
+    if (match.params.entity !== 'provider-details') {
+      if (match.params.entity !== 'contacts') {
+        const mapData = dashboardReducer.dashboard && dashboardReducer.dashboard[getNameFromEntity(match.params.entity)];
+        if (Array.isArray(mapData)) {
+          dashboardListFromReducer = [];
+          let startPoint = 0;
+          _.map(mapData, m => {
+            dashboardListFromReducer.push({
+              dashboard: m,
               startPoint,
-              addressIndex: index,
             });
-            startPoint += parseInt(_.size(cm));
+            startPoint += parseInt(_.size(m));
           });
-        });
+        }
+      } else {
+        const addressMapData = dashboardReducer.dashboard && dashboardReducer.dashboard['AddressMaps'];
+        if (Array.isArray(addressMapData)) {
+          dashboardListFromReducer = [];
+          let startPoint = 0;
+          addressMapData.forEach((am, index) => {
+            am.ContactMaps.forEach(cm => {
+              dashboardListFromReducer.push({
+                dashboard: cm,
+                startPoint,
+                addressIndex: index,
+              });
+              startPoint += parseInt(_.size(cm));
+            });
+          });
+        }
       }
     }
-  }
+    setFieldsList(fieldsListFromReducer);
+    setDashboardList(dashboardListFromReducer)
+  }, [match.params.entity]);
 
   return (
     <div className={classes.root}>
