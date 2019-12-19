@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import _ from 'lodash';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Sidebar from 'components/Sidebar';
 import Diagram from 'containers/Diagram';
@@ -38,6 +40,14 @@ const useStyles = makeStyles(theme => ({
   },
   panelItemTitle: {
     fontSize: 20,
+  },
+  buttonGroup: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 20,
+  },
+  button: {
+    textTransform: 'none',
   },
   toolbar: theme.mixins.toolbar,
 }));
@@ -192,7 +202,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
     let dashboardListFromReducer = dashboardReducer;
     if (match.params.entity !== 'provider-details') {
       if (match.params.entity !== 'contacts') {
-        const mapData =dashboardReducer.dashboard &&
+        const mapData = dashboardReducer.dashboard &&
           dashboardReducer.dashboard[getNameFromEntity(match.params.entity)];
         if (Array.isArray(mapData)) {
           dashboardListFromReducer = [];
@@ -266,6 +276,15 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
                       handleChange={handleChange}
                     />
                     {provided.placeholder}
+                    <Grid container className={classes.buttonGroup}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                      >
+                        Add Field
+                      </Button>
+                    </Grid>
                   </div>
                 )}
               </Droppable>
