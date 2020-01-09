@@ -19,7 +19,8 @@ import Sidebar from 'components/Sidebar';
 
 import {
   getNameFromID,
-  getNameFromEntity
+  getNameFromEntity,
+  reorder
 } from 'utils/helper';
 import hoc from './hoc';
 
@@ -38,15 +39,6 @@ const useStyles = makeStyles(theme => ({
   },
   toolbar: theme.mixins.toolbar,
 }));
-
-// a little function to help us with reordering the result
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const start = result[startIndex];
-  result.splice(startIndex, 1);
-  result.splice(endIndex, 0, start);
-  return [...result];
-};
 
 const refs = [];
 

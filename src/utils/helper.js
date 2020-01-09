@@ -18,3 +18,12 @@ export const getNameFromEntity = entity => {
     default: return 'NoMap';
   }
 }
+
+// a little function to help us with reordering the result
+export const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const start = result[startIndex];
+  result.splice(startIndex, 1);
+  result.splice(endIndex, 0, start);
+  return [...result];
+};
