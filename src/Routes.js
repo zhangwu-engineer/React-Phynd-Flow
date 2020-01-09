@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import Dashboard from 'containers/Dashboard'
 import LayoutContainer from 'components/Layout'
@@ -7,7 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 
 const Routes = () => (
   <WrapperComponent>
-    <React.Fragment>
+    <Fragment>
       <CssBaseline />
       <LayoutContainer>
         <Switch>
@@ -15,7 +15,7 @@ const Routes = () => (
           <Redirect to="/provider-details" />
         </Switch>
       </LayoutContainer>
-    </React.Fragment>
+    </Fragment>
   </WrapperComponent>
 )
 

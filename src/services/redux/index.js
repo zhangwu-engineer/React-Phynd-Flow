@@ -13,7 +13,7 @@ const rootReducer = createRootReducer(history)
 const sagaMiddleware = createSagaMiddleware()
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-//ensure that changes to persisted store are migrated from one version to the next
+// ensure that changes to persisted store are migrated from one version to the next
 const migrations = {
   0: state => {
     return {
