@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
 import { assign, map, size } from 'lodash';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import Sidebar from 'components/Sidebar';
-import Diagram from 'containers/Diagram';
-import CategoryDialog from 'containers/Dialog/category';
-import DetailsDialog from 'containers/Dialog/details';
-import CaseKeyDialog from 'containers/CaseKeyDialog';
-import OperationDialog from 'containers/Dialog/operations';
-
 // Expansion Panel
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CategoryDialog from 'containers/Dialog/category';
+import DetailsDialog from 'containers/Dialog/details';
+import CaseKeyDialog from 'containers/CaseKeyDialog';
+import OperationDialog from 'containers/Dialog/operations';
+import PanelItem from 'components/PanelItem';
+import Sidebar from 'components/Sidebar';
+
 import {
   getNameFromID,
   getNameFromEntity
@@ -49,79 +49,6 @@ const reorder = (list, startIndex, endIndex) => {
 };
 
 const refs = [];
-const PanelItem = ({ item, panelName, startPoint, index, dashboardReducer }) => {
-  if (!dashboardReducer.dashboard) return <div />;
-  const source = dashboardReducer.dashboard[item.item];
-  return (
-    <Draggable
-      key={`${startPoint}-${index}`}
-      draggableId={`${index}`}
-      index={index}
-      isDragDisabled={item.expanded === `${panelName}-${index}`}
-    >
-      {(provided, snapshot) => (
-        <MuiExpansionPanel
-          square key={`${startPoint}--${index}`}
-          expanded={item.expanded === `${panelName}-${index}`}
-          onChange={item.handleChange(`${panelName}-${index}`)}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <MuiExpansionPanelSummary
-            aria-controls={`${panelName}-${index}d-content`}
-            id={`${panelName}-${index}d-header`}
-            expandIcon={source && <ExpandMoreIcon />}
-          >
-            <Typography>{item.item}</Typography>
-          </MuiExpansionPanelSummary>
-          <MuiExpansionPanelDetails className={item.classes.details}>
-            {item.expanded === `${panelName}-${index}` &&
-              <Diagram
-                item={item.item}
-                ref={item.ref}
-                elementId={index}
-                source={source}
-                updateDashboard={payload => {
-                  const dashboardSource = dashboardReducer.dashboard;
-                  dashboardSource[item.item] = payload;
-                  item.updateDashboard(dashboardSource);
-                }}
-                triggerModal={(panel, flag, parent) => {
-                  item.setCategoryModalShown(flag);
-                  item.setActivePanel(panel);
-                  item.setActiveParent(parent);
-                  item.setActiveCard(parent ? parent.data.nextType : null);
-                }}
-                triggerDetailsModal={(panel, flag, parent) => {
-                  item.setDetailsModalShown(flag);
-                  item.setActivePanel(panel);
-                  item.setActiveParent(parent);
-                  item.setActiveDetails(parent && parent.data.dataDetails);
-                  if (parent && !parent.data.parent) {
-                    item.setActiveCard(parent.data.parentType);
-                  } else {
-                    item.setActiveCard(parent ? parent.data.nextType : null);
-                  }
-                }}
-                triggerCaseKeyModal={(panel, flag, parent) => {
-                  item.setCaseKeyModalShown(flag);
-                  item.setActivePanel(panel);
-                  item.setActiveParent(parent);
-                }}
-                triggerOperationModal={(panel, flag, parent) => {
-                  item.setOperationModalShown(flag);
-                  item.setActivePanel(panel);
-                  item.setActiveParent(parent);
-                }}
-              />
-            }
-          </MuiExpansionPanelDetails>
-        </MuiExpansionPanel>
-        )}
-    </Draggable>
-  );
-};
 
 const Panel = ({ items, startPoint, panelName, dashboardReducer, ...props }) => {
   const itemsList = items && map(items, (item, index) => {
