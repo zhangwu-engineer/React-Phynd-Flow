@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import _ from 'lodash';
+import { assign, map, size } from 'lodash';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -124,14 +124,14 @@ const PanelItem = ({ item, panelName, startPoint, index, dashboardReducer }) => 
 };
 
 const Panel = ({ items, startPoint, panelName, dashboardReducer, ...props }) => {
-  const itemsList = items && _.map(items, (item, index) => {
+  const itemsList = items && map(items, (item, index) => {
     refs[startPoint+index] = React.createRef();
     return { item, ref: refs[startPoint+index], ...props }
   });
   return (
     <Box>
       {
-        _.map(itemsList, (item, index) => <PanelItem item={item} panelName={panelName} index={index} startPoint={startPoint} key={`${startPoint}+${index}`} dashboardReducer={dashboardReducer} />)
+        map(itemsList, (item, index) => <PanelItem item={item} panelName={panelName} index={index} startPoint={startPoint} key={`${startPoint}+${index}`} dashboardReducer={dashboardReducer} />)
       }
     </Box>
   );
@@ -167,7 +167,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
     );
 
     setFieldsList(items);
-    const fieldsListFromReducer = _.assign({}, fieldsReducer);
+    const fieldsListFromReducer = assign({}, fieldsReducer);
     fieldsListFromReducer.fields[getNameFromID(match.params.entity)] = items;
     updateFields(fieldsListFromReducer.fields);
   }
@@ -175,18 +175,19 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
   useEffect(() => {
     const fieldsListFromReducer = fieldsReducer.fields && fieldsReducer.fields[getNameFromID(match.params.entity)] && fieldsReducer.fields[getNameFromID(match.params.entity)];
     let dashboardListFromReducer = dashboardReducer;
+
     if (match.params.entity !== 'provider-details') {
       if (match.params.entity !== 'contacts') {
         const mapData = dashboardReducer.dashboard && dashboardReducer.dashboard[getNameFromEntity(match.params.entity)];
         if (Array.isArray(mapData)) {
           dashboardListFromReducer = [];
           let startPoint = 0;
-          _.map(mapData, m => {
+          map(mapData, m => {
             dashboardListFromReducer.push({
               dashboard: m,
               startPoint,
             });
-            startPoint += parseInt(_.size(m));
+            startPoint += parseInt(size(m));
           });
         }
       } else {
@@ -201,7 +202,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
                 startPoint,
                 addressIndex: index,
               });
-              startPoint += parseInt(_.size(cm));
+              startPoint += parseInt(size(cm));
             });
           });
         }
@@ -254,7 +255,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
               </Droppable>
             </DragDropContext>
           }
-          {Array.isArray(dashboardList) && _.map(dashboardList, (dashboardItem, index) =>
+          {Array.isArray(dashboardList) && map(dashboardList, (dashboardItem, index) =>
             <DragDropContext onDragEnd={onDragEnd} key={`expansion-${index}`}>
               <Droppable droppableId="droppable">
                 {(provided, snapshot) => (
@@ -287,7 +288,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
                         setActiveCard={setActiveCard}
                         setActiveDetails={setActiveDetails}
                         updateDashboard={(payload) => {
-                          const dashboardSource = _.assign({}, dashboardReducer);
+                          const dashboardSource = assign({}, dashboardReducer);
                           if (match.params.entity !== 'contacts') {
                             dashboardSource.dashboard[getNameFromEntity(match.params.entity)][index] = payload;
                           } else if (dashboardItem.arrayIndex) {
