@@ -44,13 +44,27 @@ const refs = [];
 
 const Panel = ({ items, startPoint, panelName, dashboardReducer, ...props }) => {
   const itemsList = items && map(items, (item, index) => {
-    refs[startPoint+index] = React.createRef();
-    return { item, ref: refs[startPoint+index], ...props }
+    refs[startPoint + index] = React.createRef();
+    return {
+      item,
+      ref: refs[startPoint + index],
+      ...props
+    }
   });
+
   return (
     <Box>
       {
-        map(itemsList, (item, index) => <PanelItem item={item} panelName={panelName} index={index} startPoint={startPoint} key={`${startPoint}+${index}`} dashboardReducer={dashboardReducer} />)
+        map(itemsList, (item, index) =>
+          <PanelItem
+            item={item}
+            panelName={panelName}
+            index={index}
+            startPoint={startPoint}
+            key={`${startPoint}-${index}`}
+            dashboardReducer={dashboardReducer}
+          />
+        )
       }
     </Box>
   );
@@ -145,7 +159,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           {!Array.isArray(dashboardList) &&
             <DragDropContext onDragEnd={onDragEnd}>
               <Droppable droppableId="droppable">
-                {(provided, snapshot) => (
+                {provided => (
                   <div
                   {...provided.droppableProps}
                   ref={provided.innerRef}
