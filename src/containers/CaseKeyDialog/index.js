@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -7,33 +6,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-
-const useStyles = makeStyles(theme => ({
-  dialogTitle: {
-    paddingBottom: 0,
-  },
-  dialogContent: {
-    paddingTop: 20,
-    paddingBottom: 12,
-  },
-  tabInputContent: {
-    paddingBottom: 40,
-  },
-  buttonGroup: {
-    paddingTop: 12,
-    paddingBottom: 20,
-    paddingLeft: 0,
-    paddingRight: 0,
-    justifyContent: 'flex-end',
-  },
-  button: {
-    textTransform: 'none',
-    marginLeft: 20,
-  },
-  resize: {
-    fontSize: 20
-  },
-}));
+// style
+import useStyles from './style';
 
 const CaseKeyDialog = ({ isModalShown, hideModal, setNewCase }) => {
   const classes = useStyles();

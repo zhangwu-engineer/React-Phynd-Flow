@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { assign, map, size } from 'lodash';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 // Expansion Panel
@@ -24,21 +23,9 @@ import {
 } from 'utils/helper';
 import hoc from './hoc';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    marginTop: 112,
-  },
-  content: {
-    flexGrow: 1,
-  },
-  details: {
-    width: 'calc(100vw - 279px)',
-    overflow: 'scroll',
-    flexDirection: 'column',
-  },
-  toolbar: theme.mixins.toolbar,
-}));
+// style
+import useStyles from './style';
+
 
 const refs = [];
 
@@ -154,15 +141,14 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           role="tabpanel"
           id={`scrollable-auto-tabpanel-${0}`}
           aria-labelledby={`scrollable-auto-tab-${0}`}
-          // {...other}
         >
           {!Array.isArray(dashboardList) &&
             <DragDropContext onDragEnd={onDragEnd}>
               <Droppable droppableId="droppable">
                 {provided => (
                   <div
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
                   >
                     <Panel
                       startPoint={0}

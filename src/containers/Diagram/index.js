@@ -47,7 +47,7 @@ const edgeStyle = {
   'curve-style': 'bezier',
 };
 
-const stylesheet=[
+const stylesheet = [
   {
     selector: 'node',
     style: nodeStyle,
@@ -1297,8 +1297,7 @@ const checkCategoryEditable = (node) => {
   return false;
 }
 
-const checkNodeEditable = (node) => {
-  if (
+const checkNodeEditable = node => (
     node.data.parentType === 'Constant' ||
     node.data.parentType === 'Column' ||
     node.data.parentType === 'HL7' ||
@@ -1309,31 +1308,29 @@ const checkNodeEditable = (node) => {
     node.data.parentType === 'aggregate-info' ||
     node.data.parentType === 'aggregate-iterator-info' ||
     node.data.parentType === 'jsonelement-info'
-  )
-    return true;
-  return false;
-}
+  ) ? true : false;
 
 const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsModal, triggerCaseKeyModal, updateDashboard, triggerOperationModal }, ref) => {
   const [elements, setElements] = React.useState([]);
 
   useEffect(() => {
-    cyListener.on('tap', function(e) {
-      const isModalShown = e.target._private.group === 'nodes' ? true : false;
-      if (e.target._private.data.entity && e.target._private.data.entity === 'Cases') {
-        triggerCaseKeyModal(elementId, isModalShown, e.target._private);
-      } else if (e.target._private.data.entity && e.target._private.data.entity === 'Operations') {
-        triggerOperationModal(elementId, isModalShown, e.target._private);
-      } else if (checkNodeEditable(e.target._private)) {
-        triggerDetailsModal(elementId, isModalShown, e.target._private);
-      } else if (checkCategoryEditable(e.target._private)) {
-        triggerModal(elementId, isModalShown, e.target._private);
-      } 
-    });
-    source && setElements(generateMapping(source, 1, 1));
-  },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  [source]);
+      cyListener.on('tap', function(e) {
+        const isModalShown = e.target._private.group === 'nodes' ? true : false;
+        if (e.target._private.data.entity && e.target._private.data.entity === 'Cases') {
+          triggerCaseKeyModal(elementId, isModalShown, e.target._private);
+        } else if (e.target._private.data.entity && e.target._private.data.entity === 'Operations') {
+          triggerOperationModal(elementId, isModalShown, e.target._private);
+        } else if (checkNodeEditable(e.target._private)) {
+          triggerDetailsModal(elementId, isModalShown, e.target._private);
+        } else if (checkCategoryEditable(e.target._private)) {
+          triggerModal(elementId, isModalShown, e.target._private);
+        } 
+      });
+      source && setElements(generateMapping(source, 1, 1));
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [source]
+  );
 
 
   let cyListener;
@@ -1341,13 +1338,12 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
     name: 'preset',
     fit: false,
     transform: function(node, pos) {
-      if (node._private.data.xWeight && node._private.data.yWeight)
-        return {
-          x: node._private.data.xWeight * DIAGRAM_CONF.NODE_WIDTH,
-          y: node._private.data.yWeight * DIAGRAM_CONF.NODE_HEIGHT,
-        };
-      return pos;
-    },
+      return (node._private.data.xWeight && node._private.data.yWeight) ? {
+        x: node._private.data.xWeight * DIAGRAM_CONF.NODE_WIDTH,
+        y: node._private.data.yWeight * DIAGRAM_CONF.NODE_HEIGHT,
+      }
+      : pos;
+    }
   };
   const xWeightMax = elements.length > 0 ?
     Math.max.apply(Math, _.map(elements, o => { return o.data && o.data.xWeight ? o.data.xWeight : 0; }))
