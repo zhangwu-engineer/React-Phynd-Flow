@@ -13,5 +13,11 @@ export default makeStyles(theme => ({
     overflow: 'scroll',
     flexDirection: 'column',
   },
+  addButtonContainer: {
+    margin: 24,
+  },
+  addButton: {
+    fontSize: 22,
+  },
   toolbar: theme.mixins.toolbar,
 }));

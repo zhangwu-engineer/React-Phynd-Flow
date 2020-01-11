@@ -3,11 +3,13 @@ import { assign, map, size } from 'lodash';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 // Expansion Panel
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
+import Button from '@material-ui/core/Button';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CategoryDialog from 'containers/Dialog/category';
 import DetailsDialog from 'containers/Dialog/details';
@@ -172,6 +174,15 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
                   </div>
                 )}
               </Droppable>
+              <Grid className={classes.addButtonContainer}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.addButton}
+                >
+                  Add Field
+                </Button>
+              </Grid>
             </DragDropContext>
           }
           {Array.isArray(dashboardList) && map(dashboardList, (dashboardItem, index) =>
