@@ -31,7 +31,7 @@ import useStyles from './style';
 
 const refs = [];
 
-const Panel = ({ items, startPoint, panelName, dashboardReducer, ...props }) => {
+const Panel = ({ items, startPoint, panelName, blockedItems, dashboardReducer, ...props }) => {
   const itemsList = items && map(items, (item, index) => {
     refs[startPoint + index] = React.createRef();
     return {
@@ -47,6 +47,7 @@ const Panel = ({ items, startPoint, panelName, dashboardReducer, ...props }) => 
         map(itemsList, (item, index) =>
           <PanelItem
             item={item}
+            blockedItems={blockedItems}
             panelName={panelName}
             index={index}
             startPoint={startPoint}
@@ -63,6 +64,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
   const classes = useStyles();
   const [fieldsList, setFieldsList] = React.useState([]);
   const [dashboardList, setDashboardList] = React.useState([]);
+  const [blockList, setBlockList] = React.useState([]);
   const [expanded, setExpanded] = React.useState(null);
   const [activePanel, setActivePanel] = React.useState(null);
   const [activeParent, setActiveParent] = React.useState(null);
@@ -97,6 +99,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
   useEffect(() => {
     const fieldsListFromReducer = fieldsReducer.fields && fieldsReducer.fields[getNameFromID(match.params.entity)] && fieldsReducer.fields[getNameFromID(match.params.entity)];
     let dashboardListFromReducer = dashboardReducer;
+    const blockListTemp = [];
 
     if (match.params.entity !== 'provider-details') {
       if (match.params.entity !== 'contacts') {
@@ -129,9 +132,14 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           });
         }
       }
+    } else {
+      map(fieldsListFromReducer, (field, index) => {
+        if (!dashboardReducer.dashboard[field]) blockListTemp.push(field);
+      });
     }
+    setBlockList(blockListTemp);
     setFieldsList(fieldsListFromReducer);
-    setDashboardList(dashboardListFromReducer)
+    setDashboardList(dashboardListFromReducer);
   }, [match.params.entity]);
 
   return (
@@ -158,6 +166,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
                       items={fieldsList}
                       classes={classes}
                       expanded={expanded}
+                      blockedItems={blockList}
                       dashboardReducer={dashboardReducer}
                       setCategoryModalShown={setCategoryModalShown}
                       setDetailsModalShown={setDetailsModalShown}

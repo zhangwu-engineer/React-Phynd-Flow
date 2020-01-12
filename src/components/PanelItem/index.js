@@ -11,8 +11,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Diagram from 'containers/Diagram';
 
-export default ({ item, panelName, startPoint, index, dashboardReducer }) => {
+export default ({ item, panelName, blockedItems, startPoint, index, dashboardReducer }) => {
   if (!dashboardReducer.dashboard) return <div />;
+  if (blockedItems && blockedItems.indexOf(item.item) > -1) return <div />;
   const source = dashboardReducer.dashboard[item.item];
   return (
     <Draggable
