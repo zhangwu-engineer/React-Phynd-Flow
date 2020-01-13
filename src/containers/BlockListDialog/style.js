@@ -34,7 +34,7 @@ export default makeStyles(theme => ({
     cursor: 'pointer',
     border: '2px solid transparent',
     '&:hover': {
-      border: '1px solid #577399',
+      border: '2px solid #577399',
     }
   },
   unblockItem: {
