@@ -1,23 +1,32 @@
 import React from 'react';
+import _ from 'lodash';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 // style
 import useStyles from './style';
 
-const BlockListDialog = ({ isModalShown, hideModal, addField }) => {
+const BlockListDialog = ({ isModalShown, hideModal, blockedItems, addField }) => {
   const classes = useStyles();
   const closeModal = () => {
     hideModal();
   }
 
-  const [inputKeyValue, setInputKeyValue] = React.useState('');
-  const handleKeyInputChange = event => {
-    setInputKeyValue(event.target.value);
+  const [unblockList, setUnblockList] = React.useState([]);
+  const handleNewUnblockItem = (item, flag) => {
+    const unblockListUpdate = _.clone(unblockList);
+    if (flag) {
+      unblockListUpdate.push(item);
+    } else {
+      _.remove(unblockListUpdate, function (toRemove) {
+        return item === toRemove;
+      });
+    }
+    setUnblockList(unblockListUpdate);
   };
 
   return (
@@ -31,22 +40,25 @@ const BlockListDialog = ({ isModalShown, hideModal, addField }) => {
         <Typography>Add Fields</Typography>
       </DialogTitle>
       <DialogContent className={classes.dialogContent}>
-        <Grid className={classes.tabInputContent}>
-          <TextField
-            label="Key Name"
-            value={inputKeyValue}
-            onChange={handleKeyInputChange}
-            InputProps={{
-              classes: {
-                input: classes.resize,
-              },
-            }}
-            InputLabelProps={{
-              classes: {
-                root: classes.resize,
-              }
-            }}
-          />
+        <Grid className={classes.tabInputContent} container>
+          {_.map(blockedItems, (value, key) =>
+            <Grid
+              item
+              xs={6}
+              key={key}
+              onClick={() => {
+                if (unblockList.indexOf(value) < 0) {
+                  handleNewUnblockItem(value, true);
+                } else {
+                  handleNewUnblockItem(value, false);
+                }
+              }}
+            >
+              <Box className={unblockList.indexOf(value) < 0 ? classes.blockItem : classes.unblockItem}>
+                <Typography className={classes.blockItemLabel}>{value}</Typography>
+              </Box>
+            </Grid>
+            )}
         </Grid>
         <Grid container className={classes.buttonGroup}>
           <Button
@@ -54,7 +66,7 @@ const BlockListDialog = ({ isModalShown, hideModal, addField }) => {
             color="primary"
             className={classes.button}
             onClick={() => {
-              addField(inputKeyValue);
+              addField(unblockList);
               hideModal();
             }}
           >

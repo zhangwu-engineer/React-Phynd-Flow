@@ -294,9 +294,9 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           isModalShown={isBlockListModalShown}
           hideModal={() => setBlockListModalShown(false)}
           blockedItems={blockList}
-          addField={(field) => {
+          addField={(fields) => {
             _.remove(blockList, function (item) {
-              return item === field;
+              return fields.indexOf(item) > -1;
             });
           }}
         />
