@@ -25,4 +25,24 @@ export default makeStyles(theme => ({
   resize: {
     fontSize: 20
   },
+  blockItem: {
+    paddingTop: 6,
+    paddingBottom: 6,
+    paddingLeft: 4,
+    cursor: 'pointer',
+    border: '2px solid transparent',
+    '&:hover': {
+      border: '1px solid #577399',
+    }
+  },
+  unblockItem: {
+    paddingTop: 6,
+    paddingBottom: 6,
+    paddingLeft: 4,
+    cursor: 'pointer',
+    border: '2px solid #577399',
+  },
+  blockItemLabel: {
+    fontSize: 18
+  },
 }));
