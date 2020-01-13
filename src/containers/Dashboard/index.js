@@ -136,6 +136,11 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           });
         }
       }
+      map(fieldsListFromReducer, (field, index) => {
+        if (dashboardListFromReducer[0] && !dashboardListFromReducer[0].dashboard[field]) {
+          blockListTemp.push(field);
+        }
+      });
     } else {
       map(fieldsListFromReducer, (field, index) => {
         if (!dashboardReducer.dashboard[field]) blockListTemp.push(field);
@@ -224,6 +229,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
                         items={fieldsList}
                         classes={classes}
                         expanded={expanded}
+                        blockedItems={blockList}
                         dashboardReducer={dashboardItem}
                         setCategoryModalShown={setCategoryModalShown}
                         setDetailsModalShown={setDetailsModalShown}
@@ -251,6 +257,18 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
               </Droppable>
             </DragDropContext>
           )}
+          <Grid className={classes.addButtonContainer}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.addButton}
+              onClick={() => {
+                setBlockListModalShown(true);
+              }}
+            >
+              Add Field
+            </Button>
+          </Grid>
         </Typography>
         <CategoryDialog
           isModalShown={isCategoryModalShown}
