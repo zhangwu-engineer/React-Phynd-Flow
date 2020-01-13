@@ -4,6 +4,8 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import _ from 'lodash';
+
 // Expansion Panel
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -14,6 +16,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CategoryDialog from 'containers/Dialog/category';
 import DetailsDialog from 'containers/Dialog/details';
 import CaseKeyDialog from 'containers/CaseKeyDialog';
+import BlockListDialog from 'containers/BlockListDialog';
 import OperationDialog from 'containers/Dialog/operations';
 import PanelItem from 'components/PanelItem';
 import Sidebar from 'components/Sidebar';
@@ -73,6 +76,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
   const [isCategoryModalShown, setCategoryModalShown] = React.useState(false);
   const [isDetailsModalShown, setDetailsModalShown] = React.useState(false);
   const [isCaseKeyModalShown, setCaseKeyModalShown] = React.useState(false);
+  const [isBlockListModalShown, setBlockListModalShown] = React.useState(false);
   const [isOperationModalShown, setOperationModalShown] = React.useState(false);
 
   const handleChange = panel => (event, newExpanded) => {
@@ -188,6 +192,9 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
                   variant="contained"
                   color="primary"
                   className={classes.addButton}
+                  onClick={() => {
+                    setBlockListModalShown(true);
+                  }}
                 >
                   Add Field
                 </Button>
@@ -281,6 +288,16 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           setNewCase={(inputKeyValue) => {
             if (refs[activePanel])
               refs[activePanel].current.validateCaseKey(activeParent, inputKeyValue);
+          }}
+        />
+        <BlockListDialog
+          isModalShown={isBlockListModalShown}
+          hideModal={() => setBlockListModalShown(false)}
+          blockedItems={blockList}
+          addField={(field) => {
+            _.remove(blockList, function (item) {
+              return item === field;
+            });
           }}
         />
         <OperationDialog
