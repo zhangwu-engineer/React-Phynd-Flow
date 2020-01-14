@@ -16,7 +16,7 @@ const AppContainer = () => (
   <MuiThemeProvider theme={muiTheme}>
     <ThemeProvider theme={styledTheme}>
       <HashRouter basename='/' history={history}>
-        <Routes />
+        <Routes history={history} />
       </HashRouter>
     </ThemeProvider>
   </MuiThemeProvider>

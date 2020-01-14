@@ -5,16 +5,15 @@ import LayoutContainer from 'components/Layout'
 import WrapperComponent from 'components/Wrapper'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-const Routes = () => (
+const Routes = ({ history }) => (
   <WrapperComponent>
     <Fragment>
       <CssBaseline />
-      <LayoutContainer>
+        <LayoutContainer history={history} />
         <Switch>
           <Route path="/:module/:entity" component={Dashboard} />
           <Redirect to="/provider-module/provider-details" />
         </Switch>
-      </LayoutContainer>
     </Fragment>
   </WrapperComponent>
 )
