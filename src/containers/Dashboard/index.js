@@ -151,6 +151,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
     setDashboardList(dashboardListFromReducer);
   }, [match.params.entity]);
 
+
   return (
     <div className={classes.root}>
       <Sidebar data={sidebarData} />
@@ -257,18 +258,20 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
               </Droppable>
             </DragDropContext>
           )}
-          <Grid className={classes.addButtonContainer}>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.addButton}
-              onClick={() => {
-                setBlockListModalShown(true);
-              }}
-            >
-              Add Field
-            </Button>
-          </Grid>
+          {Array.isArray(dashboardList) &&
+            <Grid className={classes.addButtonContainer}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.addButton}
+                onClick={() => {
+                  setBlockListModalShown(true);
+                }}
+              >
+                Add Field
+              </Button>
+            </Grid>
+          }
         </Typography>
         <CategoryDialog
           isModalShown={isCategoryModalShown}
