@@ -34,12 +34,14 @@ import useStyles from './style';
 
 const refs = [];
 
-const Panel = ({ items, startPoint, panelName, blockedItems, dashboardReducer, ...props }) => {
+const Panel = ({ items, startPoint, panelName, panelIndex, blockedItems, dashboardReducer, ...props }) => {
   const itemsList = items && map(items, (item, index) => {
-    refs[startPoint + index] = React.createRef();
+    const panelInfo = panelIndex ? panelIndex.toString() : '';
+    const indexInfo = index ? index.toString() : '';
+    refs[panelInfo+indexInfo] = React.createRef();
     return {
       item,
-      ref: refs[startPoint + index],
+      ref: refs[panelInfo+indexInfo],
       ...props
     }
   });
@@ -52,9 +54,10 @@ const Panel = ({ items, startPoint, panelName, blockedItems, dashboardReducer, .
             item={item}
             blockedItems={blockedItems}
             panelName={panelName}
+            panelIndex={panelIndex}
             index={index}
             startPoint={startPoint}
-            key={`${startPoint}-${index}`}
+            key={`${startPoint}-${panelIndex}-${index}`}
             dashboardReducer={dashboardReducer}
           />
         )
@@ -227,6 +230,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
                       <Panel
                         startPoint={parseInt(dashboardItem.startPoint)}
                         panelName={match.params.entity}
+                        panelIndex={index+1}
                         items={fieldsList}
                         classes={classes}
                         expanded={expanded}

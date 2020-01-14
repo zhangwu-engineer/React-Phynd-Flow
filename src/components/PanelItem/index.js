@@ -11,22 +11,24 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Diagram from 'containers/Diagram';
 
-export default ({ item, panelName, blockedItems, startPoint, index, dashboardReducer }) => {
+export default ({ item, panelName, panelIndex, blockedItems, startPoint, index, dashboardReducer }) => {
   if (!dashboardReducer.dashboard) return <div />;
   if (blockedItems && blockedItems.indexOf(item.item) > -1) return <div />;
   const source = dashboardReducer.dashboard[item.item];
+  const panelInfo = panelIndex ? panelIndex.toString() : '';
+  const indexInfo = index ? index.toString() : '';
   return (
     <Draggable
       key={`${startPoint}-${index}`}
       draggableId={`${index}`}
       index={index}
-      isDragDisabled={item.expanded === `${panelName}-${index}`}
+      isDragDisabled={item.expanded === `${panelName}-${panelIndex}-${index}`}
     >
       {(provided, snapshot) => (
         <MuiExpansionPanel
-          square key={`${startPoint}--${index}`}
-          expanded={item.expanded === `${panelName}-${index}`}
-          onChange={item.handleChange(`${panelName}-${index}`)}
+          square key={`${startPoint}-${panelIndex}-${index}`}
+          expanded={item.expanded === `${panelName}-${panelIndex}-${index}`}
+          onChange={item.handleChange(`${panelName}-${panelIndex}-${index}`)}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -39,11 +41,11 @@ export default ({ item, panelName, blockedItems, startPoint, index, dashboardRed
             <Typography>{item.item}</Typography>
           </MuiExpansionPanelSummary>
           <MuiExpansionPanelDetails className={item.classes.details}>
-            {item.expanded === `${panelName}-${index}` &&
+            {item.expanded === `${panelName}-${panelIndex}-${index}` &&
               <Diagram
                 item={item.item}
                 ref={item.ref}
-                elementId={index}
+                elementId={panelInfo+indexInfo}
                 source={source}
                 updateDashboard={payload => {
                   const dashboardSource = dashboardReducer.dashboard;
