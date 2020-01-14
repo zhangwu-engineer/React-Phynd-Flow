@@ -11,8 +11,8 @@ const Routes = () => (
       <CssBaseline />
       <LayoutContainer>
         <Switch>
-          <Route path="/:entity" component={Dashboard} />
-          <Redirect to="/provider-details" />
+          <Route path="/:module/:entity" component={Dashboard} />
+          <Redirect to="/provider-module/provider-details" />
         </Switch>
       </LayoutContainer>
     </Fragment>
