@@ -7,7 +7,6 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { a11yProps } from 'utils/helper';
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -20,10 +19,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const moduleRouter = [
-  '#/provider-module/',
-  '#/location-module/',
-  '#/network-module/',
-  '#/healthplan-module/'
+  '/provider-module/provider-details',
+  '/location-module/location-details',
+  '/network-module/network-details',
+  '/healthplan-module/healthplan-details'
 ]
 
 const LayoutContainer = ({ children, history }) => {
