@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getIDFromName } from 'utils/helper';
+import LayoutContainer from 'components/Layout'
 
 import * as actions from 'actions';
 
@@ -13,7 +14,9 @@ const hoc = (Dashboard) => {
       super(props);
 
       props.getDashboardDataRequest();
-      props.getFieldsPerEntityRequest();
+      props.getFieldsPerEntityRequest({
+        module: props.match.params.module
+      });
     }
 
     componentDidMount() {
@@ -28,17 +31,27 @@ const hoc = (Dashboard) => {
       this.props.updateFieldsDataRequest({ data });
     }
 
+    getFields = entity => {
+      this.props.getFieldsPerEntityRequest({
+        module: entity
+      });
+    }
+
     render() {
       return (
-        <Dashboard
-          dashboardReducer={this.props.dashboardReducer}
-          fieldsReducer={this.props.fieldsReducer}
-          classes={this.props.classes}
-          width={this.props.width}
-          updateDashboard={this.updateDashboard}
-          updateFields={this.updateFields}
-          {...this.props}
-        />
+        <div>
+          <LayoutContainer history={this.props.history} />
+          <Dashboard
+            dashboardReducer={this.props.dashboardReducer}
+            fieldsReducer={this.props.fieldsReducer}
+            classes={this.props.classes}
+            width={this.props.width}
+            updateDashboard={this.updateDashboard}
+            updateFields={this.updateFields}
+            getFields={this.getFields}
+            {...this.props}
+          />
+        </div>
       )
     }
   }
