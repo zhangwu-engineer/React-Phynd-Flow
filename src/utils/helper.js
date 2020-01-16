@@ -15,6 +15,14 @@ export const getNameFromEntity = entity => {
     case 'qualifications': return 'ProviderTrainingMaps';
     case 'custom-fields': return 'CustomFieldToExtractProvider';
     case 'languages': return 'ProviderLanguageMaps';
+    case 'office-hours': return 'OfficeHourMaps';
+    case 'features': return 'FeatureMaps';
+    case 'identifiers': return 'IdentifierMaps';
+    case 'groups': return 'GroupMaps';
+    case 'treatment-terms': return 'TreatmentTermMaps';
+    case 'providers': return 'ProviderMaps';
+    case 'contacts': return 'ContactMaps';
+    case 'age-groups': return 'AgeGroupMaps';
     default: return 'NoMap';
   }
 }
