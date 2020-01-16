@@ -1,4 +1,5 @@
-import dashboardData from 'static/SampleJsonObject'
+import providerDashboard from 'static/SampleJsonObject'
+import locationDashboard from 'static/SampleJsonObjectLocation'
 import providerData from 'static/FieldsPerEntity'
 import locationData from 'static/FieldsPerEntityLocation'
 
@@ -7,7 +8,12 @@ const entityData = {
   'location-module': locationData,
 }
 
-const getDashboardDataRequest = () => dashboardData
+const dashboardData = {
+  'provider-module': providerDashboard,
+  'location-module': locationDashboard,
+}
+
+const getDashboardDataRequest = (mod) => dashboardData[mod.module]
 const getEntityDataRequest = (mod) => entityData[mod.module]
 
 export {
