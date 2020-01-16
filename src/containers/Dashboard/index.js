@@ -66,7 +66,7 @@ const Panel = ({ items, startPoint, panelName, panelIndex, blockedItems, dashboa
   );
 };
 
-const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, updateDashboard, updateFields, getFields }) => {
+const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, updateDashboard, updateFields, getFieldsDashboard }) => {
   const classes = useStyles();
   const [fieldsList, setFieldsList] = React.useState([]);
   const [dashboardList, setDashboardList] = React.useState([]);
@@ -152,12 +152,12 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
     setBlockList(blockListTemp);
     setFieldsList(fieldsListFromReducer);
     setDashboardList(dashboardListFromReducer);
-  }, [match.params.entity]);
-  
-  useEffect(() => {
-    getFields(match.params.module);
-  }, [match.params.module]);
+  }, [fieldsReducer]);
 
+  useEffect(() => {
+    getFieldsDashboard(match.params.module);
+  }, [match.params.module, match.params.entity]);
+  
   return (
     <div className={classes.root}>
       <Sidebar data={sidebarData} />

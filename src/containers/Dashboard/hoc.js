@@ -10,17 +10,6 @@ import * as actions from 'actions';
 
 const hoc = (Dashboard) => {
   class ProvidersHoc extends Component {
-    constructor(props) {
-      super(props);
-
-      props.getDashboardDataRequest({
-        module: props.match.params.module
-      });
-      props.getFieldsPerEntityRequest({
-        module: props.match.params.module
-      });
-    }
-
     componentDidMount() {
       window.scrollTo(0,0);
     }
@@ -33,8 +22,11 @@ const hoc = (Dashboard) => {
       this.props.updateFieldsDataRequest({ data });
     }
 
-    getFields = entity => {
+    getFieldsDashboard = entity => {
       this.props.getFieldsPerEntityRequest({
+        module: entity
+      });
+      this.props.getDashboardDataRequest({
         module: entity
       });
     }
@@ -50,7 +42,7 @@ const hoc = (Dashboard) => {
             width={this.props.width}
             updateDashboard={this.updateDashboard}
             updateFields={this.updateFields}
-            getFields={this.getFields}
+            getFieldsDashboard={this.getFieldsDashboard}
             {...this.props}
           />
         </div>
