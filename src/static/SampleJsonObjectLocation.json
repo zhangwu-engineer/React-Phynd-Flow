@@ -1,11 +1,11 @@
 {
-	"NPI": {
+	"Action": {
 		"MappingFieldId": 165545,
 		"MappingFieldType": "Column",
 		"SerAttributeId": null,
 		"ColumnIdentifier": "column1"
 	},
-	"FirstName": {
+	"Options": {
 		"MappingFieldId": 165533,
 		"MappingFieldType": "Function",
 		"SerAttributeId": null,
@@ -17,7 +17,7 @@
 			"ColumnIdentifier": "column5"
 		}
 	},
-	"MiddleName": {
+	"DisplayName": {
 		"MappingFieldId": 165535,
 		"MappingFieldType": "Function",
 		"SerAttributeId": null,
@@ -29,7 +29,7 @@
 			"ColumnIdentifier": "column6"
 		}
 	},
-	"LastName": {
+	"ParentLocationId": {
 		"MappingFieldId": 165531,
 		"MappingFieldType": "Function",
 		"SerAttributeId": null,
@@ -41,13 +41,13 @@
 			"ColumnIdentifier": "column4"
 		}
 	},
-	"Suffix": {
+	"ParentLocationName": {
 		"MappingFieldId": 165536,
 		"MappingFieldType": "Column",
 		"SerAttributeId": null,
 		"ColumnIdentifier": "column7"
 	},
-	"Gender": {
+	"Name": {
 		"MappingFieldId": 165565,
 		"MappingFieldType": "Conditional",
 		"SerAttributeId": null,
@@ -105,7 +105,7 @@
 			}
 		}
 	},
-	"ProviderType": {
+	"ExternalCode": {
 		"MappingFieldId": 165556,
 		"MappingFieldType": "Conditional",
 		"SerAttributeId": null,
@@ -181,7 +181,7 @@
 			"ConstantValue": null
 		}
 	},
-	"ProfessionalTitle": {
+	"Description": {
 		"MappingFieldId": 165544,
 		"MappingFieldType": "Function",
 		"SerAttributeId": null,
@@ -193,19 +193,19 @@
 			"ColumnIdentifier": "column8"
 		}
 	},
-	"Credentialed": {
+	"Hours": {
 		"MappingFieldId": 165542,
 		"MappingFieldType": "Constant",
 		"SerAttributeId": null,
 		"ConstantValue": "1"
 	},
-	"DateOfBirth": {
+	"Parking": {
 		"MappingFieldId": 175542,
 		"MappingFieldType": "HL7Segment",
 		"SerAttributeId": null,
 		"HL7Segment": "PID-7"
 	},
-	"SecondaryFirstName": {
+	"PhotoUrl": {
 		"MappingFieldId": 185544,
 		"MappingFieldType": "Regex",
 		"SerAttributeId": null,
@@ -219,7 +219,7 @@
 			"ColumnIdentifier": "column202"
 		}
 	},
-	"SecondaryMiddleName": {
+	"LocationContactName": {
 		"MappingFieldId": 185545,
 		"MappingFieldType": "Regex",
 		"SerAttributeId": null,
@@ -233,7 +233,7 @@
 			"ColumnIdentifier": "column202"
 		}
 	},
-	"SecondaryLastName": {
+	"LocationContactEmail": {
 		"MappingFieldId": 185547,
 		"MappingFieldType": "Regex",
 		"SerAttributeId": null,
@@ -247,12 +247,12 @@
 			"ColumnIdentifier": "column202"
 		}
 	},
-	"SecondarySuffix": null,
-	"ProviderStatus": null,
-	"Ethnicity": null,
-	"RaceCode": null,
-	"IsVerified": null,
-	"Source": {
+	"Npi": null,
+	"DirectAddress": null,
+	"Introduction": null,
+	"HealthSystemId": null,
+	"DataSourceId": null,
+	"ProfileType": {
 		"MappingFieldId": 165570,
 		"MappingFieldType": "Conditional",
 		"SerAttributeId": null,
@@ -284,7 +284,7 @@
 			"ConstantValue": "BSWH_NTX"
 		}
 	},
-	"Referable": {
+	"StatusType": {
 		"MappingFieldId": 165541,
 		"MappingFieldType": "Conditional",
 		"SerAttributeId": null,
@@ -316,7 +316,7 @@
 			"ConstantValue": "1"
 		}
 	},
-	"ProviderCategory": {
+	"Type": {
 		"MappingFieldId": 165582,
 		"MappingFieldType": "Switch",
 		"SerAttributeId": null,
@@ -400,10 +400,10 @@
 			}
 		}]
 	},
-	"HasOpenScheduling": null,
-	"HasOnlineScheduling": null,
-	"MatchedProviderId": null,
-	"ConditionId": {
+	"Category": null,
+	"GoogleMapUrl": null,
+	"BuildingName": null,
+	"BillingAddressBuildingName": {
 		"ConditionId": 11333,
 		"Field1": {
 			"MappingFieldId": 165587,
@@ -444,7 +444,7 @@
 			"ConstantValue": "0"
 		}
 	},
-	"FullName": {
+	"TaxpayerId": {
 		"MappingFieldId": 185669,
 		"MappingFieldType":"Combination",
 		"SerAttributeId":null,
@@ -477,6 +477,10 @@
 			}
 		}
 	},
+	"AllowWalkIns": null,
+	"HasFacilityFee": null,
+	"IsHandicapAccessible": null,
+	"NPIEnumerationDate": null,
 	"AddressMaps": [{
 		"Line1": {
 			"MappingFieldId": 165922,
