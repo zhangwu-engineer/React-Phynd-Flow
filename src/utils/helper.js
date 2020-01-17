@@ -35,3 +35,12 @@ export const reorder = (list, startIndex, endIndex) => {
   result.splice(endIndex, 0, start);
   return [...result];
 };
+
+export const OBJ_ENTITIES = [
+  'provider-details',
+  'location-details',
+  'address',
+  'billingaddress',
+  'paytoaddress',
+  'schedule'
+];

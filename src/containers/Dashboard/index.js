@@ -24,7 +24,8 @@ import Sidebar from 'components/Sidebar';
 import {
   getNameFromID,
   getNameFromEntity,
-  reorder
+  reorder,
+  OBJ_ENTITIES,
 } from 'utils/helper';
 import hoc from './hoc';
 
@@ -108,7 +109,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
     let dashboardListFromReducer = dashboardReducer;
     const blockListTemp = [];
 
-    if (match.params.entity !== 'provider-details') {
+    if (OBJ_ENTITIES.indexOf(match.params.entity) < 0) {
       if (match.params.entity !== 'contacts') {
         const mapData = dashboardReducer.dashboard && dashboardReducer.dashboard[getNameFromEntity(match.params.entity)];
         if (Array.isArray(mapData)) {
