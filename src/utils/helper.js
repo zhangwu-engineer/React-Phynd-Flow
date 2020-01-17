@@ -36,6 +36,20 @@ export const reorder = (list, startIndex, endIndex) => {
   return [...result];
 };
 
+export const moduleRouter = [
+  '/provider-module/provider-details',
+  '/location-module/location-details',
+  '/network-module/network-details',
+  '/healthplan-module/healthplan-details'
+];
+
+export const moduleTabNumber = {
+  'provider-module': 0,
+  'location-module': 1,
+  'network-module': 2,
+  'healthplan-module': 3
+}
+
 export const OBJ_ENTITIES = [
   'provider-details',
   'location-details',
