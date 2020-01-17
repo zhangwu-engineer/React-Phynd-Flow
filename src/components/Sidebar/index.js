@@ -14,12 +14,12 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    marginTop: 40,
+    marginTop: 112,
+    height: `calc(100vh - 112px)`
   },
   listItemText: {
     fontSize: 20,
   },
-  toolbar: theme.mixins.toolbar,
 }));
 
 const Sidebar = ({ match, data }) => {
@@ -33,7 +33,6 @@ const Sidebar = ({ match, data }) => {
         paper: classes.drawerPaper,
       }}
     >
-      <div className={classes.toolbar} />
       <List>
         {Array.isArray(data) && data.map((navItem, index) => (
           <ListItem button key={`navitem-${index}`} component={NavLink} to={navItem.link}>
