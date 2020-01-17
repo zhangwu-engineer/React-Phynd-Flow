@@ -46,7 +46,6 @@
 		"Weekday",
 		"Type",
 		"OpenTime",
-		"AddressType",
 		"CloseTime",
 		"IsClosed"
 	],
