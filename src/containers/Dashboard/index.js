@@ -199,18 +199,20 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
                   </div>
                 )}
               </Droppable>
-              <Grid className={classes.addButtonContainer}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.addButton}
-                  onClick={() => {
-                    setBlockListModalShown(true);
-                  }}
-                >
-                  Add Field
-                </Button>
-              </Grid>
+              {blockList.length > 0 &&
+                <Grid className={classes.addButtonContainer}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.addButton}
+                    onClick={() => {
+                      setBlockListModalShown(true);
+                    }}
+                  >
+                    Add Field
+                  </Button>
+                </Grid>
+              }
             </DragDropContext>
           }
           {Array.isArray(dashboardList) && map(dashboardList, (dashboardItem, index) =>
@@ -266,6 +268,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
             </DragDropContext>
           )}
           {Array.isArray(dashboardList) &&
+            blockList.length > 0 &&
             <Grid className={classes.addButtonContainer}>
               <Button
                 variant="contained"
