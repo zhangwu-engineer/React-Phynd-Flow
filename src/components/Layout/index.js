@@ -23,12 +23,21 @@ const moduleRouter = [
   '/location-module/location-details',
   '/network-module/network-details',
   '/healthplan-module/healthplan-details'
-]
+];
+
+const moduleTabNumber = {
+  'provider-module': 0,
+  'location-module': 1,
+  'network-module': 2,
+  'healthplan-module': 3
+}
 
 const LayoutContainer = ({ children, history }) => {
   const classes = useStyles();
-  const [activeTab, setActiveTab] = React.useState(0);
-
+  const { pathname } = history.location;
+  const locationParams = pathname && pathname.split('/');
+  const [activeTab, setActiveTab] = React.useState(moduleTabNumber[locationParams[1]]);
+  
   const handleChange = (event, newTab) => {
     setActiveTab(newTab);
     history.push(moduleRouter[newTab]);
