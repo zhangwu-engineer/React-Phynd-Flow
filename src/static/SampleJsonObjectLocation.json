@@ -706,6 +706,269 @@
 		"SerAttributeId": null,
 		"ConstantValue": null
 	},
+	"Address Action": {
+		"MappingFieldId": 165601,
+		"MappingFieldType": "Combination",
+		"SerAttributeId": null,
+		"Field1": {
+			"MappingFieldId": 165599,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column36"
+		},
+		"Field2": {
+			"MappingFieldId": 165600,
+			"MappingFieldType": "Constant",
+			"SerAttributeId": null,
+			"ConstantValue": "~~"
+		}
+	},
+	"Address Options": {
+		"MappingFieldId": 165598,
+		"MappingFieldType": "Combination",
+		"SerAttributeId": null,
+		"Field1": {
+			"MappingFieldId": 165596,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column29"
+		},
+		"Field2": {
+			"MappingFieldId": 165597,
+			"MappingFieldType": "Constant",
+			"SerAttributeId": null,
+			"ConstantValue": "~~"
+		}
+	},
+	"Address AddressType": {
+		"MappingFieldId": 165594,
+		"MappingFieldType": "Combination",
+		"SerAttributeId": null,
+		"Field1": {
+			"MappingFieldId": 165592,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column22"
+		},
+		"Field2": {
+			"MappingFieldId": 165593,
+			"MappingFieldType": "Constant",
+			"SerAttributeId": null,
+			"ConstantValue": "~~"
+		}
+	},
+	"Address Address1": {
+		"MappingFieldId": 165591,
+		"MappingFieldType": "Combination",
+		"SerAttributeId": null,
+		"Field1": {
+			"MappingFieldId": 165589,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column15"
+		},
+		"Field2": {
+			"MappingFieldId": 165590,
+			"MappingFieldType": "Constant",
+			"SerAttributeId": null,
+			"ConstantValue": "~~"
+		}
+	},
+	"Address Address2": {
+		"MappingFieldId": 165685,
+		"MappingFieldType": "Combination",
+		"SerAttributeId": null,
+		"Field1": {
+			"MappingFieldId": 165683,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column28"
+		},
+		"Field2": {
+			"MappingFieldId": 165684,
+			"MappingFieldType": "Constant",
+			"SerAttributeId": null,
+			"ConstantValue": "~"
+		}
+	},
+	"Address City": {
+		"MappingFieldId": 165682,
+		"MappingFieldType": "Combination",
+		"SerAttributeId": null,
+		"Field1": {
+			"MappingFieldId": 165680,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column32"
+		},
+		"Field2": {
+			"MappingFieldId": 165681,
+			"MappingFieldType": "Constant",
+			"SerAttributeId": null,
+			"ConstantValue": "~"
+		}
+	},
+	"Address State": {
+		"MappingFieldId": 165702,
+		"MappingFieldType": "Constant",
+		"SerAttributeId": null,
+		"ConstantValue": null
+	},
+	"Address PostalCode": {
+		"MappingFieldId": 165671,
+		"MappingFieldType": "Combination",
+		"SerAttributeId": null,
+		"Field1": {
+			"MappingFieldId": 165667,
+			"MappingFieldType": "Combination",
+			"SerAttributeId": null,
+			"Field1": {
+				"MappingFieldId": 165665,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column32"
+			},
+			"Field2": {
+				"MappingFieldId": 165666,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "~"
+			}
+		},
+		"Field2": {
+			"MappingFieldId": 165670,
+			"MappingFieldType": "Combination",
+			"SerAttributeId": null,
+			"Field1": {
+				"MappingFieldId": 165668,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column28"
+			},
+			"Field2": {
+				"MappingFieldId": 165669,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "~"
+			}
+		}
+	},
+	"Address Country": null,
+	"Address County": null,
+	"Address CreatedDate": {
+		"MappingFieldId": 165679,
+		"MappingFieldType": "Regex",
+		"SerAttributeId": null,
+		"RegexPattern": "([0-9]{2,4}$)",
+		"RegexFlags": ",",
+		"RegexGroup": 1,
+		"Source": {
+			"MappingFieldId": 165678,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column31"
+		}
+	},
+	"Address ModifiedDate": {
+		"MappingFieldId": 165702,
+		"MappingFieldType": "Constant",
+		"SerAttributeId": null,
+		"ConstantValue": null
+	},
+	"Address GoogleMapUrl": {
+		"MappingFieldId": 165701,
+		"MappingFieldType": "Function",
+		"SerAttributeId": null,
+		"FunctionName": "BSWHBoardMap",
+		"FunctionParameter": {
+			"MappingFieldId": 165700,
+			"MappingFieldType": "Combination",
+			"SerAttributeId": null,
+			"Field1": {
+				"MappingFieldId": 165698,
+				"MappingFieldType": "Combination",
+				"SerAttributeId": null,
+				"Field1": {
+					"MappingFieldId": 165694,
+					"MappingFieldType": "Combination",
+					"SerAttributeId": null,
+					"Field1": {
+						"MappingFieldId": 165692,
+						"MappingFieldType": "Column",
+						"SerAttributeId": null,
+						"ColumnIdentifier": "column39"
+					},
+					"Field2": {
+						"MappingFieldId": 165693,
+						"MappingFieldType": "Constant",
+						"SerAttributeId": null,
+						"ConstantValue": "~"
+					}
+				},
+				"Field2": {
+					"MappingFieldId": 165697,
+					"MappingFieldType": "Combination",
+					"SerAttributeId": null,
+					"Field1": {
+						"MappingFieldId": 165695,
+						"MappingFieldType": "Column",
+						"SerAttributeId": null,
+						"ColumnIdentifier": "column35"
+					},
+					"Field2": {
+						"MappingFieldId": 165696,
+						"MappingFieldType": "Constant",
+						"SerAttributeId": null,
+						"ConstantValue": "~"
+					}
+				}
+			},
+			"Field2": {
+				"MappingFieldId": 165699,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "ABMSBoardName"
+			}
+		}
+	},
+	"Address BuildingName": {
+		"MappingFieldId": 165704,
+		"MappingFieldType": "Regex",
+		"SerAttributeId": null,
+		"RegexPattern": "([0-9]{2,4}$)",
+		"RegexFlags": ",",
+		"RegexGroup": 1,
+		"Source": {
+			"MappingFieldId": 165703,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column41"
+		}
+	},
+	"Address Phone": {
+		"MappingFieldId": 165933,
+		"MappingFieldType": "Constant",
+		"SerAttributeId": null,
+		"ConstantValue": "1"
+	},
+	"Address Fax": {
+		"MappingFieldId": 165934,
+		"MappingFieldType": "Column",
+		"SerAttributeId": null,
+		"ColumnIdentifier": "column81"
+	},
+	"Address Latitude": {
+		"MappingFieldId": 165935,
+		"MappingFieldType": "Constant",
+		"SerAttributeId": null,
+		"ConstantValue": "4"
+	},
+	"Address Longitude": {
+		"MappingFieldId": 165936,
+		"MappingFieldType": "Constant",
+		"SerAttributeId": null,
+		"ConstantValue": "1"
+	},
 	"OfficeHourMaps": [{
 		"Action": {
 			"MappingFieldId": 165922,
