@@ -547,7 +547,6 @@
 		"CloseTime": null,
 		"IsClosed": null
 	}],
-	"LicenseMaps": [],
 	"AgeGroupMaps": [{
 		"Action": {
 			"MappingFieldId": 165920,
@@ -1309,7 +1308,5 @@
 			"ConstantValue": null
 		},
 		"IsPrimary": null
-	}],
-	"TaxonomyMaps": [],
-	"CustomFieldToExtractProvider": []
+	}]
 }
