@@ -559,15 +559,14 @@
 		"Name": null,
 		"ExternalCode": null
 	}],
-	"ProviderTrainingMaps": [{
-		"ProviderTrainingTypeName": "Board Certifications",
-		"DegreeTitle": {
+	"ProviderMaps": [{
+		"Action": {
 			"MappingFieldId": 165621,
 			"MappingFieldType": "Constant",
 			"SerAttributeId": null,
 			"ConstantValue": null
 		},
-		"Area": {
+		"Options": {
 			"MappingFieldId": 165635,
 			"MappingFieldType": "Function",
 			"SerAttributeId": null,
@@ -623,7 +622,7 @@
 				}
 			}
 		},
-		"OrganizationName": {
+		"ProviderId": {
 			"MappingFieldId": 165620,
 			"MappingFieldType": "Function",
 			"SerAttributeId": null,
@@ -679,8 +678,8 @@
 				}
 			}
 		},
-		"LocationName": null,
-		"BeginYear": {
+		"IsPrimaryLocation": null,
+		"IsSchedulable": {
 			"MappingFieldId": 165623,
 			"MappingFieldType": "Regex",
 			"SerAttributeId": null,
@@ -694,7 +693,7 @@
 				"ColumnIdentifier": "column19"
 			}
 		},
-		"EndYear": {
+		"UserDefined1": {
 			"MappingFieldId": 165625,
 			"MappingFieldType": "Regex",
 			"SerAttributeId": null,
@@ -708,8 +707,8 @@
 				"ColumnIdentifier": "column20"
 			}
 		},
-		"TrainingDescription": null,
-		"ConditionId": {
+		"UserDefined2": null,
+		"UserDefined3": {
 			"ConditionId": 11335,
 			"Field1": {
 				"MappingFieldId": 165636,
@@ -724,16 +723,16 @@
 				"ConstantValue": "Y"
 			}
 		},
-		"IteratorId": null
+		"UserDefined4": null,
+		"UserDefined5": null
 	}, {
-		"ProviderTrainingTypeName": "Board Certifications",
-		"DegreeTitle": {
+		"Action": {
 			"MappingFieldId": 165648,
 			"MappingFieldType": "Constant",
 			"SerAttributeId": null,
 			"ConstantValue": null
 		},
-		"Area": {
+		"Options": {
 			"MappingFieldId": 165662,
 			"MappingFieldType": "Function",
 			"SerAttributeId": null,
@@ -789,7 +788,7 @@
 				}
 			}
 		},
-		"OrganizationName": {
+		"ProviderId": {
 			"MappingFieldId": 165647,
 			"MappingFieldType": "Function",
 			"SerAttributeId": null,
@@ -845,8 +844,8 @@
 				}
 			}
 		},
-		"LocationName": null,
-		"BeginYear": {
+		"IsPrimaryLocation": null,
+		"IsSchedulable": {
 			"MappingFieldId": 165650,
 			"MappingFieldType": "Regex",
 			"SerAttributeId": null,
@@ -860,7 +859,7 @@
 				"ColumnIdentifier": "column27"
 			}
 		},
-		"EndYear": {
+		"UserDefined1": {
 			"MappingFieldId": 165652,
 			"MappingFieldType": "Regex",
 			"SerAttributeId": null,
@@ -874,8 +873,8 @@
 				"ColumnIdentifier": "column24"
 			}
 		},
-		"TrainingDescription": null,
-		"ConditionId": {
+		"UserDefined2": null,
+		"UserDefined3": {
 			"ConditionId": 11336,
 			"Field1": {
 				"MappingFieldId": 165663,
@@ -890,354 +889,22 @@
 				"ConstantValue": "Y"
 			}
 		},
-		"IteratorId": null
+		"UserDefined4": null,
+		"UserDefined5": null
 	}, {
-		"ProviderTrainingTypeName": "Board Certifications",
-		"DegreeTitle": {
-			"MappingFieldId": 165675,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165689,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "BSWHBoardMap",
-			"FunctionParameter": {
-				"MappingFieldId": 165688,
-				"MappingFieldType": "Combination",
-				"SerAttributeId": null,
-				"Field1": {
-					"MappingFieldId": 165686,
-					"MappingFieldType": "Combination",
-					"SerAttributeId": null,
-					"Field1": {
-						"MappingFieldId": 165682,
-						"MappingFieldType": "Combination",
-						"SerAttributeId": null,
-						"Field1": {
-							"MappingFieldId": 165680,
-							"MappingFieldType": "Column",
-							"SerAttributeId": null,
-							"ColumnIdentifier": "column32"
-						},
-						"Field2": {
-							"MappingFieldId": 165681,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "~"
-						}
-					},
-					"Field2": {
-						"MappingFieldId": 165685,
-						"MappingFieldType": "Combination",
-						"SerAttributeId": null,
-						"Field1": {
-							"MappingFieldId": 165683,
-							"MappingFieldType": "Column",
-							"SerAttributeId": null,
-							"ColumnIdentifier": "column28"
-						},
-						"Field2": {
-							"MappingFieldId": 165684,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "~"
-						}
-					}
-				},
-				"Field2": {
-					"MappingFieldId": 165687,
-					"MappingFieldType": "Constant",
-					"SerAttributeId": null,
-					"ConstantValue": "ABMSSpecialty"
-				}
-			}
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165674,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "BSWHBoardMap",
-			"FunctionParameter": {
-				"MappingFieldId": 165673,
-				"MappingFieldType": "Combination",
-				"SerAttributeId": null,
-				"Field1": {
-					"MappingFieldId": 165671,
-					"MappingFieldType": "Combination",
-					"SerAttributeId": null,
-					"Field1": {
-						"MappingFieldId": 165667,
-						"MappingFieldType": "Combination",
-						"SerAttributeId": null,
-						"Field1": {
-							"MappingFieldId": 165665,
-							"MappingFieldType": "Column",
-							"SerAttributeId": null,
-							"ColumnIdentifier": "column32"
-						},
-						"Field2": {
-							"MappingFieldId": 165666,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "~"
-						}
-					},
-					"Field2": {
-						"MappingFieldId": 165670,
-						"MappingFieldType": "Combination",
-						"SerAttributeId": null,
-						"Field1": {
-							"MappingFieldId": 165668,
-							"MappingFieldType": "Column",
-							"SerAttributeId": null,
-							"ColumnIdentifier": "column28"
-						},
-						"Field2": {
-							"MappingFieldId": 165669,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "~"
-						}
-					}
-				},
-				"Field2": {
-					"MappingFieldId": 165672,
-					"MappingFieldType": "Constant",
-					"SerAttributeId": null,
-					"ConstantValue": "ABMSBoardName"
-				}
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165677,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165676,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column34"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165679,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165678,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column31"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": {
-			"ConditionId": 11337,
-			"Field1": {
-				"MappingFieldId": 165690,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column30"
-			},
-			"Field2": {
-				"MappingFieldId": 165691,
-				"MappingFieldType": "Constant",
-				"SerAttributeId": null,
-				"ConstantValue": "Y"
-			}
-		},
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Board Certifications",
-		"DegreeTitle": {
-			"MappingFieldId": 165702,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165716,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "BSWHBoardMap",
-			"FunctionParameter": {
-				"MappingFieldId": 165715,
-				"MappingFieldType": "Combination",
-				"SerAttributeId": null,
-				"Field1": {
-					"MappingFieldId": 165713,
-					"MappingFieldType": "Combination",
-					"SerAttributeId": null,
-					"Field1": {
-						"MappingFieldId": 165709,
-						"MappingFieldType": "Combination",
-						"SerAttributeId": null,
-						"Field1": {
-							"MappingFieldId": 165707,
-							"MappingFieldType": "Column",
-							"SerAttributeId": null,
-							"ColumnIdentifier": "column39"
-						},
-						"Field2": {
-							"MappingFieldId": 165708,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "~"
-						}
-					},
-					"Field2": {
-						"MappingFieldId": 165712,
-						"MappingFieldType": "Combination",
-						"SerAttributeId": null,
-						"Field1": {
-							"MappingFieldId": 165710,
-							"MappingFieldType": "Column",
-							"SerAttributeId": null,
-							"ColumnIdentifier": "column35"
-						},
-						"Field2": {
-							"MappingFieldId": 165711,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "~"
-						}
-					}
-				},
-				"Field2": {
-					"MappingFieldId": 165714,
-					"MappingFieldType": "Constant",
-					"SerAttributeId": null,
-					"ConstantValue": "ABMSSpecialty"
-				}
-			}
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165701,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "BSWHBoardMap",
-			"FunctionParameter": {
-				"MappingFieldId": 165700,
-				"MappingFieldType": "Combination",
-				"SerAttributeId": null,
-				"Field1": {
-					"MappingFieldId": 165698,
-					"MappingFieldType": "Combination",
-					"SerAttributeId": null,
-					"Field1": {
-						"MappingFieldId": 165694,
-						"MappingFieldType": "Combination",
-						"SerAttributeId": null,
-						"Field1": {
-							"MappingFieldId": 165692,
-							"MappingFieldType": "Column",
-							"SerAttributeId": null,
-							"ColumnIdentifier": "column39"
-						},
-						"Field2": {
-							"MappingFieldId": 165693,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "~"
-						}
-					},
-					"Field2": {
-						"MappingFieldId": 165697,
-						"MappingFieldType": "Combination",
-						"SerAttributeId": null,
-						"Field1": {
-							"MappingFieldId": 165695,
-							"MappingFieldType": "Column",
-							"SerAttributeId": null,
-							"ColumnIdentifier": "column35"
-						},
-						"Field2": {
-							"MappingFieldId": 165696,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "~"
-						}
-					}
-				},
-				"Field2": {
-					"MappingFieldId": 165699,
-					"MappingFieldType": "Constant",
-					"SerAttributeId": null,
-					"ConstantValue": "ABMSBoardName"
-				}
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165704,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165703,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column41"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165706,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165705,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column38"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": {
-			"ConditionId": 11338,
-			"Field1": {
-				"MappingFieldId": 165717,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column37"
-			},
-			"Field2": {
-				"MappingFieldId": 165718,
-				"MappingFieldType": "Constant",
-				"SerAttributeId": null,
-				"ConstantValue": "Y"
-			}
-		},
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Medical School",
-		"DegreeTitle": {
+		"Action": {
 			"MappingFieldId": 165721,
 			"MappingFieldType": "Constant",
 			"SerAttributeId": null,
 			"ConstantValue": null
 		},
-		"Area": {
+		"Options": {
 			"MappingFieldId": 165726,
 			"MappingFieldType": "Constant",
 			"SerAttributeId": null,
 			"ConstantValue": null
 		},
-		"OrganizationName": {
+		"ProviderId": {
 			"MappingFieldId": 165720,
 			"MappingFieldType": "Function",
 			"SerAttributeId": null,
@@ -1249,8 +916,8 @@
 				"ColumnIdentifier": "column132"
 			}
 		},
-		"LocationName": null,
-		"BeginYear": {
+		"IsPrimaryLocation": null,
+		"IsSchedulable": {
 			"MappingFieldId": 165723,
 			"MappingFieldType": "Regex",
 			"SerAttributeId": null,
@@ -1264,7 +931,7 @@
 				"ColumnIdentifier": "column133"
 			}
 		},
-		"EndYear": {
+		"UserDefined1": {
 			"MappingFieldId": 165725,
 			"MappingFieldType": "Regex",
 			"SerAttributeId": null,
@@ -1278,8 +945,8 @@
 				"ColumnIdentifier": "column134"
 			}
 		},
-		"TrainingDescription": null,
-		"ConditionId": {
+		"UserDefined2": null,
+		"UserDefined3": {
 			"ConditionId": 11339,
 			"Field1": {
 				"MappingFieldId": 165751,
@@ -1478,1078 +1145,23 @@
 				"ConstantValue": "1"
 			}
 		},
-		"IteratorId": null
+		"UserDefined4": null,
+		"UserDefined5": null
 	}, {
-		"ProviderTrainingTypeName": "Dental School",
-		"DegreeTitle": {
-			"MappingFieldId": 165755,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165760,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165754,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "TitleCase",
-			"FunctionParameter": {
-				"MappingFieldId": 165753,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column132"
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165757,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165756,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column133"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165759,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165758,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column134"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": {
-			"ConditionId": 11340,
-			"Field1": {
-				"MappingFieldId": 165784,
-				"MappingFieldType": "Switch",
-				"SerAttributeId": null,
-				"SwitchValue": {
-					"MappingFieldId": 165780,
-					"MappingFieldType": "Switch",
-					"SerAttributeId": null,
-					"SwitchValue": {
-						"MappingFieldId": 165761,
-						"MappingFieldType": "Column",
-						"SerAttributeId": null,
-						"ColumnIdentifier": "column8"
-					},
-					"SwitchDefault": {
-						"MappingFieldId": 165779,
-						"MappingFieldType": "Constant",
-						"SerAttributeId": null,
-						"ConstantValue": null
-					},
-					"Cases": [{
-						"Key": "B.S.",
-						"Value": {
-							"MappingFieldId": 165762,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "BS"
-						}
-					}, {
-						"Key": "D.D.S.",
-						"Value": {
-							"MappingFieldId": 165763,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "DDS"
-						}
-					}, {
-						"Key": "D.O.",
-						"Value": {
-							"MappingFieldId": 165764,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "DO"
-						}
-					}, {
-						"Key": "D.P.M.",
-						"Value": {
-							"MappingFieldId": 165765,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "DPM"
-						}
-					}, {
-						"Key": "DPT",
-						"Value": {
-							"MappingFieldId": 165766,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "DPT"
-						}
-					}, {
-						"Key": "M.D.",
-						"Value": {
-							"MappingFieldId": 165767,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "MD"
-						}
-					}, {
-						"Key": "Ph.D., M.D.",
-						"Value": {
-							"MappingFieldId": 165768,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "MD, PhD"
-						}
-					}, {
-						"Key": "M.S.",
-						"Value": {
-							"MappingFieldId": 165769,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "MS"
-						}
-					}, {
-						"Key": "MS",
-						"Value": {
-							"MappingFieldId": 165770,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "MS"
-						}
-					}, {
-						"Key": "MSN",
-						"Value": {
-							"MappingFieldId": 165771,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "MSN"
-						}
-					}, {
-						"Key": "MSSW",
-						"Value": {
-							"MappingFieldId": 165772,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "MSSW"
-						}
-					}, {
-						"Key": "MSW",
-						"Value": {
-							"MappingFieldId": 165773,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "MSW"
-						}
-					}, {
-						"Key": "OT",
-						"Value": {
-							"MappingFieldId": 165774,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "OT"
-						}
-					}, {
-						"Key": "PA",
-						"Value": {
-							"MappingFieldId": 165775,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "PA"
-						}
-					}, {
-						"Key": "Ph.D.",
-						"Value": {
-							"MappingFieldId": 165776,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "PhD"
-						}
-					}, {
-						"Key": "PT",
-						"Value": {
-							"MappingFieldId": 165777,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "PT"
-						}
-					}, {
-						"Key": "RD",
-						"Value": {
-							"MappingFieldId": 165778,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "RD"
-						}
-					}]
-				},
-				"SwitchDefault": {
-					"MappingFieldId": 165783,
-					"MappingFieldType": "Constant",
-					"SerAttributeId": null,
-					"ConstantValue": "0"
-				},
-				"Cases": [{
-					"Key": "DDS",
-					"Value": {
-						"MappingFieldId": 165781,
-						"MappingFieldType": "Constant",
-						"SerAttributeId": null,
-						"ConstantValue": "1"
-					}
-				}, {
-					"Key": "DMD",
-					"Value": {
-						"MappingFieldId": 165782,
-						"MappingFieldType": "Constant",
-						"SerAttributeId": null,
-						"ConstantValue": "1"
-					}
-				}]
-			},
-			"Field2": {
-				"MappingFieldId": 165785,
-				"MappingFieldType": "Constant",
-				"SerAttributeId": null,
-				"ConstantValue": "1"
-			}
-		},
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Education",
-		"DegreeTitle": {
-			"MappingFieldId": 165788,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165793,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165787,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "TitleCase",
-			"FunctionParameter": {
-				"MappingFieldId": 165786,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column132"
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165790,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165789,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column133"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165792,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165791,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column134"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": {
-			"ConditionId": 11341,
-			"Field1": {
-				"MappingFieldId": 165814,
-				"MappingFieldType": "Regex",
-				"SerAttributeId": null,
-				"RegexPattern": "(MD)|(DO)|(DPM)|(DDS)|(DMD)",
-				"RegexFlags": ",g",
-				"RegexGroup": 0,
-				"Source": {
-					"MappingFieldId": 165813,
-					"MappingFieldType": "Switch",
-					"SerAttributeId": null,
-					"SwitchValue": {
-						"MappingFieldId": 165794,
-						"MappingFieldType": "Column",
-						"SerAttributeId": null,
-						"ColumnIdentifier": "column8"
-					},
-					"SwitchDefault": {
-						"MappingFieldId": 165812,
-						"MappingFieldType": "Constant",
-						"SerAttributeId": null,
-						"ConstantValue": null
-					},
-					"Cases": [{
-						"Key": "B.S.",
-						"Value": {
-							"MappingFieldId": 165795,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "BS"
-						}
-					}, {
-						"Key": "D.D.S.",
-						"Value": {
-							"MappingFieldId": 165796,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "DDS"
-						}
-					}, {
-						"Key": "D.O.",
-						"Value": {
-							"MappingFieldId": 165797,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "DO"
-						}
-					}, {
-						"Key": "D.P.M.",
-						"Value": {
-							"MappingFieldId": 165798,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "DPM"
-						}
-					}, {
-						"Key": "DPT",
-						"Value": {
-							"MappingFieldId": 165799,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "DPT"
-						}
-					}, {
-						"Key": "M.D.",
-						"Value": {
-							"MappingFieldId": 165800,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "MD"
-						}
-					}, {
-						"Key": "Ph.D., M.D.",
-						"Value": {
-							"MappingFieldId": 165801,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "MD, PhD"
-						}
-					}, {
-						"Key": "M.S.",
-						"Value": {
-							"MappingFieldId": 165802,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "MS"
-						}
-					}, {
-						"Key": "MS",
-						"Value": {
-							"MappingFieldId": 165803,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "MS"
-						}
-					}, {
-						"Key": "MSN",
-						"Value": {
-							"MappingFieldId": 165804,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "MSN"
-						}
-					}, {
-						"Key": "MSSW",
-						"Value": {
-							"MappingFieldId": 165805,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "MSSW"
-						}
-					}, {
-						"Key": "MSW",
-						"Value": {
-							"MappingFieldId": 165806,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "MSW"
-						}
-					}, {
-						"Key": "OT",
-						"Value": {
-							"MappingFieldId": 165807,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "OT"
-						}
-					}, {
-						"Key": "PA",
-						"Value": {
-							"MappingFieldId": 165808,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "PA"
-						}
-					}, {
-						"Key": "Ph.D.",
-						"Value": {
-							"MappingFieldId": 165809,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "PhD"
-						}
-					}, {
-						"Key": "PT",
-						"Value": {
-							"MappingFieldId": 165810,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "PT"
-						}
-					}, {
-						"Key": "RD",
-						"Value": {
-							"MappingFieldId": 165811,
-							"MappingFieldType": "Constant",
-							"SerAttributeId": null,
-							"ConstantValue": "RD"
-						}
-					}]
-				}
-			},
-			"Field2": {
-				"MappingFieldId": 165815,
-				"MappingFieldType": "Constant",
-				"SerAttributeId": null,
-				"ConstantValue": null
-			}
-		},
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Internship",
-		"DegreeTitle": {
-			"MappingFieldId": 165818,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165823,
-			"MappingFieldType": "Column",
-			"SerAttributeId": null,
-			"ColumnIdentifier": "column136"
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165817,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "TitleCase",
-			"FunctionParameter": {
-				"MappingFieldId": 165816,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column137"
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165820,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165819,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column138"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165822,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165821,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column139"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": null,
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Internship",
-		"DegreeTitle": {
-			"MappingFieldId": 165826,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165831,
-			"MappingFieldType": "Column",
-			"SerAttributeId": null,
-			"ColumnIdentifier": "column141"
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165825,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "TitleCase",
-			"FunctionParameter": {
-				"MappingFieldId": 165824,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column142"
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165828,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165827,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column143"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165830,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165829,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column144"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": null,
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Internship",
-		"DegreeTitle": {
-			"MappingFieldId": 165834,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165839,
-			"MappingFieldType": "Column",
-			"SerAttributeId": null,
-			"ColumnIdentifier": "column146"
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165833,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "TitleCase",
-			"FunctionParameter": {
-				"MappingFieldId": 165832,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column147"
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165836,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165835,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column148"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165838,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165837,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column149"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": null,
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Residency",
-		"DegreeTitle": {
-			"MappingFieldId": 165842,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165847,
-			"MappingFieldType": "Column",
-			"SerAttributeId": null,
-			"ColumnIdentifier": "column151"
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165841,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "TitleCase",
-			"FunctionParameter": {
-				"MappingFieldId": 165840,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column152"
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165844,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165843,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column153"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165846,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165845,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column154"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": null,
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Residency",
-		"DegreeTitle": {
-			"MappingFieldId": 165850,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165855,
-			"MappingFieldType": "Column",
-			"SerAttributeId": null,
-			"ColumnIdentifier": "column156"
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165849,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "TitleCase",
-			"FunctionParameter": {
-				"MappingFieldId": 165848,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column157"
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165852,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165851,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column158"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165854,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165853,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column159"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": null,
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Residency",
-		"DegreeTitle": {
-			"MappingFieldId": 165858,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165863,
-			"MappingFieldType": "Column",
-			"SerAttributeId": null,
-			"ColumnIdentifier": "column161"
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165857,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "TitleCase",
-			"FunctionParameter": {
-				"MappingFieldId": 165856,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column162"
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165860,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165859,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column163"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165862,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165861,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column164"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": null,
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Residency",
-		"DegreeTitle": {
-			"MappingFieldId": 165866,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165871,
-			"MappingFieldType": "Column",
-			"SerAttributeId": null,
-			"ColumnIdentifier": "column166"
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165865,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "TitleCase",
-			"FunctionParameter": {
-				"MappingFieldId": 165864,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column167"
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165868,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165867,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column168"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165870,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165869,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column169"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": null,
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Residency",
-		"DegreeTitle": {
-			"MappingFieldId": 165874,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165879,
-			"MappingFieldType": "Column",
-			"SerAttributeId": null,
-			"ColumnIdentifier": "column171"
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165873,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "TitleCase",
-			"FunctionParameter": {
-				"MappingFieldId": 165872,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column172"
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165876,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165875,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column173"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165878,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165877,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column174"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": null,
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Fellowship",
-		"DegreeTitle": {
-			"MappingFieldId": 165882,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165887,
-			"MappingFieldType": "Column",
-			"SerAttributeId": null,
-			"ColumnIdentifier": "column176"
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165881,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "TitleCase",
-			"FunctionParameter": {
-				"MappingFieldId": 165880,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column177"
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165884,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165883,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column178"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165886,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165885,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column179"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": null,
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Fellowship",
-		"DegreeTitle": {
-			"MappingFieldId": 165890,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165895,
-			"MappingFieldType": "Column",
-			"SerAttributeId": null,
-			"ColumnIdentifier": "column181"
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165889,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "TitleCase",
-			"FunctionParameter": {
-				"MappingFieldId": 165888,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column182"
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165892,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165891,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column183"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165894,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165893,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column184"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": null,
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Fellowship",
-		"DegreeTitle": {
+		"Action": "Fellowship",
+		"Options": {
 			"MappingFieldId": 165898,
 			"MappingFieldType": "Constant",
 			"SerAttributeId": null,
 			"ConstantValue": null
 		},
-		"Area": {
+		"ProviderId": {
 			"MappingFieldId": 165903,
 			"MappingFieldType": "Column",
 			"SerAttributeId": null,
 			"ColumnIdentifier": "column186"
 		},
-		"OrganizationName": {
+		"IsPrimaryLocation": {
 			"MappingFieldId": 165897,
 			"MappingFieldType": "Function",
 			"SerAttributeId": null,
@@ -2561,8 +1173,8 @@
 				"ColumnIdentifier": "column187"
 			}
 		},
-		"LocationName": null,
-		"BeginYear": {
+		"IsSchedulable": null,
+		"UserDefined1": {
 			"MappingFieldId": 165900,
 			"MappingFieldType": "Regex",
 			"SerAttributeId": null,
@@ -2576,7 +1188,7 @@
 				"ColumnIdentifier": "column188"
 			}
 		},
-		"EndYear": {
+		"UserDefined2": {
 			"MappingFieldId": 165902,
 			"MappingFieldType": "Regex",
 			"SerAttributeId": null,
@@ -2590,125 +1202,9 @@
 				"ColumnIdentifier": "column189"
 			}
 		},
-		"TrainingDescription": null,
-		"ConditionId": null,
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Fellowship",
-		"DegreeTitle": {
-			"MappingFieldId": 165906,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165911,
-			"MappingFieldType": "Column",
-			"SerAttributeId": null,
-			"ColumnIdentifier": "column191"
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165905,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "TitleCase",
-			"FunctionParameter": {
-				"MappingFieldId": 165904,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column192"
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165908,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165907,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column193"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165910,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165909,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column194"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": null,
-		"IteratorId": null
-	}, {
-		"ProviderTrainingTypeName": "Fellowship",
-		"DegreeTitle": {
-			"MappingFieldId": 165914,
-			"MappingFieldType": "Constant",
-			"SerAttributeId": null,
-			"ConstantValue": null
-		},
-		"Area": {
-			"MappingFieldId": 165919,
-			"MappingFieldType": "Column",
-			"SerAttributeId": null,
-			"ColumnIdentifier": "column196"
-		},
-		"OrganizationName": {
-			"MappingFieldId": 165913,
-			"MappingFieldType": "Function",
-			"SerAttributeId": null,
-			"FunctionName": "TitleCase",
-			"FunctionParameter": {
-				"MappingFieldId": 165912,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column197"
-			}
-		},
-		"LocationName": null,
-		"BeginYear": {
-			"MappingFieldId": 165916,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165915,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column198"
-			}
-		},
-		"EndYear": {
-			"MappingFieldId": 165918,
-			"MappingFieldType": "Regex",
-			"SerAttributeId": null,
-			"RegexPattern": "([0-9]{2,4}$)",
-			"RegexFlags": ",",
-			"RegexGroup": 1,
-			"Source": {
-				"MappingFieldId": 165917,
-				"MappingFieldType": "Column",
-				"SerAttributeId": null,
-				"ColumnIdentifier": "column199"
-			}
-		},
-		"TrainingDescription": null,
-		"ConditionId": null,
-		"IteratorId": null
+		"UserDefined3": null,
+		"UserDefined4": null,
+		"UserDefined5": null
 	}],
 	"SpecialtyMaps": [{
 		"SpecialtyDomain": "Credentialed Specialties",
