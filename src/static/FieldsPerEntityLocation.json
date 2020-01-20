@@ -168,7 +168,7 @@
 		"Longitude"
 	],
 	"Schedule": [
-		"Action",
+		"Schedule Action",
 		"Options",
 		"ScheduleCode",
 		"HasOnlineScheduling",

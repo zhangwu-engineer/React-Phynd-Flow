@@ -480,6 +480,232 @@
 	"AllowWalkIns": null,
 	"HasFacilityFee": null,
 	"IsHandicapAccessible": null,
+	"Schedule Action": {
+		"MappingFieldId": 165754,
+		"MappingFieldType": "Function",
+		"SerAttributeId": null,
+		"FunctionName": "TitleCase",
+		"FunctionParameter": {
+			"MappingFieldId": 165753,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column132"
+		}
+	},
+	"Schedule Options": {
+		"MappingFieldId": 165757,
+		"MappingFieldType": "Regex",
+		"SerAttributeId": null,
+		"RegexPattern": "([0-9]{2,4}$)",
+		"RegexFlags": ",",
+		"RegexGroup": 1,
+		"Source": {
+			"MappingFieldId": 165756,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column133"
+		}
+	},
+	"ScheduleCode": {
+		"MappingFieldId": 165759,
+		"MappingFieldType": "Regex",
+		"SerAttributeId": null,
+		"RegexPattern": "([0-9]{2,4}$)",
+		"RegexFlags": ",",
+		"RegexGroup": 1,
+		"Source": {
+			"MappingFieldId": 165758,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column134"
+		}
+	},
+	"HasOnlineScheduling": {
+		"MappingFieldId": 165788,
+		"MappingFieldType": "Constant",
+		"SerAttributeId": null,
+		"ConstantValue": null
+	},
+	"VisitType": {
+		"MappingFieldId": 165793,
+		"MappingFieldType": "Constant",
+		"SerAttributeId": null,
+		"ConstantValue": null
+	},
+	"HasExtendedHours": {
+		"MappingFieldId": 165813,
+		"MappingFieldType": "Switch",
+		"SerAttributeId": null,
+		"SwitchValue": {
+			"MappingFieldId": 165794,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column8"
+		},
+		"SwitchDefault": {
+			"MappingFieldId": 165812,
+			"MappingFieldType": "Constant",
+			"SerAttributeId": null,
+			"ConstantValue": null
+		},
+		"Cases": [{
+			"Key": "B.S.",
+			"Value": {
+				"MappingFieldId": 165795,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "BS"
+			}
+		}, {
+			"Key": "D.D.S.",
+			"Value": {
+				"MappingFieldId": 165796,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "DDS"
+			}
+		}, {
+			"Key": "D.O.",
+			"Value": {
+				"MappingFieldId": 165797,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "DO"
+			}
+		}, {
+			"Key": "D.P.M.",
+			"Value": {
+				"MappingFieldId": 165798,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "DPM"
+			}
+		}, {
+			"Key": "DPT",
+			"Value": {
+				"MappingFieldId": 165799,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "DPT"
+			}
+		}, {
+			"Key": "M.D.",
+			"Value": {
+				"MappingFieldId": 165800,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "MD"
+			}
+		}, {
+			"Key": "Ph.D., M.D.",
+			"Value": {
+				"MappingFieldId": 165801,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "MD, PhD"
+			}
+		}, {
+			"Key": "M.S.",
+			"Value": {
+				"MappingFieldId": 165802,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "MS"
+			}
+		}, {
+			"Key": "MS",
+			"Value": {
+				"MappingFieldId": 165803,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "MS"
+			}
+		}, {
+			"Key": "MSN",
+			"Value": {
+				"MappingFieldId": 165804,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "MSN"
+			}
+		}, {
+			"Key": "MSSW",
+			"Value": {
+				"MappingFieldId": 165805,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "MSSW"
+			}
+		}, {
+			"Key": "MSW",
+			"Value": {
+				"MappingFieldId": 165806,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "MSW"
+			}
+		}, {
+			"Key": "OT",
+			"Value": {
+				"MappingFieldId": 165807,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "OT"
+			}
+		}, {
+			"Key": "PA",
+			"Value": {
+				"MappingFieldId": 165808,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "PA"
+			}
+		}, {
+			"Key": "Ph.D.",
+			"Value": {
+				"MappingFieldId": 165809,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "PhD"
+			}
+		}, {
+			"Key": "PT",
+			"Value": {
+				"MappingFieldId": 165810,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "PT"
+			}
+		}, {
+			"Key": "RD",
+			"Value": {
+				"MappingFieldId": 165811,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": "RD"
+			}
+		}]
+	},
+	"IsOpen24Hours": {
+		"MappingFieldId": 165838,
+		"MappingFieldType": "Regex",
+		"SerAttributeId": null,
+		"RegexPattern": "([0-9]{2,4}$)",
+		"RegexFlags": ",",
+		"RegexGroup": 1,
+		"Source": {
+			"MappingFieldId": 165837,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column149"
+		}
+	},
+	"ScheduleUrl": {
+		"MappingFieldId": 165842,
+		"MappingFieldType": "Constant",
+		"SerAttributeId": null,
+		"ConstantValue": null
+	},
 	"OfficeHourMaps": [{
 		"Action": {
 			"MappingFieldId": 165922,
