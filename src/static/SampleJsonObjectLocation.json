@@ -1059,6 +1059,61 @@
 		"Name": null,
 		"ExternalCode": null
 	}],
+	"FeatureMaps": [{
+		"Action": {
+			"MappingFieldId": 165920,
+			"MappingFieldType": "Constant",
+			"SerAttributeId": null,
+			"ConstantValue": "English"
+		},
+		"Options": null,
+		"Name": null,
+		"ExternalCode": null
+	}],
+	"TreatmentTermMaps": [{
+		"Action": {
+			"MappingFieldId": 165920,
+			"MappingFieldType": "Constant",
+			"SerAttributeId": null,
+			"ConstantValue": "English"
+		},
+		"Options": null,
+		"Name": null,
+		"ExternalCode": null
+	}],
+	"GroupMaps": [{
+		"Action": {
+			"MappingFieldId": 165920,
+			"MappingFieldType": "Constant",
+			"SerAttributeId": null,
+			"ConstantValue": "English"
+		},
+		"Options": null,
+		"Name": null,
+		"ExternalCode": null
+	}],
+	"IdentifierMaps": [{
+		"Action": {
+			"MappingFieldId": 165920,
+			"MappingFieldType": "Constant",
+			"SerAttributeId": null,
+			"ConstantValue": "English"
+		},
+		"Options": null,
+		"Name": null,
+		"ExternalCode": null
+	}],
+	"ContactMaps": [{
+		"Action": {
+			"MappingFieldId": 165920,
+			"MappingFieldType": "Constant",
+			"SerAttributeId": null,
+			"ConstantValue": "English"
+		},
+		"Options": null,
+		"Name": null,
+		"ExternalCode": null
+	}],
 	"ProviderMaps": [{
 		"Action": {
 			"MappingFieldId": 165621,
