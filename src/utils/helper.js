@@ -55,6 +55,6 @@ export const OBJ_ENTITIES = [
   'location-details',
   'address',
   'billing-address',
-  'pay-to-address',
+  'payto-address',
   'schedule'
 ];

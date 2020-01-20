@@ -975,7 +975,7 @@
 		"SerAttributeId": null,
 		"ConstantValue": "11"
 	},
-	"PayToAddress Action": {
+	"PaytoAddress Action": {
 		"MappingFieldId": 165936232,
 		"MappingFieldType": "Constant",
 		"SerAttributeId": null,

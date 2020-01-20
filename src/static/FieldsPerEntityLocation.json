@@ -147,10 +147,10 @@
 		"BillingAddress Latitude",
 		"BillingAddress Longitude"
 	],
-	"Pay To Address": [
-		"PayToAddress Action",
-		"PayToAddress Options",
-		"PayToAddress AddressType",
+	"Payto Address": [
+		"PaytoAddress Action",
+		"PaytoAddress Options",
+		"PaytoAddress AddressType",
 		"PayToAddress Address1",
 		"PayToAddress Address2",
 		"PayToAddress City",
