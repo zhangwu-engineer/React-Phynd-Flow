@@ -110,20 +110,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
     const blockListTemp = [];
 
     if (OBJ_ENTITIES.indexOf(match.params.entity) < 0) {
-      if (match.params.entity !== 'contacts') {
-        const mapData = dashboardReducer.dashboard && dashboardReducer.dashboard[getNameFromEntity(match.params.entity)];
-        if (Array.isArray(mapData)) {
-          dashboardListFromReducer = [];
-          let startPoint = 0;
-          map(mapData, m => {
-            dashboardListFromReducer.push({
-              dashboard: m,
-              startPoint,
-            });
-            startPoint += parseInt(size(m));
-          });
-        }
-      } else {
+      if (match.params.entity === 'contacts' && match.params.module === 'provider-module') {
         const addressMapData = dashboardReducer.dashboard && dashboardReducer.dashboard['AddressMaps'];
         if (Array.isArray(addressMapData)) {
           dashboardListFromReducer = [];
@@ -137,6 +124,19 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
               });
               startPoint += parseInt(size(cm));
             });
+          });
+        }
+      } else {
+        const mapData = dashboardReducer.dashboard && dashboardReducer.dashboard[getNameFromEntity(match.params.entity)];
+        if (Array.isArray(mapData)) {
+          dashboardListFromReducer = [];
+          let startPoint = 0;
+          map(mapData, m => {
+            dashboardListFromReducer.push({
+              dashboard: m,
+              startPoint,
+            });
+            startPoint += parseInt(size(m));
           });
         }
       }
