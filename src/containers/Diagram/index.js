@@ -2,7 +2,6 @@ import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import _ from 'lodash';
 import CytoscapeComponent from 'react-cytoscapejs';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 
@@ -11,45 +10,11 @@ import { checkNodeEditable, checkCategoryEditable } from './checkEditable';
 import { getPropertyToMap } from './getPropertyToMap';
 import { generateMapping } from './generateMap';
 
+import useStyles, { nodeStyle, parentEntityStyle, edgeStyle } from './style';
+
 const DIAGRAM_CONF = {
-  DIAGRAM_PADDING: 30,
   NODE_WIDTH: 320,
   NODE_HEIGHT: 120,
-  NODE_INNER_WIDTH: 220,
-};
-
-const nodeStyle = {
-  'width': 'label',
-  'height': 'label',
-  'background-color': 'white',
-  'label': 'data(label)',
-  'border-style': 'solid',
-  'border-width': '1',
-  'border-color': 'black',
-  'text-halign': 'center',
-  'text-valign': 'center',
-  'text-max-width': DIAGRAM_CONF.NODE_INNER_WIDTH,
-  'text-wrap': 'wrap',
-  'padding': 15,
-  'shape': 'rectangle',
-};
-
-const parentEntityStyle = {
-  'width': 'label',
-  'height': 'label',
-  'font-weight': 'bold',
-  'background-opacity': 0.075,
-  'padding': DIAGRAM_CONF.DIAGRAM_PADDING,
-  'text-valign': 'top',
-  'text-halign': 'center',
-  'text-margin-y': 25,
-};
-
-const edgeStyle = {
-  'arrow-scale': 1,
-  'target-arrow-shape': 'triangle',
-  'target-arrow-color': 'black',
-  'curve-style': 'bezier',
 };
 
 const stylesheet = [
@@ -66,15 +31,6 @@ const stylesheet = [
     style: edgeStyle,
   }
 ];
-
-const useStyles = makeStyles(theme => ({
-  fab: {
-    position: 'absolute',
-    textTransform: 'none',
-    marginLeft: 'calc(50% - 28px)',
-    marginTop: 50,
-  },
-}));
 
 const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsModal, triggerCaseKeyModal, updateDashboard, triggerOperationModal }, ref) => {
   const [elements, setElements] = React.useState([]);
