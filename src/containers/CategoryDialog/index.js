@@ -9,8 +9,8 @@ import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 
 import useStyles from './style';
-import { isRemovable } from '../../utils/categoryDialog';
-import { IconsList } from '../../utils/iconsList';
+import { isRemovable } from 'utils/categoryDialog';
+import { IconsList } from 'utils/iconsList';
 import { NodeCard } from '../../components/NodeCard';
 
 const CategoryDialog = ({ isModalShown, activeParent, currentCard, currentDetails, hideModal, setNewElement, removeElement }) => {

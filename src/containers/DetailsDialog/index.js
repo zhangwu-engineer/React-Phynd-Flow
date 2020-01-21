@@ -15,7 +15,7 @@ import {
   getSecondaryFieldLabel,
   getTertiaryFieldLabel,
   getFourthFieldLabel
-} from '../../utils/detailsDialog';
+} from 'utils/detailsDialog';
 
 const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails, hideModal, updateElement, removeElement }) => {
   const classes = useStyles();

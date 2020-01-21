@@ -5,7 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { IconsList } from '../../utils/iconsList';
+import { IconsList } from 'utils/iconsList';
 
 import useStyles from './style';
 

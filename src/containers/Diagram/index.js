@@ -11,7 +11,7 @@ import {
   checkCategoryEditable,
   getPropertyToMap,
   generateMapping,
-} from '../../utils/helper';
+} from 'utils/helper';
 
 import useStyles, { nodeStyle, parentEntityStyle, edgeStyle } from './style';
 
