@@ -13,11 +13,11 @@ import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
 import Button from '@material-ui/core/Button';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import CategoryDialog from 'containers/Dialog/category';
-import DetailsDialog from 'containers/Dialog/details';
+import CategoryDialog from 'containers/CategoryDialog';
+import DetailsDialog from 'containers/DetailsDialog';
 import CaseKeyDialog from 'containers/CaseKeyDialog';
 import BlockListDialog from 'containers/BlockListDialog';
-import OperationDialog from 'containers/Dialog/operations';
+import OperationDialog from 'containers/OperationsDialog';
 import PanelItem from 'components/PanelItem';
 import Sidebar from 'components/Sidebar';
 
