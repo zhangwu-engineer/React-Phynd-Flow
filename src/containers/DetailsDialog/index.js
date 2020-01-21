@@ -9,8 +9,8 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import useStyles from './style';
 
-const isRemovable = (parent) => {
-  const primaryModels = ['Constant', 'Column', 'HL7', 'Switch', 'Regex', 'Iteration', 'Conditional', 'Combination', 'Function'];
+const isDetailsEntityRemovable = (parent) => {
+  const primaryModels = ['Constant', 'Column', 'HL7'];
   if (parent) {
     if (parent && parent.edges.length === 0 && primaryModels.indexOf(parent.data.parentType) > -1) return true;
   }
@@ -198,7 +198,7 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
           >
             Save
           </Button>
-          {isRemovable(activeParent) &&
+          {isDetailsEntityRemovable(activeParent) &&
             <Button
               variant="contained"
               color="primary"
