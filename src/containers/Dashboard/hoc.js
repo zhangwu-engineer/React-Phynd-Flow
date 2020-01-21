@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { map } from 'lodash';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { getIDFromName } from 'utils/helper';
-import LayoutContainer from 'components/Layout'
+import LayoutContainer from 'components/Layout';
+
+import { makeSidebarData } from '../../selectors';
 
 import * as actions from 'actions';
 
@@ -60,10 +60,11 @@ const hoc = (Dashboard) => {
 }
 
 export default (Dashboard) => {
+  const getSidebarData = makeSidebarData();
   const mapStateToProps = state => ({
     dashboardReducer: state.dashboard,
     fieldsReducer: state.fields,
-    sidebarData: state.fields.fields ? map(state.fields.fields, (value, name) => ({ name: name, link: getIDFromName(name) })) : {}
+    sidebarData: getSidebarData(state)
   })
 
   const mapDispatchToProps = {
@@ -71,6 +72,7 @@ export default (Dashboard) => {
     updateDashboardDataRequest: actions.updateDashboardDataRequest,
     updateFieldsDataRequest: actions.updateFieldsDataRequest,
     getFieldsPerEntityRequest: actions.getFieldsPerEntityRequest,
+    makeSidebarData
   }
 
   return connect(mapStateToProps, mapDispatchToProps)(
