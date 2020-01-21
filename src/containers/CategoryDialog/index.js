@@ -12,6 +12,7 @@ import { FaQuestion, FaColumns, FaPlus, FaCode, FaList, FaWindowMinimize, FaAngl
 import { AiOutlineScissor } from "react-icons/ai";
 
 import useStyles from './style';
+import { isRemovable } from '../../utils/categoryDialog';
 
 const IconsList = {
   Constant: FaWindowMinimize,
@@ -41,14 +42,6 @@ const NodeCard = ({ cardName, activeCard }) => {
       </CardContent>
     </Card>
   )
-}
-
-const isRemovable = (parent) => {
-  const primaryModels = ['Constant', 'Column', 'HL7', 'Switch', 'Regex', 'Iteration', 'Conditional', 'Combination', 'Function', 'JsonProperty', 'Aggregate'];
-  if (parent) {
-    if (parent && parent.edges.length === 0 && primaryModels.indexOf(parent.data.parentType) > -1) return true;
-  }
-  return false;
 }
 
 const CategoryDialog = ({ isModalShown, activeParent, currentCard, currentDetails, hideModal, setNewElement, removeElement }) => {
