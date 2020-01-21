@@ -3,46 +3,15 @@ import _ from 'lodash';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
-import { FaQuestion, FaColumns, FaPlus, FaCode, FaList, FaWindowMinimize, FaAngleUp, FaAlignJustify, FaJs } from "react-icons/fa";
-import { AiOutlineScissor } from "react-icons/ai";
 
 import useStyles from './style';
 import { isRemovable } from '../../utils/categoryDialog';
-
-const IconsList = {
-  Constant: FaWindowMinimize,
-  Column: FaColumns,
-  HL7: FaAngleUp,
-  Conditional: FaQuestion,
-  Combination: FaPlus,
-  Regex: AiOutlineScissor,
-  Iteration: FaList,
-  Function: FaCode,
-  Switch: FaAlignJustify,
-  JsonProperty: FaJs,
-  JsonElement: FaJs,
-  Aggregate: FaJs,
-};
-
-const NodeCard = ({ cardName, activeCard }) => {
-  const classes = useStyles();
-  const CardIcon = IconsList[cardName];
-  return (
-    <Card className={activeCard === cardName ? classes.cardActive : classes.cardInactive}>
-      <Typography className={classes.cardTitle}>{cardName}</Typography>
-      <CardContent>
-        <Grid container spacing={2} justify="center" className={classes.cardContent}>
-          <CardIcon className={classes.cardIcon} />
-        </Grid>
-      </CardContent>
-    </Card>
-  )
-}
+import { IconsList } from '../../utils/iconsList';
+import { NodeCard } from '../../components/NodeCard';
 
 const CategoryDialog = ({ isModalShown, activeParent, currentCard, currentDetails, hideModal, setNewElement, removeElement }) => {
   const classes = useStyles();
