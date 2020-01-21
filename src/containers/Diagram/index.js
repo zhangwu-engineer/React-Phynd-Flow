@@ -5,10 +5,13 @@ import Grid from '@material-ui/core/Grid';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 
-import { generateInitialSource } from './generateInitialSource';
-import { checkNodeEditable, checkCategoryEditable } from './checkEditable';
-import { getPropertyToMap } from './getPropertyToMap';
-import { generateMapping } from './generateMap';
+import {
+  generateInitialSource,
+  checkNodeEditable,
+  checkCategoryEditable,
+  getPropertyToMap,
+  generateMapping,
+} from '../../utils/helper';
 
 import useStyles, { nodeStyle, parentEntityStyle, edgeStyle } from './style';
 

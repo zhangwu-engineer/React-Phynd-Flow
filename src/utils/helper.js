@@ -1,3 +1,16 @@
+import { generateInitialSource } from './generateInitialSource';
+import { checkNodeEditable, checkCategoryEditable } from './checkEditable';
+import { getPropertyToMap } from './getPropertyToMap';
+import { generateMapping } from './generateMap';
+
+export {
+  generateInitialSource,
+  checkNodeEditable,
+  checkCategoryEditable,
+  getPropertyToMap,
+  generateMapping,
+};
+
 export const a11yProps = index => ({
   id: `scrollable-auto-tab-${index}`,
   'aria-controls': `scrollable-auto-tabpanel-${index}`,
