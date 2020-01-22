@@ -4,12 +4,19 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import LayoutContainer from 'components/Layout';
 
-import { makeSidebarData, getFieldsList } from '../../selectors';
+import { makeSidebarData, getFieldsList, makeDashboardList } from '../../selectors';
 
 import * as actions from 'actions';
 
 const hoc = (Dashboard) => {
   class ProvidersHoc extends Component {
+    constructor(props) {
+      super(props);
+
+      props.getDashboardDataRequest();
+      props.getFieldsPerEntityRequest();
+    }
+
     componentDidMount() {
       window.scrollTo(0,0);
     }
@@ -22,24 +29,18 @@ const hoc = (Dashboard) => {
       this.props.updateFieldsDataRequest({ data });
     }
 
-    getFieldsDashboard = entity => {
-      this.props.getDashboardDataRequest({
-        module: entity
-      });
-    }
-
     render() {
       return (
         <div>
           <LayoutContainer history={this.props.history} />
           <Dashboard
-            dashboardReducer={this.props.dashboardReducer}
+            dashboardList={this.props.dashboardList}
             fieldsReducer={this.props.fieldsReducer}
+            fieldsList={this.props.fieldsList}
             classes={this.props.classes}
             width={this.props.width}
             updateDashboard={this.updateDashboard}
             updateFields={this.updateFields}
-            getFieldsDashboard={this.getFieldsDashboard}
             {...this.props}
           />
         </div>
@@ -48,7 +49,6 @@ const hoc = (Dashboard) => {
   }
 
   ProvidersHoc.propTypes = {
-    dashboardReducer: PropTypes.object.isRequired,
     fieldsReducer: PropTypes.object.isRequired,
     fieldsList: PropTypes.array.isRequired,
     getProvidersRequest: PropTypes.func,
@@ -59,8 +59,10 @@ const hoc = (Dashboard) => {
 
 export default (Dashboard) => {
   const getSidebarData = makeSidebarData();
+  const getDashboardList = makeDashboardList();
+
   const mapStateToProps = (state, props) => ({
-    dashboardReducer: state.dashboard,
+    dashboardList: getDashboardList(state, props),
     fieldsReducer: state.fields,
     fieldsList: getFieldsList(state, props),
     sidebarData: getSidebarData(state, props)
@@ -72,7 +74,8 @@ export default (Dashboard) => {
     updateFieldsDataRequest: actions.updateFieldsDataRequest,
     getFieldsPerEntityRequest: actions.getFieldsPerEntityRequest,
     makeSidebarData,
-    getFieldsList
+    getFieldsList,
+    makeDashboardList
   }
 
   return connect(mapStateToProps, mapDispatchToProps)(
