@@ -67,9 +67,8 @@ const Panel = ({ items, startPoint, panelName, panelIndex, blockedItems, dashboa
   );
 };
 
-const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, updateDashboard, updateFields, getFieldsDashboard }) => {
+const Dashboard = ({ dashboardReducer, fieldsReducer, fieldsList, match, sidebarData, updateDashboard, updateFields, getFieldsDashboard }) => {
   const classes = useStyles();
-  const [fieldsList, setFieldsList] = React.useState([]);
   const [dashboardList, setDashboardList] = React.useState([]);
   const [blockList, setBlockList] = React.useState([]);
   const [expanded, setExpanded] = React.useState(null);
@@ -98,14 +97,12 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
       result.destination.index
     );
 
-    setFieldsList(items);
     const fieldsListFromReducer = assign({}, fieldsReducer);
-    fieldsListFromReducer.fields[getNameFromID(match.params.entity)] = items;
+    fieldsListFromReducer.fields[getNameFromID(match.params.module)][getNameFromID(match.params.entity)] = items;
     updateFields(fieldsListFromReducer.fields);
   }
 
   useEffect(() => {
-    const fieldsListFromReducer = fieldsReducer.fields && fieldsReducer.fields[getNameFromID(match.params.entity)] && fieldsReducer.fields[getNameFromID(match.params.entity)];
     let dashboardListFromReducer = dashboardReducer;
     const blockListTemp = [];
 
@@ -140,20 +137,19 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, match, sidebarData, update
           });
         }
       }
-      map(fieldsListFromReducer, (field, index) => {
+      map(fieldsReducer, (field, index) => {
         if (dashboardListFromReducer[0] && !dashboardListFromReducer[0].dashboard[field]) {
           blockListTemp.push(field);
         }
       });
     } else {
-      map(fieldsListFromReducer, (field, index) => {
-        if (!dashboardReducer.dashboard[field]) blockListTemp.push(field);
+      map(fieldsReducer, (field, index) => {
+        // if (!dashboardReducer.dashboard[field]) blockListTemp.push(field);
       });
     }
     setBlockList(blockListTemp);
-    setFieldsList(fieldsListFromReducer);
     setDashboardList(dashboardListFromReducer);
-  }, [fieldsReducer]);
+  }, [fieldsList]);
 
   useEffect(() => {
     getFieldsDashboard(match.params.module);

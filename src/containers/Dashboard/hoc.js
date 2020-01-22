@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import LayoutContainer from 'components/Layout';
 
-import { makeSidebarData } from '../../selectors';
+import { makeSidebarData, getFieldsList } from '../../selectors';
 
 import * as actions from 'actions';
 
@@ -23,9 +23,6 @@ const hoc = (Dashboard) => {
     }
 
     getFieldsDashboard = entity => {
-      this.props.getFieldsPerEntityRequest({
-        module: entity
-      });
       this.props.getDashboardDataRequest({
         module: entity
       });
@@ -53,6 +50,7 @@ const hoc = (Dashboard) => {
   ProvidersHoc.propTypes = {
     dashboardReducer: PropTypes.object.isRequired,
     fieldsReducer: PropTypes.object.isRequired,
+    fieldsList: PropTypes.array.isRequired,
     getProvidersRequest: PropTypes.func,
   }
 
@@ -61,10 +59,11 @@ const hoc = (Dashboard) => {
 
 export default (Dashboard) => {
   const getSidebarData = makeSidebarData();
-  const mapStateToProps = state => ({
+  const mapStateToProps = (state, props) => ({
     dashboardReducer: state.dashboard,
     fieldsReducer: state.fields,
-    sidebarData: getSidebarData(state)
+    fieldsList: getFieldsList(state, props),
+    sidebarData: getSidebarData(state, props)
   })
 
   const mapDispatchToProps = {
@@ -72,7 +71,8 @@ export default (Dashboard) => {
     updateDashboardDataRequest: actions.updateDashboardDataRequest,
     updateFieldsDataRequest: actions.updateFieldsDataRequest,
     getFieldsPerEntityRequest: actions.getFieldsPerEntityRequest,
-    makeSidebarData
+    makeSidebarData,
+    getFieldsList
   }
 
   return connect(mapStateToProps, mapDispatchToProps)(
