@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { assign, map, size } from 'lodash';
+import { assign, map } from 'lodash';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -35,7 +35,7 @@ import useStyles from './style';
 
 const refs = [];
 
-const Panel = ({ items, startPoint, panelName, panelIndex, blockedItems, dashboardReducer, ...props }) => {
+const Panel = ({ items, startPoint, panelName, panelIndex, blockedItems, dashboardList, ...props }) => {
   const itemsList = items && map(items, (item, index) => {
     const panelInfo = panelIndex ? panelIndex.toString() : '';
     const indexInfo = index ? index.toString() : '';
@@ -46,7 +46,6 @@ const Panel = ({ items, startPoint, panelName, panelIndex, blockedItems, dashboa
       ...props
     }
   });
-
   return (
     <Box>
       {
@@ -59,7 +58,7 @@ const Panel = ({ items, startPoint, panelName, panelIndex, blockedItems, dashboa
             index={index}
             startPoint={startPoint}
             key={`${startPoint}-${panelIndex}-${index}`}
-            dashboardReducer={dashboardReducer}
+            dashboardList={dashboardList}
           />
         )
       }
@@ -67,9 +66,8 @@ const Panel = ({ items, startPoint, panelName, panelIndex, blockedItems, dashboa
   );
 };
 
-const Dashboard = ({ dashboardReducer, fieldsReducer, fieldsList, match, sidebarData, updateDashboard, updateFields, getFieldsDashboard }) => {
+const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList, match, sidebarData, updateDashboard, updateFields }) => {
   const classes = useStyles();
-  const [dashboardList, setDashboardList] = React.useState([]);
   const [blockList, setBlockList] = React.useState([]);
   const [expanded, setExpanded] = React.useState(null);
   const [activePanel, setActivePanel] = React.useState(null);
@@ -103,58 +101,23 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, fieldsList, match, sidebar
   }
 
   useEffect(() => {
-    let dashboardListFromReducer = dashboardReducer;
     const blockListTemp = [];
 
     if (OBJ_ENTITIES.indexOf(match.params.entity) < 0) {
-      if (match.params.entity === 'contacts' && match.params.module === 'provider-module') {
-        const addressMapData = dashboardReducer.dashboard && dashboardReducer.dashboard['AddressMaps'];
-        if (Array.isArray(addressMapData)) {
-          dashboardListFromReducer = [];
-          let startPoint = 0;
-          addressMapData.forEach((am, index) => {
-            am.ContactMaps.forEach(cm => {
-              dashboardListFromReducer.push({
-                dashboard: cm,
-                startPoint,
-                addressIndex: index,
-              });
-              startPoint += parseInt(size(cm));
-            });
-          });
-        }
-      } else {
-        const mapData = dashboardReducer.dashboard && dashboardReducer.dashboard[getNameFromEntity(match.params.entity)];
-        if (Array.isArray(mapData)) {
-          dashboardListFromReducer = [];
-          let startPoint = 0;
-          map(mapData, m => {
-            dashboardListFromReducer.push({
-              dashboard: m,
-              startPoint,
-            });
-            startPoint += parseInt(size(m));
-          });
-        }
-      }
-      map(fieldsReducer, (field, index) => {
-        if (dashboardListFromReducer[0] && !dashboardListFromReducer[0].dashboard[field]) {
-          blockListTemp.push(field);
-        }
-      });
+      
+      // map(fieldsReducer, (field, index) => {
+      //   if (dashboardListFromReducer[0] && !dashboardListFromReducer[0].dashboard[field]) {
+      //     blockListTemp.push(field);
+      //   }
+      // });
     } else {
-      map(fieldsReducer, (field, index) => {
-        // if (!dashboardReducer.dashboard[field]) blockListTemp.push(field);
-      });
+      // map(fieldsReducer, (field, index) => {
+      // if (!dashboardReducer.dashboard[field]) blockListTemp.push(field);
+      // });
     }
     setBlockList(blockListTemp);
-    setDashboardList(dashboardListFromReducer);
   }, [fieldsList]);
-
-  useEffect(() => {
-    getFieldsDashboard(match.params.module);
-  }, [match.params.module, match.params.entity]);
-  
+ 
   return (
     <div className={classes.root}>
       <Sidebar data={sidebarData} />
@@ -180,7 +143,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, fieldsList, match, sidebar
                       classes={classes}
                       expanded={expanded}
                       blockedItems={blockList}
-                      dashboardReducer={dashboardReducer}
+                      dashboardList={dashboardList}
                       setCategoryModalShown={setCategoryModalShown}
                       setDetailsModalShown={setDetailsModalShown}
                       setCaseKeyModalShown={setCaseKeyModalShown}
@@ -189,7 +152,11 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, fieldsList, match, sidebar
                       setActiveParent={setActiveParent}
                       setActiveCard={setActiveCard}
                       setActiveDetails={setActiveDetails}
-                      updateDashboard={(payload) => updateDashboard(payload)}
+                      updateDashboard={(payload) => {
+                        const dashboardSource = assign({}, dashboardReducer);
+                        dashboardSource.dashboard[getNameFromID(match.params.module)] = payload;
+                        updateDashboard(dashboardSource.dashboard);
+                      }}
                       handleChange={handleChange}
                     />
                     {provided.placeholder}
@@ -237,7 +204,7 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, fieldsList, match, sidebar
                         classes={classes}
                         expanded={expanded}
                         blockedItems={blockList}
-                        dashboardReducer={dashboardItem}
+                        dashboardList={dashboardItem}
                         setCategoryModalShown={setCategoryModalShown}
                         setDetailsModalShown={setDetailsModalShown}
                         setCaseKeyModalShown={setCaseKeyModalShown}
@@ -249,9 +216,9 @@ const Dashboard = ({ dashboardReducer, fieldsReducer, fieldsList, match, sidebar
                         updateDashboard={(payload) => {
                           const dashboardSource = assign({}, dashboardReducer);
                           if (match.params.entity !== 'contacts') {
-                            dashboardSource.dashboard[getNameFromEntity(match.params.entity)][index] = payload;
+                            dashboardSource.dashboard[getNameFromID(match.params.module)][getNameFromEntity(match.params.entity)][index] = payload;
                           } else if (dashboardItem.arrayIndex) {
-                            dashboardSource.dashboard['AddressMaps'][dashboardItem.arrayIndex]['ContactMaps'][index] = payload;
+                            dashboardSource.dashboard[getNameFromID(match.params.module)]['AddressMaps'][dashboardItem.arrayIndex]['ContactMaps'][index] = payload;
                           }
                           updateDashboard(dashboardSource.dashboard);
                         }}

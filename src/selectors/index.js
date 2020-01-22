@@ -20,6 +20,8 @@ export const getDashboardMap = (state, props) => {
   return state.dashboard.dashboard[getNameFromID(props.match.params.module)];
 }
 
+const getEntityName = (state, prop) => prop.match.params.entity;
+
 export const makeSidebarData = () => createSelector(
   [getFieldsModule],
   (fieldItems) => {
@@ -30,13 +32,13 @@ export const makeSidebarData = () => createSelector(
 );
 
 export const makeDashboardList = () => createSelector(
-  [getDashboardMap],
-  (mapData) => {
+  [getDashboardMap, getEntityName],
+  (mapData, entityName) => {
     let startPoint = 0;
     const dashboardListFromReducer = [];
     if (Array.isArray(mapData)) {
       mapData.forEach((am, index) => {
-        if (am.ContactMaps && am.ContactMaps[0]['ContactType']) {
+        if (entityName === 'contacts' && am.ContactMaps && am.ContactMaps[0]['ContactType']) {
           am.ContactMaps.forEach(cm => {
             dashboardListFromReducer.push({
               dashboard: cm,

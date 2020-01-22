@@ -34,6 +34,7 @@ const hoc = (Dashboard) => {
         <div>
           <LayoutContainer history={this.props.history} />
           <Dashboard
+            dashboardReducer={this.props.dashboardReducer}
             dashboardList={this.props.dashboardList}
             fieldsReducer={this.props.fieldsReducer}
             fieldsList={this.props.fieldsList}
@@ -62,6 +63,7 @@ export default (Dashboard) => {
   const getDashboardList = makeDashboardList();
 
   const mapStateToProps = (state, props) => ({
+    dashboardReducer: state.dashboard,
     dashboardList: getDashboardList(state, props),
     fieldsReducer: state.fields,
     fieldsList: getFieldsList(state, props),
