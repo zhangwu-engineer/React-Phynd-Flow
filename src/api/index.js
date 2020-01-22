@@ -1,20 +1,8 @@
-import providerDashboard from 'static/SampleJsonObject'
-import locationDashboard from 'static/SampleJsonObjectLocation'
-import providerData from 'static/FieldsPerEntity'
-import locationData from 'static/FieldsPerEntityLocation'
+import dataDashboard from 'static/SampleJsonObject'
+import dataField from 'static/FieldsPerEntity'
 
-const entityData = {
-  'provider-module': providerData,
-  'location-module': locationData,
-}
-
-const dashboardData = {
-  'provider-module': providerDashboard,
-  'location-module': locationDashboard,
-}
-
-const getDashboardDataRequest = (mod) => dashboardData[mod.module]
-const getEntityDataRequest = (mod) => entityData[mod.module]
+const getDashboardDataRequest = () => dataDashboard
+const getEntityDataRequest = () => dataField
 
 export {
   getDashboardDataRequest,
