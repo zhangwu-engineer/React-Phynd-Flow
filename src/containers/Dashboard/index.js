@@ -217,8 +217,8 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
                           const dashboardSource = assign({}, dashboardReducer);
                           if (match.params.entity !== 'contacts') {
                             dashboardSource.dashboard[getNameFromID(match.params.module)][getNameFromEntity(match.params.entity)][index] = payload;
-                          } else if (dashboardItem.arrayIndex) {
-                            dashboardSource.dashboard[getNameFromID(match.params.module)]['AddressMaps'][dashboardItem.arrayIndex]['ContactMaps'][index] = payload;
+                          } else if (dashboardItem.addressIndex) {
+                            dashboardSource.dashboard[getNameFromID(match.params.module)]['AddressMaps'][dashboardItem.addressIndex]['ContactMaps'][index] = payload;
                           }
                           updateDashboard(dashboardSource.dashboard);
                         }}
