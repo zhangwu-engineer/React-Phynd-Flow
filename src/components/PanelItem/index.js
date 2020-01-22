@@ -11,10 +11,10 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Diagram from 'containers/Diagram';
 
-export default ({ item, panelName, panelIndex, blockedItems, startPoint, index, dashboardReducer }) => {
-  if (!dashboardReducer.dashboard) return <div />;
+export default ({ item, panelName, panelIndex, blockedItems, startPoint, index, dashboardList }) => {
+  if (!dashboardList.dashboard) return <div />;
   if (blockedItems && blockedItems.indexOf(item.item) > -1) return <div />;
-  const source = dashboardReducer.dashboard[item.item];
+  let source = dashboardList.dashboard[item.item];
   const panelInfo = panelIndex ? panelIndex.toString() : '';
   const indexInfo = index ? index.toString() : '';
   return (
@@ -48,7 +48,7 @@ export default ({ item, panelName, panelIndex, blockedItems, startPoint, index, 
                 elementId={panelInfo+indexInfo}
                 source={source}
                 updateDashboard={payload => {
-                  const dashboardSource = dashboardReducer.dashboard;
+                  const dashboardSource = dashboardList.dashboard;
                   dashboardSource[item.item] = payload;
                   item.updateDashboard(dashboardSource);
                 }}
