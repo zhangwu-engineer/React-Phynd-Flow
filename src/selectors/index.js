@@ -14,7 +14,7 @@ export const getDashboardMap = (state, props) => {
     if (props.match.params.entity === 'contacts' && props.match.params.module === 'provider-module') {
       return state.dashboard.dashboard && state.dashboard.dashboard[getNameFromID(props.match.params.module)]['AddressMaps'];
     }
-    return state.dashboard.dashboard &&
+    return state.dashboard.dashboard[getNameFromID(props.match.params.module)] &&
       state.dashboard.dashboard[getNameFromID(props.match.params.module)][getNameFromEntity(props.match.params.entity)];
   }
   return state.dashboard.dashboard[getNameFromID(props.match.params.module)];
