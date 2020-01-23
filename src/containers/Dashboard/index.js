@@ -66,9 +66,8 @@ const Panel = ({ items, startPoint, panelName, panelIndex, blockedItems, dashboa
   );
 };
 
-const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList, match, sidebarData, updateDashboard, updateFields }) => {
+const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList, blockList, match, sidebarData, updateDashboard, updateFields }) => {
   const classes = useStyles();
-  const [blockList, setBlockList] = React.useState([]);
   const [expanded, setExpanded] = React.useState(null);
   const [activePanel, setActivePanel] = React.useState(null);
   const [activeParent, setActiveParent] = React.useState(null);
