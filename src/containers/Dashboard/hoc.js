@@ -50,8 +50,9 @@ const hoc = (Dashboard) => {
   }
 
   ProvidersHoc.propTypes = {
+    dashboardReducer: PropTypes.object,
     fieldsReducer: PropTypes.object.isRequired,
-    fieldsList: PropTypes.array.isRequired,
+    fieldsList: PropTypes.array,
     getProvidersRequest: PropTypes.func,
   }
 
