@@ -100,24 +100,6 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
     updateFields(fieldsListFromReducer.fields);
   }
 
-  useEffect(() => {
-    const blockListTemp = [];
-
-    if (OBJ_ENTITIES.indexOf(match.params.entity) < 0) {
-      
-      // map(fieldsReducer, (field, index) => {
-      //   if (dashboardListFromReducer[0] && !dashboardListFromReducer[0].dashboard[field]) {
-      //     blockListTemp.push(field);
-      //   }
-      // });
-    } else {
-      // map(fieldsReducer, (field, index) => {
-      // if (!dashboardReducer.dashboard[field]) blockListTemp.push(field);
-      // });
-    }
-    setBlockList(blockListTemp);
-  }, [fieldsList]);
- 
   return (
     <div className={classes.root}>
       <Sidebar data={sidebarData} />
