@@ -85,10 +85,10 @@ export const makeBlockList = () => createSelector(
         } else {
           iterateData = mapData;
         }
-        for (const md in iterateData) if (iterateData[md][item]) ++count;
+        for (const md in iterateData) if (!iterateData[md][item]) ++count;
         return count;
       };
-      blockListFromReducer = fieldsDdata && fieldsDdata.filter((fd) => countBlocked(fd) < mapData.length);
+      blockListFromReducer = fieldsDdata && fieldsDdata.filter((fd) => countBlocked(fd) === mapData.length);
     } else {
       blockListFromReducer = fieldsDdata && fieldsDdata.filter((fd) => !mapData[fd]);
     }
