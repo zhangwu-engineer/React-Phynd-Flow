@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import LayoutContainer from 'components/Layout';
 
-import { makeSidebarData, getFieldsList, makeDashboardList } from '../../selectors';
+import { makeSidebarData, getFieldsList, makeDashboardList, makeBlockList } from '../../selectors';
 
 import * as actions from 'actions';
 
@@ -62,13 +62,15 @@ const hoc = (Dashboard) => {
 export default (Dashboard) => {
   const getSidebarData = makeSidebarData();
   const getDashboardList = makeDashboardList();
+  const getBlockList = makeBlockList();
 
   const mapStateToProps = (state, props) => ({
     dashboardReducer: state.dashboard,
     dashboardList: getDashboardList(state, props),
     fieldsReducer: state.fields,
     fieldsList: getFieldsList(state, props),
-    sidebarData: getSidebarData(state, props)
+    sidebarData: getSidebarData(state, props),
+    blockList: getBlockList(state, props),
   })
 
   const mapDispatchToProps = {
@@ -78,7 +80,8 @@ export default (Dashboard) => {
     getFieldsPerEntityRequest: actions.getFieldsPerEntityRequest,
     makeSidebarData,
     getFieldsList,
-    makeDashboardList
+    makeDashboardList,
+    makeBlockList
   }
 
   return connect(mapStateToProps, mapDispatchToProps)(
