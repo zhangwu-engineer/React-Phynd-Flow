@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { assign, map } from 'lodash';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import Box from '@material-ui/core/Box';
@@ -25,7 +25,6 @@ import {
   getNameFromID,
   getNameFromEntity,
   reorder,
-  OBJ_ENTITIES,
 } from 'utils/helper';
 import hoc from './hoc';
 
