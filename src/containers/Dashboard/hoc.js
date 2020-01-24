@@ -85,10 +85,6 @@ export default (Dashboard) => {
     updateDashboardDataRequest: actions.updateDashboardDataRequest,
     updateFieldsDataRequest: actions.updateFieldsDataRequest,
     getFieldsPerEntityRequest: actions.getFieldsPerEntityRequest,
-    makeSidebarData,
-    getFieldsList,
-    makeDashboardList,
-    makeBlockList
   }
 
   return connect(mapStateToProps, mapDispatchToProps)(
