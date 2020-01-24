@@ -4,7 +4,14 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import LayoutContainer from 'components/Layout';
 
-import { makeSidebarData, getFieldsList, makeDashboardList, makeBlockList } from '../../selectors';
+import {
+  getFieldsReducer,
+  getDashboardReducer,
+  getFieldsList,
+  makeSidebarData,
+  makeDashboardList,
+  makeBlockList,
+} from '../../selectors';
 
 import * as actions from 'actions';
 
@@ -65,9 +72,9 @@ export default (Dashboard) => {
   const getBlockList = makeBlockList();
 
   const mapStateToProps = (state, props) => ({
-    dashboardReducer: state.dashboard,
+    dashboardReducer: getDashboardReducer(state, props),
     dashboardList: getDashboardList(state, props),
-    fieldsReducer: state.fields,
+    fieldsReducer: getFieldsReducer(state, props),
     fieldsList: getFieldsList(state, props),
     sidebarData: getSidebarData(state, props),
     blockList: getBlockList(state, props),
