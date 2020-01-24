@@ -83,6 +83,20 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
     setExpanded(newExpanded ? panel : false);
   };
 
+  const handleNewMap = () => {
+    setNewMapCount(newMapCount+1);
+    const newMap = {};
+    _.map(fieldsList, function(field) {
+      newMap[field] = null;
+    });
+    dashboardList.push({
+      dashboard: newMap,
+      startPoint: dashboardList.length
+    });
+    dashboardReducer.dashboard[getNameFromID(match.params.module)][getNameFromEntity(match.params.entity)].push(newMap);
+    updateDashboard(dashboardReducer.dashboard);
+  }
+
   const onDragEnd = result => {
     if (!result.destination || !result.source) {
       return;
@@ -228,19 +242,7 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
                 variant="contained"
                 color="primary"
                 className={classes.addButton}
-                onClick={() => {
-                  setNewMapCount(newMapCount+1);
-                  const newMap = {};
-                  _.map(fieldsList, function(field) {
-                    newMap[field] = null;
-                  });
-                  dashboardList.push({
-                    dashboard: newMap,
-                    startPoint: dashboardList.length
-                  });
-                  dashboardReducer.dashboard[getNameFromID(match.params.module)][getNameFromEntity(match.params.entity)].push(newMap);
-                  updateDashboard(dashboardReducer.dashboard);
-                }}
+                onClick={handleNewMap}
               >
                 New Map
               </Button>
