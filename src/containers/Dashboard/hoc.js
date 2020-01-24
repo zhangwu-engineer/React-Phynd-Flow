@@ -11,6 +11,7 @@ import {
   makeSidebarData,
   makeDashboardList,
   makeBlockList,
+  isContactMap,
 } from '../../selectors';
 
 import * as actions from 'actions';
@@ -45,6 +46,7 @@ const hoc = (Dashboard) => {
             dashboardList={this.props.dashboardList}
             fieldsReducer={this.props.fieldsReducer}
             fieldsList={this.props.fieldsList}
+            isContactMap={this.props.isContactMap}
             classes={this.props.classes}
             width={this.props.width}
             updateDashboard={this.updateDashboard}
@@ -78,6 +80,7 @@ export default (Dashboard) => {
     fieldsList: getFieldsList(state, props),
     sidebarData: getSidebarData(state, props),
     blockList: getBlockList(state, props),
+    isContactMap: isContactMap(state, props),
   })
 
   const mapDispatchToProps = {

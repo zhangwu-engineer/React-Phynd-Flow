@@ -65,7 +65,7 @@ const Panel = ({ items, startPoint, panelName, panelIndex, blockedItems, dashboa
   );
 };
 
-const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList, blockList, match, sidebarData, updateDashboard, updateFields }) => {
+const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList, blockList, isContactMap, match, sidebarData, updateDashboard, updateFields }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(null);
   const [activePanel, setActivePanel] = React.useState(null);
@@ -239,6 +239,7 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
                   Add Field
                 </Button>
               }
+              {!isContactMap &&
               <Button
                 variant="contained"
                 color="primary"
@@ -247,6 +248,7 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
               >
                 New Map
               </Button>
+              }
             </Grid>
           }
         </Typography>
