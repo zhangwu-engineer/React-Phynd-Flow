@@ -2,25 +2,54 @@ import { createSelector } from 'reselect';
 import { map, size } from 'lodash';
 import { getIDFromName, getNameFromID, getNameFromEntity, OBJ_ENTITIES } from 'utils/helper';
 
-const getFieldsModule = (state, props) => state.fields.fields[getNameFromID(props.match.params.module)];
+export const getFieldsReducer = (state, props) => state.fields;
+export const getDashboardReducer = (state, props) => state.dashboard;
 
-export const getFieldsList = (state, props) => {
-  return state.fields.fields[getNameFromID(props.match.params.module)] &&
-  state.fields.fields[getNameFromID(props.match.params.module)][getNameFromID(props.match.params.entity)];
-}
+const getModuleEntity = (state, props) => {
+  return {
+    moduleOrigin: props.match.params.module,
+    entityOrigin: props.match.params.entity,
+    module: getNameFromID(props.match.params.module),
+    entity: getNameFromID(props.match.params.entity),
+    entityName: getNameFromEntity(props.match.params.entity),
+  };
+};
 
-export const getDashboardMap = (state, props) => {
-  if (OBJ_ENTITIES.indexOf(props.match.params.entity) < 0) {
-    if (props.match.params.entity === 'contacts' && props.match.params.module === 'provider-module') {
-      return state.dashboard.dashboard && state.dashboard.dashboard[getNameFromID(props.match.params.module)]['AddressMaps'];
-    }
-    return state.dashboard.dashboard[getNameFromID(props.match.params.module)] &&
-      state.dashboard.dashboard[getNameFromID(props.match.params.module)][getNameFromEntity(props.match.params.entity)];
+export const getFieldsModule = createSelector(
+  [getFieldsReducer, getModuleEntity],
+  (fieldsReducer, moduleEntity) => {
+    return fieldsReducer.fields[moduleEntity.module];
   }
-  return state.dashboard.dashboard[getNameFromID(props.match.params.module)];
-}
+);
 
-const getEntityName = (state, prop) => prop.match.params.entity;
+export const getFieldsList = createSelector(
+  [getFieldsReducer, getModuleEntity],
+  (fieldsReducer, moduleEntity) => {
+    return fieldsReducer.fields[moduleEntity.module] && fieldsReducer.fields[moduleEntity.module][moduleEntity.entity];
+  }
+);
+
+export const getDashboardMap = createSelector(
+  [getDashboardReducer, getModuleEntity],
+  (dashboardReducer, moduleEntity) => {
+    if (OBJ_ENTITIES.indexOf(moduleEntity.entityOrigin) < 0) {
+      if (moduleEntity.entityOrigin === 'contacts' && moduleEntity.moduleOrigin === 'provider-module') {
+        return dashboardReducer.dashboard && dashboardReducer.dashboard[moduleEntity.module]['AddressMaps'];
+      }
+      console.log(dashboardReducer.dashboard);
+      return dashboardReducer.dashboard[moduleEntity.module] &&
+      dashboardReducer.dashboard[moduleEntity.module][moduleEntity.entityName];
+    }
+    return dashboardReducer.dashboard[moduleEntity.module];
+  }
+);
+
+export const isContactMap = createSelector(
+  [getDashboardMap, getModuleEntity],
+  (mapData, moduleEntity) => {
+    return (moduleEntity.entityOrigin === 'contacts' && mapData[0].ContactMaps && mapData[0].ContactMaps[0]['ContactType'])
+  }
+);
 
 export const makeSidebarData = () => createSelector(
   [getFieldsModule],
@@ -28,13 +57,6 @@ export const makeSidebarData = () => createSelector(
     return fieldItems ?
       map(fieldItems, (value, name) => ({ name: name, link: getIDFromName(name) }))
       : {}
-  }
-);
-
-export const isContactMap = createSelector(
-  [getDashboardMap, getEntityName],
-  (mapData, entityName) => {
-    return (entityName === 'contacts' && mapData[0].ContactMaps && mapData[0].ContactMaps[0]['ContactType'])
   }
 );
 
@@ -90,7 +112,7 @@ export const makeBlockList = () => createSelector(
       };
       blockListFromReducer = fieldsDdata && fieldsDdata.filter((fd) => countBlocked(fd) === mapData.length);
     } else {
-      blockListFromReducer = fieldsDdata && fieldsDdata.filter((fd) => !mapData[fd]);
+      blockListFromReducer = fieldsDdata && fieldsDdata.filter((fd) => mapData && !mapData[fd]);
     }
     return blockListFromReducer;
   }
