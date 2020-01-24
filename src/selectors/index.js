@@ -34,9 +34,8 @@ export const getDashboardMap = createSelector(
   (dashboardReducer, moduleEntity) => {
     if (OBJ_ENTITIES.indexOf(moduleEntity.entityOrigin) < 0) {
       if (moduleEntity.entityOrigin === 'contacts' && moduleEntity.moduleOrigin === 'provider-module') {
-        return dashboardReducer.dashboard && dashboardReducer.dashboard[moduleEntity.module]['AddressMaps'];
+        return dashboardReducer.dashboard[moduleEntity.module] && dashboardReducer.dashboard[moduleEntity.module]['AddressMaps'];
       }
-      console.log(dashboardReducer.dashboard);
       return dashboardReducer.dashboard[moduleEntity.module] &&
       dashboardReducer.dashboard[moduleEntity.module][moduleEntity.entityName];
     }
