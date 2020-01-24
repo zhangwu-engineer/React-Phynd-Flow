@@ -97,6 +97,11 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
     updateDashboard(dashboardReducer.dashboard);
   }
 
+  const handleDiagramUpdate = payload => {
+    dashboardReducer.dashboard[getNameFromID(match.params.module)] = payload;
+    updateDashboard(dashboardReducer.dashboard);
+  }
+
   const onDragEnd = result => {
     if (!result.destination || !result.source) {
       return;
@@ -147,11 +152,7 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
                       setActiveParent={setActiveParent}
                       setActiveCard={setActiveCard}
                       setActiveDetails={setActiveDetails}
-                      updateDashboard={(payload) => {
-                        const dashboardSource = assign({}, dashboardReducer);
-                        dashboardSource.dashboard[getNameFromID(match.params.module)] = payload;
-                        updateDashboard(dashboardSource.dashboard);
-                      }}
+                      updateDashboard={handleDiagramUpdate}
                       handleChange={handleChange}
                     />
                     {provided.placeholder}
