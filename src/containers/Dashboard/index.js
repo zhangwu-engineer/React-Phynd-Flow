@@ -238,6 +238,8 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
                     dashboard: newMap,
                     startPoint: dashboardList.length
                   });
+                  dashboardReducer.dashboard[getNameFromID(match.params.module)][getNameFromEntity(match.params.entity)].push(newMap);
+                  updateDashboard(dashboardReducer.dashboard);
                 }}
               >
                 New Map
