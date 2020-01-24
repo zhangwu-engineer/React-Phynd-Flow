@@ -77,6 +77,7 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
   const [isCaseKeyModalShown, setCaseKeyModalShown] = React.useState(false);
   const [isBlockListModalShown, setBlockListModalShown] = React.useState(false);
   const [isOperationModalShown, setOperationModalShown] = React.useState(false);
+  const [newMapCount, setNewMapCount] = React.useState(0);
 
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -210,17 +211,36 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
             </DragDropContext>
           )}
           {Array.isArray(dashboardList) &&
-            blockList.length > 0 &&
             <Grid className={classes.addButtonContainer}>
+              {blockList.length > 0 &&
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.addButton}
+                  onClick={() => {
+                    setBlockListModalShown(true);
+                  }}
+                >
+                  Add Field
+                </Button>
+              }
               <Button
                 variant="contained"
                 color="primary"
                 className={classes.addButton}
                 onClick={() => {
-                  setBlockListModalShown(true);
+                  setNewMapCount(newMapCount+1);
+                  const newMap = {};
+                  _.map(fieldsList, function(field) {
+                    newMap[field] = null;
+                  });
+                  dashboardList.push({
+                    dashboard: newMap,
+                    startPoint: dashboardList.length
+                  });
                 }}
               >
-                Add Field
+                New Map
               </Button>
             </Grid>
           }

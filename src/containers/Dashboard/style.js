@@ -18,6 +18,7 @@ export default makeStyles(theme => ({
   },
   addButton: {
     fontSize: 22,
+    marginRight: 20
   },
   toolbar: theme.mixins.toolbar,
 }));
