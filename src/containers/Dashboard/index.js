@@ -102,6 +102,10 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
     updateDashboard(dashboardReducer.dashboard);
   }
 
+  const handleBlockListDialog = () => {
+    setBlockListModalShown(true);
+  }
+
   const onDragEnd = result => {
     if (!result.destination || !result.source) {
       return;
@@ -164,9 +168,7 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
                   variant="contained"
                   color="primary"
                   className={classes.addButton}
-                  onClick={() => {
-                    setBlockListModalShown(true);
-                  }}
+                  onClick={handleBlockListDialog}
                 >
                   Add Field
                 </Button>
@@ -232,9 +234,7 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
                   variant="contained"
                   color="primary"
                   className={classes.addButton}
-                  onClick={() => {
-                    setBlockListModalShown(true);
-                  }}
+                  onClick={handleBlockListDialog}
                 >
                   Add Field
                 </Button>
