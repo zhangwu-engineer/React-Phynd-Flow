@@ -29,24 +29,24 @@ export const getFieldsList = createSelector(
   }
 );
 
+export const isContactMap = createSelector(
+  [getModuleEntity],
+  (moduleEntity) => {
+    return (moduleEntity.entityOrigin === 'contacts' && moduleEntity.moduleOrigin === 'provider-module')
+  }
+);
+
 export const getDashboardMap = createSelector(
-  [getDashboardReducer, getModuleEntity],
-  (dashboardReducer, moduleEntity) => {
+  [getDashboardReducer, getModuleEntity, isContactMap],
+  (dashboardReducer, moduleEntity, isContactMapStatus) => {
     if (OBJ_ENTITIES.indexOf(moduleEntity.entityOrigin) < 0) {
-      if (moduleEntity.entityOrigin === 'contacts' && moduleEntity.moduleOrigin === 'provider-module') {
+      if (isContactMapStatus) {
         return dashboardReducer.dashboard[moduleEntity.module] && dashboardReducer.dashboard[moduleEntity.module]['AddressMaps'];
       }
       return dashboardReducer.dashboard[moduleEntity.module] &&
       dashboardReducer.dashboard[moduleEntity.module][moduleEntity.entityName];
     }
     return dashboardReducer.dashboard[moduleEntity.module];
-  }
-);
-
-export const isContactMap = createSelector(
-  [getDashboardMap, getModuleEntity],
-  (mapData, moduleEntity) => {
-    return (moduleEntity.entityOrigin === 'contacts' && mapData[0].ContactMaps && mapData[0].ContactMaps[0]['ContactType'])
   }
 );
 
@@ -67,6 +67,7 @@ export const makeDashboardList = () => createSelector(
     if (Array.isArray(mapData)) {
       mapData.forEach((am, index) => {
         if (isContactMapStatus) {
+          am.ContactMaps &&
           am.ContactMaps.forEach(cm => {
             dashboardListFromReducer.push({
               dashboard: cm,
