@@ -1,5 +1,4 @@
 import React from 'react';
-import { Draggable } from 'react-beautiful-dnd';
 // Typography
 import Typography from '@material-ui/core/Typography';
 // Expansion Panel
@@ -18,72 +17,60 @@ export default ({ item, panelName, panelIndex, blockedItems, startPoint, index, 
   const panelInfo = panelIndex ? panelIndex.toString() : '';
   const indexInfo = index ? index.toString() : '';
   return (
-    <Draggable
-      key={`${startPoint}-${index}`}
-      draggableId={`${index}`}
-      index={index}
-      isDragDisabled={item.expanded === `${panelName}-${panelIndex}-${index}`}
+    <MuiExpansionPanel
+      square key={`${startPoint}-${panelIndex}-${index}`}
+      expanded={item.expanded === `${panelName}-${panelIndex}-${index}`}
+      onChange={item.handleChange(`${panelName}-${panelIndex}-${index}`)}
     >
-      {(provided, snapshot) => (
-        <MuiExpansionPanel
-          square key={`${startPoint}-${panelIndex}-${index}`}
-          expanded={item.expanded === `${panelName}-${panelIndex}-${index}`}
-          onChange={item.handleChange(`${panelName}-${panelIndex}-${index}`)}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <MuiExpansionPanelSummary
-            aria-controls={`${panelName}-${index}d-content`}
-            id={`${panelName}-${index}d-header`}
-            expandIcon={source && <ExpandMoreIcon />}
-          >
-            <Typography>{item.item}</Typography>
-          </MuiExpansionPanelSummary>
-          <MuiExpansionPanelDetails className={item.classes.details}>
-            {item.expanded === `${panelName}-${panelIndex}-${index}` &&
-              <Diagram
-                item={item.item}
-                ref={item.ref}
-                elementId={panelInfo+indexInfo}
-                source={source}
-                updateDashboard={payload => {
-                  const dashboardSource = dashboardList.dashboard;
-                  dashboardSource[item.item] = payload;
-                  item.updateDashboard(dashboardSource);
-                }}
-                triggerModal={(panel, flag, parent) => {
-                  item.setCategoryModalShown(flag);
-                  item.setActivePanel(panel);
-                  item.setActiveParent(parent);
-                  item.setActiveCard(parent ? parent.data.nextType : null);
-                }}
-                triggerDetailsModal={(panel, flag, parent) => {
-                  item.setDetailsModalShown(flag);
-                  item.setActivePanel(panel);
-                  item.setActiveParent(parent);
-                  item.setActiveDetails(parent && parent.data.dataDetails);
-                  if (parent && !parent.data.parent) {
-                    item.setActiveCard(parent.data.parentType);
-                  } else {
-                    item.setActiveCard(parent ? parent.data.nextType : null);
-                  }
-                }}
-                triggerCaseKeyModal={(panel, flag, parent) => {
-                  item.setCaseKeyModalShown(flag);
-                  item.setActivePanel(panel);
-                  item.setActiveParent(parent);
-                }}
-                triggerOperationModal={(panel, flag, parent) => {
-                  item.setOperationModalShown(flag);
-                  item.setActivePanel(panel);
-                  item.setActiveParent(parent);
-                }}
-              />
-            }
-          </MuiExpansionPanelDetails>
-        </MuiExpansionPanel>
-        )}
-    </Draggable>
+      <MuiExpansionPanelSummary
+        aria-controls={`${panelName}-${index}d-content`}
+        id={`${panelName}-${index}d-header`}
+        expandIcon={source && <ExpandMoreIcon />}
+      >
+        <Typography>{item.item}</Typography>
+      </MuiExpansionPanelSummary>
+      <MuiExpansionPanelDetails className={item.classes.details}>
+        {item.expanded === `${panelName}-${panelIndex}-${index}` &&
+          <Diagram
+            item={item.item}
+            ref={item.ref}
+            elementId={panelInfo+indexInfo}
+            source={source}
+            updateDashboard={payload => {
+              const dashboardSource = dashboardList.dashboard;
+              dashboardSource[item.item] = payload;
+              item.updateDashboard(dashboardSource);
+            }}
+            triggerModal={(panel, flag, parent) => {
+              item.setCategoryModalShown(flag);
+              item.setActivePanel(panel);
+              item.setActiveParent(parent);
+              item.setActiveCard(parent ? parent.data.nextType : null);
+            }}
+            triggerDetailsModal={(panel, flag, parent) => {
+              item.setDetailsModalShown(flag);
+              item.setActivePanel(panel);
+              item.setActiveParent(parent);
+              item.setActiveDetails(parent && parent.data.dataDetails);
+              if (parent && !parent.data.parent) {
+                item.setActiveCard(parent.data.parentType);
+              } else {
+                item.setActiveCard(parent ? parent.data.nextType : null);
+              }
+            }}
+            triggerCaseKeyModal={(panel, flag, parent) => {
+              item.setCaseKeyModalShown(flag);
+              item.setActivePanel(panel);
+              item.setActiveParent(parent);
+            }}
+            triggerOperationModal={(panel, flag, parent) => {
+              item.setOperationModalShown(flag);
+              item.setActivePanel(panel);
+              item.setActiveParent(parent);
+            }}
+          />
+        }
+      </MuiExpansionPanelDetails>
+    </MuiExpansionPanel>
   );
 };

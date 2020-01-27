@@ -1,6 +1,5 @@
 import React from 'react';
-import { assign, map } from 'lodash';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { map } from 'lodash';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -24,7 +23,6 @@ import Sidebar from 'components/Sidebar';
 import {
   getNameFromID,
   getNameFromEntity,
-  reorder,
 } from 'utils/helper';
 import hoc from './hoc';
 
@@ -106,22 +104,6 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
     setBlockListModalShown(true);
   }
 
-  const onDragEnd = result => {
-    if (!result.destination || !result.source) {
-      return;
-    }
-
-    const items = reorder(
-      fieldsList,
-      result.source.index,
-      result.destination.index
-    );
-
-    const fieldsListFromReducer = assign({}, fieldsReducer);
-    fieldsListFromReducer.fields[getNameFromID(match.params.module)][getNameFromID(match.params.entity)] = items;
-    updateFields(fieldsListFromReducer.fields);
-  }
-
   return (
     <div className={classes.root}>
       <Sidebar data={sidebarData} />
@@ -133,36 +115,26 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
           aria-labelledby={`scrollable-auto-tab-${0}`}
         >
           {!Array.isArray(dashboardList) &&
-            <DragDropContext onDragEnd={onDragEnd}>
-              <Droppable droppableId="droppable">
-                {provided => (
-                  <div
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
-                    <Panel
-                      startPoint={0}
-                      panelName={match.params.entity}
-                      items={fieldsList}
-                      classes={classes}
-                      expanded={expanded}
-                      blockedItems={blockList}
-                      dashboardList={dashboardList}
-                      setCategoryModalShown={setCategoryModalShown}
-                      setDetailsModalShown={setDetailsModalShown}
-                      setCaseKeyModalShown={setCaseKeyModalShown}
-                      setOperationModalShown={setOperationModalShown}
-                      setActivePanel={setActivePanel}
-                      setActiveParent={setActiveParent}
-                      setActiveCard={setActiveCard}
-                      setActiveDetails={setActiveDetails}
-                      updateDashboard={handleDiagramUpdate}
-                      handleChange={handleChange}
-                    />
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
+            <div>
+              <Panel
+                startPoint={0}
+                panelName={match.params.entity}
+                items={fieldsList}
+                classes={classes}
+                expanded={expanded}
+                blockedItems={blockList}
+                dashboardList={dashboardList}
+                setCategoryModalShown={setCategoryModalShown}
+                setDetailsModalShown={setDetailsModalShown}
+                setCaseKeyModalShown={setCaseKeyModalShown}
+                setOperationModalShown={setOperationModalShown}
+                setActivePanel={setActivePanel}
+                setActiveParent={setActiveParent}
+                setActiveCard={setActiveCard}
+                setActiveDetails={setActiveDetails}
+                updateDashboard={handleDiagramUpdate}
+                handleChange={handleChange}
+              />
               <Grid className={classes.addButtonContainer}>
                 <Button
                   variant="contained"
@@ -173,58 +145,47 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
                   Add Field
                 </Button>
               </Grid>
-            </DragDropContext>
+            </div>
           }
           {Array.isArray(dashboardList) && map(dashboardList, (dashboardItem, index) =>
-            <DragDropContext onDragEnd={onDragEnd} key={`expansion-${index}`}>
-              <Droppable droppableId="droppable">
-                {(provided, snapshot) => (
-                  <MuiExpansionPanel
-                    square
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
-                    <MuiExpansionPanelSummary
-                      aria-controls={`panel-array${index}d-content`}
-                      id={`panel-array${index}`}
-                      expandIcon={dashboardItem && <ExpandMoreIcon />}
-                    >
-                      <Typography>{index+1}</Typography>
-                    </MuiExpansionPanelSummary>
-                    <MuiExpansionPanelDetails>
-                      <Panel
-                        startPoint={parseInt(dashboardItem.startPoint)}
-                        panelName={match.params.entity}
-                        panelIndex={index+1}
-                        items={fieldsList}
-                        classes={classes}
-                        expanded={expanded}
-                        blockedItems={blockList}
-                        dashboardList={dashboardItem}
-                        setCategoryModalShown={setCategoryModalShown}
-                        setDetailsModalShown={setDetailsModalShown}
-                        setCaseKeyModalShown={setCaseKeyModalShown}
-                        setOperationModalShown={setOperationModalShown}
-                        setActivePanel={setActivePanel}
-                        setActiveParent={setActiveParent}
-                        setActiveCard={setActiveCard}
-                        setActiveDetails={setActiveDetails}
-                        updateDashboard={(payload) => {
-                          if (isContactMap) {
-                            dashboardReducer.dashboard[getNameFromID(match.params.module)]['AddressMaps'][dashboardItem.addressIndex]['ContactMaps'][index] = payload;
-                          } else {
-                            dashboardReducer.dashboard[getNameFromID(match.params.module)][getNameFromEntity(match.params.entity)][index] = payload;
-                          } 
-                          updateDashboard(dashboardReducer.dashboard);
-                        }}
-                        handleChange={handleChange}
-                      />
-                      {provided.placeholder}
-                    </MuiExpansionPanelDetails>
-                  </MuiExpansionPanel>
-                )}
-              </Droppable>
-            </DragDropContext>
+            <MuiExpansionPanel square>
+              <MuiExpansionPanelSummary
+                aria-controls={`panel-array${index}d-content`}
+                id={`panel-array${index}`}
+                expandIcon={dashboardItem && <ExpandMoreIcon />}
+              >
+                <Typography>{index+1}</Typography>
+              </MuiExpansionPanelSummary>
+              <MuiExpansionPanelDetails>
+                <Panel
+                  startPoint={parseInt(dashboardItem.startPoint)}
+                  panelName={match.params.entity}
+                  panelIndex={index+1}
+                  items={fieldsList}
+                  classes={classes}
+                  expanded={expanded}
+                  blockedItems={blockList}
+                  dashboardList={dashboardItem}
+                  setCategoryModalShown={setCategoryModalShown}
+                  setDetailsModalShown={setDetailsModalShown}
+                  setCaseKeyModalShown={setCaseKeyModalShown}
+                  setOperationModalShown={setOperationModalShown}
+                  setActivePanel={setActivePanel}
+                  setActiveParent={setActiveParent}
+                  setActiveCard={setActiveCard}
+                  setActiveDetails={setActiveDetails}
+                  updateDashboard={(payload) => {
+                    if (isContactMap) {
+                      dashboardReducer.dashboard[getNameFromID(match.params.module)]['AddressMaps'][dashboardItem.addressIndex]['ContactMaps'][index] = payload;
+                    } else {
+                      dashboardReducer.dashboard[getNameFromID(match.params.module)][getNameFromEntity(match.params.entity)][index] = payload;
+                    } 
+                    updateDashboard(dashboardReducer.dashboard);
+                  }}
+                  handleChange={handleChange}
+                />
+              </MuiExpansionPanelDetails>
+            </MuiExpansionPanel>
           )}
           {Array.isArray(dashboardList) &&
             <Grid className={classes.addButtonContainer}>
