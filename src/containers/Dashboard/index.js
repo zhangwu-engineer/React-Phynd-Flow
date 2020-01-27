@@ -148,7 +148,7 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
             </div>
           }
           {Array.isArray(dashboardList) && map(dashboardList, (dashboardItem, index) =>
-            <MuiExpansionPanel square>
+            <MuiExpansionPanel square key={`expansion-${index}`}>
               <MuiExpansionPanelSummary
                 aria-controls={`panel-array${index}d-content`}
                 id={`panel-array${index}`}
