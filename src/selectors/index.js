@@ -18,14 +18,19 @@ const getModuleEntity = (state, props) => {
 export const getFieldsModule = createSelector(
   [getFieldsReducer, getModuleEntity],
   (fieldsReducer, moduleEntity) => {
-    return fieldsReducer.fields[moduleEntity.module];
+    return fieldsReducer &&
+      fieldsReducer.fields &&
+      fieldsReducer.fields[moduleEntity.module];
   }
 );
 
 export const getFieldsList = createSelector(
   [getFieldsReducer, getModuleEntity],
   (fieldsReducer, moduleEntity) => {
-    return fieldsReducer.fields[moduleEntity.module] && fieldsReducer.fields[moduleEntity.module][moduleEntity.entity];
+    return fieldsReducer &&
+      fieldsReducer.fields &&
+      fieldsReducer.fields[moduleEntity.module] &&
+      fieldsReducer.fields[moduleEntity.module][moduleEntity.entity];
   }
 );
 
@@ -46,7 +51,9 @@ export const getDashboardMap = createSelector(
       return dashboardReducer.dashboard[moduleEntity.module] &&
       dashboardReducer.dashboard[moduleEntity.module][moduleEntity.entityName];
     }
-    return dashboardReducer.dashboard[moduleEntity.module];
+    return dashboardReducer &&
+      dashboardReducer.dashboard &&
+      dashboardReducer.dashboard[moduleEntity.module];
   }
 );
 
