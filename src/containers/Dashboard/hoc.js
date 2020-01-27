@@ -25,10 +25,6 @@ const hoc = (Dashboard) => {
       props.getFieldsPerEntityRequest();
     }
 
-    componentDidMount() {
-      window.scrollTo(0,0);
-    }
-
     updateDashboard = data => {
       this.props.updateDashboardDataRequest({ data });
     }
