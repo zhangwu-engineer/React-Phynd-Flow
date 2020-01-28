@@ -13,7 +13,7 @@ import { muiTheme, styledTheme } from 'services/bootstrap';
 export const AppContainer = () => (
   <MuiThemeProvider theme={muiTheme}>
     <ThemeProvider theme={styledTheme}>
-      <HashRouter basename='/' history={history}>
+      <HashRouter basename='/'>
         <Routes history={history} />
       </HashRouter>
     </ThemeProvider>
