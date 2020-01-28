@@ -7,11 +7,11 @@ export const getDashboardReducer = (state, props) => state.dashboard;
 
 const getModuleEntity = (state, props) => {
   return {
-    moduleOrigin: props.match.params.module,
-    entityOrigin: props.match.params.entity,
-    module: getNameFromID(props.match.params.module),
-    entity: getNameFromID(props.match.params.entity),
-    entityName: getNameFromEntity(props.match.params.entity),
+    moduleOrigin: props.match && props.match.params.module,
+    entityOrigin: props.match && props.match.params.entity,
+    module: getNameFromID(props.match && props.match.params.module),
+    entity: getNameFromID(props.match && props.match.params.entity),
+    entityName: getNameFromEntity(props.match && props.match.params.entity),
   };
 };
 
@@ -46,9 +46,9 @@ export const getDashboardMap = createSelector(
   (dashboardReducer, moduleEntity, isContactMapStatus) => {
     if (OBJ_ENTITIES.indexOf(moduleEntity.entityOrigin) < 0) {
       if (isContactMapStatus) {
-        return dashboardReducer.dashboard[moduleEntity.module] && dashboardReducer.dashboard[moduleEntity.module]['AddressMaps'];
+        return dashboardReducer && dashboardReducer.dashboard[moduleEntity.module] && dashboardReducer.dashboard[moduleEntity.module]['AddressMaps'];
       }
-      return dashboardReducer.dashboard[moduleEntity.module] &&
+      return dashboardReducer && dashboardReducer.dashboard[moduleEntity.module] &&
       dashboardReducer.dashboard[moduleEntity.module][moduleEntity.entityName];
     }
     return dashboardReducer &&
