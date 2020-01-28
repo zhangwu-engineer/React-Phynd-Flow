@@ -14,7 +14,8 @@ describe('To test the App Component functionality.', () => {
   let rootComponent = null;
 
   it("renders without crashing", () => {
-    shallow(<App />);
+    const component = shallow(<App />);
+    expect(component).toMatchSnapshot();
   });
 
   it(`should mount and check if Provider component exists.`, () => {
