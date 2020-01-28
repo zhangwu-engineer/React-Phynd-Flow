@@ -5,6 +5,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles'
 import { ThemeProvider } from 'styled-components'
 import { muiTheme, styledTheme } from 'services/bootstrap';
 import Routes from 'Routes'
+import { HashRouter } from 'react-router-dom'
 
 import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -27,25 +28,26 @@ describe('To test the App Component functionality.', () => {
     expect(isReduxProvider).toHaveLength(1);
   });
 
-  it(`should mount and check if PersistGate component exists`, () => {
+  it(`should mount and check if PersistGate component exists.`, () => {
     rootComponent = mount(<App />);
     const isPersistGate = rootComponent.find(PersistGate);
     expect(isPersistGate).toHaveLength(1);
   });
 
-  it(`should mount and check if AppContainer component exists`, () => {
+  it(`should mount and check if AppContainer component exists.`, () => {
     rootComponent = mount(<App />);
     const isApplicationProvider = rootComponent.find(AppContainer);
     expect(isApplicationProvider).toHaveLength(1);
   });
 
-  it(`should render AppContainer children components`, () => {
+  it(`should mount and check if AppContainer children components exist.`, () => {
     const appContainer = shallow(
       <AppContainer />
     );
     expect(appContainer.find(MuiThemeProvider).prop('theme')).toBe(muiTheme);
     expect(appContainer.find(ThemeProvider).prop('theme')).toBe(styledTheme);
     expect(appContainer.find(Routes)).toHaveLength(1);
+    expect(appContainer.find(HashRouter)).toHaveLength(1);
   })
 
 });
