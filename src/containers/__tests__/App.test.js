@@ -4,6 +4,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { ThemeProvider } from 'styled-components'
 import { muiTheme, styledTheme } from 'services/bootstrap';
+import Routes from 'Routes'
 
 import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -44,6 +45,7 @@ describe('To test the App Component functionality.', () => {
     );
     expect(appContainer.find(MuiThemeProvider).prop('theme')).toBe(muiTheme);
     expect(appContainer.find(ThemeProvider).prop('theme')).toBe(styledTheme);
+    expect(appContainer.find(Routes)).toHaveLength(1);
   })
 
 });
