@@ -1,6 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
+import { MuiThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider } from 'styled-components'
+import { muiTheme, styledTheme } from 'services/bootstrap';
 
 import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -34,5 +37,13 @@ describe('To test the App Component functionality.', () => {
     const isApplicationProvider = rootComponent.find(AppContainer);
     expect(isApplicationProvider).toHaveLength(1);
   });
+
+  it(`should render AppContainer children components`, () => {
+    const appContainer = shallow(
+      <AppContainer />
+    );
+    expect(appContainer.find(MuiThemeProvider).prop('theme')).toBe(muiTheme);
+    expect(appContainer.find(ThemeProvider).prop('theme')).toBe(styledTheme);
+  })
 
 });
