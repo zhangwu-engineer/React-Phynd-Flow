@@ -7,6 +7,7 @@ import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 import { App } from '../App';
+import { AppContainer } from '../App';
 
 describe('To test the App Component functionality.', () => {
   configure({ adapter: new Adapter() });
@@ -22,10 +23,10 @@ describe('To test the App Component functionality.', () => {
     expect(isReduxProvider).toHaveLength(1);
   });
 
-  it(`should mount and check if PersistGate component exis`, () => {
+  it(`should mount and check if AppContainer component exists`, () => {
     rootComponent = mount(<App />);
-    const isPersistGate = rootComponent.find(PersistGate);
-    expect(isPersistGate).toHaveLength(1);
+    const isApplicationProvider = rootComponent.find(AppContainer);
+    expect(isApplicationProvider).toHaveLength(1);
   });
 
 });

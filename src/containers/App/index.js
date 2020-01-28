@@ -10,7 +10,7 @@ import { store, persistor, history } from 'services/redux'
 import Routes from 'Routes'
 import { muiTheme, styledTheme } from 'services/bootstrap';
 
-const AppContainer = () => (
+export const AppContainer = () => (
   <MuiThemeProvider theme={muiTheme}>
     <ThemeProvider theme={styledTheme}>
       <HashRouter basename='/' history={history}>
