@@ -16,7 +16,7 @@ import {
 
 import * as actions from 'actions';
 
-const hoc = (Dashboard) => {
+export const hoc = (Dashboard) => {
   class ProvidersHoc extends Component {
     constructor(props) {
       super(props);
