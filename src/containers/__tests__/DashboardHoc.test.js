@@ -15,7 +15,7 @@ describe('<Hoc />', () => {
 
     // creates the store with any initial state or middleware needed
     store = mockStore({
-      dashboardReducer: {},
+      isLoaded: true,
     });
   });
 
