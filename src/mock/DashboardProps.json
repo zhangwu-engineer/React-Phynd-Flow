@@ -1,0 +1,23 @@
+{
+  "dashboard": {
+    "dashboard": {
+      "Provider Module": {
+        "NPI": {
+          "MappingFieldId" : 165545,
+          "MappingFieldType": "Column",
+          "SerAttributeId" : null,
+          "ColumnIdentifier": "column1"
+        }
+      }
+    }
+  },
+  "fields": {
+    "fields": {
+      "Provider Module": {
+        "Provider Details": [
+          "NPI"
+        ]
+      }
+    }
+  }
+}
