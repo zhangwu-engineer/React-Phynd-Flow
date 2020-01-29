@@ -22,5 +22,6 @@ describe('<Hoc />', () => {
     const DashboardHOC = hoc(<Dashboard />);
     const wrapper = shallow(<DashboardHOC store={store} />);
     expect(wrapper).not.toBe(null);
+    expect(wrapper.find('withRouter(ProvidersHoc)')).toHaveLength(1);
   });
 });
