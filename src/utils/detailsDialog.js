@@ -1,7 +1,7 @@
 export const isDetailsEntityRemovable = (parent) => {
   const primaryModels = ['Constant', 'Column', 'HL7'];
   if (parent) {
-    if (parent && parent.edges.length === 0 && primaryModels.indexOf(parent.data.parentType) > -1) return true;
+    if (parent && parent.edges && parent.edges.length === 0 && primaryModels.indexOf(parent.data.parentType) > -1) return true;
   }
   return false;
 }
