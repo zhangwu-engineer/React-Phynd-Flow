@@ -11,7 +11,9 @@ import {
   checkCategoryEditable,
   generateMapping,
   findByPropertyNew,
-  findByPropertyExisting
+  findByPropertyExisting,
+  findByDiagram,
+  findByPropertyCase,
 } from 'utils/helper';
 
 import useStyles, { nodeStyle, parentEntityStyle, edgeStyle } from './style';
@@ -38,6 +40,7 @@ const stylesheet = [
 
 const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsModal, triggerCaseKeyModal, updateDashboard, triggerOperationModal }, ref) => {
   const [elements, setElements] = React.useState([]);
+  const [nextParent, setNextParent] = React.useState(null);
 
   useEffect(() => {
       cyListener.on('tap', function(e) {
@@ -58,6 +61,13 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
     [source]
   );
 
+  useEffect(() => {
+    if (nextParent)
+    console.log(findByDiagram(cyListener, nextParent));
+  },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [elements, nextParent]
+  );
 
   let cyListener;
   const layout = {
@@ -90,6 +100,7 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
           parent,
           element
         );
+        setNextParent(parent);
         setElements([]);
         setTimeout(() => {
           setElements(generateMapping(source, 1, 1));
@@ -123,22 +134,7 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
       }
     },
     validateCaseKey: (parent, inputKeyValue) => {
-      const findByProperty = (obj, val)=> {
-        for (let p in obj) {
-          if (Array.isArray(obj[p]) && p === 'Cases' && `case-target-${obj['MappingFieldId']}` === val) {
-            obj[p].push({
-              Key: inputKeyValue.length > 0 ? inputKeyValue : 'N/A',
-              Value: {
-                MappingFieldId: null,
-                MappingFieldType: null,
-              },
-            });
-          } else if (typeof obj[p] === 'object') {
-            findByProperty(obj[p], val);
-          }
-        }
-      };
-      findByProperty(source, parent.data.id);
+      findByPropertyCase(source, parent.data.id, inputKeyValue);
       setElements([]);
       setTimeout(() => {
         setElements(generateMapping(source, 1, 1));

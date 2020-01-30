@@ -4,6 +4,8 @@ import { getPropertyToMap } from './getPropertyToMap';
 import { generateMapping } from './generateMap';
 import { findByPropertyNew } from './findByPropertyNew';
 import { findByPropertyExisting } from './findByPropertyExisting';
+import { findByDiagram } from './findByDiagram';
+import { findByPropertyCase } from './findByPropertyCase';
 
 export {
   generateInitialSource,
@@ -13,6 +15,8 @@ export {
   generateMapping,
   findByPropertyNew,
   findByPropertyExisting,
+  findByDiagram,
+  findByPropertyCase,
 };
 
 export const a11yProps = index => ({
