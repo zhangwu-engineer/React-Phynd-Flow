@@ -11,6 +11,7 @@ import {
   checkCategoryEditable,
   getPropertyToMap,
   generateMapping,
+  findByPropertyNew,
 } from 'utils/helper';
 
 import useStyles, { nodeStyle, parentEntityStyle, edgeStyle } from './style';
@@ -146,41 +147,12 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
         fourth: 'N/A',
       };
       if (parent) {
-        const propertyToFind = getPropertyToMap(parent.data.parentType);
-        const findByProperty = (obj, val)=> {
-          for (let p in obj) {
-            // Case Key Value Update
-            if (Array.isArray(obj[p])) {
-              for (let ca in obj[p]) {
-                if (obj[p][ca]['Key'] && `wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
-                  obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } }, defaultInput);
-                } else if (obj[p][ca]['Key'] && obj[p][ca]['Value'][propertyToFind.id] === null && parent.data.dataDetails === parseInt(ca)) {
-                  obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } }, defaultInput);
-                }
-              }
-            }
-            if (!val) {
-              // Primary Entity Update.
-              const obj2 = generateInitialSource(element, parent, defaultInput);
-              _.assign(obj, obj2);
-              return obj;
-            } else if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
-              // Replace the internal entity with another category model.
-              const obj2 = generateInitialSource(element, parent, defaultInput);
-              obj[propertyToFind.name] = obj2;
-              if (parent.data.parentType === 'iteration-source') {
-                // Different field structure of Iteration.
-                obj['Iterator'][propertyToFind.name] = generateInitialSource(element, parent, defaultInput);
-              }
-              return obj;
-            } else if (`iterator-entity-${obj[propertyToFind.id]}` === val) {
-              obj['Iterator'][propertyToFind.name] = generateInitialSource(element, parent, defaultInput);
-            } else if (typeof obj[p] === 'object') {
-              findByProperty(obj[p], val);
-            }
-          }
-        };
-        findByProperty(source, parent.data.parent);
+        findByPropertyNew(
+          source,
+          parent.data.parent,
+          parent,
+          element
+        );
         setElements([]);
         setTimeout(() => {
           setElements(generateMapping(source, 1, 1));

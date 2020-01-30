@@ -2,6 +2,7 @@ import { generateInitialSource } from './generateInitialSource';
 import { checkNodeEditable, checkCategoryEditable } from './checkEditable';
 import { getPropertyToMap } from './getPropertyToMap';
 import { generateMapping } from './generateMap';
+import { findByPropertyNew } from './findByPropertyNew';
 
 export {
   generateInitialSource,
@@ -9,6 +10,7 @@ export {
   checkCategoryEditable,
   getPropertyToMap,
   generateMapping,
+  findByPropertyNew,
 };
 
 export const a11yProps = index => ({
