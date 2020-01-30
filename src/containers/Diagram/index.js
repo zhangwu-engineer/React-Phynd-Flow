@@ -14,6 +14,7 @@ import {
   findByPropertyExisting,
   findByDiagram,
   findByPropertyCase,
+  findByPropertyOperation,
 } from 'utils/helper';
 
 import useStyles, { nodeStyle, parentEntityStyle, edgeStyle } from './style';
@@ -142,21 +143,7 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
       updateDashboard(source);
     },
     validateOperation: (parent, name, field, value) => {
-      const findByProperty = (obj, val)=> {
-        for (let p in obj) {
-          if (p === 'Element' && `elementoperations-entity-${obj['MappingFieldId']}` === val) {
-            obj[p]['Operations'].push({
-              name,
-              field,
-              value,
-              Source: {},
-            });
-          } else if (typeof obj[p] === 'object') {
-            findByProperty(obj[p], val);
-          }
-        }
-      };
-      findByProperty(source, parent.data.id);
+      findByPropertyOperation(source, parent.data.id, name, field, value);
       setElements([]);
       setTimeout(() => {
         setElements(generateMapping(source, 1, 1));

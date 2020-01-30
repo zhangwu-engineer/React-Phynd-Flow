@@ -6,6 +6,7 @@ import { findByPropertyNew } from './findByPropertyNew';
 import { findByPropertyExisting } from './findByPropertyExisting';
 import { findByDiagram } from './findByDiagram';
 import { findByPropertyCase } from './findByPropertyCase';
+import { findByPropertyOperation } from './findByPropertyOperation';
 
 export {
   generateInitialSource,
@@ -17,6 +18,7 @@ export {
   findByPropertyExisting,
   findByDiagram,
   findByPropertyCase,
+  findByPropertyOperation,
 };
 
 export const a11yProps = index => ({
