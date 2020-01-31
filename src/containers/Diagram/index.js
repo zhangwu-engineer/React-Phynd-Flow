@@ -118,8 +118,8 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
         updateDashboard(generateInitialSource(element, parent, inputValue));
       }
     },
-    validateCaseKey: (parent, inputKeyValue) => {
-      findByPropertyCase(source, parent.data.id, inputKeyValue);
+    validateCaseKey: (parent, inputKeyValue, element, inputValue) => {
+      findByPropertyCase(source, parent.data.id, inputKeyValue, element, inputValue);
       setElements([]);
       setTimeout(() => {
         setElements(generateMapping(source, 1, 1));

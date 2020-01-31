@@ -8,13 +8,14 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 // style
 import useStyles from './style';
+import CategoryDialog from 'containers/CategoryDialog';
 
 const CaseKeyDialog = ({ isModalShown, hideModal, setNewCase }) => {
   const classes = useStyles();
   const closeModal = () => {
     hideModal();
   }
-
+  const [isCategoryModalShown, setCategoryModalShown] = React.useState(false);
   const [inputKeyValue, setInputKeyValue] = React.useState('');
   const handleKeyInputChange = event => {
     setInputKeyValue(event.target.value);
@@ -55,8 +56,8 @@ const CaseKeyDialog = ({ isModalShown, hideModal, setNewCase }) => {
               color="primary"
               className={classes.button}
               onClick={() => {
-                setNewCase(inputKeyValue);
-                hideModal();
+                closeModal();
+                setCategoryModalShown(true);
               }}
             >
               Save
@@ -67,6 +68,13 @@ const CaseKeyDialog = ({ isModalShown, hideModal, setNewCase }) => {
           </Grid>
         </DialogContent>
       </Dialog>
+      <CategoryDialog
+        isModalShown={isCategoryModalShown}
+        hideModal={() => setCategoryModalShown(false)}
+        setNewElement={(element, inputValue) => {
+          setNewCase(inputKeyValue, element, inputValue);
+        }}
+      />
     </Fragment>
   );
 }

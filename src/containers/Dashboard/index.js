@@ -244,9 +244,9 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
         <CaseKeyDialog
           isModalShown={isCaseKeyModalShown}
           hideModal={() => setCaseKeyModalShown(false)}
-          setNewCase={(inputKeyValue) => {
+          setNewCase={(inputKeyValue, element, inputValue) => {
             if (refs[activePanel])
-              refs[activePanel].current.validateCaseKey(activeParent, inputKeyValue);
+              refs[activePanel].current.validateCaseKey(activeParent, inputKeyValue, element, inputValue);
           }}
         />
         <BlockListDialog
