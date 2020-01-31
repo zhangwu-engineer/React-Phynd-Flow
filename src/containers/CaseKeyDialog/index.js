@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -21,51 +21,53 @@ const CaseKeyDialog = ({ isModalShown, hideModal, setNewCase }) => {
   };
 
   return (
-    <Dialog
-      open={isModalShown}
-      onClose={closeModal}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>
-        <Typography>Case Key Mapping Field</Typography>
-      </DialogTitle>
-      <DialogContent className={classes.dialogContent}>
-        <Grid className={classes.tabInputContent}>
-          <TextField
-            label="Key Name"
-            value={inputKeyValue}
-            onChange={handleKeyInputChange}
-            InputProps={{
-              classes: {
-                input: classes.resize,
-              },
-            }}
-            InputLabelProps={{
-              classes: {
-                root: classes.resize,
-              }
-            }}
-          />
-        </Grid>
-        <Grid container className={classes.buttonGroup}>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            onClick={() => {
-              setNewCase(inputKeyValue);
-              hideModal();
-            }}
-          >
-            Save
-          </Button>
-          <Button variant="contained" color="primary" className={classes.button} onClick={closeModal}>
-            Close
-          </Button>
-        </Grid>
-      </DialogContent>
-    </Dialog>
+    <Fragment>
+      <Dialog
+        open={isModalShown}
+        onClose={closeModal}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>
+          <Typography>Case Key Mapping Field</Typography>
+        </DialogTitle>
+        <DialogContent className={classes.dialogContent}>
+          <Grid className={classes.tabInputContent}>
+            <TextField
+              label="Key Name"
+              value={inputKeyValue}
+              onChange={handleKeyInputChange}
+              InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.resize,
+                }
+              }}
+            />
+          </Grid>
+          <Grid container className={classes.buttonGroup}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={() => {
+                setNewCase(inputKeyValue);
+                hideModal();
+              }}
+            >
+              Save
+            </Button>
+            <Button variant="contained" color="primary" className={classes.button} onClick={closeModal}>
+              Close
+            </Button>
+          </Grid>
+        </DialogContent>
+      </Dialog>
+    </Fragment>
   );
 }
 
