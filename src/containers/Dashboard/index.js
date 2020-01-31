@@ -217,9 +217,9 @@ const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList,
           hideModal={() => setCategoryModalShown(false)}
           activeParent={activeParent}
           currentCard={activeCard}
-          setNewElement={(element) => {
+          setNewElement={(element, inputValue) => {
             if (refs[activePanel])
-              refs[activePanel].current.validateNew(element, activeParent);
+              refs[activePanel].current.validateNew(element, activeParent, inputValue);
           }}
           removeElement={() => {
             if (refs[activePanel])

@@ -100,17 +100,12 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
         updateDashboard(generateInitialSource(element, parent, inputValue));
       }
     },
-    validateNew: (element, parent) => {
-      const defaultInput = {
-        primary: 'N/A',
-        secondary: 'N/A',
-        tertiary: 'N/A',
-        fourth: 'N/A',
-      };
+    validateNew: (element, parent, inputValue) => {
       if (parent) {
         findByPropertyNew(
           source,
           parent.data.parent,
+          inputValue,
           parent,
           element
         );
@@ -120,7 +115,7 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
         }, 0);
         updateDashboard(source);
       } else {
-        updateDashboard(generateInitialSource(element, parent, defaultInput));
+        updateDashboard(generateInitialSource(element, parent, inputValue));
       }
     },
     validateCaseKey: (parent, inputKeyValue) => {

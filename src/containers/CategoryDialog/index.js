@@ -12,11 +12,13 @@ import useStyles from './style';
 import { isRemovable } from 'utils/categoryDialog';
 import { IconsList } from 'utils/iconsList';
 import { NodeCard } from 'components/NodeCard';
-import { isSingleNode } from 'utils/helper';
+import { isSingleNode, DEFAULT_INPUT } from 'utils/helper';
+import DetailsDialog from 'containers/DetailsDialog';
 
 const CategoryDialog = ({ isModalShown, activeParent, currentCard, hideModal, setNewElement, removeElement }) => {
   const classes = useStyles();
   const [activeCard, setActiveCard] = React.useState(null);
+  const [isDetailsModalShown, setDetailsModalShown] = React.useState(false);
 
   const closeModal = () => {
     hideModal();
@@ -48,7 +50,9 @@ const CategoryDialog = ({ isModalShown, activeParent, currentCard, hideModal, se
                   setActiveCard(key);
                   closeModal();
                   if (!isSingleNode(key)) {
-                    setNewElement(key);
+                    setNewElement(key, DEFAULT_INPUT);
+                  } else {
+                    setDetailsModalShown(true);
                   }
                 }}
               >
@@ -73,6 +77,16 @@ const CategoryDialog = ({ isModalShown, activeParent, currentCard, hideModal, se
           </Grid>
         </DialogContent>
       </Dialog>
+      <DetailsDialog
+        isModalShown={isDetailsModalShown}
+        hideModal={() => setDetailsModalShown(false)}
+        activeParent={activeParent}
+        currentCard={activeCard}
+        currentDetails={DEFAULT_INPUT}
+        updateElement={(element, inputValue) => {
+          setNewElement(activeCard, inputValue);
+        }}
+      />
     </Fragment>
   );
 }
