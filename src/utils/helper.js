@@ -1,5 +1,5 @@
 import { generateInitialSource } from './generateInitialSource';
-import { checkNodeEditable, checkCategoryEditable } from './checkEditable';
+import { checkNodeEditable, checkCategoryEditable, isSingleNode } from './checkEditable';
 import { getPropertyToMap } from './getPropertyToMap';
 import { generateMapping } from './generateMap';
 import { findByPropertyNew } from './findByPropertyNew';
@@ -12,6 +12,7 @@ export {
   generateInitialSource,
   checkNodeEditable,
   checkCategoryEditable,
+  isSingleNode,
   getPropertyToMap,
   generateMapping,
   findByPropertyNew,

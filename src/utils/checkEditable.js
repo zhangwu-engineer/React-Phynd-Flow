@@ -30,3 +30,9 @@ export const checkCategoryEditable = (node) => {
       node.data.parentType === 'aggregate-iterator-info' ||
       node.data.parentType === 'jsonelement-info'
     ) ? true : false;
+
+  export const isSingleNode = node => (
+      node.data.parentType === 'Constant' ||
+      node.data.parentType === 'Column' ||
+      node.data.parentType === 'HL7'
+    ) ? true : false;
