@@ -26,6 +26,7 @@ export const a11yProps = index => ({
   'aria-controls': `scrollable-auto-tabpanel-${index}`,
 })
 
+//reducer helpers
 export const getIDFromName = name => `${name}`.toLowerCase().replace(' ', '-')
 
 export const getNameFromID = id => `${id}`.split('-').map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(' ');
@@ -59,6 +60,7 @@ export const reorder = (list, startIndex, endIndex) => {
   return [...result];
 };
 
+// routing helpers
 export const moduleRouter = [
   '/provider-module/provider-details',
   '/location-module/location-details',
