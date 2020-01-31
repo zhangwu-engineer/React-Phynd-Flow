@@ -13,7 +13,7 @@ import { isRemovable } from 'utils/categoryDialog';
 import { IconsList } from 'utils/iconsList';
 import { NodeCard } from '../../components/NodeCard';
 
-const CategoryDialog = ({ isModalShown, activeParent, currentCard, currentDetails, hideModal, setNewElement, removeElement }) => {
+const CategoryDialog = ({ isModalShown, activeParent, currentCard, hideModal, setNewElement, removeElement }) => {
   const classes = useStyles();
   const [activeCard, setActiveCard] = React.useState(null);
 
