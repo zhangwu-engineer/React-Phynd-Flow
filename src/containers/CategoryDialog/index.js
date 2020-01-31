@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import _ from 'lodash';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
@@ -26,49 +26,51 @@ const CategoryDialog = ({ isModalShown, activeParent, currentCard, currentDetail
   }, [currentCard]);
 
   return (
-    <Dialog
-      open={isModalShown}
-      onClose={closeModal}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <Grid container justify="space-between" alignItems="center" className={classes.dialogTitle}>
-        <Typography>Choose Mapping Field</Typography>
-        <Typography><CloseIcon onClick={closeModal} /></Typography>
-      </Grid>
-      <DialogContent className={classes.dialogContent}>
-        <Grid container spacing={2} className={classes.tabContent}>
-          {_.map(IconsList, (value, key) =>
-            <Grid
-              item xs={4}
-              key={key}
-              onClick={() => {
-                setActiveCard(key);
-                setNewElement(key);
-                closeModal();
-              }}
-            >
-              <NodeCard cardName={key} activeCard={activeCard} />
-            </Grid>
-          )}
+    <Fragment>
+      <Dialog
+        open={isModalShown}
+        onClose={closeModal}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <Grid container justify="space-between" alignItems="center" className={classes.dialogTitle}>
+          <Typography>Choose Mapping Field</Typography>
+          <Typography><CloseIcon onClick={closeModal} /></Typography>
         </Grid>
-        <Grid container className={classes.buttonGroup}>
-          {isRemovable(activeParent) &&
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              onClick={() => {
-                removeElement();
-                closeModal();
-              }}
-            >
-              Remove
-            </Button>
-          }
-        </Grid>
-      </DialogContent>
-    </Dialog>
+        <DialogContent className={classes.dialogContent}>
+          <Grid container spacing={2} className={classes.tabContent}>
+            {_.map(IconsList, (value, key) =>
+              <Grid
+                item xs={4}
+                key={key}
+                onClick={() => {
+                  setActiveCard(key);
+                  setNewElement(key);
+                  closeModal();
+                }}
+              >
+                <NodeCard cardName={key} activeCard={activeCard} />
+              </Grid>
+            )}
+          </Grid>
+          <Grid container className={classes.buttonGroup}>
+            {isRemovable(activeParent) &&
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={() => {
+                  removeElement();
+                  closeModal();
+                }}
+              >
+                Remove
+              </Button>
+            }
+          </Grid>
+        </DialogContent>
+      </Dialog>
+    </Fragment>
   );
 }
 
