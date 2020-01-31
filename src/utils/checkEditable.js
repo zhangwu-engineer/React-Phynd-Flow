@@ -31,8 +31,8 @@ export const checkCategoryEditable = (node) => {
       node.data.parentType === 'jsonelement-info'
     ) ? true : false;
 
-  export const isSingleNode = node => (
-      node.data.parentType === 'Constant' ||
-      node.data.parentType === 'Column' ||
-      node.data.parentType === 'HL7'
+  export const isSingleNode = nodeName => (
+      nodeName === 'Constant' ||
+      nodeName === 'Column' ||
+      nodeName === 'HL7'
     ) ? true : false;

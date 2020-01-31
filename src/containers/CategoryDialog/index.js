@@ -11,7 +11,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import useStyles from './style';
 import { isRemovable } from 'utils/categoryDialog';
 import { IconsList } from 'utils/iconsList';
-import { NodeCard } from '../../components/NodeCard';
+import { NodeCard } from 'components/NodeCard';
+import { isSingleNode } from 'utils/helper';
 
 const CategoryDialog = ({ isModalShown, activeParent, currentCard, hideModal, setNewElement, removeElement }) => {
   const classes = useStyles();
@@ -45,8 +46,10 @@ const CategoryDialog = ({ isModalShown, activeParent, currentCard, hideModal, se
                 key={key}
                 onClick={() => {
                   setActiveCard(key);
-                  setNewElement(key);
                   closeModal();
+                  if (!isSingleNode(key)) {
+                    setNewElement(key);
+                  }
                 }}
               >
                 <NodeCard cardName={key} activeCard={activeCard} />
