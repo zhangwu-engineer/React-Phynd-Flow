@@ -12,7 +12,6 @@ import {
   generateMapping,
   findByPropertyNew,
   findByPropertyExisting,
-  findByDiagram,
   findByPropertyCase,
   findByPropertyOperation,
 } from 'utils/helper';
@@ -41,7 +40,6 @@ const stylesheet = [
 
 const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsModal, triggerCaseKeyModal, updateDashboard, triggerOperationModal }, ref) => {
   const [elements, setElements] = React.useState([]);
-  const [nextParent, setNextParent] = React.useState(null);
 
   useEffect(() => {
       cyListener.on('tap', function(e) {
@@ -60,14 +58,6 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [source]
-  );
-
-  useEffect(() => {
-    if (nextParent)
-    console.log(findByDiagram(cyListener, nextParent));
-  },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [elements, nextParent]
   );
 
   let cyListener;
@@ -101,7 +91,6 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
           parent,
           element
         );
-        setNextParent(parent);
         setElements([]);
         setTimeout(() => {
           setElements(generateMapping(source, 1, 1));
