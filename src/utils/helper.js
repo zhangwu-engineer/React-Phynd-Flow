@@ -84,3 +84,11 @@ export const OBJ_ENTITIES = [
   'payto-address',
   'schedule'
 ];
+
+// diagram input
+export const DEFAULT_INPUT = {
+  primary: 'N/A',
+  secondary: 'N/A',
+  tertiary: 'N/A',
+  fourth: 'N/A',
+};
