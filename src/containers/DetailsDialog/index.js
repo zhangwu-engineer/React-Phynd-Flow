@@ -20,7 +20,10 @@ import {
 const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails, hideModal, updateElement, removeElement }) => {
   const classes = useStyles();
   const closeModal = () => {
-    hideModal();
+    hideModal(false);
+  }
+  const closeSaveModal = () => {
+    hideModal(true);
   }
 
   const [inputPrimaryValue, setInputPrimaryValue] = React.useState('');
@@ -152,7 +155,7 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
                 tertiary: inputTertiaryValue,
                 fourth: inputFourthValue,
               });
-              closeModal();
+              closeSaveModal();
             }}
           >
             Save

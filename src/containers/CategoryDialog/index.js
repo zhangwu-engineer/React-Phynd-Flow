@@ -79,7 +79,12 @@ const CategoryDialog = ({ isModalShown, activeParent, currentCard, hideModal, se
       </Dialog>
       <DetailsDialog
         isModalShown={isDetailsModalShown}
-        hideModal={() => setDetailsModalShown(false)}
+        hideModal={(isSaving) => {
+          if (!isSaving) {
+            setNewElement(activeCard, DEFAULT_INPUT);
+          }
+          setDetailsModalShown(false)
+        }}
         activeParent={activeParent}
         currentCard={activeCard}
         currentDetails={DEFAULT_INPUT}
