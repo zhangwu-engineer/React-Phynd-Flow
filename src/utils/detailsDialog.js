@@ -40,7 +40,7 @@ export const getTertiaryFieldLabel = (cardType) => {
 }
 
 export const getFourthFieldLabel = (activeParent) => {
-  if (activeParent && activeParent.data.parentType === 'cases-entity') {
+  if (activeParent && activeParent.data && activeParent.data.parentType === 'cases-entity') {
     return 'Key Name';
   }
   return null;
