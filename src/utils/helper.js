@@ -4,7 +4,6 @@ import { getPropertyToMap } from './getPropertyToMap';
 import { generateMapping } from './generateMap';
 import { findByPropertyNew } from './findByPropertyNew';
 import { findByPropertyExisting } from './findByPropertyExisting';
-import { findByDiagram } from './findByDiagram';
 import { findByPropertyCase } from './findByPropertyCase';
 import { findByPropertyOperation } from './findByPropertyOperation';
 
@@ -17,7 +16,6 @@ export {
   generateMapping,
   findByPropertyNew,
   findByPropertyExisting,
-  findByDiagram,
   findByPropertyCase,
   findByPropertyOperation,
 };
