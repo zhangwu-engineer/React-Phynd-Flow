@@ -5,8 +5,9 @@ import Adapter from 'enzyme-adapter-react-16';
 
 import hoc from '../Dashboard/hoc';
 import Dashboard from '../Dashboard';
+import LayoutContainer from 'components/Layout';
 
-let store, DashboardHOCDefault, wrapperDefault, DashboardHOC, wrapper;
+let store, DashboardHOCDefault, wrapperDefault, DashboardHOC, LayoutHOC, layoutWrapper, wrapper;
 const mockFn = jest.fn();
 const dashboardProps = {
   getDashboardDataRequest: new mockFn(),
@@ -27,15 +28,22 @@ describe('<Hoc />', () => {
     });
 
     DashboardHOCDefault = hoc(<Dashboard />);
+    LayoutHOC = hoc(<LayoutContainer />);
+
     wrapperDefault = shallow(<DashboardHOCDefault store={store} />);
+    layoutWrapper = shallow(<LayoutHOC store={store} />);
 
     DashboardHOC = hoc(<Dashboard {...dashboardProps} />);
     wrapper = shallow(<DashboardHOC store={store} />);
   });
 
-  it('should render the component only when prop is not null', () => {
+  it('should render the Dashboard component only when prop is not null', () => {
     expect(wrapperDefault).not.toBe(null);
     expect(wrapper).not.toBe(null);
+  });
+
+  it('should render the LayoutContainer component only when prop is not null', () => {
+    expect(layoutWrapper).not.toBe(null);
   });
 
   it('should render the hoc with router', () => {
@@ -43,7 +51,7 @@ describe('<Hoc />', () => {
     expect(wrapper.find('withRouter(ProvidersHoc)')).toHaveLength(1);
   });
 
-  it('should generate default props correctly', () => {
+  it('should generate default props of Dashboard component correctly', () => {
     expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().dashboardReducer).toBe(undefined);
     expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().dashboardList).not.toBe(null);
     expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().filedsReducer).toBe(undefined);
