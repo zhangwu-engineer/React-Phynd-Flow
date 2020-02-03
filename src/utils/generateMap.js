@@ -183,9 +183,7 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
     const valueType = caseItem.Value.MappingFieldType;
     let caseKeyDetails = getDataDetails(caseItem.Value);
     const alternativeId = `case-value-${Math.random()*10000}`;
-    if (caseKeyDetails) {
-      caseKeyDetails.fourth = caseItem.Key;
-    } else {
+    if (!caseKeyDetails) {
       caseKeyDetails = index;
     }
 

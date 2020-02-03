@@ -14,7 +14,6 @@ import {
   getPrimaryFieldLabel,
   getSecondaryFieldLabel,
   getTertiaryFieldLabel,
-  getFourthFieldLabel
 } from 'utils/detailsDialog';
 
 const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails, hideModal, updateElement, removeElement }) => {
@@ -41,16 +40,10 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
     setInputTertiaryValue(event.target.value);
   };
 
-  const [inputFourthValue, setInputFourthValue] = React.useState('');
-  const handleFourthInputChange = event => {
-    setInputFourthValue(event.target.value);
-  };
-
   useEffect(() => {
     setInputPrimaryValue(currentDetails ? currentDetails.primary : '');
     setInputSecondaryValue(currentDetails ? currentDetails.secondary : '');
     setInputTertiaryValue(currentDetails ? currentDetails.tertiary : '');
-    setInputFourthValue(currentDetails ? currentDetails.fourth : '');
   }, [currentDetails]);
 
   return (
@@ -124,25 +117,6 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
             />
           }
         </Grid>
-        <Grid item>
-          {getFourthFieldLabel(activeParent) &&
-            <TextField
-              label={getFourthFieldLabel(activeParent)}
-              value={inputFourthValue || ''}
-              onChange={handleFourthInputChange}
-              InputProps={{
-                classes: {
-                  input: classes.resize,
-                },
-              }}
-              InputLabelProps={{
-                classes: {
-                  root: classes.resize,
-                }
-              }}
-            />
-          }
-        </Grid>
         <Grid container className={classes.buttonGroup}>
           <Button
             variant="contained"
@@ -153,7 +127,6 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
                 primary: inputPrimaryValue,
                 secondary: inputSecondaryValue,
                 tertiary: inputTertiaryValue,
-                fourth: inputFourthValue,
               });
               closeSaveModal();
             }}

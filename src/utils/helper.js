@@ -88,5 +88,4 @@ export const DEFAULT_INPUT = {
   primary: 'N/A',
   secondary: 'N/A',
   tertiary: 'N/A',
-  fourth: 'N/A',
 };
