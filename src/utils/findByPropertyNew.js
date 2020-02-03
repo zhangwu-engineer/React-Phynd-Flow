@@ -8,10 +8,22 @@ export const findByPropertyNew = (obj, val, inputValue, parent, element)=> {
     // Case Key Value Update
     if (Array.isArray(obj[p])) {
       for (let ca in obj[p]) {
-        if (obj[p][ca]['Key'] && `wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
-          obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } }, inputValue);
-        } else if (obj[p][ca]['Key'] && obj[p][ca]['Value'][propertyToFind.id] === null && parent.data.dataDetails === parseInt(ca)) {
-          obj[p][ca]['Value'] = generateInitialSource(element, { data: { id: parent.data.parent } }, inputValue);
+        if (obj[p][ca]['Key'] &&
+          `wrap-${obj[p][ca]['Value'][propertyToFind.id]}` === parent.data.id) {
+          obj[p][ca]['Value'] = generateInitialSource(
+            element,
+            { data: { id: parent.data.parent } },
+            inputValue
+          );
+        } else if (obj[p][ca]['Key'] &&
+          obj[p][ca]['Value'][propertyToFind.id] === null &&
+          parent.data.dataDetails === parseInt(ca)
+        ) {
+          obj[p][ca]['Value'] = generateInitialSource(
+            element,
+            { data: { id: parent.data.parent } },
+            inputValue
+          );
         }
       }
     }
@@ -20,7 +32,9 @@ export const findByPropertyNew = (obj, val, inputValue, parent, element)=> {
       const obj2 = generateInitialSource(element, parent, inputValue);
       _.assign(obj, obj2);
       return obj;
-    } else if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
+    } else if (obj[propertyToFind.id] === parseInt(val) ||
+      obj[propertyToFind.id] === val
+    ) {
       // Replace the internal entity with another category model.
       const obj2 = generateInitialSource(element, parent, inputValue);
       obj[propertyToFind.name] = obj2;
