@@ -51,7 +51,11 @@ const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
 };
 
 const generateFunctionMapping = (source, xWeight, yWeight) => {
-  const nextMappingField = generateMapping(source.FunctionParameter, xWeight+1, yWeight+1);
+  const nextMappingField = generateMapping(
+    source.FunctionParameter,
+    xWeight+1,
+    yWeight+1
+  );
   const currentId = source.MappingFieldId;
   const functionId = source.FunctionParameter.MappingFieldId;
   const functionType = source.FunctionParameter.MappingFieldType;
@@ -158,7 +162,11 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
   ];
 
   if (switchId) {
-    const switchValue = generateMapping(source.SwitchValue, xWeight+1, yWeight);
+    const switchValue = generateMapping(
+      source.SwitchValue,
+      xWeight+1,
+      yWeight
+    );
     elements.push(generateEdge(
       `edge-value-${switchId}`,
       `value-${currentId}`,
@@ -167,7 +175,11 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
     elements = _.concat(elements, switchValue);
   }
   if (defaultId) {
-    const switchDefault = generateMapping(source.SwitchDefault, xWeight+1, yWeight+addWeight1);
+    const switchDefault = generateMapping(
+      source.SwitchDefault,
+      xWeight+1,
+      yWeight+addWeight1
+    );
     elements.push(generateEdge(
       `edge-default-${defaultId}`,
       `default-${currentId}`,
@@ -178,7 +190,11 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
 
   let addCasesWeight = addWeight;
   _.map(source.Cases, (caseItem, index) => {
-    const nextMappingField = generateMapping(caseItem.Value, xWeight+2, yWeight+index+addCasesWeight);
+    const nextMappingField = generateMapping(
+      caseItem.Value,
+      xWeight+2,
+      yWeight+index+addCasesWeight
+    );
     const valueId = caseItem.Value.MappingFieldId;
     const valueType = caseItem.Value.MappingFieldType;
     let caseKeyDetails = getDataDetails(caseItem.Value);
@@ -279,8 +295,16 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
     ),
   ];
 
-  const trueMappingField = generateMapping(source.TrueField, xWeight+1, yWeight+addWeightField1+addWeightField2);
-  const falseMappingField = generateMapping(source.FalseField, xWeight+1, yWeight+addWeight+addWeightField1+addWeightField2);
+  const trueMappingField = generateMapping(
+    source.TrueField,
+    xWeight+1,
+    yWeight+addWeightField1+addWeightField2
+  );
+  const falseMappingField = generateMapping(
+    source.FalseField,
+    xWeight+1,
+    yWeight+addWeight+addWeightField1+addWeightField2
+  );
 
   let fields = [
     generateEntity(
@@ -319,7 +343,11 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
   ];
 
   if (field1) {
-    const field1MappingField = generateMapping(field1, xWeight+2, yWeight);
+    const field1MappingField = generateMapping(
+      field1,
+      xWeight+2,
+      yWeight
+    );
     fields = _.concat(fields, field1MappingField);
     fields.push(generateEdge(
       `edge-field1-${conditionId}`,
@@ -328,7 +356,11 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
     ));
   }
   if (field2) {
-    const field2MappingField = generateMapping(field2, xWeight+2, yWeight+addWeightField1);
+    const field2MappingField = generateMapping(
+      field2,
+      xWeight+2,
+      yWeight+addWeightField1
+    );
     fields = _.concat(fields, field2MappingField);
     fields.push(generateEdge(
       `edge-field2-${conditionId}`,
@@ -390,8 +422,16 @@ const generateCombinationMapping = (source, xWeight, yWeight) => {
       ),
     ];
 
-    const field1MappingField = generateMapping(field1, xWeight+1, yWeight);
-    const field2MappingField = generateMapping(field2, xWeight+1, yWeight+addWeight);
+    const field1MappingField = generateMapping(
+      field1,
+      xWeight+1,
+      yWeight
+    );
+    const field2MappingField = generateMapping(
+      field2,
+      xWeight+1,
+      yWeight+addWeight
+    );
 
     elements = _.concat(elements, fields, field1MappingField, field2MappingField);
   }
@@ -436,7 +476,11 @@ const generateRegexMapping = (source, xWeight, yWeight) => {
       source.Source.MappingFieldId
     ),
   ];
-  const sourceMappingField = generateMapping(source.Source, xWeight+1, yWeight+1);
+  const sourceMappingField = generateMapping(
+    source.Source,
+    xWeight+1,
+    yWeight+1
+  );
 
   return _.concat(elements, sourceMappingField);
 };
@@ -479,13 +523,21 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
       source.Iterator.Source.MappingFieldId
     ),
   ];
-  const sourceMappingField = generateMapping(source.Iterator.Source, xWeight+1, yWeight+1);
+  const sourceMappingField = generateMapping(
+    source.Iterator.Source,
+    xWeight+1,
+    yWeight+1
+  );
 
   return _.concat(elements, sourceMappingField);
 };
 
 const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
-  const nextMappingField = generateMapping(source.Source, xWeight+1, yWeight+1);
+  const nextMappingField = generateMapping(
+    source.Source,
+    xWeight+1,
+    yWeight+1
+  );
   const currentId = source.MappingFieldId;
   const sourceId = source.Source.MappingFieldId;
   const sourceType = source.Source.MappingFieldType;
@@ -529,7 +581,11 @@ const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
 };
 
 const generateJsonElementMapping = (source, xWeight, yWeight) => {
-  const nextMappingField = generateMapping(source.Source, xWeight+1, yWeight+getChildrenWeight(source.Element));
+  const nextMappingField = generateMapping(
+    source.Source,
+    xWeight+1,
+    yWeight+getChildrenWeight(source.Element)
+  );
   const currentId = source.MappingFieldId;
   const sourceId = source.Source.MappingFieldId;
   const sourceType = source.Source.MappingFieldType;
@@ -721,7 +777,15 @@ const generateAggregateMapping = (source, xWeight, yWeight) => {
       source.Iterations.MappingFieldId
     ),
   ];
-  const sourceMappingField = generateMapping(source.Iterator.Source, xWeight+2, yWeight+2);
-  const iterationsMappingField = generateMapping(source.Iterations, xWeight+1, yWeight+getChildrenWeight(source.Iterator.Source)+2);
+  const sourceMappingField = generateMapping(
+    source.Iterator.Source,
+    xWeight+2,
+    yWeight+2
+  );
+  const iterationsMappingField = generateMapping(
+    source.Iterations,
+    xWeight+1,
+    yWeight+getChildrenWeight(source.Iterator.Source)+2
+  );
   return _.concat(elements, sourceMappingField, iterationsMappingField);
 };
