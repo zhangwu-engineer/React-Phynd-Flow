@@ -13,12 +13,20 @@ export const findByPropertyExisting = (obj, val, inputValue, parent, element)=> 
         const newProperty = getPropertyToMap(obj2['MappingFieldType']);
         if (parent.data.parentType === 'Iteration') {
           obj['Iterator'][oldProperty.name] = obj2['Iterator'][newProperty.name];
-          if (oldProperty.name1) obj['Iterator'][oldProperty.name1] = obj2['Iterator'][newProperty.name1];
-          if (oldProperty.name2) obj['Iterator'][oldProperty.name2] = obj2['Iterator'][newProperty.name2];
+          if (oldProperty.name1) {
+            obj['Iterator'][oldProperty.name1] = obj2['Iterator'][newProperty.name1];
+          }
+          if (oldProperty.name2) {
+            obj['Iterator'][oldProperty.name2] = obj2['Iterator'][newProperty.name2];
+          }
         } else {
           obj[oldProperty.name] = obj2[newProperty.name];
-          if (oldProperty.name1) obj[oldProperty.name1] = obj2[newProperty.name1];
-          if (oldProperty.name2) obj[oldProperty.name2] = obj2[newProperty.name2];
+          if (oldProperty.name1) {
+            obj[oldProperty.name1] = obj2[newProperty.name1];
+          }
+          if (oldProperty.name2) {
+            obj[oldProperty.name2] = obj2[newProperty].name2;
+          }
         }
       }
       return obj;
@@ -31,8 +39,12 @@ export const findByPropertyExisting = (obj, val, inputValue, parent, element)=> 
         if (oldProperty.name2) obj['Iterator'][oldProperty.name2] = inputValue.tertiary;
       } else {
         obj[oldProperty.name] = inputValue.primary;
-        if (oldProperty.name1) obj[oldProperty.name1] = inputValue.secondary;
-        if (oldProperty.name2) obj[oldProperty.name2] = inputValue.tertiary;
+        if (oldProperty.name1) {
+          obj[oldProperty.name1] = inputValue.secondary;
+        }
+        if (oldProperty.name2) {
+          obj[oldProperty.name2] = inputValue.tertiary;
+        }
       }
       return obj;
     } else if (`iterator-entity-${obj[propertyToFind.id]}` === val) {
