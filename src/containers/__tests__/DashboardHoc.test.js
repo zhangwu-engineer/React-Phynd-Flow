@@ -5,9 +5,8 @@ import Adapter from 'enzyme-adapter-react-16';
 
 import hoc from '../Dashboard/hoc';
 import Dashboard from '../Dashboard';
-import LayoutContainer from 'components/Layout';
 
-let store, DashboardHOCDefault, wrapperDefault, DashboardHOC, LayoutHOC, layoutWrapper, wrapper;
+let store, DashboardHOCDefault, wrapperDefault, DashboardHOC, wrapper;
 const mockFn = jest.fn();
 const dashboardProps = {
   getDashboardDataRequest: new mockFn(),
