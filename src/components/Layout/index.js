@@ -40,7 +40,7 @@ const StyledButton = withStyles({
   },
 })(Button);
 
-const LayoutContainer = ({ children, history }) => {
+const LayoutContainer = ({ children, history, submitCTA, revertCTA }) => {
   const classes = useStyles();
   const { pathname } = history.location;
   const locationParams = pathname && pathname.split('/');
@@ -79,9 +79,9 @@ const LayoutContainer = ({ children, history }) => {
             aria-label="contained primary button group"
             className={classes.buttonGroup}
           >
-            <StyledButton>Submit</StyledButton>
+            <StyledButton onClick={submitCTA}>Submit</StyledButton>
             <StyledButton>Compare</StyledButton>
-            <StyledButton>Revert</StyledButton>
+            <StyledButton onClick={revertCTA}>Revert</StyledButton>
           </ButtonGroup>
         </Paper>
       </AppBar>

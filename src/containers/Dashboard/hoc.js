@@ -33,10 +33,22 @@ export const hoc = (Dashboard) => {
       this.props.updateFieldsDataRequest({ data });
     }
 
+    revertStore = () => {
+      console.log('Revert CTA required');
+    }
+
+    submitStore = () => {
+      console.log('Submit CTA required');
+    }
+
     render() {
       return (
         <div>
-          <LayoutContainer history={this.props.history} />
+          <LayoutContainer
+            history={this.props.history}
+            revertCTA={this.revertStore}
+            submitCTA={this.submitStore}
+          />
           <Dashboard
             dashboardReducer={this.props.dashboardReducer}
             dashboardList={this.props.dashboardList}
