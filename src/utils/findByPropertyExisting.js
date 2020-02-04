@@ -29,7 +29,6 @@ export const findByPropertyExisting = (obj, val, inputValue, parent, element)=> 
           }
         }
       }
-      return obj;
     } else if (obj[propertyToFind.id] === parseInt(val) || obj[propertyToFind.id] === val) {
       // Internal Entities Update.
       const oldProperty = getPropertyToMap(obj['MappingFieldType']);
@@ -46,7 +45,6 @@ export const findByPropertyExisting = (obj, val, inputValue, parent, element)=> 
           obj[oldProperty.name2] = inputValue.tertiary;
         }
       }
-      return obj;
     } else if (`iterator-entity-${obj[propertyToFind.id]}` === val) {
       const oldProperty = getPropertyToMap(obj['MappingFieldType']);
       obj['Iterator'][oldProperty.name] = inputValue.secondary;
@@ -58,4 +56,5 @@ export const findByPropertyExisting = (obj, val, inputValue, parent, element)=> 
       findByPropertyExisting(obj[p], val, inputValue, parent, element);
     }
   }
+  return obj;
 };

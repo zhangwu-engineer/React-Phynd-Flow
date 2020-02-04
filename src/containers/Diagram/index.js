@@ -84,13 +84,14 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
   useImperativeHandle(ref, () => ({
     validate: (element, parent, inputValue) => {
       if (parent) {
-        findByPropertyExisting(
+        const modifedObj = findByPropertyExisting(
           source,
           parent.data.parent ? parent.data.parent: parent.data.id,
           inputValue,
           parent,
           element
         );
+        console.log(modifedObj);
         setElements([]);
         setTimeout(() => {
           setElements(generateMapping(source, 1, 1));
