@@ -28,10 +28,8 @@ describe('<Hoc />', () => {
     });
 
     DashboardHOCDefault = hoc(<Dashboard />);
-    LayoutHOC = hoc(<LayoutContainer />);
 
     wrapperDefault = shallow(<DashboardHOCDefault store={store} />);
-    layoutWrapper = shallow(<LayoutHOC store={store} />);
 
     DashboardHOC = hoc(<Dashboard {...dashboardProps} />);
     wrapper = shallow(<DashboardHOC store={store} />);
@@ -40,10 +38,6 @@ describe('<Hoc />', () => {
   it('should render the Dashboard component only when prop is not null', () => {
     expect(wrapperDefault).not.toBe(null);
     expect(wrapper).not.toBe(null);
-  });
-
-  it('should render the LayoutContainer component only when prop is not null', () => {
-    expect(layoutWrapper).not.toBe(null);
   });
 
   it('should render the hoc with router', () => {
