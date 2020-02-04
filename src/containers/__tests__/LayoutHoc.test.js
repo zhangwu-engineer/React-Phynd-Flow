@@ -28,4 +28,8 @@ describe('<Hoc />', () => {
     expect(layoutWrapper).not.toBe(null);
   });
 
+  it('should render the hoc with router', () => {
+    expect(layoutWrapper.find('withRouter(ProvidersHoc)')).toHaveLength(1);
+  });
+
 });
