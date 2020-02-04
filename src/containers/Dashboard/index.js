@@ -99,6 +99,10 @@ const Dashboard = ({
     setExpanded(newExpanded ? panel : false);
   };
 
+  const handleBlockListDialog = () => {
+    setBlockListModalShown(true);
+  }
+
   const handleNewMap = () => {
     setNewMapCount(newMapCount+1);
     const newMap = {};
@@ -116,10 +120,6 @@ const Dashboard = ({
   const handleObjectMapUpdate = payload => {
     dashboardReducer.dashboard[getNameFromID(match.params.module)] = payload;
     updateDashboard(dashboardReducer.dashboard);
-  }
-
-  const handleBlockListDialog = () => {
-    setBlockListModalShown(true);
   }
 
   const handleArrayMapUpdate = (payload, dashboardItem, index) => {
