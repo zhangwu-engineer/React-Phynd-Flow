@@ -122,6 +122,15 @@ const Dashboard = ({
     setBlockListModalShown(true);
   }
 
+  const handleArrayMapUpdate = (payload, dashboardItem, index) => {
+    if (isContactMap) {
+      dashboardReducer.dashboard[getNameFromID(match.params.module)]['AddressMaps'][dashboardItem.addressIndex]['ContactMaps'][index] = payload;
+    } else {
+      dashboardReducer.dashboard[getNameFromID(match.params.module)][getNameFromEntity(match.params.entity)][index] = payload;
+    } 
+    updateDashboard(dashboardReducer.dashboard);
+  }
+
   return (
     <div className={classes.root}>
       <Sidebar data={sidebarData} />
@@ -192,14 +201,7 @@ const Dashboard = ({
                   setActiveParent={setActiveParent}
                   setActiveCard={setActiveCard}
                   setActiveDetails={setActiveDetails}
-                  updateDashboard={(payload) => {
-                    if (isContactMap) {
-                      dashboardReducer.dashboard[getNameFromID(match.params.module)]['AddressMaps'][dashboardItem.addressIndex]['ContactMaps'][index] = payload;
-                    } else {
-                      dashboardReducer.dashboard[getNameFromID(match.params.module)][getNameFromEntity(match.params.entity)][index] = payload;
-                    } 
-                    updateDashboard(dashboardReducer.dashboard);
-                  }}
+                  updateDashboard={(payload) => handleArrayMapUpdate(payload, dashboardItem, index)}
                   handleChange={handleChange}
                 />
               </MuiExpansionPanelDetails>
