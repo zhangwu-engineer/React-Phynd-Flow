@@ -32,7 +32,15 @@ import useStyles from './style';
 
 const refs = [];
 
-const Panel = ({ items, startPoint, panelName, panelIndex, blockedItems, dashboardList, ...props }) => {
+const Panel = ({
+  items,
+  startPoint,
+  panelName,
+  panelIndex,
+  blockedItems,
+  dashboardList,
+  ...props
+}) => {
   const itemsList = items && map(items, (item, index) => {
     const panelInfo = panelIndex ? panelIndex.toString() : '';
     const indexInfo = index ? index.toString() : '';
@@ -63,7 +71,17 @@ const Panel = ({ items, startPoint, panelName, panelIndex, blockedItems, dashboa
   );
 };
 
-const Dashboard = ({ dashboardReducer, dashboardList, fieldsReducer, fieldsList, blockList, isContactMap, match, sidebarData, updateDashboard, updateFields }) => {
+const Dashboard = ({
+  dashboardReducer,
+  dashboardList,
+  fieldsList,
+  blockList,
+  isContactMap,
+  match,
+  sidebarData,
+  updateDashboard,
+  updateFields
+}) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(null);
   const [activePanel, setActivePanel] = React.useState(null);
