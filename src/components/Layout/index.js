@@ -40,7 +40,7 @@ const StyledButton = withStyles({
   },
 })(Button);
 
-const LayoutContainer = ({ children, history, submitCTA, revertCTA }) => {
+const LayoutContainer = ({ children, history, submitCTA, compareCTA, revertCTA }) => {
   const classes = useStyles();
   const { pathname } = history.location;
   const locationParams = pathname && pathname.split('/');
@@ -80,7 +80,7 @@ const LayoutContainer = ({ children, history, submitCTA, revertCTA }) => {
             className={classes.buttonGroup}
           >
             <StyledButton onClick={submitCTA}>Submit</StyledButton>
-            <StyledButton>Compare</StyledButton>
+            <StyledButton onClick={compareCTA}>Compare</StyledButton>
             <StyledButton onClick={revertCTA}>Revert</StyledButton>
           </ButtonGroup>
         </Paper>

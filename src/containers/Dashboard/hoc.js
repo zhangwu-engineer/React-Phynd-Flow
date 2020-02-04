@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import LayoutContainer from 'components/Layout';
+import CompareDialog from 'containers/CompareDialog';
 
 import {
   getFieldsReducer,
@@ -18,6 +19,10 @@ import * as actions from 'actions';
 
 export const hoc = (Dashboard) => {
   class ProvidersHoc extends Component {
+    state = {
+      isCompareModalShown: false,
+    }
+
     constructor(props) {
       super(props);
 
@@ -41,13 +46,20 @@ export const hoc = (Dashboard) => {
       console.log('Submit CTA required');
     }
 
+    compareStore = () => {
+      console.log('Compare CTA required');
+      this.setState({ isCompareModalShown: true });
+    }
+
     render() {
+      const { isCompareModalShown } = this.state;
       return (
         <div>
           <LayoutContainer
             history={this.props.history}
             revertCTA={this.revertStore}
             submitCTA={this.submitStore}
+            compareCTA={this.compareStore}
           />
           <Dashboard
             dashboardReducer={this.props.dashboardReducer}
@@ -60,6 +72,10 @@ export const hoc = (Dashboard) => {
             updateDashboard={this.updateDashboard}
             updateFields={this.updateFields}
             {...this.props}
+          />
+          <CompareDialog
+            isModalShown={isCompareModalShown}
+            hideModal={() => this.setState({ isCompareModalShown: false })}
           />
         </div>
       )
