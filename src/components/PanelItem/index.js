@@ -39,6 +39,7 @@ export default ({ item, panelName, panelIndex, blockedItems, startPoint, index, 
             updateDashboard={payload => {
               const dashboardSource = dashboardList.dashboard;
               dashboardSource[item.item] = payload;
+              item.stashChanges(item.item, payload);
               item.updateDashboard(dashboardSource);
             }}
             triggerModal={(panel, flag, parent) => {

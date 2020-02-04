@@ -131,6 +131,10 @@ const Dashboard = ({
     updateDashboard(dashboardReducer.dashboard);
   }
 
+  const handleStashChanges = (payload, itemName) => {
+    console.log(payload, itemName);
+  }
+
   return (
     <div className={classes.root}>
       <Sidebar data={sidebarData} />
@@ -159,6 +163,7 @@ const Dashboard = ({
                 setActiveParent={setActiveParent}
                 setActiveCard={setActiveCard}
                 setActiveDetails={setActiveDetails}
+                stashChanges={handleStashChanges}
                 updateDashboard={handleObjectMapUpdate}
                 handleChange={handleChange}
               />
@@ -201,6 +206,7 @@ const Dashboard = ({
                   setActiveParent={setActiveParent}
                   setActiveCard={setActiveCard}
                   setActiveDetails={setActiveDetails}
+                  stashChanges={handleStashChanges}
                   updateDashboard={(payload) => handleArrayMapUpdate(payload, dashboardItem, index)}
                   handleChange={handleChange}
                 />
