@@ -113,7 +113,7 @@ const Dashboard = ({
     updateDashboard(dashboardReducer.dashboard);
   }
 
-  const handleDiagramUpdate = payload => {
+  const handleObjectMapUpdate = payload => {
     dashboardReducer.dashboard[getNameFromID(match.params.module)] = payload;
     updateDashboard(dashboardReducer.dashboard);
   }
@@ -159,7 +159,7 @@ const Dashboard = ({
                 setActiveParent={setActiveParent}
                 setActiveCard={setActiveCard}
                 setActiveDetails={setActiveDetails}
-                updateDashboard={handleDiagramUpdate}
+                updateDashboard={handleObjectMapUpdate}
                 handleChange={handleChange}
               />
               <Grid className={classes.addButtonContainer}>
