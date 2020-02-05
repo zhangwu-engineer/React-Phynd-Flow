@@ -9,6 +9,7 @@ import {
   getFieldsReducer,
   getDashboardReducer,
   getFieldsList,
+  getStashesList,
   makeSidebarData,
   makeDashboardList,
   makeBlockList,
@@ -80,6 +81,7 @@ export const hoc = (Dashboard) => {
           />
           <CompareDialog
             isModalShown={isCompareModalShown}
+            stashesList={this.props.stashesList}
             hideModal={() => this.setState({ isCompareModalShown: false })}
           />
         </div>
@@ -107,6 +109,7 @@ export default (Dashboard) => {
     dashboardList: getDashboardList(state, props),
     fieldsReducer: getFieldsReducer(state),
     fieldsList: getFieldsList(state, props),
+    stashesList: getStashesList(state),
     sidebarData: getSidebarData(state, props),
     blockList: getBlockList(state, props),
     isContactMap: isContactMap(state, props),
