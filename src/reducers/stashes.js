@@ -59,7 +59,11 @@ const updateStashesDataRequest = (state, { payload }) => {
 
 const updateStashesDataSuccess = (state, { payload }) => {
   return update(state, {
-    stashes: { $set: [...state.stashes, payload.data] },
+    stashes: {
+      $set: state.stashes.length > 0 ?
+        [...state.stashes, payload.data] :
+        [payload.data]
+    },
     getStashesData: {
       message: { $set: payload.message },
       status: { $set: constants.SUCCESS },
