@@ -80,7 +80,7 @@ const Dashboard = ({
   match,
   sidebarData,
   updateDashboard,
-  updateFields
+  stashData,
 }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(null);
@@ -131,8 +131,14 @@ const Dashboard = ({
     updateDashboard(dashboardReducer.dashboard);
   }
 
-  const handleStashChanges = (payload, itemName, panelIndex) => {
-    console.log(payload, itemName, panelIndex);
+  const handleStashChanges = (itemName, itemContent, panelIndex) => {
+    stashData({
+      itemName,
+      itemContent,
+      panelIndex,
+      module: match.params.module,
+      entity: match.params.entity,
+    });
   }
 
   return (
@@ -163,7 +169,7 @@ const Dashboard = ({
                 setActiveParent={setActiveParent}
                 setActiveCard={setActiveCard}
                 setActiveDetails={setActiveDetails}
-                stashChanges={(payload, itemName) => handleStashChanges(payload, itemName, -1)}
+                stashChanges={(itemName, payload) => handleStashChanges(itemName, payload, -1)}
                 updateDashboard={handleObjectMapUpdate}
                 handleChange={handleChange}
               />
@@ -206,7 +212,7 @@ const Dashboard = ({
                   setActiveParent={setActiveParent}
                   setActiveCard={setActiveCard}
                   setActiveDetails={setActiveDetails}
-                  stashChanges={(payload, itemName) => handleStashChanges(payload, itemName, index)}
+                  stashChanges={(itemName, payload) => handleStashChanges(itemName, payload, index)}
                   updateDashboard={(payload) => handleArrayMapUpdate(payload, dashboardItem, index)}
                   handleChange={handleChange}
                 />
