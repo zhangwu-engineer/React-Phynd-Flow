@@ -18,3 +18,12 @@ export const getFieldsPerEntityFailure = createAction(constants.GET_FIELDS_PER_E
 export const updateFieldsDataRequest = createAction(constants.UPDATE_FIELDS_DATA_REQUEST)
 export const updateFieldsDataSuccess = createAction(constants.UPDATE_FIELDS_DATA_SUCCESS)
 export const updateFieldsDataFailure = createAction(constants.UPDATE_FIELDS_DATA_FAILURE)
+
+export const getStashesDataIdle = createAction(constants.GET_STASHES_DATA_IDLE)
+export const getStashesDataRequest = createAction(constants.GET_STASHES_DATA_REQUEST)
+export const getStashesDataSuccess = createAction(constants.GET_STASHES_DATA_SUCCESS)
+export const getStashesDataFailure = createAction(constants.GET_STASHES_DATA_FAILURE)
+
+export const updateStashesDataRequest = createAction(constants.UPDATE_STASHES_DATA_REQUEST)
+export const updateStashesDataSuccess = createAction(constants.UPDATE_STASHES_DATA_SUCCESS)
+export const updateStashesDataFailure = createAction(constants.UPDATE_STASHES_DATA_FAILURE)
