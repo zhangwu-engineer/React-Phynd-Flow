@@ -3,7 +3,7 @@ import update from 'immutability-helper'
 import * as constants from 'constants/index'
 
 export const initialState = {
-  stashes: [],
+  stashes: null,
 
   getStashesData: {
     message: null,
@@ -60,7 +60,7 @@ const updateStashesDataRequest = (state, { payload }) => {
 const updateStashesDataSuccess = (state, { payload }) => {
   return update(state, {
     stashes: {
-      $set: state.stashes.length > 0 ?
+      $set: state.stashes ?
         [...state.stashes, payload.data] :
         [payload.data]
     },
