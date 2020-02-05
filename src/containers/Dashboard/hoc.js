@@ -38,6 +38,10 @@ export const hoc = (Dashboard) => {
       this.props.updateFieldsDataRequest({ data });
     }
 
+    stashData = data => {
+      this.props.updateStashesDataRequest({ data });
+    }
+
     revertStore = () => {
       console.log('Revert CTA required');
     }
@@ -70,6 +74,7 @@ export const hoc = (Dashboard) => {
             classes={this.props.classes}
             width={this.props.width}
             updateDashboard={this.updateDashboard}
+            stashData={this.stashData}
             updateFields={this.updateFields}
             {...this.props}
           />
@@ -110,6 +115,7 @@ export default (Dashboard) => {
   const mapDispatchToProps = {
     getDashboardDataRequest: actions.getDashboardDataRequest,
     updateDashboardDataRequest: actions.updateDashboardDataRequest,
+    updateStashesDataRequest: actions.updateStashesDataRequest,
     updateFieldsDataRequest: actions.updateFieldsDataRequest,
     getFieldsPerEntityRequest: actions.getFieldsPerEntityRequest,
   }
