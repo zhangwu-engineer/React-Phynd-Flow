@@ -103,9 +103,9 @@ export default (Dashboard) => {
   const getBlockList = makeBlockList();
 
   const mapStateToProps = (state, props) => ({
-    dashboardReducer: getDashboardReducer(state, props),
+    dashboardReducer: getDashboardReducer(state),
     dashboardList: getDashboardList(state, props),
-    fieldsReducer: getFieldsReducer(state, props),
+    fieldsReducer: getFieldsReducer(state),
     fieldsList: getFieldsList(state, props),
     sidebarData: getSidebarData(state, props),
     blockList: getBlockList(state, props),

@@ -2,8 +2,8 @@ import { createSelector } from 'reselect';
 import { map, size } from 'lodash';
 import { getIDFromName, getNameFromID, getNameFromEntity, OBJ_ENTITIES } from 'utils/helper';
 
-export const getFieldsReducer = (state, props) => state.fields;
-export const getDashboardReducer = (state, props) => state.dashboard;
+export const getFieldsReducer = (state) => state.fields;
+export const getDashboardReducer = (state) => state.dashboard;
 
 const getModuleEntity = (state, props) => {
   return {
