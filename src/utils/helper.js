@@ -46,7 +46,7 @@ export const getNameFromEntity = entity => {
     case 'providers': return 'ProviderMaps';
     case 'contacts': return 'ContactMaps';
     case 'age-groups': return 'AgeGroupMaps';
-    default: return 'NoMap';
+    default: return `${entity}`.split('-').map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(' ');
   }
 }
 
