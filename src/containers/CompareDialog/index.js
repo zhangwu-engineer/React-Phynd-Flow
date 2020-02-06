@@ -4,14 +4,27 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Typography from '@material-ui/core/Typography';
+import { List } from 'react-virtualized';
 // style
 import useStyles from './style';
 
-const CompareDialog = ({ isModalShown, hideModal }) => {
+const height = 400;
+const rowHeight = 40;
+const width = 800;
+
+const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
   const classes = useStyles();
   const closeModal = () => {
     hideModal();
   }
+
+  const rowRenderer = ({ index, key, style }) => {
+    return (
+      <div key={key} style={style}>
+        <div>{stashesList[index].itemName}</div>
+      </div>
+    );
+  };
 
   return (
     <Dialog
@@ -25,7 +38,14 @@ const CompareDialog = ({ isModalShown, hideModal }) => {
       </DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <Grid className={classes.tabInputContent} container>
-          
+          <List
+            rowCount={stashesList && stashesList.length}
+            width={width}
+            height={height}
+            rowHeight={rowHeight}
+            rowRenderer={rowRenderer}
+            overscanRowCount={3}
+          />
         </Grid>
       </DialogContent>
     </Dialog>
