@@ -83,22 +83,22 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
             />
             <Column
               className={classes.stashColumn}
-              label="Name" dataKey="itemName"
-              width={150}
-              cellRenderer={cellTextRenderer}
+              label="Index"
+              dataKey="panelIndex"
+              width={60} 
+              cellRenderer={cellNumberRenderer}
             />
             <Column
               className={classes.stashColumn}
-              label="Index"
-              dataKey="panelIndex"
-              width={80} 
-              cellRenderer={cellNumberRenderer}
+              label="Name" dataKey="itemName"
+              width={180}
+              cellRenderer={cellTextRenderer}
             />
             <Column
               className={classes.stashColumn}
               label="Actions"
               dataKey="itemName"
-              width={270}
+              width={260}
               cellRenderer={cellButtonRenderer}
             />
           </Table>
