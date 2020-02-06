@@ -136,8 +136,8 @@ const Dashboard = ({
       itemName,
       itemContent,
       panelIndex,
-      module: match.params.module,
-      entity: match.params.entity,
+      module: getNameFromID(match.params.module),
+      entity: getNameFromEntity(match.params.entity),
     });
   }
 
