@@ -12,7 +12,7 @@ export default makeStyles(theme => ({
     paddingBottom: 40,
   },
   buttonGroup: {
-    paddingTop: 12,
+    paddingTop: 20,
     paddingBottom: 20,
     paddingLeft: 0,
     paddingRight: 0,
@@ -27,8 +27,9 @@ export default makeStyles(theme => ({
   },
   stashTable: {
     fontSize: 16,
+    textAlign: "center",
   },
   stashColumn: {
-    fontSize: 16
+    fontSize: 16,
   }
 }));

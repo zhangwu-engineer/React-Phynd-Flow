@@ -59,14 +59,15 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
           >
             <Column className={classes.stashColumn} label="Module" dataKey="module" width={150} />
             <Column className={classes.stashColumn} label="Entity" dataKey="entity" width={150} />
-            <Column className={classes.stashColumn} label="Name" dataKey="itemName" width={180} />
-            <Column className={classes.stashColumn} label="Index" dataKey="panelIndex" width={60} />
+            <Column className={classes.stashColumn} label="Name" dataKey="itemName" width={150} />
+            <Column className={classes.stashColumn} label="Index" dataKey="panelIndex" width={80} />
             <Column
               className={classes.stashColumn}
               label="Actions"
               dataKey="itemName"
               cellRenderer={cellRenderer}
-              width={260}
+              scrollToAlignment="center"
+              width={270}
             />
           </Table>
         </Grid>
