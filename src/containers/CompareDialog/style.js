@@ -25,4 +25,10 @@ export default makeStyles(theme => ({
   resize: {
     fontSize: 20
   },
+  stashTable: {
+    fontSize: 16,
+  },
+  stashColumn: {
+    fontSize: 16
+  }
 }));

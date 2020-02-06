@@ -11,8 +11,8 @@ import useStyles from './style';
 
 const height = 400;
 const rowHeight = 40;
-const headerHeight = 40;
-const width = 500;
+const headerHeight = 30;
+const width = 800;
 
 const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
   const classes = useStyles();
@@ -26,6 +26,7 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
       onClose={closeModal}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
+      maxWidth="false"
     >
       <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>
         <Typography>Compare</Typography>
@@ -39,10 +40,11 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
             rowHeight={rowHeight}
             rowCount={stashesList && stashesList.length}
             rowGetter={({index}) => stashesList[index]}
+            className={classes.stashTable}
           >
-            <Column label="Module" dataKey="module" width={100} />
-            <Column label="Entity" dataKey="entity" width={200} />
-            <Column label="Name" dataKey="itemName" width={200} />
+            <Column className={classes.stashColumn} label="Module" dataKey="module" width={200} />
+            <Column className={classes.stashColumn}  label="Entity" dataKey="entity" width={200} />
+            <Column className={classes.stashColumn}  label="Name" dataKey="itemName" width={200} />
           </Table>
         </Grid>
       </DialogContent>
