@@ -169,7 +169,7 @@ const Dashboard = ({
                 setActiveParent={setActiveParent}
                 setActiveCard={setActiveCard}
                 setActiveDetails={setActiveDetails}
-                stashChanges={(itemName, payload) => handleStashChanges(itemName, payload, ' ')}
+                stashChanges={(itemName, payload) => handleStashChanges(itemName, payload, -1)}
                 updateDashboard={handleObjectMapUpdate}
                 handleChange={handleChange}
               />

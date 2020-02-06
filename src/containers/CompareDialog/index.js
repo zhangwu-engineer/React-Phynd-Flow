@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Typography from '@material-ui/core/Typography';
 import StyledButton from 'components/StyledButton';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Tooltip from '@material-ui/core/Tooltip';
 import { Column, Table } from 'react-virtualized';
 import 'react-virtualized/styles.css';
 // style
@@ -22,7 +23,7 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
     hideModal();
   }
 
-  const cellRenderer= ({ cellData, rowIndex, dataKey }) => (
+  const cellButtonRenderer= ({ cellData, rowIndex, dataKey }) => (
     <ButtonGroup
       variant="contained"
       size="small"
@@ -34,6 +35,18 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
       <StyledButton>Revert</StyledButton>
     </ButtonGroup>
   )
+
+  const cellTextRenderer= ({ cellData, rowIndex, dataKey }) => (
+      <Tooltip title={cellData} placement="top-end" arrow>
+        <Typography className={classes.stashColumn}>{cellData}</Typography>
+      </Tooltip>
+  )
+
+  const cellNumberRenderer= ({ cellData, rowIndex, dataKey }) => (
+    <Typography className={classes.stashColumn}>
+      { parseFloat(cellData) > -1 ? cellData : '' }
+    </Typography>
+)
 
   return (
     <Dialog
@@ -57,17 +70,36 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
             rowGetter={({index}) => stashesList[index]}
             className={classes.stashTable}
           >
-            <Column className={classes.stashColumn} label="Module" dataKey="module" width={150} />
-            <Column className={classes.stashColumn} label="Entity" dataKey="entity" width={150} />
-            <Column className={classes.stashColumn} label="Name" dataKey="itemName" width={150} />
-            <Column className={classes.stashColumn} label="Index" dataKey="panelIndex" width={80} />
+            <Column
+              label="Module" dataKey="module"
+              width={150}
+              cellRenderer={cellTextRenderer}
+            />
+            <Column
+              className={classes.stashColumn}
+              label="Entity" dataKey="entity"
+              width={150}
+              cellRenderer={cellTextRenderer}
+            />
+            <Column
+              className={classes.stashColumn}
+              label="Name" dataKey="itemName"
+              width={150}
+              cellRenderer={cellTextRenderer}
+            />
+            <Column
+              className={classes.stashColumn}
+              label="Index"
+              dataKey="panelIndex"
+              width={80} 
+              cellRenderer={cellNumberRenderer}
+            />
             <Column
               className={classes.stashColumn}
               label="Actions"
               dataKey="itemName"
-              cellRenderer={cellRenderer}
-              scrollToAlignment="center"
               width={270}
+              cellRenderer={cellButtonRenderer}
             />
           </Table>
         </Grid>
