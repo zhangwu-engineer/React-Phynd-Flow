@@ -2,11 +2,11 @@ import React from 'react'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Button from '@material-ui/core/Button';
+import StyledButton from 'components/StyledButton';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { moduleTabNumber, moduleRouter, a11yProps } from 'utils/helper';
 const useStyles = makeStyles(theme => ({
@@ -24,21 +24,6 @@ const useStyles = makeStyles(theme => ({
     boxShadow: 'none',
   }
 }));
-
-const StyledButton = withStyles({
-  root: {
-    borderRadius: 0,
-    border: 0,
-    color: 'white',
-    height: 34,
-    padding: '0 30px',
-    marginRight: 24,
-  },
-  label: {
-    textTransform: 'capitalize',
-    fontSize: 14,
-  },
-})(Button);
 
 const LayoutContainer = ({ children, history, submitCTA, compareCTA, revertCTA }) => {
   const classes = useStyles();

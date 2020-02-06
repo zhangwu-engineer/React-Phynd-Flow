@@ -1,7 +1,7 @@
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
-export const StyledButton = withStyles({
+export default withStyles({
   root: {
     borderRadius: 0,
     border: 0,
