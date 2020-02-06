@@ -10,8 +10,6 @@ export default makeStyles(theme => ({
   },
   tabInputContent: {
     paddingBottom: 40,
-    minWidth: 300,
-    minHeight: 200,
   },
   buttonGroup: {
     paddingTop: 12,

@@ -4,27 +4,21 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Typography from '@material-ui/core/Typography';
-import { List } from 'react-virtualized';
+import { Column, Table } from 'react-virtualized';
+import 'react-virtualized/styles.css';
 // style
 import useStyles from './style';
 
 const height = 400;
 const rowHeight = 40;
-const width = 800;
+const headerHeight = 40;
+const width = 500;
 
 const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
   const classes = useStyles();
   const closeModal = () => {
     hideModal();
   }
-
-  const rowRenderer = ({ index, key, style }) => {
-    return (
-      <div key={key} style={style}>
-        <div>{stashesList[index].itemName}</div>
-      </div>
-    );
-  };
 
   return (
     <Dialog
@@ -38,14 +32,18 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
       </DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <Grid className={classes.tabInputContent} container>
-          <List
-            rowCount={stashesList && stashesList.length}
+          <Table
             width={width}
             height={height}
+            headerHeight={headerHeight}
             rowHeight={rowHeight}
-            rowRenderer={rowRenderer}
-            overscanRowCount={3}
-          />
+            rowCount={stashesList && stashesList.length}
+            rowGetter={({index}) => stashesList[index]}
+          >
+            <Column label="Module" dataKey="module" width={100} />
+            <Column label="Entity" dataKey="entity" width={200} />
+            <Column label="Name" dataKey="itemName" width={200} />
+          </Table>
         </Grid>
       </DialogContent>
     </Dialog>
