@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { generateInitialSource } from './generateInitialSource';
 import { checkNodeEditable, checkCategoryEditable, isSingleNode } from './checkEditable';
 import { getPropertyToMap } from './getPropertyToMap';
@@ -58,6 +59,23 @@ export const reorder = (list, startIndex, endIndex) => {
   result.splice(endIndex, 0, start);
   return [...result];
 };
+
+// reducer management funciton
+export const addOrReplaceStash = (arr, obj) => {
+  const { module, entity, panelIndex, itemName } = obj;
+  const index = _.findIndex(arr, {
+    module,
+    entity,
+    itemName,
+    panelIndex,
+  });
+  if (index === -1) {
+    arr.push(obj);
+  } else {
+    arr[index] = obj;
+  }
+  return arr;
+} 
 
 // routing helpers
 export const moduleRouter = [

@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions'
 import update from 'immutability-helper'
 import * as constants from 'constants/index'
+import { addOrReplaceStash } from 'utils/helper'
 
 export const initialState = {
   stashes: null,
@@ -61,7 +62,7 @@ const updateStashesDataSuccess = (state, { payload }) => {
   return update(state, {
     stashes: {
       $set: state.stashes ?
-        [...state.stashes, payload.data] :
+        addOrReplaceStash(state.stashes, payload.data) :
         [payload.data]
     },
     getStashesData: {
