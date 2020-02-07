@@ -39,7 +39,7 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
   )
 
   const cellTextRenderer= ({ cellData, rowIndex, dataKey }) => (
-      <Tooltip title={cellData} placement="top-end" arrow>
+      <Tooltip title={cellData} placement="top-end">
         <Typography className={classes.stashColumn}>{getNameFromID(cellData)}</Typography>
       </Tooltip>
   )
@@ -56,7 +56,7 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
       onClose={closeModal}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
-      maxWidth="false"
+      maxWidth={null}
     >
       <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>
         <Typography>Compare</Typography>
