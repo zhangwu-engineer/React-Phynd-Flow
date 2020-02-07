@@ -9,21 +9,8 @@ import Tab from '@material-ui/core/Tab';
 import StyledButton from 'components/StyledButton';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { moduleTabNumber, moduleRouter, a11yProps } from 'utils/helper';
-const useStyles = makeStyles(theme => ({
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
-  toolbar: theme.mixins.toolbar,
-  moduleBar: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    boxShadow: 'none',
-  },
-  buttonGroup: {
-    boxShadow: 'none',
-  }
-}));
+
+import useStyles from './style';
 
 const LayoutContainer = ({ children, history, submitCTA, compareCTA, revertCTA }) => {
   const classes = useStyles();
