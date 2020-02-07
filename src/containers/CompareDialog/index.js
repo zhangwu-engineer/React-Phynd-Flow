@@ -72,7 +72,7 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
             height={height}
             headerHeight={headerHeight}
             rowHeight={rowHeight}
-            rowCount={stashesList && stashesList.length}
+            rowCount={stashesList ? stashesList.length : 0}
             rowGetter={({index}) => stashesList[index]}
             className={classes.stashTable}
           >
