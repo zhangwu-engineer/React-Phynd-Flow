@@ -11,6 +11,8 @@ import { Column, Table } from 'react-virtualized';
 import 'react-virtualized/styles.css';
 // style
 import useStyles from './style';
+//heler
+import { getNameFromID } from 'utils/helper';
 
 const height = 400;
 const rowHeight = 50;
@@ -38,7 +40,7 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
 
   const cellTextRenderer= ({ cellData, rowIndex, dataKey }) => (
       <Tooltip title={cellData} placement="top-end" arrow>
-        <Typography className={classes.stashColumn}>{cellData}</Typography>
+        <Typography className={classes.stashColumn}>{getNameFromID(cellData)}</Typography>
       </Tooltip>
   )
 
