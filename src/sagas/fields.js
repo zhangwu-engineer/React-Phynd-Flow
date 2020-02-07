@@ -10,7 +10,7 @@ function* getFieldsPerEntityRequest({ payload }) {
       ...payload,
     }))
 
-    yield put(actions.getFieldsPerEntitySuccess({ data, message: 'Providers have been fetched' }))
+    yield put(actions.getFieldsPerEntitySuccess({ data, message: 'Fields have been fetched' }))
   } catch (e) {
     console.error(e)
     yield put(actions.getFieldsPerEntityFailure({ message: e.message }))
@@ -20,7 +20,7 @@ function* getFieldsPerEntityRequest({ payload }) {
 function* updateFieldsDataRequest({ payload }) {
   try {
     const data = payload.data;
-    yield put(actions.updateFieldsDataSuccess({ data, message: 'Providers have been fetched' }))
+    yield put(actions.updateFieldsDataSuccess({ data, message: 'Fields have been updated' }))
   } catch (e) {
     console.error(e)
     yield put(actions.updateFieldsDataFailure({ message: e.message }))

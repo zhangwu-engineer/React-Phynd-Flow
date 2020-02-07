@@ -10,7 +10,7 @@ function* getDashboardDataRequest({ payload }) {
       ...payload,
     }))
 
-    yield put(actions.getDashboardDataSuccess({ data, message: 'Providers have been fetched' }))
+    yield put(actions.getDashboardDataSuccess({ data, message: 'Dashboard data have been fetched' }))
   } catch (e) {
     console.error(e)
     yield put(actions.getDashboardDataFailure({ message: e.message }))
@@ -20,7 +20,7 @@ function* getDashboardDataRequest({ payload }) {
 function* updateDashboardDataRequest({ payload }) {
   try {
     const data = payload.data;
-    yield put(actions.updateDashboardDataSuccess({ data, message: 'Providers have been fetched' }))
+    yield put(actions.updateDashboardDataSuccess({ data, message: 'Dashboard data have been fetched' }))
   } catch (e) {
     console.error(e)
     yield put(actions.updateDashboardDataFailure({ message: e.message }))
