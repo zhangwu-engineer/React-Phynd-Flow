@@ -25,6 +25,10 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
     hideModal();
   }
 
+  const submitStash = cellData => {
+    console.log(cellData, 'A stash submission');
+  }
+
   const cellButtonRenderer= ({ cellData, rowIndex, dataKey }) => (
     <ButtonGroup
       variant="contained"
@@ -33,7 +37,7 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
       aria-label="contained primary button group"
       className={classes.buttonGroup}
     >
-      <StyledButton>Submit</StyledButton>
+      <StyledButton onClick={() => submitStash(cellData)}>Submit</StyledButton>
       <StyledButton>Revert</StyledButton>
     </ButtonGroup>
   )
@@ -104,6 +108,7 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
               label="Actions"
               dataKey="itemName"
               width={260}
+              cellDataGetter={({ rowData }) => rowData}
               cellRenderer={cellButtonRenderer}
             />
           </Table>
