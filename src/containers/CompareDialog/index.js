@@ -73,13 +73,15 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
             className={classes.stashTable}
           >
             <Column
-              label="Module" dataKey="module"
+              label="Module"
+              dataKey="module"
               width={150}
               cellRenderer={cellTextRenderer}
             />
             <Column
               className={classes.stashColumn}
-              label="Entity" dataKey="entity"
+              label="Entity"
+              dataKey="entity"
               width={150}
               cellRenderer={cellTextRenderer}
             />
@@ -92,7 +94,8 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
             />
             <Column
               className={classes.stashColumn}
-              label="Name" dataKey="itemName"
+              label="Name"
+              dataKey="itemName"
               width={180}
               cellRenderer={cellTextRenderer}
             />
