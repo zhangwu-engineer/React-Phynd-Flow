@@ -6,7 +6,6 @@ import LayoutContainer from 'components/Layout';
 import CompareDialog from 'containers/CompareDialog';
 
 import {
-  getFieldsReducer,
   getDashboardReducer,
   getFieldsList,
   getStashesList,
@@ -17,6 +16,7 @@ import {
 } from '../../selectors';
 
 import * as actions from 'actions';
+import * as queries from 'api'
 
 export const hoc = (Dashboard) => {
   class ProvidersHoc extends Component {
@@ -29,6 +29,7 @@ export const hoc = (Dashboard) => {
 
       props.getDashboardDataRequest();
       props.getFieldsPerEntityRequest();
+      console.log(queries.getDashboardDataRequest());
     }
 
     updateDashboard = data => {
@@ -69,7 +70,6 @@ export const hoc = (Dashboard) => {
           <Dashboard
             dashboardReducer={this.props.dashboardReducer}
             dashboardList={this.props.dashboardList}
-            fieldsReducer={this.props.fieldsReducer}
             fieldsList={this.props.fieldsList}
             isContactMap={this.props.isContactMap}
             classes={this.props.classes}
@@ -91,7 +91,7 @@ export const hoc = (Dashboard) => {
 
   ProvidersHoc.propTypes = {
     dashboardReducer: PropTypes.object,
-    fieldsReducer: PropTypes.object.isRequired,
+
     fieldsList: PropTypes.array,
     getProvidersRequest: PropTypes.func,
   }
@@ -107,7 +107,6 @@ export default (Dashboard) => {
   const mapStateToProps = (state, props) => ({
     dashboardReducer: getDashboardReducer(state),
     dashboardList: getDashboardList(state, props),
-    fieldsReducer: getFieldsReducer(state),
     fieldsList: getFieldsList(state, props),
     stashesList: getStashesList(state),
     sidebarData: getSidebarData(state, props),
