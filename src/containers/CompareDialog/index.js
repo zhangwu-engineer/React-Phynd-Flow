@@ -50,7 +50,7 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
 
   const cellNumberRenderer= ({ cellData, rowIndex, dataKey }) => (
     <Typography className={classes.stashColumn}>
-      { parseFloat(cellData) > -1 ? cellData : '' }
+      { parseFloat(cellData) > -1 ? cellData+1 : '' }
     </Typography>
 )
 
