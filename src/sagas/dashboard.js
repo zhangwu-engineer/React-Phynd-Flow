@@ -27,7 +27,18 @@ function* updateDashboardDataRequest({ payload }) {
   }
 }
 
+function* submitDashboardDataRequest({ payload }) {
+  try {
+    const data = payload.data;
+    yield put(actions.submitDashboardDataSuccess({ data, message: 'Dashboard data have been submitted' }))
+  } catch (e) {
+    console.error(e)
+    yield put(actions.submitDashboardDataFailure({ message: e.message }))
+  }
+}
+
 export default function* () {
   yield takeEvery(constants.GET_DASHBOARD_DATA_REQUEST, getDashboardDataRequest)
   yield takeEvery(constants.UPDATE_DASHBOARD_DATA_REQUEST, updateDashboardDataRequest)
+  yield takeEvery(constants.SUBMIT_DASHBOARD_DATA_REQUEST, submitDashboardDataRequest)
 }
