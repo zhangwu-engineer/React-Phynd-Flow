@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
 import Typography from '@material-ui/core/Typography';
 import StyledButton from 'components/StyledButton';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -62,10 +63,10 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
       aria-describedby="alert-dialog-description"
       maxWidth={null}
     >
-      <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>
+      <DialogTitle>
         <Typography>Compare</Typography>
       </DialogTitle>
-      <DialogContent className={classes.dialogContent}>
+      <DialogContent className={classes.dialogContent} dividers>
         <Grid className={classes.tabInputContent} container>
           <Table
             width={width}
@@ -114,6 +115,9 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
           </Table>
         </Grid>
       </DialogContent>
+      <DialogActions>
+        <StyledButton variant="contained">Submit All</StyledButton>
+      </DialogActions>
     </Dialog>
   );
 }
