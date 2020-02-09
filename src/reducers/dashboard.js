@@ -1,10 +1,11 @@
 import { handleActions } from 'redux-actions'
 import update from 'immutability-helper'
+import { cloneDeep } from 'lodash';
 import * as constants from 'constants/index'
 
 export const initialState = {
   dashboard: null,
-
+  origin: null,
   getDashboardData: {
     message: null,
     status: constants.IDLE,
@@ -27,6 +28,7 @@ const getDashboardDataRequest = (state, { payload }) => {
 
 const getDashboardDataSuccess = (state, { payload }) => {
   return update(state, {
+    origin: { $set: cloneDeep(payload.data) },
     dashboard: { $set: payload.data },
     getDashboardData: {
       message: { $set: payload.message },
