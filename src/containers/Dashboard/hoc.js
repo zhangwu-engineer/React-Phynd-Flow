@@ -50,6 +50,7 @@ export const hoc = (Dashboard) => {
     submitStore = () => {
       const data = this.props.dashboardReducer.dashboard;
       this.props.submitAllDashboardDataRequest({ data });
+      console.log('Submit CTA required');
     }
 
     compareStore = () => {
@@ -83,6 +84,7 @@ export const hoc = (Dashboard) => {
             isModalShown={isCompareModalShown}
             stashesList={this.props.stashesList}
             hideModal={() => this.setState({ isCompareModalShown: false })}
+            submitCTA={this.submitStore}
           />
         </div>
       )

@@ -20,7 +20,7 @@ const rowHeight = 50;
 const headerHeight = 30;
 const width = 800;
 
-const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
+const CompareDialog = ({ isModalShown, stashesList, hideModal, submitCTA }) => {
   const classes = useStyles();
   const closeModal = () => {
     hideModal();
@@ -115,8 +115,8 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal }) => {
           </Table>
         </Grid>
       </DialogContent>
-      <DialogActions>
-        <StyledButton variant="contained">Submit All</StyledButton>
+      <DialogActions className={classes.dialogActions}>
+        <StyledButton variant="contained" onClick={submitCTA}>Submit All</StyledButton>
       </DialogActions>
     </Dialog>
   );

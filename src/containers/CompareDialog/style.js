@@ -5,6 +5,10 @@ export default makeStyles(theme => ({
     paddingTop: 20,
     paddingBottom: 12,
   },
+  dialogActions: {
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
   tabInputContent: {
     paddingBottom: 40,
   },
