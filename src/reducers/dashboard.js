@@ -106,6 +106,34 @@ const submitAllDashboardDataFailure = (state, { payload }) => update(state, {
   }
 })
 
+const submitOneDashboardDataRequest = (state, { payload }) => {
+  return update(state, {
+    getDashboardData: {
+      status: { $set: constants.LOADING },
+      statusMeta: { $setStatusMeta: constants.LOADING },
+    },
+  })
+}
+
+const submitOneDashboardDataSuccess = (state, { payload }) => {
+  return update(state, {
+    origin: { $set: cloneDeep(payload.data) },
+    getDashboardData: {
+      message: { $set: payload.message },
+      status: { $set: constants.SUCCESS },
+      statusMeta: { $setStatusMeta: constants.SUCCESS },
+    },
+  })
+}
+
+const submitOneDashboardDataFailure = (state, { payload }) => update(state, {
+  getDashboardData: {
+    message: { $set: payload.message },
+    status: { $set: constants.FAILURE },
+    statusMeta: { $setStatusMeta: constants.FAILURE },
+  }
+})
+
 export default handleActions({
   [constants.GET_DASHBOARD_DATA_REQUEST]: getDashboardDataRequest,
   [constants.GET_DASHBOARD_DATA_SUCCESS]: getDashboardDataSuccess,
@@ -117,4 +145,7 @@ export default handleActions({
   [constants.SUBMIT_ALL_DASHBOARD_DATA_REQUEST]: submitAllDashboardDataRequest,
   [constants.SUBMIT_ALL_DASHBOARD_DATA_SUCCESS]: submitAllDashboardDataSuccess,
   [constants.SUBMIT_ALL_DASHBOARD_DATA_FAILURE]: submitAllDashboardDataFailure,
+  [constants.SUBMIT_ONE_DASHBOARD_DATA_REQUEST]: submitOneDashboardDataRequest,
+  [constants.SUBMIT_ONE_DASHBOARD_DATA_SUCCESS]: submitOneDashboardDataSuccess,
+  [constants.SUBMIT_ONE_DASHBOARD_DATA_FAILURE]: submitOneDashboardDataFailure,
 }, initialState)

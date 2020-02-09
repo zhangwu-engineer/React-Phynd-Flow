@@ -20,7 +20,7 @@ function* getDashboardDataRequest({ payload }) {
 function* updateDashboardDataRequest({ payload }) {
   try {
     const data = payload.data;
-    yield put(actions.updateDashboardDataSuccess({ data, message: 'Dashboard data has been fetched' }))
+    yield put(actions.updateDashboardDataSuccess({ data, message: 'Dashboard data has been updated' }))
   } catch (e) {
     console.error(e)
     yield put(actions.updateDashboardDataFailure({ message: e.message }))
@@ -37,8 +37,19 @@ function* submitAllDashboardDataRequest({ payload }) {
   }
 }
 
+function* submitOneDashboardDataRequest({ payload }) {
+  try {
+    const data = payload.data;
+    yield put(actions.submitOneDashboardDataSuccess({ data, message: 'A stash has been submitted' }))
+  } catch (e) {
+    console.error(e)
+    yield put(actions.submitOneDashboardDataFailure({ message: e.message }))
+  }
+}
+
 export default function* () {
   yield takeEvery(constants.GET_DASHBOARD_DATA_REQUEST, getDashboardDataRequest)
   yield takeEvery(constants.UPDATE_DASHBOARD_DATA_REQUEST, updateDashboardDataRequest)
   yield takeEvery(constants.SUBMIT_ALL_DASHBOARD_DATA_REQUEST, submitAllDashboardDataRequest)
+  yield takeEvery(constants.SUBMIT_ONE_DASHBOARD_DATA_REQUEST, submitOneDashboardDataRequest)
 }
