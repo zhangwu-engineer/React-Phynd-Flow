@@ -49,7 +49,7 @@ const getStashesDataIdle = (state, { payload }) => update(state, {
   getStashesData: { $set: initialState.getStashesData },
 })
 
-const updateStashesDataRequest = (state, { payload }) => {
+const addStashesDataRequest = (state, { payload }) => {
   return update(state, {
     getStashesData: {
       status: { $set: constants.LOADING },
@@ -58,7 +58,7 @@ const updateStashesDataRequest = (state, { payload }) => {
   })
 }
 
-const updateStashesDataSuccess = (state, { payload }) => {
+const addStashesDataSuccess = (state, { payload }) => {
   return update(state, {
     stashes: {
       $set: state.stashes ?
@@ -73,7 +73,7 @@ const updateStashesDataSuccess = (state, { payload }) => {
   })
 }
 
-const updateStashesDataFailure = (state, { payload }) => update(state, {
+const addStashesDataFailure = (state, { payload }) => update(state, {
   getStashesData: {
     message: { $set: payload.message },
     status: { $set: constants.FAILURE },
@@ -114,9 +114,9 @@ export default handleActions({
   [constants.GET_STASHES_DATA_SUCCESS]: getStashesDataSuccess,
   [constants.GET_STASHES_DATA_FAILURE]: getStashesDataFailure,
   [constants.GET_STASHES_DATA_IDLE]: getStashesDataIdle,
-  [constants.UPDATE_STASHES_DATA_REQUEST]: updateStashesDataRequest,
-  [constants.UPDATE_STASHES_DATA_SUCCESS]: updateStashesDataSuccess,
-  [constants.UPDATE_STASHES_DATA_FAILURE]: updateStashesDataFailure,
+  [constants.ADD_STASHES_DATA_REQUEST]: addStashesDataRequest,
+  [constants.ADD_STASHES_DATA_SUCCESS]: addStashesDataSuccess,
+  [constants.ADD_STASHES_DATA_FAILURE]: addStashesDataFailure,
   [constants.SET_STASHES_DATA_REQUEST]: setStashesDataRequest,
   [constants.SET_STASHES_DATA_SUCCESS]: setStashesDataSuccess,
   [constants.SET_STASHES_DATA_FAILURE]: setStashesDataFailure,

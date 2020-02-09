@@ -32,9 +32,9 @@ export const getStashesDataRequest = createAction(constants.GET_STASHES_DATA_REQ
 export const getStashesDataSuccess = createAction(constants.GET_STASHES_DATA_SUCCESS)
 export const getStashesDataFailure = createAction(constants.GET_STASHES_DATA_FAILURE)
 
-export const updateStashesDataRequest = createAction(constants.UPDATE_STASHES_DATA_REQUEST)
-export const updateStashesDataSuccess = createAction(constants.UPDATE_STASHES_DATA_SUCCESS)
-export const updateStashesDataFailure = createAction(constants.UPDATE_STASHES_DATA_FAILURE)
+export const addStashesDataRequest = createAction(constants.ADD_STASHES_DATA_REQUEST)
+export const addStashesDataSuccess = createAction(constants.ADD_STASHES_DATA_SUCCESS)
+export const addStashesDataFailure = createAction(constants.ADD_STASHES_DATA_FAILURE)
 
 export const setStashesDataRequest = createAction(constants.SET_STASHES_DATA_REQUEST)
 export const setStashesDataSuccess = createAction(constants.SET_STASHES_DATA_SUCCESS)

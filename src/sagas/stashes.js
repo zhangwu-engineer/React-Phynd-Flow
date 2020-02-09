@@ -17,13 +17,13 @@ function* getStashesDataRequest({ payload }) {
   }
 }
 
-function* updateStashesDataRequest({ payload }) {
+function* addStashesDataRequest({ payload }) {
   try {
     const data = payload.data;
-    yield put(actions.updateStashesDataSuccess({ data, message: 'Stashes have been updated' }))
+    yield put(actions.addStashesDataSuccess({ data, message: 'A new stash has been added' }))
   } catch (e) {
     console.error(e)
-    yield put(actions.updateStashesDataFailure({ message: e.message }))
+    yield put(actions.addStashesDataFailure({ message: e.message }))
   }
 }
 
@@ -40,6 +40,6 @@ function* setStashesDataRequest({ payload }) {
 
 export default function* () {
   yield takeEvery(constants.GET_STASHES_DATA_REQUEST, getStashesDataRequest);
-  yield takeEvery(constants.UPDATE_STASHES_DATA_REQUEST, updateStashesDataRequest);
+  yield takeEvery(constants.ADD_STASHES_DATA_REQUEST, addStashesDataRequest);
   yield takeEvery(constants.SET_STASHES_DATA_REQUEST, setStashesDataRequest);
 }

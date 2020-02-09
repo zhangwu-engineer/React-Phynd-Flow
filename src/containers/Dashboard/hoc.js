@@ -40,7 +40,7 @@ export const hoc = (Dashboard) => {
     }
 
     stashData = data => {
-      this.props.updateStashesDataRequest({ data });
+      this.props.addStashesDataRequest({ data });
     }
 
     revertStore = () => {
@@ -126,7 +126,7 @@ export default (Dashboard) => {
     updateDashboardDataRequest: actions.updateDashboardDataRequest,
     submitAllDashboardDataRequest: actions.submitAllDashboardDataRequest,
     submitOneDashboardDataRequest: actions.submitOneDashboardDataRequest,
-    updateStashesDataRequest: actions.updateStashesDataRequest,
+    addStashesDataRequest: actions.addStashesDataRequest,
     updateFieldsDataRequest: actions.updateFieldsDataRequest,
     getFieldsPerEntityRequest: actions.getFieldsPerEntityRequest,
   }
