@@ -35,3 +35,7 @@ export const getStashesDataFailure = createAction(constants.GET_STASHES_DATA_FAI
 export const updateStashesDataRequest = createAction(constants.UPDATE_STASHES_DATA_REQUEST)
 export const updateStashesDataSuccess = createAction(constants.UPDATE_STASHES_DATA_SUCCESS)
 export const updateStashesDataFailure = createAction(constants.UPDATE_STASHES_DATA_FAILURE)
+
+export const setStashesDataRequest = createAction(constants.SET_STASHES_DATA_REQUEST)
+export const setStashesDataSuccess = createAction(constants.SET_STASHES_DATA_SUCCESS)
+export const setStashesDataFailure = createAction(constants.SET_STASHES_DATA_FAILURE)

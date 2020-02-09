@@ -9,7 +9,6 @@ function* getDashboardDataRequest({ payload }) {
     const data = yield call(queries.getDashboardDataRequest.bind(null, {
       ...payload,
     }))
-
     yield put(actions.getDashboardDataSuccess({ data, message: 'Dashboard data has been fetched' }))
   } catch (e) {
     console.error(e)
@@ -30,6 +29,7 @@ function* updateDashboardDataRequest({ payload }) {
 function* submitAllDashboardDataRequest({ payload }) {
   try {
     const data = payload.data;
+    yield put(actions.setStashesDataSuccess({ data: [], message: 'Stash list should be empty now' }))
     yield put(actions.submitAllDashboardDataSuccess({ data, message: 'Dashboard data has been submitted' }))
   } catch (e) {
     console.error(e)

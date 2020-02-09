@@ -27,8 +27,19 @@ function* updateStashesDataRequest({ payload }) {
   }
 }
 
+function* setStashesDataRequest({ payload }) {
+  try {
+    const data = payload.data;
+    yield put(actions.setStashesDataSuccess({ data, message: 'Stashes have been set' }))
+  } catch (e) {
+    console.error(e)
+    yield put(actions.setStashesDataFailure({ message: e.message }))
+  }
+}
+
 
 export default function* () {
   yield takeEvery(constants.GET_STASHES_DATA_REQUEST, getStashesDataRequest);
   yield takeEvery(constants.UPDATE_STASHES_DATA_REQUEST, updateStashesDataRequest);
+  yield takeEvery(constants.SET_STASHES_DATA_REQUEST, setStashesDataRequest);
 }
