@@ -20,14 +20,14 @@ const rowHeight = 50;
 const headerHeight = 30;
 const width = 800;
 
-const CompareDialog = ({ isModalShown, stashesList, hideModal, submitCTA }) => {
+const CompareDialog = ({ isModalShown, stashesList, hideModal, submitCTA, submitOne }) => {
   const classes = useStyles();
   const closeModal = () => {
     hideModal();
   }
 
   const submitStash = cellData => {
-    console.log(cellData, 'A stash submission');
+    submitOne(cellData);
   }
 
   const cellButtonRenderer= ({ cellData, rowIndex, dataKey }) => (

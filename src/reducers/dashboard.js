@@ -1,7 +1,11 @@
 import { handleActions } from 'redux-actions'
 import update from 'immutability-helper'
-import { cloneDeep } from 'lodash';
+import { cloneDeep, set } from 'lodash';
 import * as constants from 'constants/index'
+import {
+  getNameFromID,
+  getNameFromEntity,
+} from 'utils/helper';
 
 export const initialState = {
   dashboard: null,
@@ -116,8 +120,14 @@ const submitOneDashboardDataRequest = (state, { payload }) => {
 }
 
 const submitOneDashboardDataSuccess = (state, { payload }) => {
+  const originData = cloneDeep(state.origin);
+  let nestedSub = `${getNameFromID(payload.data.module)}.${payload.data.itemName}`;
+  if (payload.data.panelIndex > -1) {
+    nestedSub = `${getNameFromID(payload.data.module)}.${getNameFromEntity(payload.data.entity)}.[${payload.data.panelIndex}].${payload.data.itemName}`;
+  }
+  set(originData, nestedSub, payload.data.itemContent);
   return update(state, {
-    origin: { $set: cloneDeep(payload.data) },
+    origin: { $set: originData },
     getDashboardData: {
       message: { $set: payload.message },
       status: { $set: constants.SUCCESS },
