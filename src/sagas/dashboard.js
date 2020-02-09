@@ -10,7 +10,7 @@ function* getDashboardDataRequest({ payload }) {
       ...payload,
     }))
 
-    yield put(actions.getDashboardDataSuccess({ data, message: 'Dashboard data have been fetched' }))
+    yield put(actions.getDashboardDataSuccess({ data, message: 'Dashboard data has been fetched' }))
   } catch (e) {
     console.error(e)
     yield put(actions.getDashboardDataFailure({ message: e.message }))
@@ -20,25 +20,25 @@ function* getDashboardDataRequest({ payload }) {
 function* updateDashboardDataRequest({ payload }) {
   try {
     const data = payload.data;
-    yield put(actions.updateDashboardDataSuccess({ data, message: 'Dashboard data have been fetched' }))
+    yield put(actions.updateDashboardDataSuccess({ data, message: 'Dashboard data has been fetched' }))
   } catch (e) {
     console.error(e)
     yield put(actions.updateDashboardDataFailure({ message: e.message }))
   }
 }
 
-function* submitDashboardDataRequest({ payload }) {
+function* submitAllDashboardDataRequest({ payload }) {
   try {
     const data = payload.data;
-    yield put(actions.submitDashboardDataSuccess({ data, message: 'Dashboard data have been submitted' }))
+    yield put(actions.submitAllDashboardDataSuccess({ data, message: 'Dashboard data has been submitted' }))
   } catch (e) {
     console.error(e)
-    yield put(actions.submitDashboardDataFailure({ message: e.message }))
+    yield put(actions.submitAllDashboardDataFailure({ message: e.message }))
   }
 }
 
 export default function* () {
   yield takeEvery(constants.GET_DASHBOARD_DATA_REQUEST, getDashboardDataRequest)
   yield takeEvery(constants.UPDATE_DASHBOARD_DATA_REQUEST, updateDashboardDataRequest)
-  yield takeEvery(constants.SUBMIT_DASHBOARD_DATA_REQUEST, submitDashboardDataRequest)
+  yield takeEvery(constants.SUBMIT_ALL_DASHBOARD_DATA_REQUEST, submitAllDashboardDataRequest)
 }

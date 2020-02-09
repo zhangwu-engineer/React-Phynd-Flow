@@ -29,7 +29,6 @@ export const hoc = (Dashboard) => {
 
       props.getDashboardDataRequest();
       props.getFieldsPerEntityRequest();
-      console.log(queries.getDashboardDataRequest());
     }
 
     updateDashboard = data => {
@@ -49,7 +48,8 @@ export const hoc = (Dashboard) => {
     }
 
     submitStore = () => {
-      console.log('Submit CTA required');
+      const data = this.props.dashboardReducer.dashboard;
+      this.props.submitAllDashboardDataRequest({ data });
     }
 
     compareStore = () => {
@@ -117,6 +117,7 @@ export default (Dashboard) => {
   const mapDispatchToProps = {
     getDashboardDataRequest: actions.getDashboardDataRequest,
     updateDashboardDataRequest: actions.updateDashboardDataRequest,
+    submitAllDashboardDataRequest: actions.submitAllDashboardDataRequest,
     updateStashesDataRequest: actions.updateStashesDataRequest,
     updateFieldsDataRequest: actions.updateFieldsDataRequest,
     getFieldsPerEntityRequest: actions.getFieldsPerEntityRequest,
