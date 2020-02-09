@@ -89,7 +89,7 @@ const submitAllDashboardDataRequest = (state, { payload }) => {
 
 const submitAllDashboardDataSuccess = (state, { payload }) => {
   return update(state, {
-    origin: { $set: payload.data },
+    origin: { $set: cloneDeep(payload.data) },
     getDashboardData: {
       message: { $set: payload.message },
       status: { $set: constants.SUCCESS },
