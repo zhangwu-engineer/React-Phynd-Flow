@@ -1,5 +1,6 @@
 import { handleActions } from 'redux-actions'
 import update from 'immutability-helper'
+import { pull } from 'lodash';
 import * as constants from 'constants/index'
 import { addOrReplaceStash } from 'utils/helper'
 
@@ -81,6 +82,36 @@ const addStashesDataFailure = (state, { payload }) => update(state, {
   }
 })
 
+const deleteStashesDataRequest = (state, { payload }) => {
+  return update(state, {
+    getStashesData: {
+      status: { $set: constants.LOADING },
+      statusMeta: { $setStatusMeta: constants.LOADING },
+    },
+  })
+}
+
+const deleteStashesDataSuccess = (state, { payload }) => {
+  return update(state, {
+    stashes: {
+      $set: pull(state.stashes, payload.data)
+    },
+    getStashesData: {
+      message: { $set: payload.message },
+      status: { $set: constants.SUCCESS },
+      statusMeta: { $setStatusMeta: constants.SUCCESS },
+    },
+  })
+}
+
+const deleteStashesDataFailure = (state, { payload }) => update(state, {
+  getStashesData: {
+    message: { $set: payload.message },
+    status: { $set: constants.FAILURE },
+    statusMeta: { $setStatusMeta: constants.FAILURE },
+  }
+})
+
 const setStashesDataRequest = (state, { payload }) => {
   return update(state, {
     getStashesData: {
@@ -117,6 +148,9 @@ export default handleActions({
   [constants.ADD_STASHES_DATA_REQUEST]: addStashesDataRequest,
   [constants.ADD_STASHES_DATA_SUCCESS]: addStashesDataSuccess,
   [constants.ADD_STASHES_DATA_FAILURE]: addStashesDataFailure,
+  [constants.DELETE_STASHES_DATA_REQUEST]: deleteStashesDataRequest,
+  [constants.DELETE_STASHES_DATA_SUCCESS]: deleteStashesDataSuccess,
+  [constants.DELETE_STASHES_DATA_FAILURE]: deleteStashesDataFailure,
   [constants.SET_STASHES_DATA_REQUEST]: setStashesDataRequest,
   [constants.SET_STASHES_DATA_SUCCESS]: setStashesDataSuccess,
   [constants.SET_STASHES_DATA_FAILURE]: setStashesDataFailure,

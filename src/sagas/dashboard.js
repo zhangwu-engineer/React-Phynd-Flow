@@ -40,6 +40,7 @@ function* submitAllDashboardDataRequest({ payload }) {
 function* submitOneDashboardDataRequest({ payload }) {
   try {
     const data = payload.data;
+    yield put(actions.deleteStashesDataSuccess({ data, message: 'A stash has been deleted from stashes list' }))
     yield put(actions.submitOneDashboardDataSuccess({ data, message: 'A stash has been submitted' }))
   } catch (e) {
     console.error(e)
