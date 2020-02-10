@@ -107,3 +107,20 @@ export const DEFAULT_INPUT = {
   secondary: 'N/A',
   tertiary: 'N/A',
 };
+
+// notification format
+export const NOTIFICATION_FORMAT = {
+  title: 'Title',
+  message: 'Message',
+  type: 'success',
+  insert: 'top',
+  container: 'top-right',
+  animationIn: ['animated', 'fadeIn'],
+  animationOut: ['animated', 'fadeOut'],
+  dismiss: {
+    duration: 5000,
+    onScreen: true,
+    showIcon: true,
+    delay: 0
+  }
+};
