@@ -44,7 +44,8 @@ export const hoc = (Dashboard) => {
     }
 
     revertStore = () => {
-      console.log('Revert CTA required');
+      const data = this.props.dashboardReducer.origin;
+      this.props.revertAllDashboardDataRequest({ data });
     }
 
     submitStore = () => {
@@ -126,6 +127,7 @@ export default (Dashboard) => {
     updateDashboardDataRequest: actions.updateDashboardDataRequest,
     submitAllDashboardDataRequest: actions.submitAllDashboardDataRequest,
     submitOneDashboardDataRequest: actions.submitOneDashboardDataRequest,
+    revertAllDashboardDataRequest: actions.revertAllDashboardDataRequest,
     addStashesDataRequest: actions.addStashesDataRequest,
     updateFieldsDataRequest: actions.updateFieldsDataRequest,
     getFieldsPerEntityRequest: actions.getFieldsPerEntityRequest,

@@ -18,6 +18,10 @@ export const submitOneDashboardDataRequest = createAction(constants.SUBMIT_ONE_D
 export const submitOneDashboardDataSuccess = createAction(constants.SUBMIT_ONE_DASHBOARD_DATA_SUCCESS)
 export const submitOneDashboardDataFailure = createAction(constants.SUBMIT_ONE_DASHBOARD_DATA_FAILURE)
 
+export const revertAllDashboardDataRequest = createAction(constants.REVERT_ALL_DASHBOARD_DATA_REQUEST)
+export const revertAllDashboardDataSuccess = createAction(constants.REVERT_ALL_DASHBOARD_DATA_SUCCESS)
+export const revertAllDashboardDataFailure = createAction(constants.REVERT_ALL_DASHBOARD_DATA_FAILURE)
+
 export const getFieldsPerEntityIdle = createAction(constants.GET_FIELDS_PER_ENTITY_IDLE)
 export const getFieldsPerEntityRequest = createAction(constants.GET_FIELDS_PER_ENTITY_REQUEST)
 export const getFieldsPerEntitySuccess = createAction(constants.GET_FIELDS_PER_ENTITY_SUCCESS)

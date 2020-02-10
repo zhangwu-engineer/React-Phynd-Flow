@@ -48,9 +48,21 @@ function* submitOneDashboardDataRequest({ payload }) {
   }
 }
 
+function* revertAllDashboardDataRequest({ payload }) {
+  try {
+    const data = payload.data;
+    yield put(actions.setStashesDataRequest({ data: [], message: 'Stash list should be empty now' }))
+    yield put(actions.revertAllDashboardDataSuccess({ data, message: 'Dashboard data has been submitted' }))
+  } catch (e) {
+    console.error(e)
+    yield put(actions.revertAllDashboardDataFailure({ message: e.message }))
+  }
+}
+
 export default function* () {
   yield takeEvery(constants.GET_DASHBOARD_DATA_REQUEST, getDashboardDataRequest)
   yield takeEvery(constants.UPDATE_DASHBOARD_DATA_REQUEST, updateDashboardDataRequest)
   yield takeEvery(constants.SUBMIT_ALL_DASHBOARD_DATA_REQUEST, submitAllDashboardDataRequest)
   yield takeEvery(constants.SUBMIT_ONE_DASHBOARD_DATA_REQUEST, submitOneDashboardDataRequest)
+  yield takeEvery(constants.REVERT_ALL_DASHBOARD_DATA_REQUEST, revertAllDashboardDataRequest)
 }
