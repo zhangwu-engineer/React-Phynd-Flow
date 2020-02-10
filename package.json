@@ -16,6 +16,7 @@
     "react-dom": "^16.10.2",
     "react-gojs": "^4.5.0",
     "react-icons": "^3.8.0",
+    "react-notifications-component": "^2.3.0",
     "react-scripts": "3.2.0",
     "react-virtualized": "^9.21.2",
     "redux-mock-store": "^1.5.4",
