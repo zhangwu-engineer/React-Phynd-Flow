@@ -27,6 +27,16 @@ function* addStashesDataRequest({ payload }) {
   }
 }
 
+function* deleteStashesDataRequest({ payload }) {
+  try {
+    const data = payload.data;
+    yield put(actions.deleteStashesDataSuccess({ data, message: 'The stash has been deleted' }))
+  } catch (e) {
+    console.error(e)
+    yield put(actions.deleteStashesDataFailure({ message: e.message }))
+  }
+}
+
 function* setStashesDataRequest({ payload }) {
   try {
     const data = payload.data;
@@ -41,5 +51,6 @@ function* setStashesDataRequest({ payload }) {
 export default function* () {
   yield takeEvery(constants.GET_STASHES_DATA_REQUEST, getStashesDataRequest);
   yield takeEvery(constants.ADD_STASHES_DATA_REQUEST, addStashesDataRequest);
+  yield takeEvery(constants.DELETE_STASHES_DATA_REQUEST, deleteStashesDataRequest);
   yield takeEvery(constants.SET_STASHES_DATA_REQUEST, setStashesDataRequest);
 }

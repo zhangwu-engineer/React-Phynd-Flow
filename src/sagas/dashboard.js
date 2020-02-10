@@ -29,7 +29,7 @@ function* updateDashboardDataRequest({ payload }) {
 function* submitAllDashboardDataRequest({ payload }) {
   try {
     const data = payload.data;
-    yield put(actions.setStashesDataSuccess({ data: [], message: 'Stash list should be empty now' }))
+    yield put(actions.setStashesDataRequest({ data: [], message: 'Stash list should be empty now' }))
     yield put(actions.submitAllDashboardDataSuccess({ data, message: 'Dashboard data has been submitted' }))
   } catch (e) {
     console.error(e)
@@ -40,7 +40,7 @@ function* submitAllDashboardDataRequest({ payload }) {
 function* submitOneDashboardDataRequest({ payload }) {
   try {
     const data = payload.data;
-    yield put(actions.deleteStashesDataSuccess({ data, message: 'A stash has been deleted from stashes list' }))
+    yield put(actions.deleteStashesDataRequest({ data, message: 'A stash has been deleted from stashes list' }))
     yield put(actions.submitOneDashboardDataSuccess({ data, message: 'A stash has been submitted' }))
   } catch (e) {
     console.error(e)
