@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import ReactNofitication from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+
 import LayoutContainer from 'components/Layout';
 import CompareDialog from 'containers/CompareDialog';
-
 import {
   getDashboardReducer,
   getFieldsList,
@@ -50,7 +52,7 @@ export const hoc = (Dashboard) => {
     submitStore = () => {
       const data = this.props.dashboardReducer.dashboard;
       this.props.submitAllDashboardDataRequest({ data });
-      console.log('Submit CTA required');
+      
     }
 
     submitOne = (data) => {
@@ -70,6 +72,7 @@ export const hoc = (Dashboard) => {
       const { isCompareModalShown } = this.state;
       return (
         <div>
+          <ReactNofitication />
           <LayoutContainer
             history={this.props.history}
             revertCTA={this.revertStore}
