@@ -16,7 +16,6 @@ import {
 } from '../../selectors';
 
 import * as actions from 'actions';
-import * as queries from 'api'
 
 export const hoc = (Dashboard) => {
   class ProvidersHoc extends Component {
