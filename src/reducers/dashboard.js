@@ -3,8 +3,7 @@ import update from 'immutability-helper'
 import { cloneDeep, set, get } from 'lodash';
 import * as constants from 'constants/index'
 import {
-  getNameFromID,
-  getNameFromEntity,
+  getPathFromPayload,
 } from 'utils/helper';
 
 export const initialState = {
@@ -121,10 +120,7 @@ const submitOneDashboardDataRequest = (state, { payload }) => {
 
 const submitOneDashboardDataSuccess = (state, { payload }) => {
   const originData = cloneDeep(state.origin);
-  let nestedSub = `${getNameFromID(payload.data.module)}.${payload.data.itemName}`;
-  if (payload.data.panelIndex > -1) {
-    nestedSub = `${getNameFromID(payload.data.module)}.${getNameFromEntity(payload.data.entity)}.[${payload.data.panelIndex}].${payload.data.itemName}`;
-  }
+  const nestedSub = getPathFromPayload(payload.data);
   set(originData, nestedSub, payload.data.itemContent);
   return update(state, {
     origin: { $set: originData },
@@ -185,10 +181,7 @@ const revertOneDashboardDataRequest = (state, { payload }) => {
 const revertOneDashboardDataSuccess = (state, { payload }) => {
   const currentDashboard = cloneDeep(state.dashboard);
   const originData = cloneDeep(state.origin);
-  let nestedSub = `${getNameFromID(payload.data.module)}.${payload.data.itemName}`;
-  if (payload.data.panelIndex > -1) {
-    nestedSub = `${getNameFromID(payload.data.module)}.${getNameFromEntity(payload.data.entity)}.[${payload.data.panelIndex}].${payload.data.itemName}`;
-  }
+  const nestedSub = getPathFromPayload(payload.data);
   const dataToRevert = get(originData, nestedSub);
   set(currentDashboard, nestedSub, dataToRevert);
   return update(state, {

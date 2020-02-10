@@ -124,3 +124,13 @@ export const NOTIFICATION_FORMAT = {
     delay: 0
   }
 };
+
+// reducer helper
+
+export const getPathFromPayload = data => {
+  let nestedSub = `${getNameFromID(data.module)}.${data.itemName}`;
+  if (data.panelIndex > -1) {
+    nestedSub = `${getNameFromID(data.module)}.${getNameFromEntity(data.entity)}.[${data.panelIndex}].${data.itemName}`;
+  }
+  return nestedSub
+}
