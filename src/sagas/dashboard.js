@@ -1,7 +1,8 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import * as constants from 'constants/index'
 import * as actions from 'actions'
-
+import { store } from 'react-notifications-component';
+import { NOTIFICATION_FORMAT } from 'utils/helper';
 import * as queries from 'api'
 
 function* getDashboardDataRequest({ payload }) {
@@ -29,8 +30,16 @@ function* updateDashboardDataRequest({ payload }) {
 function* submitAllDashboardDataRequest({ payload }) {
   try {
     const data = payload.data;
+    const message = 'Dashboard data has been submitted';
+
     yield put(actions.setStashesDataRequest({ data: [], message: 'Stash list should be empty now' }))
-    yield put(actions.submitAllDashboardDataSuccess({ data, message: 'Dashboard data has been submitted' }))
+    yield put(actions.submitAllDashboardDataSuccess({ data, message }))
+
+    store.addNotification({
+      ...NOTIFICATION_FORMAT,
+      title: 'SUCCESS',
+      message,
+    })
   } catch (e) {
     console.error(e)
     yield put(actions.submitAllDashboardDataFailure({ message: e.message }))
@@ -40,8 +49,16 @@ function* submitAllDashboardDataRequest({ payload }) {
 function* submitOneDashboardDataRequest({ payload }) {
   try {
     const data = payload.data;
+    const message = 'A stash has been submitted';
+
     yield put(actions.deleteStashesDataRequest({ data, message: 'A stash has been deleted from stashes list' }))
-    yield put(actions.submitOneDashboardDataSuccess({ data, message: 'A stash has been submitted' }))
+    yield put(actions.submitOneDashboardDataSuccess({ data, message }))
+
+    store.addNotification({
+      ...NOTIFICATION_FORMAT,
+      title: 'SUCCESS',
+      message,
+    })
   } catch (e) {
     console.error(e)
     yield put(actions.submitOneDashboardDataFailure({ message: e.message }))
@@ -51,8 +68,16 @@ function* submitOneDashboardDataRequest({ payload }) {
 function* revertAllDashboardDataRequest({ payload }) {
   try {
     const data = payload.data;
+    const message = 'All dashboard data has been reverted';
+
     yield put(actions.setStashesDataRequest({ data: [], message: 'Stash list should be empty now' }))
-    yield put(actions.revertAllDashboardDataSuccess({ data, message: 'All dashboard data has been reverted' }))
+    yield put(actions.revertAllDashboardDataSuccess({ data, message }))
+
+    store.addNotification({
+      ...NOTIFICATION_FORMAT,
+      title: 'SUCCESS',
+      message,
+    })
   } catch (e) {
     console.error(e)
     yield put(actions.revertAllDashboardDataFailure({ message: e.message }))
@@ -62,8 +87,16 @@ function* revertAllDashboardDataRequest({ payload }) {
 function* revertOneDashboardDataRequest({ payload }) {
   try {
     const data = payload.data;
+    const message = 'The stash has been reverted';
+
     yield put(actions.deleteStashesDataRequest({ data, message: 'A stash has been deleted from stashes list' }))
-    yield put(actions.revertOneDashboardDataSuccess({ data, message: 'A stash has been reverted' }))
+    yield put(actions.revertOneDashboardDataSuccess({ data, message }))
+
+    store.addNotification({
+      ...NOTIFICATION_FORMAT,
+      title: 'SUCCESS',
+      message,
+    })
   } catch (e) {
     console.error(e)
     yield put(actions.revertOneDashboardDataFailure({ message: e.message }))
