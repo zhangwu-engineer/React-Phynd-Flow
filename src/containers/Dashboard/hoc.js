@@ -58,6 +58,10 @@ export const hoc = (Dashboard) => {
       this.props.submitOneDashboardDataRequest({ data });
     }
 
+    revertOne = (data) => {
+      this.props.revertOneDashboardDataRequest({ data });
+    }
+
     compareStore = () => {
       console.log('Compare CTA required');
       this.setState({ isCompareModalShown: true });
@@ -91,6 +95,7 @@ export const hoc = (Dashboard) => {
             hideModal={() => this.setState({ isCompareModalShown: false })}
             submitCTA={this.submitStore}
             submitOne={this.submitOne}
+            revertOne={this.revertOne}
           />
         </div>
       )
@@ -128,6 +133,7 @@ export default (Dashboard) => {
     submitAllDashboardDataRequest: actions.submitAllDashboardDataRequest,
     submitOneDashboardDataRequest: actions.submitOneDashboardDataRequest,
     revertAllDashboardDataRequest: actions.revertAllDashboardDataRequest,
+    revertOneDashboardDataRequest: actions.revertOneDashboardDataRequest,
     addStashesDataRequest: actions.addStashesDataRequest,
     updateFieldsDataRequest: actions.updateFieldsDataRequest,
     getFieldsPerEntityRequest: actions.getFieldsPerEntityRequest,

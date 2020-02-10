@@ -22,6 +22,10 @@ export const revertAllDashboardDataRequest = createAction(constants.REVERT_ALL_D
 export const revertAllDashboardDataSuccess = createAction(constants.REVERT_ALL_DASHBOARD_DATA_SUCCESS)
 export const revertAllDashboardDataFailure = createAction(constants.REVERT_ALL_DASHBOARD_DATA_FAILURE)
 
+export const revertOneDashboardDataRequest = createAction(constants.REVERT_ONE_DASHBOARD_DATA_REQUEST)
+export const revertOneDashboardDataSuccess = createAction(constants.REVERT_ONE_DASHBOARD_DATA_SUCCESS)
+export const revertOneDashboardDataFailure = createAction(constants.REVERT_ONE_DASHBOARD_DATA_FAILURE)
+
 export const getFieldsPerEntityIdle = createAction(constants.GET_FIELDS_PER_ENTITY_IDLE)
 export const getFieldsPerEntityRequest = createAction(constants.GET_FIELDS_PER_ENTITY_REQUEST)
 export const getFieldsPerEntitySuccess = createAction(constants.GET_FIELDS_PER_ENTITY_SUCCESS)

@@ -20,7 +20,7 @@ const rowHeight = 50;
 const headerHeight = 30;
 const width = 800;
 
-const CompareDialog = ({ isModalShown, stashesList, hideModal, submitCTA, submitOne }) => {
+const CompareDialog = ({ isModalShown, stashesList, hideModal, submitCTA, submitOne, revertOne }) => {
   const classes = useStyles();
   const closeModal = () => {
     hideModal();
@@ -28,6 +28,10 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal, submitCTA, submit
 
   const submitStash = cellData => {
     submitOne(cellData);
+  }
+
+  const revertStash = cellData => {
+    revertOne(cellData);
   }
 
   const cellButtonRenderer= ({ cellData, rowIndex, dataKey }) => (
@@ -39,7 +43,7 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal, submitCTA, submit
       className={classes.buttonGroup}
     >
       <StyledButton onClick={() => submitStash(cellData)}>Submit</StyledButton>
-      <StyledButton>Revert</StyledButton>
+      <StyledButton onClick={() => revertStash(cellData)}>Revert</StyledButton>
     </ButtonGroup>
   )
 

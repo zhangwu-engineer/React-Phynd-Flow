@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions'
 import update from 'immutability-helper'
-import { cloneDeep, set } from 'lodash';
+import { cloneDeep, set, get } from 'lodash';
 import * as constants from 'constants/index'
 import {
   getNameFromID,
@@ -173,6 +173,42 @@ const revertAllDashboardDataFailure = (state, { payload }) => update(state, {
   }
 })
 
+const revertOneDashboardDataRequest = (state, { payload }) => {
+  return update(state, {
+    getDashboardData: {
+      status: { $set: constants.LOADING },
+      statusMeta: { $setStatusMeta: constants.LOADING },
+    },
+  })
+}
+
+const revertOneDashboardDataSuccess = (state, { payload }) => {
+  const currentDashboard = cloneDeep(state.dashboard);
+  const originData = cloneDeep(state.origin);
+  let nestedSub = `${getNameFromID(payload.data.module)}.${payload.data.itemName}`;
+  if (payload.data.panelIndex > -1) {
+    nestedSub = `${getNameFromID(payload.data.module)}.${getNameFromEntity(payload.data.entity)}.[${payload.data.panelIndex}].${payload.data.itemName}`;
+  }
+  const dataToRevert = get(originData, nestedSub);
+  set(currentDashboard, nestedSub, dataToRevert);
+  return update(state, {
+    dashboard: { $set: currentDashboard },
+    getDashboardData: {
+      message: { $set: payload.message },
+      status: { $set: constants.SUCCESS },
+      statusMeta: { $setStatusMeta: constants.SUCCESS },
+    },
+  })
+}
+
+const revertOneDashboardDataFailure = (state, { payload }) => update(state, {
+  getDashboardData: {
+    message: { $set: payload.message },
+    status: { $set: constants.FAILURE },
+    statusMeta: { $setStatusMeta: constants.FAILURE },
+  }
+})
+
 export default handleActions({
   [constants.GET_DASHBOARD_DATA_REQUEST]: getDashboardDataRequest,
   [constants.GET_DASHBOARD_DATA_SUCCESS]: getDashboardDataSuccess,
@@ -190,4 +226,7 @@ export default handleActions({
   [constants.REVERT_ALL_DASHBOARD_DATA_REQUEST]: revertAllDashboardDataRequest,
   [constants.REVERT_ALL_DASHBOARD_DATA_SUCCESS]: revertAllDashboardDataSuccess,
   [constants.REVERT_ALL_DASHBOARD_DATA_FAILURE]: revertAllDashboardDataFailure,
+  [constants.REVERT_ONE_DASHBOARD_DATA_REQUEST]: revertOneDashboardDataRequest,
+  [constants.REVERT_ONE_DASHBOARD_DATA_SUCCESS]: revertOneDashboardDataSuccess,
+  [constants.REVERT_ONE_DASHBOARD_DATA_FAILURE]: revertOneDashboardDataFailure,
 }, initialState)
