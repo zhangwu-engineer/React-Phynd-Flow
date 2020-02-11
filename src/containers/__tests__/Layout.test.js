@@ -8,12 +8,19 @@ import StyledButton from 'components/StyledButton';
 let layoutComponent;
 const historyMock = { push: jest.fn() };
 const submitCTA = jest.fn();
+const revertCTA = jest.fn();
 
 describe('To test the Layout Component functionality.', () => {
   configure({ adapter: new Adapter() });
 
   beforeEach(() => {
-    layoutComponent = shallow(<Layout history={historyMock} submitCTA={submitCTA} />);
+    layoutComponent = shallow(
+      <Layout
+        history={historyMock}
+        submitCTA={submitCTA}
+        revertCTA={revertCTA}
+      />
+    );
   });
 
   it("renders without crashing", () => {
@@ -34,5 +41,12 @@ describe('To test the Layout Component functionality.', () => {
     submitAllButton.simulate('click');
     expect(submitCTA.mock.calls.length).toEqual(1);
   });
+
+  it("simulate RevertAll button trigger", () => {
+    const revertAllButton = layoutComponent.find(StyledButton).at(2);
+    revertAllButton.simulate('click');
+    expect(revertCTA.mock.calls.length).toEqual(1);
+  });
+
 
 });
