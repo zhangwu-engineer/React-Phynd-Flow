@@ -128,11 +128,14 @@ export const NOTIFICATION_FORMAT = {
 // reducer helper
 
 export const getPathFromPayload = data => {
-  let nestedSub = `${getNameFromID(data.module)}.${data.itemName}`;
+  const itemName = data.itemName === '' ?
+    data.itemName :
+    `.${data.itemName}`;
+  let nestedSub = `${getNameFromID(data.module)}${itemName}`;
   if (data.panelIndex > -1) {
-    nestedSub = `${getNameFromID(data.module)}.${getNameFromEntity(data.entity)}.[${data.panelIndex}].${data.itemName}`;
+    nestedSub = `${getNameFromID(data.module)}.${getNameFromEntity(data.entity)}.[${data.panelIndex}]${itemName}`;
     if (data.module === 'provider-module' && data.entity === 'contacts') {
-      nestedSub = `${getNameFromID(data.module)}.AddressMaps.[${data.addressIndex}].ContactMaps.[${data.contactIndex}].${data.itemName}`;
+      nestedSub = `${getNameFromID(data.module)}.AddressMaps.[${data.addressIndex}].ContactMaps.[${data.contactIndex}]${itemName}`;
     }
   }
   return nestedSub
