@@ -6,7 +6,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import hoc from '../Dashboard/hoc';
 import LayoutContainer from 'components/Layout';
 
-let store, LayoutHOC, layoutWrapper;
+let store, LayoutHOCDefault, layoutWrapperDefault;
 
 describe('<Hoc />', () => {
   configure({ adapter: new Adapter() });
@@ -19,22 +19,21 @@ describe('<Hoc />', () => {
       isLoaded: true,
     });
 
-    LayoutHOC = hoc(<LayoutContainer />);
-    layoutWrapper = shallow(<LayoutHOC store={store} />);
+    LayoutHOCDefault = hoc(<LayoutContainer />);
+    layoutWrapperDefault = shallow(<LayoutHOCDefault store={store} />);
 
   });
 
   it('should render the LayoutContainer component only when prop is not null', () => {
-    expect(layoutWrapper).not.toBe(null);
+    expect(layoutWrapperDefault).not.toBe(null);
   });
 
   it('should render the hoc with router', () => {
-    expect(layoutWrapper.find('withRouter(ProvidersHoc)')).toHaveLength(1);
+    expect(layoutWrapperDefault.find('withRouter(ProvidersHoc)')).toHaveLength(1);
   });
 
   it('should generate default props of Dashboard component correctly', () => {
-    expect(layoutWrapper.find('withRouter(ProvidersHoc)').props().history).not.toBe(null);
-
+    expect(layoutWrapperDefault.find('withRouter(ProvidersHoc)').props().history).not.toBe(null);
   });
 
 });
