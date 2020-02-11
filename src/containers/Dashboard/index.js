@@ -250,11 +250,11 @@ const Dashboard = ({
           activeParent={activeParent}
           currentCard={activeCard}
           setNewElement={(element, inputValue) => {
-            if (refs[activePanel])
+            if (refs[activePanel] && refs[activePanel].current)
               refs[activePanel].current.validateNew(element, activeParent, inputValue);
           }}
           removeElement={() => {
-            if (refs[activePanel])
+            if (refs[activePanel] && refs[activePanel].current)
               refs[activePanel].current.remove();
           }}
         />
@@ -265,7 +265,7 @@ const Dashboard = ({
           currentCard={activeCard}
           currentDetails={activeDetails}
           updateElement={(element, inputValue) => {
-            if (refs[activePanel])
+            if (refs[activePanel] && refs[activePanel].current)
               refs[activePanel].current.validate(element, activeParent, inputValue);
           }}
           removeElement={() => {
@@ -277,7 +277,7 @@ const Dashboard = ({
           isModalShown={isCaseKeyModalShown}
           hideModal={() => setCaseKeyModalShown(false)}
           setNewCase={(inputKeyValue, element, inputValue) => {
-            if (refs[activePanel])
+            if (refs[activePanel] && refs[activePanel].current)
               refs[activePanel].current.validateCaseKey(activeParent, inputKeyValue, element, inputValue);
           }}
         />
@@ -295,7 +295,7 @@ const Dashboard = ({
           isModalShown={isOperationModalShown}
           hideModal={() => setOperationModalShown(false)}
           setNewOperation={(name, field, value) => {
-            if (refs[activePanel])
+            if (refs[activePanel] && refs[activePanel].current)
               refs[activePanel].current.validateOperation(activeParent, name, field, value);
           }}
         />
