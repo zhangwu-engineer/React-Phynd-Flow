@@ -42,12 +42,10 @@ const Panel = ({
   ...props
 }) => {
   const itemsList = items && map(items, (item, index) => {
-    const panelInfo = panelIndex ? panelIndex.toString() : '';
-    const indexInfo = index ? index.toString() : '';
-    refs[panelInfo+indexInfo] = React.createRef();
+    refs[`${panelIndex}${index}`] = React.createRef();
     return {
       item,
-      ref: refs[panelInfo+indexInfo],
+      ref: refs[`${panelIndex}${index}`],
       ...props
     }
   });
