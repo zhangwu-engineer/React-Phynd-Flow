@@ -27,7 +27,6 @@ describe('<Hoc />', () => {
     });
 
     DashboardHOCDefault = hoc(<Dashboard />);
-
     wrapperDefault = shallow(<DashboardHOCDefault store={store} />);
 
     DashboardHOC = hoc(<Dashboard {...dashboardProps} />);

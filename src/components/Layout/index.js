@@ -13,9 +13,10 @@ import useStyles from './style';
 
 const LayoutContainer = ({ children, history, submitCTA, compareCTA, revertCTA }) => {
   const classes = useStyles();
-  const { pathname } = history.location;
+  const { pathname } = (history && history.location) || {};
   const locationParams = pathname && pathname.split('/');
-  const [activeTab, setActiveTab] = React.useState(moduleTabNumber[locationParams[1]]);
+  const tabNumber = locationParams ? moduleTabNumber[locationParams[1]] : 0
+  const [activeTab, setActiveTab] = React.useState(tabNumber);
   
   const handleChange = (event, newTab) => {
     setActiveTab(newTab);
