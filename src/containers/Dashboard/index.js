@@ -115,23 +115,22 @@ const Dashboard = ({
     updateDashboard(dashboardReducer.dashboard);
   }
 
-  const handleObjectMapUpdate = payload => {
-    dashboardReducer.dashboard[getNameFromID(match.params.module)] = payload;
-    updateDashboard(dashboardReducer.dashboard);
-  }
-
-  const handleArrayMapUpdate = (payload, dashboardItem, index) => {
-    if (isContactMap) {
-      dashboardReducer.dashboard[getNameFromID(match.params.module)]['AddressMaps'][dashboardItem.addressIndex]['ContactMaps'][index] = payload;
-    } else {
-      dashboardReducer.dashboard[getNameFromID(match.params.module)][getNameFromEntity(match.params.entity)][index] = payload;
-    } 
-    updateDashboard(dashboardReducer.dashboard);
-  }
-
   const handleStashChanges = (itemName, itemContent, indexData) => {
     const { panelIndex, addressIndex, contactIndex } = indexData;
     stashData({
+      itemName,
+      itemContent,
+      panelIndex,
+      addressIndex,
+      contactIndex,
+      module: match.params.module,
+      entity: match.params.entity,
+    });
+  }
+
+  const handleUpdateDashboard = (itemName, itemContent, indexData) => {
+    const { panelIndex, addressIndex, contactIndex } = indexData;
+    updateDashboard({
       itemName,
       itemContent,
       panelIndex,
@@ -179,7 +178,15 @@ const Dashboard = ({
                     }
                   )
                 }
-                updateDashboard={handleObjectMapUpdate}
+                updateDashboard={(itemName, payload) => 
+                  handleUpdateDashboard(
+                    itemName,
+                    payload,
+                    {
+                      panelIndex: -1,
+                    }
+                  )
+                }
                 handleChange={handleChange}
               />
               <Grid className={classes.addButtonContainer}>
@@ -232,7 +239,17 @@ const Dashboard = ({
                       }
                     )
                   }
-                  updateDashboard={(payload) => handleArrayMapUpdate(payload, dashboardItem, index)}
+                  updateDashboard={(itemName, payload) =>
+                    handleUpdateDashboard(
+                      itemName,
+                      payload,
+                      {
+                        panelIndex: index,
+                        addressIndex: dashboardItem.addressIndex,
+                        contactIndex: dashboardItem.contactIndex,
+                      }
+                    )
+                  }
                   handleChange={handleChange}
                 />
               </MuiExpansionPanelDetails>

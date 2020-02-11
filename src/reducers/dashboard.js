@@ -63,8 +63,11 @@ const updateDashboardDataRequest = (state, { payload }) => {
 }
 
 const updateDashboardDataSuccess = (state, { payload }) => {
+  const currentDashboard = cloneDeep(state.dashboard);
+  const nestedSub = getPathFromPayload(payload.data);
+  set(currentDashboard, nestedSub, payload.data.itemContent);
   return update(state, {
-    dashboard: { $set: payload.data },
+    dashboard: { $set: currentDashboard },
     getDashboardData: {
       message: { $set: payload.message },
       status: { $set: constants.SUCCESS },

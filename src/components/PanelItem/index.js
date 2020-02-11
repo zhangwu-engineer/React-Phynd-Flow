@@ -35,10 +35,8 @@ export default ({ item, panelName, panelIndex, blockedItems, startPoint, index, 
             elementId={`${panelIndex}${index}`}
             source={source}
             updateDiagram={payload => {
-              const dashboardSource = dashboardList.dashboard;
-              dashboardSource[item.item] = payload;
               item.stashChanges(item.item, payload);
-              item.updateDashboard(dashboardSource);
+              item.updateDashboard(item.item, payload);
             }}
             triggerModal={(panel, flag, parent) => {
               item.setCategoryModalShown(flag);
