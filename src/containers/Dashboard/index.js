@@ -116,12 +116,15 @@ const Dashboard = ({
       module: match.params.module,
       entity: match.params.entity,
     });
-    dashboardList.push({
-      dashboard: newMap,
-      startPoint: dashboardList.length
+    updateDashboard({
+      itemName: '',
+      itemContent: newMap,
+      panelIndex: dashboardList.length,
+      addressIndex: -1,
+      contactIndex: -1,
+      module: match.params.module,
+      entity: match.params.entity,
     });
-    dashboardReducer.dashboard[getNameFromID(match.params.module)][getNameFromEntity(match.params.entity)].push(newMap);
-    updateDashboard(dashboardReducer.dashboard);
   }
 
   const handleStashChanges = (itemName, itemContent, indexData) => {
