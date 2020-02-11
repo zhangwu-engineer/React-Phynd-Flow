@@ -129,11 +129,15 @@ const Dashboard = ({
     updateDashboard(dashboardReducer.dashboard);
   }
 
-  const handleStashChanges = (itemName, itemContent, panelIndex) => {
+  const handleStashChanges = (itemName, itemContent, indexData) => {
+    console.log(indexData);
+    const { panelIndex, addressIndex, contactIndex } = indexData;
     stashData({
       itemName,
       itemContent,
       panelIndex,
+      addressIndex,
+      contactIndex,
       module: match.params.module,
       entity: match.params.entity,
     });
@@ -167,7 +171,15 @@ const Dashboard = ({
                 setActiveParent={setActiveParent}
                 setActiveCard={setActiveCard}
                 setActiveDetails={setActiveDetails}
-                stashChanges={(itemName, payload) => handleStashChanges(itemName, payload, -1)}
+                stashChanges={(itemName, payload) => 
+                  handleStashChanges(
+                    itemName,
+                    payload,
+                    {
+                      panelIndex: -1,
+                    }
+                  )
+                }
                 updateDashboard={handleObjectMapUpdate}
                 handleChange={handleChange}
               />
@@ -210,7 +222,17 @@ const Dashboard = ({
                   setActiveParent={setActiveParent}
                   setActiveCard={setActiveCard}
                   setActiveDetails={setActiveDetails}
-                  stashChanges={(itemName, payload) => handleStashChanges(itemName, payload, index)}
+                  stashChanges={(itemName, payload) =>
+                    handleStashChanges(
+                      itemName,
+                      payload,
+                      {
+                        panelIndex: index,
+                        addressIndex: dashboardItem.addressIndex,
+                        contactIndex: dashboardItem.contactIndex,
+                      }
+                    )
+                  }
                   updateDashboard={(payload) => handleArrayMapUpdate(payload, dashboardItem, index)}
                   handleChange={handleChange}
                 />

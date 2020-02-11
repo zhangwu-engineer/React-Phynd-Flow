@@ -131,6 +131,9 @@ export const getPathFromPayload = data => {
   let nestedSub = `${getNameFromID(data.module)}.${data.itemName}`;
   if (data.panelIndex > -1) {
     nestedSub = `${getNameFromID(data.module)}.${getNameFromEntity(data.entity)}.[${data.panelIndex}].${data.itemName}`;
+    if (data.module === 'provider-module' && data.entity === 'contacts') {
+      nestedSub = `${getNameFromID(data.module)}.AddressMaps.[${data.addressIndex}].ContactMaps.[${data.contactIndex}].${data.itemName}`;
+    }
   }
   return nestedSub
 }

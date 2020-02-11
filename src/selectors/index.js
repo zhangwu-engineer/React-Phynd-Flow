@@ -78,14 +78,15 @@ export const makeDashboardList = () => createSelector(
     let startPoint = 0;
     const dashboardListFromReducer = [];
     if (Array.isArray(mapData)) {
-      mapData.forEach((am, index) => {
+      mapData.forEach((am, addressIndex) => {
         if (isContactMapStatus) {
           am.ContactMaps &&
-          am.ContactMaps.forEach(cm => {
+          am.ContactMaps.forEach((cm, contactIndex) => {
             dashboardListFromReducer.push({
               dashboard: cm,
               startPoint,
-              addressIndex: index,
+              addressIndex,
+              contactIndex,
             });
             startPoint += parseInt(size(cm));
           });
@@ -120,7 +121,9 @@ export const makeBlockList = () => createSelector(
         } else {
           iterateData = mapData;
         }
-        for (const md in iterateData) if (!iterateData[md][item]) ++count;
+        for (const md in iterateData) {
+          if (!(iterateData[md] && iterateData[md][item])) ++count;
+        }
         return count;
       };
       blockListFromReducer = fieldsDdata && fieldsDdata.filter((fd) => countBlocked(fd) === mapData.length);
