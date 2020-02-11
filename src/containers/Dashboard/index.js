@@ -107,6 +107,15 @@ const Dashboard = ({
     _.map(fieldsList, function(field) {
       newMap[field] = null;
     });
+    stashData({
+      itemName: '',
+      itemContent: newMap,
+      panelIndex: dashboardList.length,
+      addressIndex: -1,
+      contactIndex: -1,
+      module: match.params.module,
+      entity: match.params.entity,
+    });
     dashboardList.push({
       dashboard: newMap,
       startPoint: dashboardList.length
