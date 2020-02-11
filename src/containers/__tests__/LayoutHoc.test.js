@@ -32,4 +32,9 @@ describe('<Hoc />', () => {
     expect(layoutWrapper.find('withRouter(ProvidersHoc)')).toHaveLength(1);
   });
 
+  it('should generate default props of Dashboard component correctly', () => {
+    expect(layoutWrapper.find('withRouter(ProvidersHoc)').props().history).not.toBe(null);
+
+  });
+
 });
