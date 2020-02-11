@@ -14,8 +14,6 @@ export default ({ item, panelName, panelIndex, blockedItems, startPoint, index, 
   if (!dashboardList.dashboard) return <div />;
   if (blockedItems && blockedItems.indexOf(item.item) > -1) return <div />;
   let source = dashboardList.dashboard[item.item];
-  const panelInfo = panelIndex ? panelIndex.toString() : '';
-  const indexInfo = index ? index.toString() : '';
   return (
     <MuiExpansionPanel
       square key={`${startPoint}-${panelIndex}-${index}`}
@@ -34,7 +32,7 @@ export default ({ item, panelName, panelIndex, blockedItems, startPoint, index, 
           <Diagram
             item={item.item}
             ref={item.ref}
-            elementId={panelInfo+indexInfo}
+            elementId={`${panelIndex}${index}`}
             source={source}
             updateDashboard={payload => {
               const dashboardSource = dashboardList.dashboard;
