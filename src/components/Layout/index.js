@@ -13,7 +13,7 @@ import useStyles from './style';
 
 const LayoutContainer = ({ children, history, submitCTA, compareCTA, revertCTA }) => {
   const classes = useStyles();
-  const { pathname } = history && history.location || {};
+  const { pathname } = (history && history.location) || {};
   const locationParams = pathname && pathname.split('/');
   const tabNumber = locationParams ? moduleTabNumber[locationParams[1]] : 0
   const [activeTab, setActiveTab] = React.useState(tabNumber);
