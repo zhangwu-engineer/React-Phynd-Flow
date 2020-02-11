@@ -7,12 +7,13 @@ import StyledButton from 'components/StyledButton';
 
 let layoutComponent;
 const historyMock = { push: jest.fn() };
+const submitCTA = jest.fn();
 
 describe('To test the Layout Component functionality.', () => {
   configure({ adapter: new Adapter() });
 
   beforeEach(() => {
-    layoutComponent = shallow(<Layout history={historyMock} />);
+    layoutComponent = shallow(<Layout history={historyMock} submitCTA={submitCTA} />);
   });
 
   it("renders without crashing", () => {
@@ -25,8 +26,13 @@ describe('To test the Layout Component functionality.', () => {
   });
 
   it("generates 3 StyledButtons", () => {
-    expect(layoutComponent.find(StyledButton)).toHaveLength(3);
+    expect(layoutComponent.find(StyledButton)).toHaveLength(3);    
   });
 
+  it("simulate SubmitAll button trigger", () => {
+    const submitAllButton = layoutComponent.find(StyledButton).first();
+    submitAllButton.simulate('click');
+    expect(submitCTA.mock.calls.length).toEqual(1);
+  });
 
 });
