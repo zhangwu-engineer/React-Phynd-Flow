@@ -120,7 +120,7 @@ const CompareDialog = ({ isModalShown, stashesList, hideModal, submitCTA, submit
         </Grid>
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
-        <StyledButton variant="contained" onClick={submitCTA}>Submit All</StyledButton>
+        <StyledButton variant="contained" onClick={submitCTA} backgroundColor="#577399">Submit All</StyledButton>
       </DialogActions>
     </Dialog>
   );
