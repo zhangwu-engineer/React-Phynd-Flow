@@ -38,7 +38,7 @@ const stylesheet = [
   }
 ];
 
-const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsModal, triggerCaseKeyModal, updateDashboard, triggerOperationModal }, ref) => {
+const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsModal, triggerCaseKeyModal, updateDiagram, triggerOperationModal }, ref) => {
   const [elements, setElements] = React.useState([]);
 
   useEffect(() => {
@@ -95,9 +95,9 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
         setTimeout(() => {
           setElements(generateMapping(source, 1, 1));
         }, 0);
-        updateDashboard(source);
+        updateDiagram(source);
       } else {
-        updateDashboard(generateInitialSource(element, parent, inputValue));
+        updateDiagram(generateInitialSource(element, parent, inputValue));
       }
     },
     validateNew: (element, parent, inputValue) => {
@@ -113,9 +113,9 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
         setTimeout(() => {
           setElements(generateMapping(source, 1, 1));
         }, 0);
-        updateDashboard(source);
+        updateDiagram(source);
       } else {
-        updateDashboard(generateInitialSource(element, parent, inputValue));
+        updateDiagram(generateInitialSource(element, parent, inputValue));
       }
     },
     validateCaseKey: (parent, inputKeyValue, element, inputValue) => {
@@ -124,7 +124,7 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
       setTimeout(() => {
         setElements(generateMapping(source, 1, 1));
       }, 0);
-      updateDashboard(source);
+      updateDiagram(source);
     },
     validateOperation: (parent, name, field, value) => {
       findByPropertyOperation(source, parent.data.id, name, field, value);
@@ -132,11 +132,11 @@ const Diagram = forwardRef(({ source, elementId, triggerModal, triggerDetailsMod
       setTimeout(() => {
         setElements(generateMapping(source, 1, 1));
       }, 0);
-      updateDashboard(source);
+      updateDiagram(source);
     },
     remove: () => {
       setElements([]);
-      updateDashboard({});
+      updateDiagram({});
     },
   }), [elements]);
 

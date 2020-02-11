@@ -34,7 +34,7 @@ export default ({ item, panelName, panelIndex, blockedItems, startPoint, index, 
             ref={item.ref}
             elementId={`${panelIndex}${index}`}
             source={source}
-            updateDashboard={payload => {
+            updateDiagram={payload => {
               const dashboardSource = dashboardList.dashboard;
               dashboardSource[item.item] = payload;
               item.stashChanges(item.item, payload);
