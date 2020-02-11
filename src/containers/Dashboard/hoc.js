@@ -64,7 +64,6 @@ export const hoc = (Dashboard) => {
     }
 
     compareStore = () => {
-      console.log('Compare CTA required');
       this.setState({ isCompareModalShown: true });
     }
 

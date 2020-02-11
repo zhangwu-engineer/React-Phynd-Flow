@@ -130,7 +130,6 @@ const Dashboard = ({
   }
 
   const handleStashChanges = (itemName, itemContent, indexData) => {
-    console.log(indexData);
     const { panelIndex, addressIndex, contactIndex } = indexData;
     stashData({
       itemName,
