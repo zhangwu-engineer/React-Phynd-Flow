@@ -83,8 +83,6 @@ export const hoc = (Dashboard) => {
             dashboardList={this.props.dashboardList}
             fieldsList={this.props.fieldsList}
             isContactMap={this.props.isContactMap}
-            classes={this.props.classes}
-            width={this.props.width}
             updateDashboard={this.updateDashboard}
             stashData={this.stashData}
             updateFields={this.updateFields}
