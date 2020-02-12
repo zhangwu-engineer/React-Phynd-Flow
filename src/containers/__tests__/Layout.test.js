@@ -2,6 +2,7 @@ import React from 'react';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 import Layout from 'components/Layout';
 import StyledButton from 'components/StyledButton';
@@ -53,6 +54,10 @@ describe('To test the Layout Component functionality.', () => {
       />
     );
     expect(layoutComponent.find(Tabs).prop('value')).toBe(1);
+  });
+
+  it("generates 4 Tabs", () => {
+    expect(layoutComponent.find(Tabs).find(Tab)).toHaveLength(4);    
   });
 
   it("generates 3 StyledButtons", () => {
