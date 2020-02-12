@@ -69,8 +69,6 @@ export const hoc = (WrapperContainer) => {
           submitCTA={this.submitStore}
           submitOne={this.submitOne}
           revertOne={this.revertOne}
-          classes={this.props.classes}
-          width={this.props.width}
           {...this.props}
         />
       )

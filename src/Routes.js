@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
-import WrapperContainer from 'containers/Dashboard/Wrapper'
+import WrapperContainer from 'containers/Dashboard/wrapper'
 import WrapperComponent from 'components/Wrapper'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
