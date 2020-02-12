@@ -10,11 +10,20 @@ describe('<Hoc />', () => {
   configure({ adapter: new Adapter() });
   let store, DashboardHOCDefault, wrapperDefault, DashboardHOC, wrapper;
   const mockFn = jest.fn();
+  let historyMock = { push: new mockFn() };
   const dashboardProps = {
-    getDashboardDataRequest: new mockFn(),
-    updateDashboardDataRequest: new mockFn(),
-    updateFieldsDataRequest: new mockFn(),
-    getFieldsPerEntityRequest: new mockFn(),
+    history: historyMock,
+    dashboardReducer: {},
+    dashboardList: [],
+    fieldsList: [],
+    isContactMap: true,
+    updateDashboard: new mockFn(),
+    updateFields: new mockFn(),
+    stashData: new mockFn(),
+    revertCTA: new mockFn(),
+    submitCTA: new mockFn(),
+    submitOne: new mockFn(),
+    revertOne: new mockFn(),
   };
 
   beforeEach(() => {
