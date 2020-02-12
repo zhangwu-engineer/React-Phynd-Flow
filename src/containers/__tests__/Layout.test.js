@@ -9,6 +9,7 @@ let layoutComponent;
 const historyMock = { push: jest.fn() };
 const submitCTA = jest.fn();
 const revertCTA = jest.fn();
+const compareCTA = jest.fn();
 
 describe('To test the Layout Component functionality.', () => {
   configure({ adapter: new Adapter() });
@@ -19,6 +20,7 @@ describe('To test the Layout Component functionality.', () => {
         history={historyMock}
         submitCTA={submitCTA}
         revertCTA={revertCTA}
+        compareCTA={compareCTA}
       />
     );
   });
@@ -46,6 +48,12 @@ describe('To test the Layout Component functionality.', () => {
     const revertAllButton = layoutComponent.find(StyledButton).at(2);
     revertAllButton.simulate('click');
     expect(revertCTA.mock.calls.length).toEqual(1);
+  });
+
+  it("simulate Compare button trigger", () => {
+    const compareButton = layoutComponent.find(StyledButton).at(1);
+    compareButton.simulate('click');
+    expect(compareCTA.mock.calls.length).toEqual(1);
   });
 
 
