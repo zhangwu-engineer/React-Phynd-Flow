@@ -52,13 +52,12 @@ describe('<Hoc />', () => {
   });
 
   it('should generate default props of wrapper component correctly', () => {
-    expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().dashboardReducer).toBe(undefined);
-    expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().dashboardList).not.toBe(null);
-    expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().filedsReducer).toBe(undefined);
-    expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().fieldsList).toBe(undefined);
-    expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().blockList).toBe(undefined);
-    expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().sidebarData).toStrictEqual({});
-    expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().isContactMap).toStrictEqual(false);
+    expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().dashboardReducer).toBeUndefined();
+    expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().fieldsList).toBeUndefined();
+    expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().stashesList).toBeUndefined();
+    expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().blockList).toBeUndefined();
+    expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().dashboardList).not.toBeUndefined();
+    expect(wrapperDefault.find('withRouter(ProvidersHoc)').props().sidebarData).not.toBeUndefined();
   });
 
 });
