@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import ReactNofitication from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css';
 
-import LayoutContainer from 'components/Layout';
-import CompareDialog from 'containers/CompareDialog';
 import {
   getDashboardReducer,
   getFieldsList,
@@ -19,15 +15,10 @@ import {
 
 import * as actions from 'actions';
 
-export const hoc = (Dashboard) => {
+export const hoc = (WrapperContainer) => {
   class ProvidersHoc extends Component {
-    state = {
-      isCompareModalShown: false,
-    }
-
     constructor(props) {
       super(props);
-
       props.getDashboardDataRequest();
       props.getFieldsPerEntityRequest();
     }
@@ -63,49 +54,31 @@ export const hoc = (Dashboard) => {
       this.props.revertOneDashboardDataRequest({ data });
     }
 
-    compareStore = () => {
-      this.setState({ isCompareModalShown: true });
-    }
-
     render() {
-      const { isCompareModalShown } = this.state;
       return (
-        <div>
-          <ReactNofitication />
-          <LayoutContainer
-            history={this.props.history}
-            revertCTA={this.revertStore}
-            submitCTA={this.submitStore}
-            compareCTA={this.compareStore}
-          />
-          <Dashboard
-            dashboardReducer={this.props.dashboardReducer}
-            dashboardList={this.props.dashboardList}
-            fieldsList={this.props.fieldsList}
-            isContactMap={this.props.isContactMap}
-            classes={this.props.classes}
-            width={this.props.width}
-            updateDashboard={this.updateDashboard}
-            stashData={this.stashData}
-            updateFields={this.updateFields}
-            {...this.props}
-          />
-          <CompareDialog
-            isModalShown={isCompareModalShown}
-            stashesList={this.props.stashesList}
-            hideModal={() => this.setState({ isCompareModalShown: false })}
-            submitCTA={this.submitStore}
-            submitOne={this.submitOne}
-            revertOne={this.revertOne}
-          />
-        </div>
+        <WrapperContainer
+          history={this.props.history}
+          dashboardReducer={this.props.dashboardReducer}
+          dashboardList={this.props.dashboardList}
+          fieldsList={this.props.fieldsList}
+          isContactMap={this.props.isContactMap}
+          updateDashboard={this.updateDashboard}
+          updateFields={this.updateFields}
+          stashData={this.stashData}
+          revertCTA={this.revertStore}
+          submitCTA={this.submitStore}
+          submitOne={this.submitOne}
+          revertOne={this.revertOne}
+          classes={this.props.classes}
+          width={this.props.width}
+          {...this.props}
+        />
       )
     }
   }
 
   ProvidersHoc.propTypes = {
     dashboardReducer: PropTypes.object,
-
     fieldsList: PropTypes.array,
     getProvidersRequest: PropTypes.func,
   }
@@ -113,7 +86,7 @@ export const hoc = (Dashboard) => {
   return withRouter(ProvidersHoc)
 }
 
-export default (Dashboard) => {
+export default (WrapperContainer) => {
   const getSidebarData = makeSidebarData();
   const getDashboardList = makeDashboardList();
   const getBlockList = makeBlockList();
@@ -141,6 +114,6 @@ export default (Dashboard) => {
   }
 
   return connect(mapStateToProps, mapDispatchToProps)(
-    hoc(Dashboard)
+    hoc(WrapperContainer)
   )
 }

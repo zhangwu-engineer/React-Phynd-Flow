@@ -20,11 +20,6 @@ import OperationDialog from 'containers/OperationsDialog';
 import PanelItem from 'components/PanelItem';
 import Sidebar from 'components/Sidebar';
 
-import {
-  getNameFromID,
-  getNameFromEntity,
-} from 'utils/helper';
-import hoc from './hoc';
 
 // style
 import useStyles from './style';
@@ -70,7 +65,6 @@ const Panel = ({
 };
 
 const Dashboard = ({
-  dashboardReducer,
   dashboardList,
   fieldsList,
   blockList,
@@ -352,4 +346,4 @@ const Dashboard = ({
   );
 }
 
-export default hoc(Dashboard);
+export default Dashboard;
