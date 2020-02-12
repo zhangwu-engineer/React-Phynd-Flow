@@ -20,7 +20,6 @@ import OperationDialog from 'containers/OperationsDialog';
 import PanelItem from 'components/PanelItem';
 import Sidebar from 'components/Sidebar';
 
-import hoc from './hoc';
 
 // style
 import useStyles from './style';
@@ -347,4 +346,4 @@ const Dashboard = ({
   );
 }
 
-export default hoc(Dashboard);
+export default Dashboard;
