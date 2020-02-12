@@ -5,6 +5,7 @@ import 'react-notifications-component/dist/theme.css';
 import LayoutContainer from 'components/Layout';
 import Dashboard from 'containers/Dashboard';
 import CompareDialog from 'containers/CompareDialog';
+import hoc from './hoc';
 
 const WrapperContainer = ({
   history,
@@ -18,12 +19,16 @@ const WrapperContainer = ({
   updateFields,
   revertCTA,
   submitCTA,
-  compareCTA,
   submitOne,
   revertOne,
+  ...props
 }) => {
 
   const [isCompareModalShown, setIsCompareModalShown] = React.useState(false);
+
+  const compareStore = () => {
+    setIsCompareModalShown(true);
+  }
 
   return (
     <Fragment>
@@ -32,7 +37,7 @@ const WrapperContainer = ({
         history={history}
         revertCTA={revertCTA}
         submitCTA={submitCTA}
-        compareCTA={compareCTA}
+        compareCTA={compareStore}
       />
       <Dashboard
         dashboardReducer={dashboardReducer}
@@ -42,6 +47,7 @@ const WrapperContainer = ({
         updateDashboard={updateDashboard}
         stashData={stashData}
         updateFields={updateFields}
+        { ...props }
       />
       <CompareDialog
         isModalShown={isCompareModalShown}
@@ -55,4 +61,4 @@ const WrapperContainer = ({
   )
 }
 
-export default WrapperContainer;
+export default hoc(WrapperContainer);
