@@ -6,17 +6,16 @@ import Adapter from 'enzyme-adapter-react-16';
 import hoc from 'containers/Dashboard/hoc';
 import WrapperContainer from 'containers/Dashboard/Wrapper';
 
-let store, DashboardHOCDefault, wrapperDefault, DashboardHOC, wrapper;
-const mockFn = jest.fn();
-const dashboardProps = {
-  getDashboardDataRequest: new mockFn(),
-  updateDashboardDataRequest: new mockFn(),
-  updateFieldsDataRequest: new mockFn(),
-  getFieldsPerEntityRequest: new mockFn(),
-};
-
 describe('<Hoc />', () => {
   configure({ adapter: new Adapter() });
+  let store, DashboardHOCDefault, wrapperDefault, DashboardHOC, wrapper;
+  const mockFn = jest.fn();
+  const dashboardProps = {
+    getDashboardDataRequest: new mockFn(),
+    updateDashboardDataRequest: new mockFn(),
+    updateFieldsDataRequest: new mockFn(),
+    getFieldsPerEntityRequest: new mockFn(),
+  };
 
   beforeEach(() => {
     const mockStore = configureStore();

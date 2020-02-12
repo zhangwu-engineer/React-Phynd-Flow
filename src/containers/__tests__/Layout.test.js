@@ -7,14 +7,13 @@ import Tab from '@material-ui/core/Tab';
 import Layout from 'components/Layout';
 import StyledButton from 'components/StyledButton';
 
-let layoutComponent;
-let historyMock = { push: jest.fn() };
-const submitCTA = jest.fn();
-const revertCTA = jest.fn();
-const compareCTA = jest.fn();
-
 describe('To test the Layout Component functionality.', () => {
   configure({ adapter: new Adapter() });
+  let layoutComponent;
+  let historyMock = { push: jest.fn() };
+  const submitCTA = jest.fn();
+  const revertCTA = jest.fn();
+  const compareCTA = jest.fn();
 
   beforeEach(() => {
     layoutComponent = shallow(
