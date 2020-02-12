@@ -66,7 +66,6 @@ const Panel = ({
 };
 
 const Dashboard = ({
-  dashboardReducer,
   dashboardList,
   fieldsList,
   blockList,
