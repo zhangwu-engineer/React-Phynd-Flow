@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactNofitication from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
 
 import LayoutContainer from 'components/Layout';
 import Dashboard from 'containers/Dashboard';
@@ -25,7 +26,7 @@ const WrapperContainer = ({
   const [isCompareModalShown, setIsCompareModalShown] = React.useState(false);
 
   return (
-    <div>
+    <Fragment>
       <ReactNofitication />
       <LayoutContainer
         history={history}
@@ -50,7 +51,7 @@ const WrapperContainer = ({
         submitOne={submitOne}
         revertOne={revertOne}
       />
-    </div>
+    </Fragment>
   )
 }
 
