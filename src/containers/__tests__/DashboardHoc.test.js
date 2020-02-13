@@ -4,7 +4,7 @@ import configureStore from 'redux-mock-store';
 import Adapter from 'enzyme-adapter-react-16';
 
 import hoc from 'containers/Dashboard/hoc';
-import WrapperContainer from 'containers/Dashboard/Wrapper';
+import WrapperContainer from 'containers/Dashboard/wrapper';
 
 describe('<Hoc />', () => {
   configure({ adapter: new Adapter() });
