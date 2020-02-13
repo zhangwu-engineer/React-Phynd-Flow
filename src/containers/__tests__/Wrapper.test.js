@@ -61,4 +61,11 @@ describe('To test the Wrapper Component functionality.', () => {
     expect(wrapperComponent.find(Dashboard).props().updateFields).toBe(dashboardProps.updateFields);
   });
 
+  it('should transfer props to CompareDialog correctly', () => {
+    expect(wrapperComponent.find(CompareDialog).props().stashesList).toBe(dashboardProps.stashesList);
+    expect(wrapperComponent.find(CompareDialog).props().submitCTA).toBe(dashboardProps.submitCTA);
+    expect(wrapperComponent.find(CompareDialog).props().submitOne).toBe(dashboardProps.submitOne);
+    expect(wrapperComponent.find(CompareDialog).props().revertOne).toBe(dashboardProps.revertOne);
+  });
+
 });
