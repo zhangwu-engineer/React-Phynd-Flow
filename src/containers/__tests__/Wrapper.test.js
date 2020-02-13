@@ -51,6 +51,10 @@ describe('To test the Wrapper Component functionality.', () => {
     expect(wrapperComponent.find(LayoutContainer).props().submitCTA).toBe(dashboardProps.submitCTA);
   });
 
+  it('should have other props in LayoutContainer', () => {
+    expect(wrapperComponent.find(LayoutContainer).props().compareCTA).not.toBeUndefined();
+  });
+
   it('should transfer props to Dashboard component correctly', () => {
     expect(wrapperComponent.find(Dashboard).props().dashboardReducer).toBe(dashboardProps.dashboardReducer);
     expect(wrapperComponent.find(Dashboard).props().dashboardList).toBe(dashboardProps.dashboardList);
