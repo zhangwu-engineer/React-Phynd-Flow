@@ -72,4 +72,9 @@ describe('To test the Wrapper Component functionality.', () => {
     expect(wrapperComponent.find(CompareDialog).props().revertOne).toBe(dashboardProps.revertOne);
   });
 
+  it('should have other props in CompareDialog', () => {
+    expect(wrapperComponent.find(CompareDialog).props().isModalShown).toBe(false);
+    expect(wrapperComponent.find(CompareDialog).props().hideModal).not.toBeUndefined();
+  });
+
 });
