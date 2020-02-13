@@ -3,7 +3,10 @@ import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 import { WrapperContainer } from 'containers/Dashboard/wrapper';
+import LayoutContainer from 'components/Layout';
 import Dashboard from 'containers/Dashboard';
+import CompareDialog from 'containers/CompareDialog';
+import ReactNofitication from 'react-notifications-component';
 
 describe('To test the Wrapper Component functionality.', () => {
   configure({ adapter: new Adapter() });
@@ -33,6 +36,13 @@ describe('To test the Wrapper Component functionality.', () => {
 
   it("renders without crashing", () => {
     expect(wrapperComponent).not.toBe(null);
+  });
+
+  it('should genrate internal components correctly', () => {
+    expect(wrapperComponent.find(ReactNofitication)).toHaveLength(1);
+    expect(wrapperComponent.find(LayoutContainer)).toHaveLength(1);
+    expect(wrapperComponent.find(CompareDialog)).toHaveLength(1);
+    expect(wrapperComponent.find(Dashboard)).toHaveLength(1);
   });
 
   it('should transfer props to Dashboard component correctly', () => {
