@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`To test the Layout Component functionality. renders without crashing 1`] = `undefined`;
+
+exports[`To test the Wrapper Component functionality. renders without crashing 1`] = `undefined`;
