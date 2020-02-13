@@ -45,6 +45,12 @@ describe('To test the Wrapper Component functionality.', () => {
     expect(wrapperComponent.find(Dashboard)).toHaveLength(1);
   });
 
+  it('should transfer props to LayoutContainer correctly', () => {
+    expect(wrapperComponent.find(LayoutContainer).props().history).toBe(dashboardProps.history);
+    expect(wrapperComponent.find(LayoutContainer).props().revertCTA).toBe(dashboardProps.revertCTA);
+    expect(wrapperComponent.find(LayoutContainer).props().submitCTA).toBe(dashboardProps.submitCTA);
+  });
+
   it('should transfer props to Dashboard component correctly', () => {
     expect(wrapperComponent.find(Dashboard).props().dashboardReducer).toBe(dashboardProps.dashboardReducer);
     expect(wrapperComponent.find(Dashboard).props().dashboardList).toBe(dashboardProps.dashboardList);
