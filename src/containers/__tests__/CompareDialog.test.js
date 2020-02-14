@@ -56,9 +56,7 @@ describe('To test the CompareDialog component functionality.', () => {
   it('should generate SubmitAll CTA in DialogActions', () => {
     const findCTA = dialogComponent.find(DialogActions).find(StyledButton);
     expect(findCTA).toHaveLength(1);
-    // const submitAllButton = findCTA.first();
-    // submitAllButton.simulate('click');
-    // expect(dialogProps.submitCTA.mock.calls.length).toEqual(1);
+    expect(findCTA.first().props().onClick).toBe(dialogProps.submitCTA);
   });
 
 });
