@@ -34,4 +34,12 @@ describe('To test the CompareDialog component functionality.', () => {
     expect(dialogComponent.find(Table).props().rowCount).toBe(stashListLength);
   });
 
+  it('should generate others props in Table', () => {
+    expect(dialogComponent.find(Table).props().width).not.toBeUndefined();
+    expect(dialogComponent.find(Table).props().height).not.toBeUndefined();
+    expect(dialogComponent.find(Table).props().headerHeight).not.toBeUndefined();
+    expect(dialogComponent.find(Table).props().rowHeight).not.toBeUndefined();
+    expect(dialogComponent.find(Table).props().rowGetter).not.toBeUndefined();
+  });
+
 });
