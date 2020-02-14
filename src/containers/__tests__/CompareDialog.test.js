@@ -4,6 +4,8 @@ import Adapter from 'enzyme-adapter-react-16';
 
 import CompareDialog from 'containers/CompareDialog';
 import { Column, Table } from 'react-virtualized';
+import DialogActions from '@material-ui/core/DialogActions';
+import StyledButton from 'components/StyledButton';
 
 describe('To test the CompareDialog component functionality.', () => {
   configure({ adapter: new Adapter() });
@@ -49,6 +51,14 @@ describe('To test the CompareDialog component functionality.', () => {
     expect(dialogComponent.find(Table).find(Column).at(2).props().cellRenderer).not.toBeUndefined();
     expect(dialogComponent.find(Table).find(Column).at(3).props().cellRenderer).not.toBeUndefined();
     expect(dialogComponent.find(Table).find(Column).at(4).props().cellRenderer).not.toBeUndefined();
+  });
+
+  it('should generate SubmitAll CTA in DialogActions', () => {
+    const findCTA = dialogComponent.find(DialogActions).find(StyledButton);
+    expect(findCTA).toHaveLength(1);
+    // const submitAllButton = findCTA.first();
+    // submitAllButton.simulate('click');
+    // expect(dialogProps.submitCTA.mock.calls.length).toEqual(1);
   });
 
 });
