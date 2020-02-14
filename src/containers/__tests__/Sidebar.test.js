@@ -6,8 +6,22 @@ import Sidebar from 'components/Sidebar';
 describe('To test the Sidebar Component functionality.', () => {
   configure({ adapter: new Adapter() });
   let sidebarComponent;
+  const match = {
+    params: {
+      module: "provider-module",
+      entity: "provider-details",
+    },
+  }
+  const data = [
+    {
+      name: "Provider Details",
+      link: "provider-details",
+    },
+  ];
+
   const sidebarProps = {
-    data: [],
+    match,
+    data,
   };
 
   beforeEach(() => {
