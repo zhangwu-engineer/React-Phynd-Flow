@@ -2,6 +2,7 @@ import React from 'react';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
+import Dialog from '@material-ui/core/Dialog';
 import CompareDialog from 'containers/CompareDialog';
 import { Column, Table } from 'react-virtualized';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -29,6 +30,10 @@ describe('To test the CompareDialog component functionality.', () => {
 
   it("renders without crashing", () => {
     expect(dialogComponent).not.toBe(null);
+  });
+
+  it('should show Dialog component', () => {
+    expect(dialogComponent.find(Dialog).props().open).toBe(dialogProps.isModalShown);
   });
 
   it('should transfer props to Table correctly', () => {
