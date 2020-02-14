@@ -11,21 +11,21 @@ import ReactNofitication from 'react-notifications-component';
 describe('To test the Wrapper Component functionality.', () => {
   configure({ adapter: new Adapter() });
   let wrapperComponent;
-  const mockFn = jest.fn();
-  let historyMock = { push: new mockFn() };
+
+  let historyMock = { push: jest.fn() };
   const dashboardProps = {
     history: historyMock,
     dashboardReducer: {},
     dashboardList: [],
     fieldsList: [],
     isContactMap: true,
-    updateDashboard: new mockFn(),
-    updateFields: new mockFn(),
-    stashData: new mockFn(),
-    revertCTA: new mockFn(),
-    submitCTA: new mockFn(),
-    submitOne: new mockFn(),
-    revertOne: new mockFn(),
+    updateDashboard: jest.fn(),
+    updateFields: jest.fn(),
+    stashData: jest.fn(),
+    revertCTA: jest.fn(),
+    submitCTA: jest.fn(),
+    submitOne: jest.fn(),
+    revertOne: jest.fn(),
   };
 
   beforeEach(() => {
