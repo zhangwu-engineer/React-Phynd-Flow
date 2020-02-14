@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import useStyles from './style';
 
-const Sidebar = ({ match, data }) => {
+export const Sidebar = ({ match, data }) => {
   const classes = useStyles();
 
   return (
