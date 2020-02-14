@@ -1,26 +1,11 @@
 import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-const drawerWidth = 240;
-const useStyles = makeStyles(theme => ({
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    marginTop: 112,
-    height: `calc(100vh - 112px)`
-  },
-  listItemText: {
-    fontSize: 20,
-  },
-}));
+import useStyles from './style';
 
 const Sidebar = ({ match, data }) => {
   const classes = useStyles();
