@@ -7,7 +7,7 @@ import Dashboard from 'containers/Dashboard';
 import CompareDialog from 'containers/CompareDialog';
 import hoc from './hoc';
 
-const WrapperContainer = ({
+export const WrapperContainer = ({
   history,
   dashboardReducer,
   dashboardList,
