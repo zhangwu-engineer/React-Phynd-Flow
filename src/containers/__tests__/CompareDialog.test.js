@@ -12,14 +12,13 @@ describe('To test the CompareDialog component functionality.', () => {
   configure({ adapter: new Adapter() });
   let dialogComponent;
 
-  const mockFn = jest.fn();
   const dialogProps = {
     isModalShown: true,
     stasjesList: [],
-    hideModal: new mockFn(),
-    submitCTA: new mockFn(),
-    submitOne: new mockFn(),
-    revertOne: new mockFn(),
+    hideModal: jest.fn(),
+    submitCTA: jest.fn(),
+    submitOne: jest.fn(),
+    revertOne: jest.fn(),
   };
 
   beforeEach(() => {
@@ -62,6 +61,8 @@ describe('To test the CompareDialog component functionality.', () => {
     const findCTA = dialogComponent.find(DialogActions).find(StyledButton);
     expect(findCTA).toHaveLength(1);
     expect(findCTA.first().props().onClick).toBe(dialogProps.submitCTA);
+    findCTA.first().simulate('click');
+    expect(dialogProps.submitCTA.mock.calls.length).toEqual(1);
   });
 
 });
