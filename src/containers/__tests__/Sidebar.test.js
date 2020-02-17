@@ -20,6 +20,14 @@ describe('To test the Sidebar Component functionality.', () => {
       name: "Provider Details",
       link: "provider-details",
     },
+    {
+      name: "Addresses",
+      link: "addresses",
+    },
+    {
+      name: "Contacts",
+      link: "contacts",
+    },
   ];
 
   const sidebarProps = {
@@ -40,7 +48,7 @@ describe('To test the Sidebar Component functionality.', () => {
   });
 
   it("renders ListItems with ListItemText", () => {
-    expect(sidebarComponent.find(List).find(ListItem).find(ListItemText)).toHaveLength(1);
+    expect(sidebarComponent.find(List).find(ListItem).find(ListItemText)).toHaveLength(sidebarProps.data.length);
   });
 
 });
