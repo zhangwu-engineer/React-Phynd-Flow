@@ -3,6 +3,7 @@ import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { NodeCard } from 'components/NodeCard';
 import Card from '@material-ui/core/Card';
+import { IconsList } from 'utils/iconsList';
 
 describe('To test the Sidebar Component functionality.', () => {
   configure({ adapter: new Adapter() });
@@ -33,5 +34,11 @@ describe('To test the Sidebar Component functionality.', () => {
     expect(nodeCardComponentActive.find(Card).prop('className')).toMatch(/cardActive/);
     expect(nodeCardComponentInactive.find(Card).prop('className')).toMatch(/cardInactive/);
   });
+
+  it("renders CardIcon without crashing", () => {
+    const CardIcon = IconsList[activeProps.cardName];
+    expect(CardIcon).not.toBeUndefined();
+  });
+  
 
 });
