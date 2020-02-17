@@ -51,4 +51,14 @@ describe('To test the Sidebar Component functionality.', () => {
     expect(sidebarComponent.find(List).find(ListItem).find(ListItemText)).toHaveLength(sidebarProps.data.length);
   });
 
+  it("renders correct menu name", () => {
+    sidebarProps.data.forEach((sidebarItem, index) => {
+      if (sidebarItem.link === sidebarProps.match.params.entity) {
+        expect(sidebarComponent.find(List).find(ListItem).find(ListItemText).get(index).props.primary).toEqual(sidebarItem.name);
+      } else {
+        expect(sidebarComponent.find(List).find(ListItem).find(ListItemText).get(index).props.secondary).toEqual(sidebarItem.name);
+      }
+    });
+  });
+
 });
