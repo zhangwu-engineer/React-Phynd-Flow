@@ -5,14 +5,27 @@ import { NodeCard } from 'components/NodeCard';
 
 describe('To test the Sidebar Component functionality.', () => {
   configure({ adapter: new Adapter() });
-  let nodeCardComponent;
+  let nodeCardComponentActive;
+  let nodeCardComponentInactive;
+
+  const activeProps = {
+    cardName: 'Column',
+    activeCard: 'Column',
+  };
+
+  const inactiveProps = {
+    cardName: 'Column',
+    activeCard: 'Constant',
+  };
 
   beforeEach(() => {
-    nodeCardComponent = shallow(<NodeCard />);
+    nodeCardComponentActive = shallow(<NodeCard {...activeProps} />);
+    nodeCardComponentInactive = shallow(<NodeCard {...inactiveProps} />);
   });
 
   it("renders without crashing", () => {
-    expect(nodeCardComponent).not.toBeUndefined();
+    expect(nodeCardComponentActive).not.toBeUndefined();
+    expect(nodeCardComponentInactive).not.toBeUndefined();
   });
 
 });
