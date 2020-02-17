@@ -2,6 +2,7 @@ import React from 'react';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Sidebar } from 'components/Sidebar';
+import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -41,6 +42,10 @@ describe('To test the Sidebar Component functionality.', () => {
 
   it("renders without crashing", () => {
     expect(sidebarComponent).not.toBeUndefined();
+  });
+
+  it("renders the wrapping Drawer", () => {
+    expect(sidebarComponent.find(Drawer)).toHaveLength(1);
   });
 
   it("renders ListItems according to the data props", () => {
