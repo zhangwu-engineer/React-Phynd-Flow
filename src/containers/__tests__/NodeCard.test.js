@@ -2,6 +2,7 @@ import React from 'react';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { NodeCard } from 'components/NodeCard';
+import Card from '@material-ui/core/Card';
 
 describe('To test the Sidebar Component functionality.', () => {
   configure({ adapter: new Adapter() });
@@ -26,6 +27,11 @@ describe('To test the Sidebar Component functionality.', () => {
   it("renders without crashing", () => {
     expect(nodeCardComponentActive).not.toBeUndefined();
     expect(nodeCardComponentInactive).not.toBeUndefined();
+  });
+
+  it("generates correct class name due to active status", () => {
+    expect(nodeCardComponentActive.find(Card).prop('className')).toMatch(/cardActive/);
+    expect(nodeCardComponentInactive.find(Card).prop('className')).toMatch(/cardInactive/);
   });
 
 });
