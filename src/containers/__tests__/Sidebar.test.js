@@ -55,8 +55,10 @@ describe('To test the Sidebar Component functionality.', () => {
     sidebarProps.data.forEach((sidebarItem, index) => {
       if (sidebarItem.link === sidebarProps.match.params.entity) {
         expect(sidebarComponent.find(List).find(ListItem).find(ListItemText).get(index).props.primary).toEqual(sidebarItem.name);
+        expect(sidebarComponent.find(List).find(ListItem).find(ListItemText).get(index).props.secondary).toBeUndefined();
       } else {
         expect(sidebarComponent.find(List).find(ListItem).find(ListItemText).get(index).props.secondary).toEqual(sidebarItem.name);
+        expect(sidebarComponent.find(List).find(ListItem).find(ListItemText).get(index).props.primary).toBeUndefined();
       }
     });
   });
