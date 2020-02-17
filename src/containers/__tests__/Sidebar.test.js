@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import { Sidebar } from 'components/Sidebar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 describe('To test the Sidebar Component functionality.', () => {
   configure({ adapter: new Adapter() });
@@ -36,6 +37,10 @@ describe('To test the Sidebar Component functionality.', () => {
 
   it("renders ListItems according to the data props", () => {
     expect(sidebarComponent.find(List).find(ListItem)).toHaveLength(sidebarProps.data.length);
+  });
+
+  it("renders ListItems with ListItemText", () => {
+    expect(sidebarComponent.find(List).find(ListItem).find(ListItemText)).toHaveLength(1);
   });
 
 });
