@@ -39,6 +39,11 @@ describe('To test the Sidebar Component functionality.', () => {
     const CardIcon = IconsList[activeProps.cardName];
     expect(CardIcon).not.toBeUndefined();
   });
+
+  it("renders CardIcon inside the component", () => {
+    const CardIcon = IconsList[activeProps.cardName];
+    expect(nodeCardComponentActive.find(CardIcon)).toHaveLength(1);
+  });
   
 
 });
