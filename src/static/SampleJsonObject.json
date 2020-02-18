@@ -5472,7 +5472,7 @@
 			"IsPrimary": null
 		}]
 	},
-	"Epic Outbound Module": {
+	"Epicoutbound Module": {
 		"Kvp Provider": {
 			"SerId_1": {
 				"MappingFieldId": 165545,
