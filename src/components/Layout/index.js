@@ -43,6 +43,7 @@ const LayoutContainer = ({ children, history, submitCTA, compareCTA, revertCTA }
             <Tab label="Location Module" {...a11yProps(1)} />
             <Tab label="Network Module" {...a11yProps(2)} />
             <Tab label="HealthPlan Module" {...a11yProps(3)} />
+            <Tab label="Epic Outbound Module" {...a11yProps(4)} />
           </Tabs>
           <ButtonGroup
             variant="contained"

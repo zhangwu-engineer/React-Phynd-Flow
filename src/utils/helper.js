@@ -82,14 +82,16 @@ export const moduleRouter = [
   '/provider-module/provider-details',
   '/location-module/location-details',
   '/network-module/network-details',
-  '/healthplan-module/healthplan-details'
+  '/healthplan-module/healthplan-details',
+  '/epicoutbound-module/kvpprovider',
 ];
 
 export const moduleTabNumber = {
   'provider-module': 0,
   'location-module': 1,
   'network-module': 2,
-  'healthplan-module': 3
+  'healthplan-module': 3,
+  'epicoutbound-module': 4
 }
 
 export const OBJ_ENTITIES = [
@@ -98,7 +100,8 @@ export const OBJ_ENTITIES = [
   'address',
   'billing-address',
   'payto-address',
-  'schedule'
+  'schedule',
+  'kvpprovider',
 ];
 
 // diagram input
