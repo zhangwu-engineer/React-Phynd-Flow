@@ -300,5 +300,94 @@
 			"IsOpen24Hours",
 			"ScheduleUrl"
 		]
+	},
+	"Epicoutbound Module": {
+		"KvpProvider": [
+			"SerId_1",
+			"Name_2",
+			"ClinicalTitle_5",
+			"ExternalName_10",
+			"DateOfBirth_1360",
+			"IsVerified_6",
+			"StaffResourceType_30",
+			"ActiveStatus_35",
+			"MessageSource_38",
+			"ReferralSourceType_45",
+			"DeficiencyDivision_560",
+			"DefaultDeficiencyTracking_561",
+			"AttendingPrivileges_851",
+			"AttendingRevoked_854",
+			"ProviderDegree_1060",
+			"EncounterProvider_1081",
+			"IsResident_1120",
+			"PrimaryPager_1220",
+			"DefaultAllowRefer_6550",
+			"ResultsType_8114",
+			"MedsAuthorizing_8210",
+			"OrdersAuthorizing_8220",
+			"DefaultSER_26005",
+			"InpatientOrdering_34920",
+			"OutpatientOrdering_34921",
+			"InternalExternal_190",
+			"DataSource_195",
+			"HospitalAffiliation_2911",
+			"DeaNumber_1310",
+			"Gender_1340",
+			"ProviderType_1040",
+			"Upin_1740",
+			"ReportGroup7_2906",
+			"LicenseDisplay_6000",
+			"PreferredCommunicationMethod_8350",
+			"Condition",
+			"Template"
+		],
+		"KvpAddress": [
+			"UniqueId_21000",
+			"Line1_21010",
+			"Line2_21020",
+			"Line3_21030",
+			"City_21040",
+			"State_21050",
+			"Zip_21060",
+			"County_21070",
+			"Country_21080",
+			"IsPrimary_21090",
+			"Phone_21100",
+			"Fax_21110",
+			"FaxVerificationDate_21111",
+			"DirectAddress_21161",
+			"Active_21120",
+			"Email_21130",
+			"ExternalId_21200",
+			"IsShared_21180",
+			"InternalAddress_21185",
+			"SourceOrganization_21170",
+			"Condition",
+			"Iterator"
+		],
+		"KvpLicense": [
+			"LicenseState_2320",
+			"LicenseType_2750",
+			"LicenseNumber_2760",
+			"LicenseExpirationDate_2765",
+			"Condition",
+			"Iterator"
+		],
+		"KvpSpecialty": [
+			"Specialty_1050",
+			"Condition",
+			"Iterator"
+		],
+		"KvpMpi": [
+			"MpiIdType_9300",
+			"MpiId_9301",
+			"Condition",
+			"Iterator"
+		],
+		"KvpItem": [
+			"ItemNumber",
+			"ItemValue",
+			"Condition"
+		]
 	}
 }
