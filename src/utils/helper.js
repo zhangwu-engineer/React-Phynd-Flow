@@ -83,7 +83,7 @@ export const moduleRouter = [
   '/location-module/location-details',
   '/network-module/network-details',
   '/healthplan-module/healthplan-details',
-  '/epicoutbound-module/kvp-provider',
+  '/epic-outbound-module/kvp-provider',
 ];
 
 export const moduleTabNumber = {
