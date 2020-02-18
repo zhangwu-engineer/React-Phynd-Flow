@@ -5471,5 +5471,15 @@
 			},
 			"IsPrimary": null
 		}]
+	},
+	"Epicoutbound Module": {
+		"Kvp Provider": {
+			"SerId_1": {
+				"MappingFieldId": 165545,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column1"
+			}
+		}
 	}
 }
