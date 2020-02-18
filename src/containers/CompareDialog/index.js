@@ -127,7 +127,7 @@ const CompareDialog = ({
         </Grid>
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
-        <StyledButton variant="contained" onClick={submitCTA} backgroundColor="#577399">Submit All</StyledButton>
+        <StyledButton variant="contained" onClick={submitCTA} bgcolor="#577399">Submit All</StyledButton>
       </DialogActions>
     </Dialog>
   );

@@ -9,7 +9,7 @@ export default withStyles({
     height: 34,
     padding: '0 30px',
     marginRight: 24,
-    backgroundColor: (props) => props.backgroundColor,
+    backgroundColor: (props) => props.bgcolor,
   },
   label: {
     textTransform: 'capitalize',
