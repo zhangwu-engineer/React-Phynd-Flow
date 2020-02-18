@@ -6437,6 +6437,25 @@
 				"SerAttributeId": null,
 				"ColumnIdentifier": "column76"
 			}
+		},  {
+			"Specialty_1050": {
+				"MappingFieldId": 165922,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column74"
+			},
+			"Condition": {
+				"MappingFieldId": 165923,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column75"
+			},
+			"Iterator": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
+			}
 		}],
 		"Kvp Mpi": [{
 			"MpiIdType_9300": {
@@ -6490,6 +6509,25 @@
 			}
 		}],
 		"Kvp Item": [{
+			"ItemNumber": {
+				"MappingFieldId": 165922,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column74"
+			},
+			"ItemValue": {
+				"MappingFieldId": 165923,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column75"
+			},
+			"Condition": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
+			}
+		}, {
 			"ItemNumber": {
 				"MappingFieldId": 165922,
 				"MappingFieldType": "Column",
