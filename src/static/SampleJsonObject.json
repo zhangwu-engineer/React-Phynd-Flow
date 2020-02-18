@@ -6058,6 +6058,81 @@
 					"ColumnIdentifier": "column202"
 				}
 			}
-		}
+		},
+		"Kvp License": [{
+			"LicenseState_2320": {
+				"MappingFieldId": 165922,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column74"
+			},
+			"LicenseType_2750": {
+				"MappingFieldId": 165923,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column75"
+			},
+			"LicenseNumber_2760": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
+			},
+			"LicenseExpirationDate_2765": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"Condition": {
+				"MappingFieldId": 165926,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column78"
+			},
+			"Iterator": {
+				"MappingFieldId": 165927,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column79"
+			}
+		}, {
+			"LicenseState_2320": {
+				"MappingFieldId": 165922,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column74"
+			},
+			"LicenseType_2750": {
+				"MappingFieldId": 165923,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column75"
+			},
+			"LicenseNumber_2760": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
+			},
+			"LicenseExpirationDate_2765": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"Condition": {
+				"MappingFieldId": 165926,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column78"
+			},
+			"Iterator": {
+				"MappingFieldId": 165927,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column79"
+			}
+		}]
 	}
 }
