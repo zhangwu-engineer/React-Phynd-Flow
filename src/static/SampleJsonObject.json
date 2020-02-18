@@ -6057,6 +6057,273 @@
 				"ColumnIdentifier": "column202"
 			}
 		},
+		"Kvp Address": [{
+			"UniqueId_21000": {
+				"MappingFieldId": 165922,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column74"
+			},
+			"Line1_21010": {
+				"MappingFieldId": 165923,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column75"
+			},
+			"Line2_21020": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
+			},
+			"Line3_21030": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"City_21040": {
+				"MappingFieldId": 165926,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column78"
+			},
+			"State_21050": {
+				"MappingFieldId": 165927,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column79"
+			},
+			"Zip_21060": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
+			},
+			"County_21070": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"Country_21080": {
+				"MappingFieldId": 165926,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column78"
+			},
+			"IsPrimary_21090": {
+				"MappingFieldId": 165927,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column79"
+			},
+			"Phone_21100": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"Fax_21110": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"FaxVerificationDate_21111": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"DirectAddress_21161": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"Active_21120": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"Email_21130": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"ExternalId_21200": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"IsShared_21180": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"InternalAddress_21185": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"SourceOrganization_21170": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"Condition": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"Iterator": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			}
+		}, {
+			"UniqueId_21000": {
+				"MappingFieldId": 165922,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column74"
+			},
+			"Line1_21010": {
+				"MappingFieldId": 165923,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column75"
+			},
+			"Line2_21020": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
+			},
+			"Line3_21030": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"City_21040": {
+				"MappingFieldId": 165926,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column78"
+			},
+			"State_21050": {
+				"MappingFieldId": 165927,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column79"
+			},
+			"Zip_21060": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
+			},
+			"County_21070": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"Country_21080": {
+				"MappingFieldId": 165926,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column78"
+			},
+			"IsPrimary_21090": {
+				"MappingFieldId": 165927,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column79"
+			},
+			"Phone_21100": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"Fax_21110": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"FaxVerificationDate_21111": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"DirectAddress_21161": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"Active_21120": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"Email_21130": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"ExternalId_21200": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"IsShared_21180": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"InternalAddress_21185": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"SourceOrganization_21170": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"Condition": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			},
+			"Iterator": {
+				"MappingFieldId": 165925,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column77"
+			}
+		}],
 		"Kvp License": [{
 			"LicenseState_2320": {
 				"MappingFieldId": 165922,
@@ -6130,6 +6397,135 @@
 				"MappingFieldType": "Column",
 				"SerAttributeId": null,
 				"ColumnIdentifier": "column79"
+			}
+		}],
+		"Kvp Specialty": [{
+			"Specialty_1050": {
+				"MappingFieldId": 165922,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column74"
+			},
+			"Condition": {
+				"MappingFieldId": 165923,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column75"
+			},
+			"Iterator": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
+			}
+		}, {
+			"Specialty_1050": {
+				"MappingFieldId": 165922,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column74"
+			},
+			"Condition": {
+				"MappingFieldId": 165923,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column75"
+			},
+			"Iterator": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
+			}
+		}],
+		"Kvp Mpi": [{
+			"MpiIdType_9300": {
+				"MappingFieldId": 165922,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column74"
+			},
+			"MpiId_9301": {
+				"MappingFieldId": 165923,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column75"
+			},
+			"Condition": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
+			},
+			"Iterator": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
+			}
+		}, {
+			"MpiIdType_9300": {
+				"MappingFieldId": 165922,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column74"
+			},
+			"MpiId_9301": {
+				"MappingFieldId": 165923,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column75"
+			},
+			"Condition": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
+			},
+			"Iterator": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
+			}
+		}],
+		"Kvp Item": [{
+			"ItemNumber": {
+				"MappingFieldId": 165922,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column74"
+			},
+			"ItemValue": {
+				"MappingFieldId": 165923,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column75"
+			},
+			"Condition": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
+			}
+		}, {
+			"ItemNumber": {
+				"MappingFieldId": 165922,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column74"
+			},
+			"ItemValue": {
+				"MappingFieldId": 165923,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column75"
+			},
+			"Condition": {
+				"MappingFieldId": 165924,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column76"
 			}
 		}]
 	}
