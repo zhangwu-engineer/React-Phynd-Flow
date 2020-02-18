@@ -5472,7 +5472,7 @@
 			"IsPrimary": null
 		}]
 	},
-	"Epicoutbound Module": {
+	"Epic Outbound Module": {
 		"SerId_1": {
 			"MappingFieldId": 165545,
 			"MappingFieldType": "Column",

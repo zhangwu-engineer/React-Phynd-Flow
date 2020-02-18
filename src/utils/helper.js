@@ -83,7 +83,7 @@ export const moduleRouter = [
   '/location-module/location-details',
   '/network-module/network-details',
   '/healthplan-module/healthplan-details',
-  '/epicoutbound-module/kvp-provider',
+  '/epic-outbound-module/kvp-provider',
 ];
 
 export const moduleTabNumber = {
@@ -91,7 +91,7 @@ export const moduleTabNumber = {
   'location-module': 1,
   'network-module': 2,
   'healthplan-module': 3,
-  'epicoutbound-module': 4
+  'epic-outbound-module': 4
 }
 
 export const OBJ_ENTITIES = [
