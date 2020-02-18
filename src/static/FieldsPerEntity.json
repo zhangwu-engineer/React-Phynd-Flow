@@ -302,7 +302,7 @@
 		]
 	},
 	"Epicoutbound Module": {
-		"KvpProvider": [
+		"Kvp Provider": [
 			"SerId_1",
 			"Name_2",
 			"ClinicalTitle_5",
@@ -341,7 +341,7 @@
 			"Condition",
 			"Template"
 		],
-		"KvpAddress": [
+		"Kvp Address": [
 			"UniqueId_21000",
 			"Line1_21010",
 			"Line2_21020",
@@ -365,7 +365,7 @@
 			"Condition",
 			"Iterator"
 		],
-		"KvpLicense": [
+		"Kvp License": [
 			"LicenseState_2320",
 			"LicenseType_2750",
 			"LicenseNumber_2760",
@@ -373,18 +373,18 @@
 			"Condition",
 			"Iterator"
 		],
-		"KvpSpecialty": [
+		"Kvp Specialty": [
 			"Specialty_1050",
 			"Condition",
 			"Iterator"
 		],
-		"KvpMpi": [
+		"Kvp Mpi": [
 			"MpiIdType_9300",
 			"MpiId_9301",
 			"Condition",
 			"Iterator"
 		],
-		"KvpItem": [
+		"Kvp Item": [
 			"ItemNumber",
 			"ItemValue",
 			"Condition"
