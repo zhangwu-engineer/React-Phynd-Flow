@@ -101,7 +101,7 @@ export const OBJ_ENTITIES = [
   'billing-address',
   'payto-address',
   'schedule',
-  'kvpprovider',
+  'kvp-provider',
 ];
 
 // diagram input
