@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import StyledButton from 'components/StyledButton';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Tooltip from '@material-ui/core/Tooltip';
+import { useConfirm } from 'material-ui-confirm';
 import { Column, Table } from 'react-virtualized';
 import 'react-virtualized/styles.css';
 // style
@@ -29,16 +30,23 @@ const CompareDialog = ({
   revertOne,
 }) => {
   const classes = useStyles();
+  const confirm = useConfirm();
   const closeModal = () => {
     hideModal();
   }
 
   const submitStash = cellData => {
-    submitOne(cellData);
+    confirm({ description: 'The change will be submitted!' })
+      .then(() => {
+        submitOne(cellData);
+      });
   }
 
   const revertStash = cellData => {
-    revertOne(cellData);
+    confirm({ description: 'The change will be reverted!' })
+      .then(() => {
+        revertOne(cellData);
+      });
   }
 
   const cellButtonRenderer= ({ cellData, rowIndex, dataKey }) => (

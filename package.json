@@ -10,6 +10,7 @@
     "cytoscape-cola": "^2.3.0",
     "cytoscape-cose-bilkent": "^4.1.0",
     "gh-pages": "^2.1.1",
+    "material-ui-confirm": "^2.0.4",
     "react": "^16.10.2",
     "react-beautiful-dnd": "^12.2.0",
     "react-cytoscapejs": "^1.2.0",
