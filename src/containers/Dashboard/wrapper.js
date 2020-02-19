@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import ReactNofitication from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
+import { useConfirm } from 'material-ui-confirm';
 
 import LayoutContainer from 'components/Layout';
 import Dashboard from 'containers/Dashboard';
@@ -25,18 +26,33 @@ export const WrapperContainer = ({
 }) => {
 
   const [isCompareModalShown, setIsCompareModalShown] = React.useState(false);
+  const confirm = useConfirm();
 
   const compareStore = () => {
     setIsCompareModalShown(true);
   }
+
+  const handleRevertAll = () => {
+    confirm({ description: 'All changes will be reverted!' })
+      .then(() => {
+        revertCTA();
+      });
+  };
+
+  const handleSubmitAll = () => {
+    confirm({ description: 'All changes will be reverted!' })
+      .then(() => {
+        submitCTA();
+      });
+  };
 
   return (
     <Fragment>
       <ReactNofitication />
       <LayoutContainer
         history={history}
-        revertCTA={revertCTA}
-        submitCTA={submitCTA}
+        revertCTA={handleRevertAll}
+        submitCTA={handleSubmitAll}
         compareCTA={compareStore}
       />
       <Dashboard
