@@ -47,8 +47,6 @@ describe('To test the Wrapper Component functionality.', () => {
 
   it('should transfer props to LayoutContainer correctly', () => {
     expect(wrapperComponent.find(LayoutContainer).props().history).toBe(dashboardProps.history);
-    expect(wrapperComponent.find(LayoutContainer).props().revertCTA).toBe(dashboardProps.revertCTA);
-    expect(wrapperComponent.find(LayoutContainer).props().submitCTA).toBe(dashboardProps.submitCTA);
   });
 
   it('should have other props in LayoutContainer', () => {
@@ -67,9 +65,6 @@ describe('To test the Wrapper Component functionality.', () => {
 
   it('should transfer props to CompareDialog correctly', () => {
     expect(wrapperComponent.find(CompareDialog).props().stashesList).toBe(dashboardProps.stashesList);
-    expect(wrapperComponent.find(CompareDialog).props().submitCTA).toBe(dashboardProps.submitCTA);
-    expect(wrapperComponent.find(CompareDialog).props().submitOne).toBe(dashboardProps.submitOne);
-    expect(wrapperComponent.find(CompareDialog).props().revertOne).toBe(dashboardProps.revertOne);
   });
 
   it('should have other props in CompareDialog', () => {
