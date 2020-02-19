@@ -40,7 +40,7 @@ export const WrapperContainer = ({
   };
 
   const handleSubmitAll = () => {
-    confirm({ description: 'All changes will be reverted!' })
+    confirm({ description: 'All changes will be submitted!' })
       .then(() => {
         submitCTA();
       });
@@ -69,7 +69,7 @@ export const WrapperContainer = ({
         isModalShown={isCompareModalShown}
         stashesList={stashesList}
         hideModal={() => setIsCompareModalShown(false)}
-        submitCTA={submitCTA}
+        submitCTA={handleSubmitAll}
         submitOne={submitOne}
         revertOne={revertOne}
       />
