@@ -55,8 +55,8 @@ describe('To test the Layout Component functionality.', () => {
     expect(layoutComponent.find(Tabs).prop('value')).toBe(1);
   });
 
-  it("generates 4 Tabs", () => {
-    expect(layoutComponent.find(Tabs).find(Tab)).toHaveLength(4);    
+  it("generates 5 Tabs", () => {
+    expect(layoutComponent.find(Tabs).find(Tab)).toHaveLength(5);    
   });
 
   it("generates 3 StyledButtons", () => {
