@@ -43,7 +43,10 @@ const CompareDialog = ({
   }
 
   const revertStash = cellData => {
-    revertOne(cellData);
+    confirm({ description: 'The change will be reverted!' })
+      .then(() => {
+        revertOne(cellData);
+      });
   }
 
   const cellButtonRenderer= ({ cellData, rowIndex, dataKey }) => (
