@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { ThemeProvider } from 'styled-components'
+import { ConfirmProvider } from 'material-ui-confirm'
 import { muiTheme, styledTheme } from 'services/bootstrap';
 import Routes from 'Routes'
 import { HashRouter } from 'react-router-dom'
@@ -47,6 +48,7 @@ describe('To test the App Component functionality.', () => {
     );
     expect(appContainer.find(MuiThemeProvider).prop('theme')).toBe(muiTheme);
     expect(appContainer.find(ThemeProvider).prop('theme')).toBe(styledTheme);
+    expect(appContainer.find(ConfirmProvider)).toHaveLength(1);
     expect(appContainer.find(Routes)).toHaveLength(1);
     expect(appContainer.find(HashRouter)).toHaveLength(1);
   })
