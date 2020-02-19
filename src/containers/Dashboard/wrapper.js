@@ -46,6 +46,20 @@ export const WrapperContainer = ({
       });
   };
 
+  const handleSubmitStash = stashData => {
+    confirm({ description: 'The change will be submitted!' })
+      .then(() => {
+        submitOne(stashData);
+      });
+  }
+
+  const handleRevertStash = stashData => {
+    confirm({ description: 'The change will be reverted!' })
+      .then(() => {
+        revertOne(stashData);
+      });
+  }
+
   return (
     <Fragment>
       <ReactNofitication />
@@ -70,8 +84,8 @@ export const WrapperContainer = ({
         stashesList={stashesList}
         hideModal={() => setIsCompareModalShown(false)}
         submitCTA={handleSubmitAll}
-        submitOne={submitOne}
-        revertOne={revertOne}
+        submitOne={handleSubmitStash}
+        revertOne={handleRevertStash}
       />
     </Fragment>
   )
