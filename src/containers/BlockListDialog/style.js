@@ -27,10 +27,8 @@ export default makeStyles(theme => ({
   },
   blockItem: {
     paddingTop: 4,
-    paddingBottom: 4,
-    paddingLeft: 4,
-    marginTop: 2,
-    marginLeft: 2,
+    paddingLeft: 10,
+    paddingBottom: 2,
     cursor: 'pointer',
     border: '2px solid transparent',
     '&:hover': {
@@ -39,10 +37,8 @@ export default makeStyles(theme => ({
   },
   unblockItem: {
     paddingTop: 4,
-    paddingBottom: 4,
-    paddingLeft: 4,
-    marginTop: 2,
-    marginLeft: 2,
+    paddingLeft: 10,
+    paddingBottom: 2,
     cursor: 'pointer',
     border: '2px solid #577399',
   },
