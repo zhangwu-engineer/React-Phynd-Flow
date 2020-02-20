@@ -14,7 +14,7 @@ import useStyles from './style';
 const height = 400;
 const rowHeight = 50;
 const headerHeight = 30;
-const width = 800;
+const width = 500;
 
 const BlockListDialog = ({ isModalShown, hideModal, blockedItems, addField }) => {
   const classes = useStyles();
@@ -22,6 +22,12 @@ const BlockListDialog = ({ isModalShown, hideModal, blockedItems, addField }) =>
     hideModal();
   }
 
+  const blockedItemsCopy =  blockedItems.map((name, index) => {
+    return {
+      index,
+      name
+    }
+  })
   const [unblockList, setUnblockList] = React.useState([]);
   const handleNewUnblockItem = (item, flag) => {
     const unblockListUpdate = _.clone(unblockList);
@@ -36,8 +42,22 @@ const BlockListDialog = ({ isModalShown, hideModal, blockedItems, addField }) =>
   };
 
   const cellTextRenderer= ({ cellData, rowIndex, dataKey }) => (
-    <Typography>cellData</Typography>
-)
+    <Grid
+      item
+      key={dataKey}
+      onClick={() => {
+        if (unblockList.indexOf(cellData) < 0) {
+          handleNewUnblockItem(cellData, true);
+        } else {
+          handleNewUnblockItem(cellData, false);
+        }
+      }}
+    >
+      <Box className={unblockList.indexOf(cellData) < 0 ? classes.blockItem : classes.unblockItem}>
+        <Typography className={classes.blockItemLabel}>{cellData}</Typography>
+      </Box>
+    </Grid>
+  )
 
   return (
     <Dialog
@@ -46,9 +66,6 @@ const BlockListDialog = ({ isModalShown, hideModal, blockedItems, addField }) =>
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>
-        <Typography>Add Fields</Typography>
-      </DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <Grid className={classes.tabInputContent} container>
           <Table
@@ -56,35 +73,17 @@ const BlockListDialog = ({ isModalShown, hideModal, blockedItems, addField }) =>
             height={height}
             headerHeight={headerHeight}
             rowHeight={rowHeight}
-            rowCount={blockedItems ? blockedItems.length : 0}
-            rowGetter={({index}) => blockedItems[index]}
+            rowCount={blockedItemsCopy ? blockedItemsCopy.length : 0}
+            rowGetter={({index}) => blockedItemsCopy[index]}
             className={classes.stashTable}
           >
             <Column
-              label="Module"
-              dataKey="module"
-              width={150}
+              label="Add Fields"
+              dataKey="name"
+              width={width}
               cellRenderer={cellTextRenderer}
             />
           </Table>
-          {_.map(blockedItems, (value, key) =>
-            <Grid
-              item
-              xs={6}
-              key={key}
-              onClick={() => {
-                if (unblockList.indexOf(value) < 0) {
-                  handleNewUnblockItem(value, true);
-                } else {
-                  handleNewUnblockItem(value, false);
-                }
-              }}
-            >
-              <Box className={unblockList.indexOf(value) < 0 ? classes.blockItem : classes.unblockItem}>
-                <Typography className={classes.blockItemLabel}>{value}</Typography>
-              </Box>
-            </Grid>
-            )}
         </Grid>
         <Grid container className={classes.buttonGroup}>
           <Button
