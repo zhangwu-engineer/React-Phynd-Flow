@@ -22,7 +22,7 @@ const BlockListDialog = ({ isModalShown, hideModal, blockedItems, addField }) =>
     hideModal();
   }
 
-  const blockedItemsCopy =  blockedItems.map((name, index) => {
+  const blockedItemsCopy = blockedItems && blockedItems.map((name, index) => {
     return {
       index,
       name
