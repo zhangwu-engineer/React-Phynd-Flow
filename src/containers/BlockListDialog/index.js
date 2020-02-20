@@ -12,8 +12,8 @@ import { Column, Table } from 'react-virtualized';
 import useStyles from './style';
 
 const height = 400;
-const rowHeight = 50;
-const headerHeight = 30;
+const rowHeight = 40;
+const headerHeight = 50;
 const width = 500;
 
 const BlockListDialog = ({ isModalShown, hideModal, blockedItems, addField }) => {
