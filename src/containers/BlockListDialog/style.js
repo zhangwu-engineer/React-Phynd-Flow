@@ -25,6 +25,13 @@ export default makeStyles(theme => ({
   resize: {
     fontSize: 20
   },
+
+  blockTable: {
+    '& > div:nth-child(2)': {
+      outline: 0,
+      border: '1px solid #d2d2d2',
+    }
+  },
   blockItem: {
     paddingTop: 4,
     paddingLeft: 10,

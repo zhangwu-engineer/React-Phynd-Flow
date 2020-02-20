@@ -75,7 +75,7 @@ const BlockListDialog = ({ isModalShown, hideModal, blockedItems, addField }) =>
             rowHeight={rowHeight}
             rowCount={blockedItemsCopy ? blockedItemsCopy.length : 0}
             rowGetter={({index}) => blockedItemsCopy[index]}
-            className={classes.stashTable}
+            className={classes.blockTable}
           >
             <Column
               label="Add Fields"
