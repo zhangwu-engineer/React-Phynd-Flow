@@ -2,8 +2,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(theme => ({
   dialogContent: {
-    paddingTop: 20,
-    paddingBottom: 12,
+    paddingTop: 30,
+    paddingBottom: 0,
   },
   dialogActions: {
     paddingTop: 20,
@@ -29,6 +29,11 @@ export default makeStyles(theme => ({
   stashTable: {
     fontSize: 16,
     textAlign: "center",
+    '& > div:nth-child(2)': {
+      outline: 0,
+      paddingTop: 8,
+      border: '1px solid #e2e2e2',
+    }
   },
   stashColumn: {
     fontSize: 16,

@@ -25,12 +25,17 @@ export default makeStyles(theme => ({
   resize: {
     fontSize: 20
   },
+
+  blockTable: {
+    '& > div:nth-child(2)': {
+      outline: 0,
+      border: '1px solid #d2d2d2',
+    }
+  },
   blockItem: {
     paddingTop: 4,
-    paddingBottom: 4,
-    paddingLeft: 4,
-    marginTop: 2,
-    marginLeft: 2,
+    paddingLeft: 10,
+    paddingBottom: 2,
     cursor: 'pointer',
     border: '2px solid transparent',
     '&:hover': {
@@ -39,10 +44,8 @@ export default makeStyles(theme => ({
   },
   unblockItem: {
     paddingTop: 4,
-    paddingBottom: 4,
-    paddingLeft: 4,
-    marginTop: 2,
-    marginLeft: 2,
+    paddingLeft: 10,
+    paddingBottom: 2,
     cursor: 'pointer',
     border: '2px solid #577399',
   },

@@ -3,12 +3,17 @@ import _ from 'lodash';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import { Column, Table } from 'react-virtualized';
 // style
 import useStyles from './style';
+
+const height = 400;
+const rowHeight = 40;
+const headerHeight = 50;
+const width = 500;
 
 const BlockListDialog = ({ isModalShown, hideModal, blockedItems, addField }) => {
   const classes = useStyles();
@@ -16,6 +21,12 @@ const BlockListDialog = ({ isModalShown, hideModal, blockedItems, addField }) =>
     hideModal();
   }
 
+  const blockedItemsCopy = blockedItems && blockedItems.map((name, index) => {
+    return {
+      index,
+      name
+    }
+  })
   const [unblockList, setUnblockList] = React.useState([]);
   const handleNewUnblockItem = (item, flag) => {
     const unblockListUpdate = _.clone(unblockList);
@@ -29,6 +40,24 @@ const BlockListDialog = ({ isModalShown, hideModal, blockedItems, addField }) =>
     setUnblockList(unblockListUpdate);
   };
 
+  const cellTextRenderer= ({ cellData, rowIndex, dataKey }) => (
+    <Grid
+      item
+      key={dataKey}
+      onClick={() => {
+        if (unblockList.indexOf(cellData) < 0) {
+          handleNewUnblockItem(cellData, true);
+        } else {
+          handleNewUnblockItem(cellData, false);
+        }
+      }}
+    >
+      <Box className={unblockList.indexOf(cellData) < 0 ? classes.blockItem : classes.unblockItem}>
+        <Typography className={classes.blockItemLabel}>{cellData}</Typography>
+      </Box>
+    </Grid>
+  )
+
   return (
     <Dialog
       open={isModalShown}
@@ -36,29 +65,24 @@ const BlockListDialog = ({ isModalShown, hideModal, blockedItems, addField }) =>
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>
-        <Typography>Add Fields</Typography>
-      </DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <Grid className={classes.tabInputContent} container>
-          {_.map(blockedItems, (value, key) =>
-            <Grid
-              item
-              xs={6}
-              key={key}
-              onClick={() => {
-                if (unblockList.indexOf(value) < 0) {
-                  handleNewUnblockItem(value, true);
-                } else {
-                  handleNewUnblockItem(value, false);
-                }
-              }}
-            >
-              <Box className={unblockList.indexOf(value) < 0 ? classes.blockItem : classes.unblockItem}>
-                <Typography className={classes.blockItemLabel}>{value}</Typography>
-              </Box>
-            </Grid>
-            )}
+          <Table
+            width={width}
+            height={height}
+            headerHeight={headerHeight}
+            rowHeight={rowHeight}
+            rowCount={blockedItemsCopy ? blockedItemsCopy.length : 0}
+            rowGetter={({index}) => blockedItemsCopy[index]}
+            className={classes.blockTable}
+          >
+            <Column
+              label="Add Fields"
+              dataKey="name"
+              width={width}
+              cellRenderer={cellTextRenderer}
+            />
+          </Table>
         </Grid>
         <Grid container className={classes.buttonGroup}>
           <Button
