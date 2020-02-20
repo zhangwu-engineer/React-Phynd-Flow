@@ -6516,10 +6516,41 @@
 				"ColumnIdentifier": "column74"
 			},
 			"ItemValue": {
-				"MappingFieldId": 165923,
+				"MappingFieldId": 165825,
+				"MappingFieldType": "Function",
+				"SerAttributeId": null,
+				"FunctionName": "TitleCase",
+				"FunctionParameter": {
+					"MappingFieldId": 165824,
+					"MappingFieldType": "Column",
+					"SerAttributeId": null,
+					"ColumnIdentifier": "column142"
+				}
+			},
+			"Condition": {
+				"MappingFieldId": 165924,
 				"MappingFieldType": "Column",
 				"SerAttributeId": null,
-				"ColumnIdentifier": "column75"
+				"ColumnIdentifier": "column76"
+			}
+		}, {
+			"ItemNumber": {
+				"MappingFieldId": 165922,
+				"MappingFieldType": "Column",
+				"SerAttributeId": null,
+				"ColumnIdentifier": "column74"
+			},
+			"ItemValue": {
+				"MappingFieldId": 165825,
+				"MappingFieldType": "Function",
+				"SerAttributeId": null,
+				"FunctionName": "TitleCase",
+				"FunctionParameter": {
+					"MappingFieldId": 165824,
+					"MappingFieldType": "Column",
+					"SerAttributeId": null,
+					"ColumnIdentifier": "column142"
+				}
 			},
 			"Condition": {
 				"MappingFieldId": 165924,
