@@ -1,4 +1,4 @@
-export const generateNode = (id, label, parent, parentType, nextType, dataDetails, xWeight, yWeight) => {
+export const generateNode = (id, label, parent, parentType, nextType, dataDetails, xWeight, yWeight, entityColor) => {
   const nodeElement = {
     data: {
       id,
@@ -10,6 +10,9 @@ export const generateNode = (id, label, parent, parentType, nextType, dataDetail
       yWeight,
     },
     group: 'nodes',
+    style: {
+      'background-color': entityColor
+    }
   };
   if (parent) {
     nodeElement.data.parent = parent;
