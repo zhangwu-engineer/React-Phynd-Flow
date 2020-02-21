@@ -4,7 +4,7 @@ export const getEntityColor = (type) => {
     case 'Column': return '#99ccff';
     case 'Constant': return '#ffffff';
     case 'HL7': return '#ff9999';
-    case 'Switch': return '#ffffff';
+    case 'Switch': return '#ff9966';
     case 'Conditional': return '#ffcc99';
     case 'Combination': return '#ccffcc';
     case 'Regex': return '#ffff99';
