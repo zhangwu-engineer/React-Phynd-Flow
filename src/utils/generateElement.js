@@ -18,7 +18,7 @@ export const generateNode = (id, label, parent, parentType, nextType, dataDetail
   return nodeElement;
 };
 
-export const generateEntity = (id, label, parentType, dataDetails, xWeight, yWeight) => {
+export const generateEntity = (id, label, parentType, dataDetails, xWeight, yWeight, entityColor) => {
   return {
     data: {
       id,
@@ -30,6 +30,9 @@ export const generateEntity = (id, label, parentType, dataDetails, xWeight, yWei
       entity: label,
     },
     classes: 'entity',
+    style: {
+      'background-color': entityColor
+    }
   };
 };
 
