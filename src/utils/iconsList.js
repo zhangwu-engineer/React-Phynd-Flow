@@ -25,3 +25,21 @@ export const IconsList = {
   JsonElement: FaJs,
   Aggregate: FaJs,
 };
+
+export const DataFieldsIconsList = {
+  Constant: FaWindowMinimize,
+  Column: FaColumns,
+  HL7: FaAngleUp,
+  JsonProperty: FaJs,
+};
+
+export const LogicalFieldsIconsList = {
+  Conditional: FaQuestion,
+  Combination: FaPlus,
+  Regex: AiOutlineScissor,
+  Iteration: FaList,
+  Function: FaCode,
+  Switch: FaAlignJustify,
+  JsonElement: FaJs,
+  Aggregate: FaJs,
+};

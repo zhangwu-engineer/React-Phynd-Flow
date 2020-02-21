@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { getChildrenWeight } from './getChildrenWeight';
 import { getDataDetails } from './getDataDetails';
 import { generateNode, generateEntity, generateEdge } from './generateElement';
+import { getEntityColor } from './getEntityColor';
 
 export const generateMapping = (source, xWeight, yWeight) => {
   if (!source) return [];
@@ -36,6 +37,7 @@ export const generateMapping = (source, xWeight, yWeight) => {
 };
 
 const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
+  const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   return [
     generateNode(
       source.MappingFieldId,
@@ -45,12 +47,14 @@ const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
       null,
       getDataDetails(source),
       xWeight,
-      yWeight
+      yWeight,
+      entityColor
     ),
   ];
 };
 
 const generateFunctionMapping = (source, xWeight, yWeight) => {
+  const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const nextMappingField = generateMapping(
     source.FunctionParameter,
     xWeight+1,
@@ -67,7 +71,8 @@ const generateFunctionMapping = (source, xWeight, yWeight) => {
       'Function',
       getDataDetails(source),
       xWeight,
-      yWeight
+      yWeight,
+      entityColor
     ),
     generateNode(
       `info-${currentId}`,
@@ -98,6 +103,7 @@ const generateFunctionMapping = (source, xWeight, yWeight) => {
 };
 
 const generateSwitchMapping = (source, xWeight, yWeight) => {
+  const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const currentId = source.MappingFieldId;
   const switchId = source.SwitchValue.MappingFieldId;
   const defaultId = source.SwitchDefault.MappingFieldId;
@@ -114,7 +120,8 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
       'Switch',
       null,
       xWeight,
-      yWeight
+      yWeight,
+      entityColor
     ),
     generateNode(
       `value-${currentId}`,
@@ -233,6 +240,7 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
 };
 
 const generateConditionMapping = (source, xWeight, yWeight) => {
+  const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const addWeight = source.TrueField && getChildrenWeight(source.TrueField);
   const currentId = source.MappingFieldId;
   const trueId = source.TrueField && source.TrueField.MappingFieldId;
@@ -251,7 +259,8 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
       'Conditional',
       null,
       xWeight,
-      yWeight
+      yWeight,
+      entityColor
     ),
     generateNode(
       `condition-${currentId}`,
@@ -440,6 +449,7 @@ const generateCombinationMapping = (source, xWeight, yWeight) => {
 };
 
 const generateRegexMapping = (source, xWeight, yWeight) => {
+  const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const currentId = source.MappingFieldId;
 
   const elements = [
@@ -449,7 +459,8 @@ const generateRegexMapping = (source, xWeight, yWeight) => {
       'Regex',
       getDataDetails(source),
       xWeight,
-      yWeight
+      yWeight,
+      entityColor
     ),
     generateNode(
       `info-${currentId}`,
@@ -486,6 +497,7 @@ const generateRegexMapping = (source, xWeight, yWeight) => {
 };
 
 const generateIterationMapping = (source, xWeight, yWeight) => {
+  const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const currentId = source.MappingFieldId;
 
   const elements = [
@@ -495,7 +507,8 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
       'Iteration',
       getDataDetails(source),
       xWeight,
-      yWeight
+      yWeight,
+      entityColor
     ),
     generateNode(
       `info-${currentId}`,
@@ -533,6 +546,7 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
 };
 
 const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
+  const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const nextMappingField = generateMapping(
     source.Source,
     xWeight+1,
@@ -549,7 +563,8 @@ const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
       'JsonProperty',
       getDataDetails(source),
       xWeight,
-      yWeight
+      yWeight,
+      entityColor
     ),
     generateNode(
       `info-${currentId}`,
@@ -581,6 +596,7 @@ const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
 };
 
 const generateJsonElementMapping = (source, xWeight, yWeight) => {
+  const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const nextMappingField = generateMapping(
     source.Source,
     xWeight+1,
@@ -597,7 +613,8 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
       'JsonElement',
       getDataDetails(source),
       xWeight,
-      yWeight
+      yWeight,
+      entityColor
     ),
     generateNode(
       `info-element-${currentId}`,
@@ -692,6 +709,7 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
 };
 
 const generateAggregateMapping = (source, xWeight, yWeight) => {
+  const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const currentId = source.MappingFieldId;
 
   const elements = [
@@ -701,7 +719,8 @@ const generateAggregateMapping = (source, xWeight, yWeight) => {
       'Aggregate',
       getDataDetails(source),
       xWeight,
-      yWeight
+      yWeight,
+      entityColor
     ),
     generateNode(
       `info-${currentId}`,

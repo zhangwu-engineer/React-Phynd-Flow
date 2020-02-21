@@ -10,7 +10,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import useStyles from './style';
 import { isRemovable } from 'utils/categoryDialog';
-import { IconsList } from 'utils/iconsList';
+import { DataFieldsIconsList, LogicalFieldsIconsList } from 'utils/iconsList';
 import { NodeCard } from 'components/NodeCard';
 import { isSingleNode, DEFAULT_INPUT } from 'utils/helper';
 import DetailsDialog from 'containers/DetailsDialog';
@@ -41,10 +41,31 @@ const CategoryDialog = ({ isModalShown, activeParent, currentCard, hideModal, se
           <Typography><CloseIcon onClick={closeModal} /></Typography>
         </Grid>
         <DialogContent className={classes.dialogContent}>
+          <Typography className={classes.fieldsHeading}>Data Fields</Typography>
           <Grid container spacing={2} className={classes.tabContent}>
-            {_.map(IconsList, (value, key) =>
+            {_.map(DataFieldsIconsList, (value, key) =>
               <Grid
-                item xs={4}
+                item xs={3}
+                key={key}
+                onClick={() => {
+                  setActiveCard(key);
+                  closeModal();
+                  if (!isSingleNode(key)) {
+                    setNewElement(key, DEFAULT_INPUT);
+                  } else {
+                    setDetailsModalShown(true);
+                  }
+                }}
+              >
+                <NodeCard cardName={key} activeCard={activeCard} />
+              </Grid>
+            )}
+          </Grid>
+          <Typography className={classes.fieldsHeading}>Logical Fields</Typography>
+          <Grid container spacing={2} className={classes.tabContent}>
+            {_.map(LogicalFieldsIconsList, (value, key) =>
+              <Grid
+                item xs={3}
                 key={key}
                 onClick={() => {
                   setActiveCard(key);

@@ -1,4 +1,4 @@
-export const generateNode = (id, label, parent, parentType, nextType, dataDetails, xWeight, yWeight) => {
+export const generateNode = (id, label, parent, parentType, nextType, dataDetails, xWeight, yWeight, entityColor) => {
   const nodeElement = {
     data: {
       id,
@@ -8,16 +8,17 @@ export const generateNode = (id, label, parent, parentType, nextType, dataDetail
       dataDetails,
       xWeight,
       yWeight,
+      parent,
     },
     group: 'nodes',
+    style: {
+      'background-color': entityColor
+    }
   };
-  if (parent) {
-    nodeElement.data.parent = parent;
-  }
   return nodeElement;
 };
 
-export const generateEntity = (id, label, parentType, dataDetails, xWeight, yWeight) => {
+export const generateEntity = (id, label, parentType, dataDetails, xWeight, yWeight, entityColor) => {
   return {
     data: {
       id,
@@ -29,6 +30,9 @@ export const generateEntity = (id, label, parentType, dataDetails, xWeight, yWei
       entity: label,
     },
     classes: 'entity',
+    style: {
+      'background-color': entityColor
+    }
   };
 };
 

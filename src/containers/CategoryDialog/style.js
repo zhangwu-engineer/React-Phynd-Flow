@@ -7,10 +7,9 @@ export default makeStyles(theme => ({
   },
   dialogContent: {
     paddingTop: 20,
-    paddingBottom: 12,
   },
   tabContent: {
-    paddingBottom: 20,
+    paddingBottom: 32,
   },
   buttonGroup: {
     paddingTop: 12,
@@ -23,4 +22,9 @@ export default makeStyles(theme => ({
     textTransform: 'none',
     marginLeft: 20,
   },
+  fieldsHeading: {
+    fontSize: 16,
+    fontWeight: 800,
+    marginBottom: 16,
+  }
 }));
