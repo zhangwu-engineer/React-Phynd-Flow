@@ -8,15 +8,13 @@ export const generateNode = (id, label, parent, parentType, nextType, dataDetail
       dataDetails,
       xWeight,
       yWeight,
+      parent,
     },
     group: 'nodes',
     style: {
       'background-color': entityColor
     }
   };
-  if (parent) {
-    nodeElement.data.parent = parent;
-  }
   return nodeElement;
 };
 
