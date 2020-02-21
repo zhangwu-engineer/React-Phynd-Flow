@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { getChildrenWeight } from './getChildrenWeight';
 import { getDataDetails } from './getDataDetails';
 import { generateNode, generateEntity, generateEdge } from './generateElement';
+import { getEntityColor } from './getEntityColor';
 
 export const generateMapping = (source, xWeight, yWeight) => {
   if (!source) return [];
@@ -36,6 +37,7 @@ export const generateMapping = (source, xWeight, yWeight) => {
 };
 
 const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
+  const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   return [
     generateNode(
       source.MappingFieldId,
@@ -45,7 +47,8 @@ const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
       null,
       getDataDetails(source),
       xWeight,
-      yWeight
+      yWeight,
+      entityColor
     ),
   ];
 };
