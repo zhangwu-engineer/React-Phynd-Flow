@@ -39,17 +39,17 @@ export const generateMapping = (source, xWeight, yWeight) => {
 const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
   const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   return [
-    generateNode(
-      source.MappingFieldId,
-      `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`,
-      null,
-      source.MappingFieldType,
-      null,
-      getDataDetails(source),
+    generateNode({
+      id: source.MappingFieldId,
+      label: `${source.MappingFieldType}: ${identifier ? identifier : 'NULL'}`,
+      parent: null,
+      parentType: source.MappingFieldType,
+      nextType: null,
+      dataDetails: getDataDetails(source),
       xWeight,
       yWeight,
       entityColor
-    ),
+    }),
   ];
 };
 
@@ -74,25 +74,26 @@ const generateFunctionMapping = (source, xWeight, yWeight) => {
       yWeight,
       entityColor
     ),
-    generateNode(
-      `info-${currentId}`,
-      `Name: ${source.FunctionName}`,
-      currentId, 'function-info',
-      source.MappingFieldType,
-      getDataDetails(source),
+    generateNode({
+      id: `info-${currentId}`,
+      label: `Name: ${source.FunctionName}`,
+      parent: currentId,
+      parentType: 'function-info',
+      nextType: source.MappingFieldType,
+      dataDetails: getDataDetails(source),
       xWeight,
       yWeight
-    ),
-    generateNode(
-      `source-${currentId}`,
-      'SourceParameter',
-      currentId,
-      'function-source',
-      functionType,
-      null,
+    }),
+    generateNode({
+      id: `source-${currentId}`,
+      label: 'SourceParameter',
+      parent: currentId,
+      parentType: 'function-source',
+      nextType: functionType,
+      dataDetails: null,
       xWeight, 
-      yWeight+1
-    ),
+      yWeight: yWeight+1
+    }),
     generateEdge(
       `edge-source-${functionId}`,
       `source-${currentId}`,
@@ -123,36 +124,36 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
       yWeight,
       entityColor
     ),
-    generateNode(
-      `value-${currentId}`,
-      'SwitchValue',
-      currentId,
-      'switch-value',
-      switchType,
-      getDataDetails(source.SwitchValue),
+    generateNode({
+      id: `value-${currentId}`,
+      label: 'SwitchValue',
+      parent: currentId,
+      parentType: 'switch-value',
+      nextType: switchType,
+      dataDetails: getDataDetails(source.SwitchValue),
       xWeight,
       yWeight
-    ),
-    generateNode(
-      `default-${currentId}`,
-      'DefaultValue',
-      currentId,
-      'switch-default',
-      defaultType,
-      getDataDetails(source.SwitchDefault),
+    }),
+    generateNode({
+      id: `default-${currentId}`,
+      label: 'DefaultValue',
+      parent: currentId,
+      parentType: 'switch-default',
+      nextType: defaultType,
+      dataDetails: getDataDetails(source.SwitchDefault),
       xWeight,
-      yWeight+addWeight1
-    ),
-    generateNode(
-      `case-source-${currentId}`,
-      'Cases:',
-      currentId,
-      'switch-entity',
-      'switch-entity',
-      null,
+      yWeight: yWeight+addWeight1
+    }),
+    generateNode({
+      id: `case-source-${currentId}`,
+      label: 'Cases:',
+      parent: currentId,
+      parentType: 'switch-entity',
+      nextType: 'switch-entity',
+      dataDetails: null,
       xWeight,
-      yWeight+addWeight
-    ),
+      yWeight: yWeight+addWeight
+    }),
     generateEntity(
       `case-target-${currentId}`,
       'Cases',
@@ -211,16 +212,16 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
     }
 
     const wrapper = [
-      generateNode(
-        `wrap-${valueId ? valueId : alternativeId}`,
-        `${caseItem.Key}`,
-        `case-target-${currentId}`,
-        'cases-entity',
-        valueType,
-        caseKeyDetails,
-        xWeight+1,
-        yWeight+index+addCasesWeight
-      )
+      generateNode({
+        id: `wrap-${valueId ? valueId : alternativeId}`,
+        label: `${caseItem.Key}`,
+        parent: `case-target-${currentId}`,
+        parentType: 'cases-entity',
+        nextType: valueType,
+        dataDetails: caseKeyDetails,
+        xWeight: xWeight+1,
+        yWeight: yWeight+index+addCasesWeight
+      })
     ];
     if (valueId) {
       wrapper.push(
@@ -262,36 +263,36 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
       yWeight,
       entityColor
     ),
-    generateNode(
-      `condition-${currentId}`,
-      'Condition:',
-      currentId,
-      'conditional-entity',
-      'conditional-entity',
-      null,
+    generateNode({
+      id: `condition-${currentId}`,
+      label: 'Condition:',
+      parent: currentId,
+      parentType: 'conditional-entity',
+      nextType: 'conditional-entity',
+      dataDetails: null,
       xWeight,
       yWeight
-    ),
-    generateNode(
-      `true-${currentId}`,
-      'If True:',
-      currentId,
-      'conditional-true',
-      source.TrueField.MappingFieldType,
-      getDataDetails(source.TrueField),
+    }),
+    generateNode({
+      id: `true-${currentId}`,
+      label: 'If True:',
+      parent: currentId,
+      parentType: 'conditional-true',
+      nextType: source.TrueField.MappingFieldType,
+      dataDetails: getDataDetails(source.TrueField),
       xWeight,
-      yWeight+addWeightField1+addWeightField2
-    ),
-    generateNode(
-      `false-${currentId}`,
-      'If False:',
-      currentId,
-      'conditional-false',
-      source.FalseField.MappingFieldType,
-      getDataDetails(source.FalseField),
+      yWeight: yWeight+addWeightField1+addWeightField2
+    }),
+    generateNode({
+      id: `false-${currentId}`,
+      label: 'If False:',
+      parent: currentId,
+      parentType: 'conditional-false',
+      nextType: source.FalseField.MappingFieldType,
+      dataDetails: getDataDetails(source.FalseField),
       xWeight,
-      yWeight+addWeight+addWeightField1+addWeightField2
-    ),
+      yWeight: yWeight+addWeight+addWeightField1+addWeightField2
+    }),
     generateEdge(
       `edge-true-${trueId}`,
       `true-${currentId}`,
@@ -324,26 +325,26 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
       xWeight,
       yWeight
     ),
-    generateNode(
-      `field1-${conditionId}`,
-      'Field 1',
-      conditionId,
-      'condition1',
-      field1.MappingFieldType,
-      getDataDetails(field1),
-      xWeight+1,
+    generateNode({
+      id: `field1-${conditionId}`,
+      label: 'Field 1',
+      parent: conditionId,
+      parentType: 'condition1',
+      nextType: field1.MappingFieldType,
+      dataDetails: getDataDetails(field1),
+      xWeight: xWeight+1,
       yWeight
-    ),
-    generateNode(
-      `field2-${conditionId}`,
-      'Field 2',
-      conditionId,
-      'condition2',
-      field2.MappingFieldType,
-      getDataDetails(field2),
-      xWeight+1,
-      yWeight+addWeightField1
-    ),
+    }),
+    generateNode({
+      id: `field2-${conditionId}`,
+      label: 'Field 2',
+      parent: conditionId,
+      parentType: 'condition2',
+      nextType: field2.MappingFieldType,
+      dataDetails: getDataDetails(field2),
+      xWeight: xWeight+1,
+      yWeight: yWeight+addWeightField1
+    }),
     generateEdge(
       `edge-fields-${currentId}`,
       `condition-${currentId}`,
@@ -399,26 +400,26 @@ const generateCombinationMapping = (source, xWeight, yWeight) => {
     const addWeight = getChildrenWeight(field1);
   
     const fields = [
-      generateNode(
-        `field1-${currentId}`,
-        'Field 1',
-        currentId,
-        'combination1',
-        field1.MappingFieldType,
-        getDataDetails(field1),
+      generateNode({
+        id: `field1-${currentId}`,
+        label: 'Field 1',
+        parent: currentId,
+        parentType: 'combination1',
+        nextType: field1.MappingFieldType,
+        dataDetails: getDataDetails(field1),
         xWeight,
         yWeight
-      ),
-      generateNode(
-        `field2-${currentId}`,
-        'Field 2',
-        currentId,
-        'combination2',
-        field2.MappingFieldType,
-        getDataDetails(field2),
+      }),
+      generateNode({
+        id: `field2-${currentId}`,
+        label: 'Field 2',
+        parent: currentId,
+        parentType: 'combination2',
+        nextType: field2.MappingFieldType,
+        dataDetails: getDataDetails(field2),
         xWeight,
-        yWeight+addWeight
-      ),
+        yWeight: yWeight+addWeight
+      }),
       generateEdge(
         `edge-field1-${currentId}`,
         `field1-${currentId}`,
@@ -462,25 +463,26 @@ const generateRegexMapping = (source, xWeight, yWeight) => {
       yWeight,
       entityColor
     ),
-    generateNode(
-      `info-${currentId}`,
-      `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: ${source.RegexGroup}`,
-      currentId,
-      'regex-info',
-      source.MappingFieldType,getDataDetails(source),
+    generateNode({
+      id: `info-${currentId}`,
+      label: `Pattern: "${source.RegexPattern}", Flags: "${source.RegexFlags}" Group: ${source.RegexGroup}`,
+      parent: currentId,
+      parentType: 'regex-info',
+      nextType: source.MappingFieldType,
+      dataDetails: getDataDetails(source),
       xWeight,
       yWeight
-    ),
-    generateNode(
-      `source-${currentId}`,
-      'Source:',
-      currentId,
-      'regex-source',
-      source.Source.MappingFieldType,
-      null,
+    }),
+    generateNode({
+      id: `source-${currentId}`,
+      label: 'Source:',
+      parent: currentId,
+      parentType: 'regex-source',
+      nextType: source.Source.MappingFieldType,
+      dataDetails: null,
       xWeight,
-      yWeight+1
-    ),
+      yWeight: yWeight+1
+    }),
     generateEdge(
       `edge-source-${currentId}`,
       `source-${currentId}`,
@@ -510,26 +512,26 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
       yWeight,
       entityColor
     ),
-    generateNode(
-      `info-${currentId}`,
-      `Delimiter: "${source.Iterator.Delimiter}", Index: "${source.Iterator.Index}"`,
-      currentId,
-      'iteration-info',
-      source.MappingFieldType,
-      getDataDetails(source),
+    generateNode({
+      id: `info-${currentId}`,
+      label: `Delimiter: "${source.Iterator.Delimiter}", Index: "${source.Iterator.Index}"`,
+      parent: currentId,
+      parentType: 'iteration-info',
+      nextType: source.MappingFieldType,
+      dataDetails: getDataDetails(source),
       xWeight,
       yWeight
-    ),
-    generateNode(
-      `source-${source.Iterator.IteratorId}`,
-      'Source:',
-      currentId,
-      'iteration-source',
-      source.Iterator.Source.MappingFieldType,
-      null,
+    }),
+    generateNode({
+      id: `source-${source.Iterator.IteratorId}`,
+      label: 'Source:',
+      parent: currentId,
+      parentType: 'iteration-source',
+      nextType: source.Iterator.Source.MappingFieldType,
+      dataDetails: null,
       xWeight,
-      yWeight+1
-    ),
+      yWeight: yWeight+1
+    }),
     generateEdge(
       `edge-source-${currentId}`,
       `source-${source.Iterator.IteratorId}`,
@@ -566,26 +568,26 @@ const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
       yWeight,
       entityColor
     ),
-    generateNode(
-      `info-${currentId}`,
-      `Property Path: ${source.PropertyPath}, Default: ${source.Default}`,
-      currentId,
-      'jsonproperty-info',
-      source.MappingFieldType,
-      getDataDetails(source),
+    generateNode({
+      id: `info-${currentId}`,
+      label: `Property Path: ${source.PropertyPath}, Default: ${source.Default}`,
+      parent: currentId,
+      parentType: 'jsonproperty-info',
+      nextType: source.MappingFieldType,
+      dataDetails: getDataDetails(source),
       xWeight,
       yWeight
-    ),
-    generateNode(
-      `source-${currentId}`,
-      'Source',
-      currentId,
-      'jsonproperty-source',
-      sourceType,
-      null,
+    }),
+    generateNode({
+      id: `source-${currentId}`,
+      label: 'Source',
+      parent: currentId,
+      parentType: 'jsonproperty-source',
+      nextType: sourceType,
+      dataDetails: null,
       xWeight,
-      yWeight+1
-    ),
+      yWeight: yWeight+1
+    }),
     generateEdge(
       `edge-source-${sourceId}`,
       `source-${currentId}`,
@@ -616,26 +618,26 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
       yWeight,
       entityColor
     ),
-    generateNode(
-      `info-element-${currentId}`,
-      'Element Info',
-      currentId,
-      'elementobj-info',
-      source.MappingFieldType,
-      getDataDetails(source),
+    generateNode({
+      id: `info-element-${currentId}`,
+      label: 'Element Info',
+      parent: currentId,
+      parentType: 'elementobj-info',
+      nextType: source.MappingFieldType,
+      dataDetails: getDataDetails(source),
       xWeight,
       yWeight
-    ),
-    generateNode(
-      `source-element-${currentId}`,
-      'Source',
-      currentId,
-      'jsonelement-source',
-      sourceType,
-      null,
+    }),
+    generateNode({
+      id: `source-element-${currentId}`,
+      label: 'Source',
+      parent: currentId,
+      parentType: 'jsonelement-source',
+      nextType: sourceType,
+      dataDetails: null,
       xWeight,
-      yWeight+getChildrenWeight(source.Element)
-    ),
+      yWeight: yWeight+getChildrenWeight(source.Element)
+    }),
     generateEdge(
       `edge-source-${sourceId}`,
       `source-element-${currentId}`,
@@ -654,26 +656,26 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
       `info-element-${currentId}`,
       `elementobj-entity-${currentId}`
     ),
-    generateNode(
-      `elementobj-info-${currentId}`,
-      `Path: "${source.Element.Path}", Limit: ${source.Element.Limit}`,
-      `elementobj-entity-${currentId}`,
-      'jsonelement-info',
-      'JsonElementObject',
-      getDataDetails(source),
-      xWeight+1,
+    generateNode({
+      id: `elementobj-info-${currentId}`,
+      label: `Path: "${source.Element.Path}", Limit: ${source.Element.Limit}`,
+      parent: `elementobj-entity-${currentId}`,
+      parentType: 'jsonelement-info',
+      nextType: 'JsonElementObject',
+      dataDetails: getDataDetails(source),
+      xWeight: xWeight+1,
       yWeight
-    ),
-    generateNode(
-      `elementobj-operations-${currentId}`,
-      'Operations:',
-      `elementobj-entity-${currentId}`,
-      'jsonelement-operations',
-      'JsonElementObject',
-      null,
-      xWeight+1,
-      yWeight+1
-    ),
+    }),
+    generateNode({
+      id: `elementobj-operations-${currentId}`,
+      lable: 'Operations:',
+      parent: `elementobj-entity-${currentId}`,
+      parentType: 'jsonelement-operations',
+      nextType: 'JsonElementObject',
+      dataDetails: null,
+      xWeight: xWeight+1,
+      yWeight: yWeight+1
+    }),
     generateEntity(
       `elementoperations-entity-${currentId}`,
       'Operations',
@@ -692,16 +694,16 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
   _.map(source.Element.Operations, (operationItem, index) => {
     const valueId = Math.random()*1000;
 
-    const newOperation = generateNode(
-      `wrap-${valueId}`,
-      `Name: ${operationItem.name}, Field: ${operationItem.field}, Value: ${operationItem.value},`,
-      `elementoperations-entity-${currentId}`,
-      'jsonelement-operations',
-      null,
-      null,
-      xWeight+2,
-      yWeight+1+index
-    );
+    const newOperation = generateNode({
+      id: `wrap-${valueId}`,
+      label: `Name: ${operationItem.name}, Field: ${operationItem.field}, Value: ${operationItem.value},`,
+      parent: `elementoperations-entity-${currentId}`,
+      parentType: 'jsonelement-operations',
+      nextType: null,
+      dataDetails: null,
+      xWeight: xWeight+2,
+      yWeight: yWeight+1+index
+    });
     elements.push(newOperation);
   });
 
@@ -722,26 +724,26 @@ const generateAggregateMapping = (source, xWeight, yWeight) => {
       yWeight,
       entityColor
     ),
-    generateNode(
-      `info-${currentId}`,
-      `Delimiter: "${source.Delimiter}"`,
-      currentId,
-      'aggregate-info',
-      source.MappingFieldType,
-      getDataDetails(source),
+    generateNode({
+      id: `info-${currentId}`,
+      label: `Delimiter: "${source.Delimiter}"`,
+      parent: currentId,
+      parentType: 'aggregate-info',
+      nextType: source.MappingFieldType,
+      dataDetails: getDataDetails(source),
       xWeight,
       yWeight
-    ),
-    generateNode(
-      `iterator-${currentId}`,
-      'Iterator:',
-      currentId,
-      'iterator-entity',
-      'iterator-entity',
-      null,
+    }),
+    generateNode({
+      id: `iterator-${currentId}`,
+      label: 'Iterator:',
+      parent: currentId,
+      parentType: 'iterator-entity',
+      nextType: 'iterator-entity',
+      dataDetails: null,
       xWeight,
-      yWeight+1
-    ),
+      yWeight: yWeight+1
+    }),
     generateEdge(
       `edge-iterator-${currentId}`,
       `iterator-${currentId}`,
@@ -755,41 +757,41 @@ const generateAggregateMapping = (source, xWeight, yWeight) => {
       xWeight+1,
       yWeight+1
     ),
-    generateNode(
-      `iterator-info-${currentId}`,
-      `Delimiter: "${source.Iterator.Delimiter}"`,
-      `iterator-entity-${currentId}`,
-      'aggregate-iterator-info',
-      'AggregateIterator',
-      getDataDetails(source),
-      xWeight+1,
-      yWeight+1
-    ),
-    generateNode(
-      `iterator-source-${currentId}`,
-      'Source:',
-      `iterator-entity-${currentId}`,
-      'aggregate-iterator-source',
-      source.Iterator.Source.MappingFieldType,
-      null,
-      xWeight+1,
-      yWeight+2
-    ),
+    generateNode({
+      id: `iterator-info-${currentId}`,
+      label: `Delimiter: "${source.Iterator.Delimiter}"`,
+      parent: `iterator-entity-${currentId}`,
+      parentType: 'aggregate-iterator-info',
+      nextType: 'AggregateIterator',
+      dataDetails: getDataDetails(source),
+      xWeight: xWeight+1,
+      yWeight: yWeight+1
+    }),
+    generateNode({
+      id: `iterator-source-${currentId}`,
+      label: 'Source:',
+      parent: `iterator-entity-${currentId}`,
+      parentType: 'aggregate-iterator-source',
+      nextType: source.Iterator.Source.MappingFieldType,
+      dataDetails: null,
+      xWeight: xWeight+1,
+      yWeight: yWeight+2
+    }),
     generateEdge(
       `edge-source-${currentId}`,
       `iterator-source-${currentId}`,
       source.Iterator.Source.MappingFieldId
     ),
-    generateNode(
-      `iterations-${currentId}`,
-      'Iterations:',
-      currentId,
-      'aggregate-iterations',
-      source.Iterations.MappingFieldType,
-      null,
+    generateNode({
+      id: `iterations-${currentId}`,
+      label: 'Iterations:',
+      parent: currentId,
+      parentType: 'aggregate-iterations',
+      nextType: source.Iterations.MappingFieldType,
+      dataDetails: null,
       xWeight,
-      yWeight+getChildrenWeight(source.Iterator.Source)+2
-    ),
+      yWeight: yWeight+getChildrenWeight(source.Iterator.Source)+2
+    }),
     generateEdge(
       `edge-iterations-${currentId}`,
       `iterations-${currentId}`,

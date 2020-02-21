@@ -1,14 +1,7 @@
-export const generateNode = (id, label, parent, parentType, nextType, dataDetails, xWeight, yWeight, entityColor) => {
+export const generateNode = ({ entityColor, ...infoDetails }) => {
   const nodeElement = {
     data: {
-      id,
-      label,
-      parentType,
-      nextType,
-      dataDetails,
-      xWeight,
-      yWeight,
-      parent,
+      ...infoDetails
     },
     group: 'nodes',
     style: {
