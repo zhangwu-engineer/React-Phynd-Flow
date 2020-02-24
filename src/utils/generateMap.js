@@ -668,7 +668,7 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
     }),
     generateNode({
       id: `elementobj-operations-${currentId}`,
-      lable: 'Operations:',
+      label: 'Operations:',
       parent: `elementobj-entity-${currentId}`,
       parentType: 'jsonelement-operations',
       nextType: 'JsonElementObject',
