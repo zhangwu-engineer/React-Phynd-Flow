@@ -10,11 +10,11 @@ export const generateMapping = (source, xWeight, yWeight) => {
     case 'Function':
       return generateFunctionMapping(source, xWeight, yWeight);
     case 'Column':
-      return generateSingleMapping(source, source.ColumnIdentifier, xWeight, yWeight);
+      return generateSingleMapping(source, xWeight, yWeight);
     case 'Constant':
-      return generateSingleMapping(source, source.ConstantValue, xWeight, yWeight);
+      return generateSingleMapping(source, xWeight, yWeight);
     case 'HL7':
-      return generateSingleMapping(source, source.HL7Segment, xWeight, yWeight);
+      return generateSingleMapping(source, xWeight, yWeight);
     case 'Switch':
       return generateSwitchMapping(source, xWeight, yWeight);
     case 'Conditional':
@@ -36,7 +36,20 @@ export const generateMapping = (source, xWeight, yWeight) => {
   }
 };
 
-const generateSingleMapping = (source, identifier, xWeight, yWeight) => {
+const generateSingleMapping = (source, xWeight, yWeight) => {
+  let identifier;
+  switch (source.MappingFieldType) {
+    case 'Column':
+      identifier = source.ColumnIdentifier;
+      break;
+    case 'HL7':
+      identifier = source.HL7Segment;
+      break;
+    case 'Constant':
+    default:
+      identifier = source.ConstantValue;
+      break;
+  }
   const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   return [
     generateNode({
