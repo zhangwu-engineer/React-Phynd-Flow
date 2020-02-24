@@ -25,21 +25,25 @@ export const getPrimaryFieldLabel = (cardType) => {
 }
 
 export const getSecondaryFieldLabel = (cardType) => {
-  switch (cardType) {
-    case 'Iteration': return 'Index';
-    case 'Regex': return 'Flags';
-    case 'JsonProperty': return 'Default';
-    case 'JsonElementObject': return 'Limit';
-    case 'AggregateIterator': return 'Iterator Delimiter';
-    default: return null;
+  const secondaryMapping = {
+    'Iteration': 'Index',
+    'Regex': 'Flags',
+    'JsonProperty': 'Default',
+    'JsonElementObject': 'Limit',
+    'AggregateIterator': 'Iterator Delimiter',
+
   }
+  if (secondaryMapping[cardType]) {
+    return secondaryMapping[cardType];
+  }
+  return null;
 }
 
 export const getTertiaryFieldLabel = (cardType) => {
-  switch (cardType) {
-    case 'Regex': return 'Group Number';
-    default: return null;
+  if (cardType === 'Regex') {
+    return 'Group Number';
   }
+  return null;
 }
 
 export const getFourthFieldLabel = (activeParent) => {
