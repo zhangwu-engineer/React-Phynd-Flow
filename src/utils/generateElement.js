@@ -24,12 +24,10 @@ export const generateEntity = ({ entityColor, ...infoDetails }) => {
   };
 };
 
-export const generateEdge = (id, source, target) => {
+export const generateEdge = ({ ...infoDetails }) => {
   return {
     data: {
-      id,
-      source,
-      target,
+      ...infoDetails
     },
     classes: 'edges',
   };

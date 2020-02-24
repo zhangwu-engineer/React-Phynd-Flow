@@ -94,11 +94,11 @@ const generateFunctionMapping = (source, xWeight, yWeight) => {
       xWeight, 
       yWeight: yWeight+1
     }),
-    generateEdge(
-      `edge-source-${functionId}`,
-      `source-${currentId}`,
-      functionId
-    ),
+    generateEdge({
+      id: `edge-source-${functionId}`,
+      source: `source-${currentId}`,
+      target: functionId
+    }),
   ];
   return _.concat(elements, nextMappingField);
 };
@@ -162,11 +162,11 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
       xWeight: xWeight+1,
       yWeight: yWeight+addWeight
     }),
-    generateEdge(
-      `edge-case-${currentId}`,
-      `case-source-${currentId}`,
-      `case-target-${currentId}`
-    ),
+    generateEdge({
+      id: `edge-case-${currentId}`,
+      source: `case-source-${currentId}`,
+      target: `case-target-${currentId}`
+    }),
   ];
 
   if (switchId) {
@@ -175,11 +175,11 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
       xWeight+1,
       yWeight
     );
-    elements.push(generateEdge(
-      `edge-value-${switchId}`,
-      `value-${currentId}`,
-      switchId
-    ));
+    elements.push(generateEdge({
+      id: `edge-value-${switchId}`,
+      source: `value-${currentId}`,
+      target: switchId
+    }));
     elements = _.concat(elements, switchValue);
   }
   if (defaultId) {
@@ -188,11 +188,11 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
       xWeight+1,
       yWeight+addWeight1
     );
-    elements.push(generateEdge(
-      `edge-default-${defaultId}`,
-      `default-${currentId}`,
-      defaultId
-    ));
+    elements.push(generateEdge({
+      id: `edge-default-${defaultId}`,
+      source: `default-${currentId}`,
+      target: defaultId
+    }));
     elements = _.concat(elements, switchDefault);
   }
 
@@ -225,11 +225,11 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
     ];
     if (valueId) {
       wrapper.push(
-        generateEdge(
-          `edge-each-case-${valueId}`,
-          `wrap-${valueId}`,
-          valueId ? valueId : alternativeId
-        ),
+        generateEdge({
+          id: `edge-each-case-${valueId}`,
+          source: `wrap-${valueId}`,
+          target: valueId ? valueId : alternativeId
+        }),
       );
     }
     elements = _.concat(elements, wrapper, nextMappingField);
@@ -293,16 +293,16 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
       xWeight,
       yWeight: yWeight+addWeight+addWeightField1+addWeightField2
     }),
-    generateEdge(
-      `edge-true-${trueId}`,
-      `true-${currentId}`,
-      trueId
-    ),
-    generateEdge(
-      `edge-false-${falseId}`,
-      `false-${currentId}`,
-      falseId
-    ),
+    generateEdge({
+      id: `edge-true-${trueId}`,
+      source: `true-${currentId}`,
+      target: trueId
+    }),
+    generateEdge({
+      id: `edge-false-${falseId}`,
+      source: `false-${currentId}`,
+      target: falseId
+    }),
   ];
 
   const trueMappingField = generateMapping(
@@ -345,11 +345,11 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
       xWeight: xWeight+1,
       yWeight: yWeight+addWeightField1
     }),
-    generateEdge(
-      `edge-fields-${currentId}`,
-      `condition-${currentId}`,
-      conditionId
-    ),
+    generateEdge({
+      id: `edge-fields-${currentId}`,
+      source: `condition-${currentId}`,
+      target: conditionId
+    }),
   ];
 
   if (field1) {
@@ -359,11 +359,11 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
       yWeight
     );
     fields = _.concat(fields, field1MappingField);
-    fields.push(generateEdge(
-      `edge-field1-${conditionId}`,
-      `field1-${conditionId}`,
-      field1.MappingFieldId
-    ));
+    fields.push(generateEdge({
+      id: `edge-field1-${conditionId}`,
+      source: `field1-${conditionId}`,
+      target: field1.MappingFieldId
+    }));
   }
   if (field2) {
     const field2MappingField = generateMapping(
@@ -372,11 +372,11 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
       yWeight+addWeightField1
     );
     fields = _.concat(fields, field2MappingField);
-    fields.push(generateEdge(
-      `edge-field2-${conditionId}`,
-      `field2-${conditionId}`,
-      field2.MappingFieldId
-    ));
+    fields.push(generateEdge({
+      id: `edge-field2-${conditionId}`,
+      source: `field2-${conditionId}`,
+      target: field2.MappingFieldId
+    }));
   }
   return _.concat(elements, fields, trueMappingField, falseMappingField);
 };
@@ -420,16 +420,16 @@ const generateCombinationMapping = (source, xWeight, yWeight) => {
         xWeight,
         yWeight: yWeight+addWeight
       }),
-      generateEdge(
-        `edge-field1-${currentId}`,
-        `field1-${currentId}`,
-        field1.MappingFieldId
-      ),
-      generateEdge(
-        `edge-field2-${currentId}`,
-        `field2-${currentId}`,
-        field2.MappingFieldId
-      ),
+      generateEdge({
+        id: `edge-field1-${currentId}`,
+        source: `field1-${currentId}`,
+        target: field1.MappingFieldId
+      }),
+      generateEdge({
+        id: `edge-field2-${currentId}`,
+        source: `field2-${currentId}`,
+        target: field2.MappingFieldId
+      }),
     ];
 
     const field1MappingField = generateMapping(
@@ -483,11 +483,11 @@ const generateRegexMapping = (source, xWeight, yWeight) => {
       xWeight,
       yWeight: yWeight+1
     }),
-    generateEdge(
-      `edge-source-${currentId}`,
-      `source-${currentId}`,
-      source.Source.MappingFieldId
-    ),
+    generateEdge({
+      id: `edge-source-${currentId}`,
+      source: `source-${currentId}`,
+      target: source.Source.MappingFieldId
+    }),
   ];
   const sourceMappingField = generateMapping(
     source.Source,
@@ -532,11 +532,11 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
       xWeight,
       yWeight: yWeight+1
     }),
-    generateEdge(
-      `edge-source-${currentId}`,
-      `source-${source.Iterator.IteratorId}`,
-      source.Iterator.Source.MappingFieldId
-    ),
+    generateEdge({
+      id: `edge-source-${currentId}`,
+      source: `source-${source.Iterator.IteratorId}`,
+      target: source.Iterator.Source.MappingFieldId
+    }),
   ];
   const sourceMappingField = generateMapping(
     source.Iterator.Source,
@@ -588,11 +588,11 @@ const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
       xWeight,
       yWeight: yWeight+1
     }),
-    generateEdge(
-      `edge-source-${sourceId}`,
-      `source-${currentId}`,
-      sourceId
-    ),
+    generateEdge({
+      id: `edge-source-${sourceId}`,
+      source: `source-${currentId}`,
+      target: sourceId
+    }),
   ];
   return _.concat(elements, nextMappingField);
 };
@@ -638,11 +638,11 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
       xWeight,
       yWeight: yWeight+getChildrenWeight(source.Element)
     }),
-    generateEdge(
-      `edge-source-${sourceId}`,
-      `source-element-${currentId}`,
-      sourceId
-    ),
+    generateEdge({
+      id: `edge-source-${sourceId}`,
+      source: `source-element-${currentId}`,
+      target: sourceId
+    }),
     generateEntity({
       id: `elementobj-entity-${currentId}`,
       label: 'Element Object',
@@ -651,11 +651,11 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
       xWeight: xWeight+1,
       yWeight
     }),
-    generateEdge(
-      `edge-elementobj-${currentId}`,
-      `info-element-${currentId}`,
-      `elementobj-entity-${currentId}`
-    ),
+    generateEdge({
+      id: `edge-elementobj-${currentId}`,
+      source: `info-element-${currentId}`,
+      target: `elementobj-entity-${currentId}`
+    }),
     generateNode({
       id: `elementobj-info-${currentId}`,
       label: `Path: "${source.Element.Path}", Limit: ${source.Element.Limit}`,
@@ -684,11 +684,11 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
       xWeight: xWeight+2,
       yWeight: yWeight+1
     }),
-    generateEdge(
-      `edge-elementoperations-${currentId}`,
-      `elementobj-operations-${currentId}`,
-      `elementoperations-entity-${currentId}`
-    ),
+    generateEdge({
+      id: `edge-elementoperations-${currentId}`,
+      source: `elementobj-operations-${currentId}`,
+      target: `elementoperations-entity-${currentId}`
+    }),
   ];
 
   _.map(source.Element.Operations, (operationItem, index) => {
@@ -744,11 +744,11 @@ const generateAggregateMapping = (source, xWeight, yWeight) => {
       xWeight,
       yWeight: yWeight+1
     }),
-    generateEdge(
-      `edge-iterator-${currentId}`,
-      `iterator-${currentId}`,
-      `iterator-entity-${currentId}`
-    ),
+    generateEdge({
+      id: `edge-iterator-${currentId}`,
+      source: `iterator-${currentId}`,
+      target: `iterator-entity-${currentId}`
+    }),
     generateEntity({
       id: `iterator-entity-${currentId}`,
       label: 'Iterator',
@@ -777,11 +777,11 @@ const generateAggregateMapping = (source, xWeight, yWeight) => {
       xWeight: xWeight+1,
       yWeight: yWeight+2
     }),
-    generateEdge(
-      `edge-source-${currentId}`,
-      `iterator-source-${currentId}`,
-      source.Iterator.Source.MappingFieldId
-    ),
+    generateEdge({
+      id: `edge-source-${currentId}`,
+      source: `iterator-source-${currentId}`,
+      target: source.Iterator.Source.MappingFieldId
+    }),
     generateNode({
       id: `iterations-${currentId}`,
       label: 'Iterations:',
@@ -792,11 +792,11 @@ const generateAggregateMapping = (source, xWeight, yWeight) => {
       xWeight,
       yWeight: yWeight+getChildrenWeight(source.Iterator.Source)+2
     }),
-    generateEdge(
-      `edge-iterations-${currentId}`,
-      `iterations-${currentId}`,
-      source.Iterations.MappingFieldId
-    ),
+    generateEdge({
+      id: `edge-iterations-${currentId}`,
+      source: `iterations-${currentId}`,
+      target: source.Iterations.MappingFieldId
+    }),
   ];
   const sourceMappingField = generateMapping(
     source.Iterator.Source,
