@@ -6,37 +6,40 @@ import { getEntityColor } from './getEntityColor';
 
 export const generateMapping = (source, xWeight, yWeight) => {
   if (!source) return [];
+  const mapDetails = {
+    source,
+    xWeight,
+    yWeight
+  };
   switch (source.MappingFieldType) {
     case 'Function':
-      return generateFunctionMapping(source, xWeight, yWeight);
+      return generateFunctionMapping(mapDetails);
     case 'Column':
-      return generateSingleMapping(source, xWeight, yWeight);
     case 'Constant':
-      return generateSingleMapping(source, xWeight, yWeight);
     case 'HL7':
-      return generateSingleMapping(source, xWeight, yWeight);
+      return generateSingleMapping(mapDetails);
     case 'Switch':
-      return generateSwitchMapping(source, xWeight, yWeight);
+      return generateSwitchMapping(mapDetails);
     case 'Conditional':
-      return generateConditionMapping(source, xWeight, yWeight);
+      return generateConditionMapping(mapDetails);
     case 'Combination':
-      return generateCombinationMapping(source, xWeight, yWeight);
+      return generateCombinationMapping(mapDetails);
     case 'Regex':
-      return generateRegexMapping(source, xWeight, yWeight);
+      return generateRegexMapping(mapDetails);
     case 'Iteration':
-      return generateIterationMapping(source, xWeight, yWeight);
+      return generateIterationMapping(mapDetails);
     case 'JsonProperty':
-      return generateJsonPropertyMapping(source, xWeight, yWeight);
+      return generateJsonPropertyMapping(mapDetails);
     case 'JsonElement':
-      return generateJsonElementMapping(source, xWeight, yWeight);
+      return generateJsonElementMapping(mapDetails);
     case 'Aggregate':
-      return generateAggregateMapping(source, xWeight, yWeight);
+      return generateAggregateMapping(mapDetails);
     default:
       return [];
   }
 };
 
-const generateSingleMapping = (source, xWeight, yWeight) => {
+const generateSingleMapping = ({ source, xWeight, yWeight }) => {
   let identifier;
   switch (source.MappingFieldType) {
     case 'Column':
@@ -66,7 +69,7 @@ const generateSingleMapping = (source, xWeight, yWeight) => {
   ];
 };
 
-const generateFunctionMapping = (source, xWeight, yWeight) => {
+const generateFunctionMapping = ({ source, xWeight, yWeight }) => {
   const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const nextMappingField = generateMapping(
     source.FunctionParameter,
@@ -116,7 +119,7 @@ const generateFunctionMapping = (source, xWeight, yWeight) => {
   return _.concat(elements, nextMappingField);
 };
 
-const generateSwitchMapping = (source, xWeight, yWeight) => {
+const generateSwitchMapping = ({ source, xWeight, yWeight }) => {
   const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const currentId = source.MappingFieldId;
   const switchId = source.SwitchValue.MappingFieldId;
@@ -253,7 +256,7 @@ const generateSwitchMapping = (source, xWeight, yWeight) => {
   return elements;
 };
 
-const generateConditionMapping = (source, xWeight, yWeight) => {
+const generateConditionMapping = ({ source, xWeight, yWeight }) => {
   const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const addWeight = source.TrueField && getChildrenWeight(source.TrueField);
   const currentId = source.MappingFieldId;
@@ -394,7 +397,7 @@ const generateConditionMapping = (source, xWeight, yWeight) => {
   return _.concat(elements, fields, trueMappingField, falseMappingField);
 };
 
-const generateCombinationMapping = (source, xWeight, yWeight) => {
+const generateCombinationMapping = ({ source, xWeight, yWeight }) => {
   const currentId = source.MappingFieldId;
   let elements = [
     generateEntity({
@@ -462,7 +465,7 @@ const generateCombinationMapping = (source, xWeight, yWeight) => {
   return elements;
 };
 
-const generateRegexMapping = (source, xWeight, yWeight) => {
+const generateRegexMapping = ({ source, xWeight, yWeight }) => {
   const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const currentId = source.MappingFieldId;
 
@@ -511,7 +514,7 @@ const generateRegexMapping = (source, xWeight, yWeight) => {
   return _.concat(elements, sourceMappingField);
 };
 
-const generateIterationMapping = (source, xWeight, yWeight) => {
+const generateIterationMapping = ({ source, xWeight, yWeight }) => {
   const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const currentId = source.MappingFieldId;
 
@@ -560,7 +563,7 @@ const generateIterationMapping = (source, xWeight, yWeight) => {
   return _.concat(elements, sourceMappingField);
 };
 
-const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
+const generateJsonPropertyMapping = ({ source, xWeight, yWeight }) => {
   const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const nextMappingField = generateMapping(
     source.Source,
@@ -610,7 +613,7 @@ const generateJsonPropertyMapping = (source, xWeight, yWeight) => {
   return _.concat(elements, nextMappingField);
 };
 
-const generateJsonElementMapping = (source, xWeight, yWeight) => {
+const generateJsonElementMapping = ({ source, xWeight, yWeight }) => {
   const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const nextMappingField = generateMapping(
     source.Source,
@@ -723,7 +726,7 @@ const generateJsonElementMapping = (source, xWeight, yWeight) => {
   return _.concat(elements, nextMappingField);
 };
 
-const generateAggregateMapping = (source, xWeight, yWeight) => {
+const generateAggregateMapping = ({ source, xWeight, yWeight }) => {
   const entityColor = source.MappingFieldType && getEntityColor(source.MappingFieldType);
   const currentId = source.MappingFieldId;
 
