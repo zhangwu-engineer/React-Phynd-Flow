@@ -11,11 +11,11 @@ export const generateNode = ({ entityColor, ...infoDetails }) => {
   return nodeElement;
 };
 
-export const generateEntity = ({ entityColor, label, ...infoDetails }) => {
+export const generateEntity = ({ entityColor, ...infoDetails }) => {
   return {
     data: {
       ...infoDetails,
-      entity: label,
+      entity: infoDetails.label,
     },
     classes: 'entity',
     style: {
