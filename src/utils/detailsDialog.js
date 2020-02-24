@@ -7,18 +7,21 @@ export const isDetailsEntityRemovable = (parent) => {
 }
 
 export const getPrimaryFieldLabel = (cardType) => {
-  switch (cardType) {
-    case 'Function': return 'Function Name';
-    case 'Iteration': return 'Delimiter';
-    case 'Regex': return 'Pattern';
-    case 'Constant': return 'Constant Value';
-    case 'Column': return 'Column Name';
-    case 'HL7': return 'HL7 Value';
-    case 'JsonProperty': return 'Property Path';
-    case 'JsonElementObject': return 'Path';
-    case 'Aggregate': return 'Delimiter';
-    default: return null;
+  const primaryMapping = {
+    'Function': 'Function Name',
+    'Iteration': 'Delimiter',
+    'Regex': 'Pattern',
+    'Constant': 'Constant Value',
+    'Column': 'Column Value',
+    'HL7': 'HL7 Value',
+    'JsonProperty': 'Property Path',
+    'JsonElementObject': 'Path',
+    'Aggregate': 'Delimiter',
   }
+  if (primaryMapping[cardType]) {
+    return primaryMapping[cardType];
+  }
+  return null;
 }
 
 export const getSecondaryFieldLabel = (cardType) => {
