@@ -102,6 +102,7 @@ export const OBJ_ENTITIES = [
   'payto-address',
   'schedule',
   'kvp-provider',
+  'healthplan-details',
 ];
 
 // diagram input
