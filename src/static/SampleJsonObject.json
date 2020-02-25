@@ -6630,5 +6630,13 @@
 				"ColumnIdentifier": "column76"
 			}
 		}]
+	},
+	"Healthplan Module": {
+		"Action": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		}
 	}
 }

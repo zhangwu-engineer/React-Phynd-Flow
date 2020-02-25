@@ -389,5 +389,32 @@
 			"ItemValue",
 			"Condition"
 		]
+	},
+	"Healthplan Module": {
+		"Healthplan Details": [
+			"Action",
+			"ExternalCode",
+			"HealthPlanDisplayName",
+			"HealthPlanName",
+			"Notes",
+			"PrimaryCareProviderRequired",
+			"SortOrder",
+			"Restrictions",
+			"ServiceAreaCounty",
+			"ServiceAreaState",
+			"UserDefined1",
+			"UserDefined2",
+			"UserDefined3",
+			"UserDefined4",
+			"UserDefined5",
+			"UserDefined6",
+			"UserDefined7",
+			"UserDefined8",
+			"UserDefined9",
+			"UserDefined10",
+			"DataSourceId",
+			"Type",
+			"Options"
+		]
 	}
 }
