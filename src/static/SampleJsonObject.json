@@ -6637,6 +6637,138 @@
 			"MappingFieldType": "Column",
 			"SerAttributeId": null,
 			"ColumnIdentifier": "column1"
+		},
+		"ExternalCode": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"HealthPlanDisplayName": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"HealthPlanName": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"Notes": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"PrimaryCareProviderRequired": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"SortOrder": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"Restrictions": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"ServiceAreaCounty": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"ServiceAreaState": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"UserDefined1": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"UserDefined2": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"UserDefined3": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"UserDefined4": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"UserDefined5": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"UserDefined6": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"UserDefined7": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"UserDefined8": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"UserDefined9": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"UserDefined10": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"DataSourceId": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"Type": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"Options": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
 		}
 	}
 }
