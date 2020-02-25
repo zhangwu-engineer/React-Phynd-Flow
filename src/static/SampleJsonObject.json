@@ -6934,6 +6934,129 @@
 				"SerAttributeId": null,
 				"ConstantValue": null
 			}
+		}],
+		"HealthplanLocationMaps": [{
+			"Action": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"LocationId": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"LocationExternalCode": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"UserDefined1": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"UserDefined2": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"UserDefined3": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"UserDefined4": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"UserDefined5": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"TierName": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"TierNumber": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			}
+		}, {
+			"Action": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"LocationId": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"LocationExternalCode": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"UserDefined1": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"UserDefined2": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"UserDefined3": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"UserDefined4": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"UserDefined5": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"TierName": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"TierNumber": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			}
 		}]
 	}
 }
