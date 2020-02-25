@@ -1,14 +1,7 @@
-export const generateNode = (id, label, parent, parentType, nextType, dataDetails, xWeight, yWeight, entityColor) => {
+export const generateNode = ({ entityColor, ...infoDetails }) => {
   const nodeElement = {
     data: {
-      id,
-      label,
-      parentType,
-      nextType,
-      dataDetails,
-      xWeight,
-      yWeight,
-      parent,
+      ...infoDetails
     },
     group: 'nodes',
     style: {
@@ -18,16 +11,11 @@ export const generateNode = (id, label, parent, parentType, nextType, dataDetail
   return nodeElement;
 };
 
-export const generateEntity = (id, label, parentType, dataDetails, xWeight, yWeight, entityColor) => {
+export const generateEntity = ({ entityColor, ...infoDetails }) => {
   return {
     data: {
-      id,
-      label,
-      parentType,
-      dataDetails,
-      xWeight,
-      yWeight,
-      entity: label,
+      ...infoDetails,
+      entity: infoDetails.label,
     },
     classes: 'entity',
     style: {
@@ -36,12 +24,10 @@ export const generateEntity = (id, label, parentType, dataDetails, xWeight, yWei
   };
 };
 
-export const generateEdge = (id, source, target) => {
+export const generateEdge = ({ ...infoDetails }) => {
   return {
     data: {
-      id,
-      source,
-      target,
+      ...infoDetails
     },
     classes: 'edges',
   };

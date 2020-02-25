@@ -7,36 +7,43 @@ export const isDetailsEntityRemovable = (parent) => {
 }
 
 export const getPrimaryFieldLabel = (cardType) => {
-  switch (cardType) {
-    case 'Function': return 'Function Name';
-    case 'Iteration': return 'Delimiter';
-    case 'Regex': return 'Pattern';
-    case 'Constant': return 'Constant Value';
-    case 'Column': return 'Column Name';
-    case 'HL7': return 'HL7 Value';
-    case 'JsonProperty': return 'Property Path';
-    case 'JsonElementObject': return 'Path';
-    case 'Aggregate': return 'Delimiter';
-    default: return null;
+  const primaryMapping = {
+    'Function': 'Function Name',
+    'Iteration': 'Delimiter',
+    'Regex': 'Pattern',
+    'Constant': 'Constant Value',
+    'Column': 'Column Value',
+    'HL7': 'HL7 Value',
+    'JsonProperty': 'Property Path',
+    'JsonElementObject': 'Path',
+    'Aggregate': 'Delimiter',
   }
+  if (primaryMapping[cardType]) {
+    return primaryMapping[cardType];
+  }
+  return null;
 }
 
 export const getSecondaryFieldLabel = (cardType) => {
-  switch (cardType) {
-    case 'Iteration': return 'Index';
-    case 'Regex': return 'Flags';
-    case 'JsonProperty': return 'Default';
-    case 'JsonElementObject': return 'Limit';
-    case 'AggregateIterator': return 'Iterator Delimiter';
-    default: return null;
+  const secondaryMapping = {
+    'Iteration': 'Index',
+    'Regex': 'Flags',
+    'JsonProperty': 'Default',
+    'JsonElementObject': 'Limit',
+    'AggregateIterator': 'Iterator Delimiter',
+
   }
+  if (secondaryMapping[cardType]) {
+    return secondaryMapping[cardType];
+  }
+  return null;
 }
 
 export const getTertiaryFieldLabel = (cardType) => {
-  switch (cardType) {
-    case 'Regex': return 'Group Number';
-    default: return null;
+  if (cardType === 'Regex') {
+    return 'Group Number';
   }
+  return null;
 }
 
 export const getFourthFieldLabel = (activeParent) => {
