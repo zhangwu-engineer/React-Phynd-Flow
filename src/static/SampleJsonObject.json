@@ -6769,6 +6769,120 @@
 			"MappingFieldType": "Column",
 			"SerAttributeId": null,
 			"ColumnIdentifier": "column1"
+		},
+		"CompanyAction": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"AddressLine1": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"AddressLine2": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"City": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"CompanyName": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"ConsumerFax": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"ConsumerPhone": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"ContactEmail": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"ContactName": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"ContactPhone": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"CompanyExternalCode": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"CompanyNotes": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"State": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"Zip": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"CompanyOptions": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"NetworkAction": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"NetworkName": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"NetworkExternalCode": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
+		},
+		"NetworkOptions": {
+			"MappingFieldId": 165545,
+			"MappingFieldType": "Column",
+			"SerAttributeId": null,
+			"ColumnIdentifier": "column1"
 		}
 	}
 }

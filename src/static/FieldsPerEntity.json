@@ -417,7 +417,7 @@
 			"Options"
 		],
 		"Healthplan Company": [
-			"Action",
+			"CompanyAction",
 			"AddressLine1",
 			"AddressLine2",
 			"City",
@@ -427,17 +427,17 @@
 			"ContactEmail",
 			"ContactName",
 			"ContactPhone",
-			"ExternalCode",
-			"Notes",
+			"CompanyExternalCode",
+			"CompanyNotes",
 			"State",
 			"Zip",
-			"Options"
+			"CompanyOptions"
 		],
 		"Healthplan Network": [
-			"Action",
-			"Name",
-			"ExternalCode",
-			"Options"
+			"NetworkAction",
+			"NetworkName",
+			"NetworkExternalCode",
+			"NetworkOptions"
 		]
 	}
 }
