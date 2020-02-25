@@ -6883,6 +6883,57 @@
 			"MappingFieldType": "Column",
 			"SerAttributeId": null,
 			"ColumnIdentifier": "column1"
-		}
+		},
+		"HealthplanGroupMaps": [{
+			"Action": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"Name": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"ExternalCode": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"Options": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			}
+		}, {
+			"Action": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"Name": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"ExternalCode": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			},
+			"Options": {
+				"MappingFieldId": 165621,
+				"MappingFieldType": "Constant",
+				"SerAttributeId": null,
+				"ConstantValue": null
+			}
+		}]
 	}
 }
