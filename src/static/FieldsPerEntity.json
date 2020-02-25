@@ -456,6 +456,29 @@
 			"UserDefined5",
 			"TierName",
 			"TierNumber"
+		],
+		"Healthplan Providers": [
+			"Action",
+			"ProviderId",
+			"Npi",
+			"InitialDate",
+			"MostRecentDate",
+			"NextActionDate",
+			"StartDate",
+			"EndDate",
+			"ExternalCode",
+			"UserDefined1",
+			"UserDefined2",
+			"UserDefined3",
+			"UserDefined4",
+			"UserDefined5",
+			"TierName",
+			"TierNumber",
+			"ScopeName",
+			"AcceptingOption",
+			"AddressId",
+			"LocationId",
+			"Options"
 		]
 	}
 }
