@@ -103,6 +103,8 @@ export const OBJ_ENTITIES = [
   'schedule',
   'kvp-provider',
   'healthplan-details',
+  'healthplan-company',
+  'healthplan-network'
 ];
 
 // diagram input

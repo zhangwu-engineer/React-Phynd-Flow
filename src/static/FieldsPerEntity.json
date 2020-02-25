@@ -415,6 +415,29 @@
 			"DataSourceId",
 			"Type",
 			"Options"
+		],
+		"Healthplan Company": [
+			"Action",
+			"AddressLine1",
+			"AddressLine2",
+			"City",
+			"CompanyName",
+			"ConsumerFax",
+			"ConsumerPhone",
+			"ContactEmail",
+			"ContactName",
+			"ContactPhone",
+			"ExternalCode",
+			"Notes",
+			"State",
+			"Zip",
+			"Options"
+		],
+		"Healthplan Network": [
+			"Action",
+			"Name",
+			"ExternalCode",
+			"Options"
 		]
 	}
 }
