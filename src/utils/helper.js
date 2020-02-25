@@ -47,7 +47,10 @@ export const getNameFromEntity = entity => {
     case 'providers': return 'ProviderMaps';
     case 'contacts': return 'ContactMaps';
     case 'age-groups': return 'AgeGroupMaps';
-    default: return `${entity}`.split('-').map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(' ');
+    case 'healthplan-groups': return 'HealthplanGroupMaps';
+    case 'healthplan-locations': return 'HealthplanLocationMaps';
+    case 'healthplan-providers': return 'HealthplanProviderMaps';
+    default: console.log(`${entity}`.split('-').map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(' ')); return `${entity}`.split('-').map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(' ');
   }
 }
 
@@ -102,6 +105,9 @@ export const OBJ_ENTITIES = [
   'payto-address',
   'schedule',
   'kvp-provider',
+  'healthplan-details',
+  'healthplan-company',
+  'healthplan-network'
 ];
 
 // diagram input
