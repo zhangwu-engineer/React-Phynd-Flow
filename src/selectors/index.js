@@ -5,6 +5,7 @@ import { getIDFromName, getNameFromID, getNameFromEntity, OBJ_ENTITIES } from 'u
 export const getFieldsReducer = (state) => state.fields;
 export const getDashboardReducer = (state) => state.dashboard;
 export const getStashesList = (state) =>  state.stashes && state.stashes.stashes;
+export const getIteratorsList = (state) =>  state.iterators && state.iterators.iteratorsList;
 
 const getModuleEntity = (state, props) => {
   return {
