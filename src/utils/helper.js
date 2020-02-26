@@ -78,6 +78,20 @@ export const addOrReplaceStash = (arr, obj) => {
     arr[index] = obj;
   }
   return arr;
+}
+
+export const addOrReplaceIterator = (arr, obj) => {
+  const { delimiter, index } = obj;
+  const listId = _.findIndex(arr, {
+    delimiter,
+    index,
+  });
+  if (listId === -1) {
+    arr.push(obj);
+  } else {
+    arr[listId] = obj;
+  }
+  return arr;
 } 
 
 // routing helpers
