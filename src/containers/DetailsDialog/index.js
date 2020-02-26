@@ -21,7 +21,17 @@ import {
   getTertiaryFieldLabel,
 } from 'utils/detailsDialog';
 
-const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails, hideModal, updateElement, removeElement }) => {
+const DetailsDialog = ({
+  isModalShown,
+  activeParent,
+  currentCard,
+  currentDetails,
+  hideModal,
+  updateElement,
+  removeElement,
+  iteratorsList,
+  addIteratorsList
+}) => {
   const classes = useStyles();
   const closeModal = () => {
     hideModal(false);
@@ -45,7 +55,6 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
     setInputTertiaryValue(event.target.value);
   };
 
-  const [iteratorsList, setIteratorList] = React.useState([]);
   const [iteratorsListId, setIteratorsListId] = React.useState(0);
 
   const handleListIdChange = event => {
@@ -73,7 +82,7 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
         <Typography><CloseIcon onClick={closeModal} /></Typography>
       </Grid>
       <DialogContent className={classes.dialogContent}>
-        {iteratorsList.length > 0 &&
+        {iteratorsList && iteratorsList.length > 0 &&
           <Grid className={classes.tabInputContent}>
             <FormControl className={classes.formControl}>
               <InputLabel className={classes.resize}>Iterators</InputLabel>
@@ -155,19 +164,10 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
             className={classes.button}
             onClick={() => {
               if (currentCard === 'Iteration') {
-                const iteratorsListClone = _.clone(iteratorsList);
-                const duplicatedId = _.findIndex(iteratorsListClone, {
+                addIteratorsList({
                   delimiter: inputPrimaryValue,
                   index: inputSecondaryValue,
                 });
-                if (duplicatedId === -1) {
-                  iteratorsListClone.push({
-                    delimiter: inputPrimaryValue,
-                    index: inputSecondaryValue,
-                  });
-                  setIteratorsListId(iteratorsListClone.length-1);
-                  setIteratorList(iteratorsListClone);
-                }
               }
               updateElement(currentCard, {
                 primary: inputPrimaryValue,

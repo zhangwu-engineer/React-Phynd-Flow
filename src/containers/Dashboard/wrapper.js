@@ -15,8 +15,10 @@ export const WrapperContainer = ({
   fieldsList,
   isContactMap,
   stashesList,
+  iteratorsList,
   updateDashboard,
   stashData,
+  addIteratorsList,
   updateFields,
   revertCTA,
   submitCTA,
@@ -76,6 +78,8 @@ export const WrapperContainer = ({
         isContactMap={isContactMap}
         updateDashboard={updateDashboard}
         stashData={stashData}
+        iteratorsList={iteratorsList}
+        addIteratorsList={addIteratorsList}
         updateFields={updateFields}
         { ...props }
       />
