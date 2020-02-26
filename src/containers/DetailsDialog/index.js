@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
+import _ from 'lodash';
 
 import useStyles from './style';
 
@@ -39,6 +40,8 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
   const handleTertiaryInputChange = event => {
     setInputTertiaryValue(event.target.value);
   };
+
+  const [iteratorsList, setIteratorList] = React.useState([]);
 
   useEffect(() => {
     setInputPrimaryValue(currentDetails ? currentDetails.primary : '');
@@ -123,6 +126,14 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
             color="primary"
             className={classes.button}
             onClick={() => {
+              if (currentCard === 'Iteration') {
+                const iteratorsListClone = _.clone(iteratorsList);
+                iteratorsListClone.push({
+                  delimiter: inputPrimaryValue,
+                  index: inputSecondaryValue,
+                });
+                setIteratorList(iteratorsListClone);
+              }
               updateElement(currentCard, {
                 primary: inputPrimaryValue,
                 secondary: inputSecondaryValue,
