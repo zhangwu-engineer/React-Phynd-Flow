@@ -6,6 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
 import _ from 'lodash';
 
 import useStyles from './style';
@@ -42,6 +46,14 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
   };
 
   const [iteratorsList, setIteratorList] = React.useState([]);
+  const [iteratorsListId, setIteratorsListId] = React.useState(0);
+
+  const handleListIdChange = event => {
+    const newListId = event.target.value;
+    setIteratorsListId(newListId);
+    setInputPrimaryValue(iteratorsList[newListId].delimiter);
+    setInputSecondaryValue(iteratorsList[newListId].index);
+  };
 
   useEffect(() => {
     setInputPrimaryValue(currentDetails ? currentDetails.primary : '');
@@ -61,6 +73,22 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
         <Typography><CloseIcon onClick={closeModal} /></Typography>
       </Grid>
       <DialogContent className={classes.dialogContent}>
+        {iteratorsList.length > 0 &&
+          <Grid className={classes.tabInputContent}>
+            <FormControl className={classes.formControl}>
+              <InputLabel className={classes.resize}>Iterators</InputLabel>
+              <Select
+                className={classes.select}
+                value={iteratorsListId}
+                onChange={handleListIdChange}
+              >
+                {iteratorsList.map((data, index) => (
+                  <MenuItem value={index} key={`iterator-${index}`}>{`Delimiter: ${data.delimiter}, Index: ${data.index}`}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+        }
         <Grid item>
           {getPrimaryFieldLabel(currentCard) &&
             <TextField
@@ -128,11 +156,18 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
             onClick={() => {
               if (currentCard === 'Iteration') {
                 const iteratorsListClone = _.clone(iteratorsList);
-                iteratorsListClone.push({
+                const duplicatedId = _.findIndex(iteratorsListClone, {
                   delimiter: inputPrimaryValue,
                   index: inputSecondaryValue,
                 });
-                setIteratorList(iteratorsListClone);
+                if (duplicatedId === -1) {
+                  iteratorsListClone.push({
+                    delimiter: inputPrimaryValue,
+                    index: inputSecondaryValue,
+                  });
+                  setIteratorsListId(iteratorsListClone.length-1);
+                  setIteratorList(iteratorsListClone);
+                }
               }
               updateElement(currentCard, {
                 primary: inputPrimaryValue,
