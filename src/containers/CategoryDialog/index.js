@@ -70,7 +70,7 @@ const CategoryDialog = ({ isModalShown, activeParent, currentCard, hideModal, se
                 onClick={() => {
                   setActiveCard(key);
                   closeModal();
-                  if (!isSingleNode(key)) {
+                  if (key !== 'Iteration' ) {
                     setNewElement(key, DEFAULT_INPUT);
                   } else {
                     setDetailsModalShown(true);
