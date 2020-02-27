@@ -6737,10 +6737,37 @@
 			"ColumnIdentifier": "column1"
 		},
 		"UserDefined7": {
-			"MappingFieldId": 165545,
-			"MappingFieldType": "Column",
-			"SerAttributeId": null,
-			"ColumnIdentifier": "column1"
+			"MappingFieldId": 185669,
+			"MappingFieldType":"Combination",
+			"SerAttributeId":null,
+			"Field1": {
+				"MappingFieldId": 185670,
+				"MappingFieldType": "Regex",
+				"SerAttributeId": null,
+				"RegexPattern": "([^ ]+) ([^ ]+) ([^ ]+)",
+				"RegexFlags": "g",
+				"RegexGroup": 1,
+				"Source": {
+					"MappingFieldId": 185671,
+					"MappingFieldType": "Column",
+					"SerAttributeId": null,
+					"ColumnIdentifier": "column202"
+				}
+			},
+			"Field2":{
+				"MappingFieldId": 185672,
+				"MappingFieldType": "Regex",
+				"SerAttributeId": null,
+				"RegexPattern": "([^ ]+) ([^ ]+) ([^ ]+)",
+				"RegexFlags": "g",
+				"RegexGroup": 3,
+				"Source": {
+					"MappingFieldId": 185673,
+					"MappingFieldType": "Column",
+					"SerAttributeId": null,
+					"ColumnIdentifier": "column202"
+				}
+			}
 		},
 		"UserDefined8": {
 			"MappingFieldId": 165545,
@@ -6829,10 +6856,37 @@
 			"ColumnIdentifier": "column1"
 		},
 		"ContactEmail": {
-			"MappingFieldId": 165545,
-			"MappingFieldType": "Column",
-			"SerAttributeId": null,
-			"ColumnIdentifier": "column1"
+			"MappingFieldId": 185669,
+			"MappingFieldType":"Combination",
+			"SerAttributeId":null,
+			"Field1": {
+				"MappingFieldId": 185670,
+				"MappingFieldType": "Regex",
+				"SerAttributeId": null,
+				"RegexPattern": "([^ ]+) ([^ ]+) ([^ ]+)",
+				"RegexFlags": "g",
+				"RegexGroup": 1,
+				"Source": {
+					"MappingFieldId": 185671,
+					"MappingFieldType": "Column",
+					"SerAttributeId": null,
+					"ColumnIdentifier": "column202"
+				}
+			},
+			"Field2":{
+				"MappingFieldId": 185672,
+				"MappingFieldType": "Regex",
+				"SerAttributeId": null,
+				"RegexPattern": "([^ ]+) ([^ ]+) ([^ ]+)",
+				"RegexFlags": "g",
+				"RegexGroup": 3,
+				"Source": {
+					"MappingFieldId": 185673,
+					"MappingFieldType": "Column",
+					"SerAttributeId": null,
+					"ColumnIdentifier": "column202"
+				}
+			}
 		},
 		"ContactName": {
 			"MappingFieldId": 165545,
