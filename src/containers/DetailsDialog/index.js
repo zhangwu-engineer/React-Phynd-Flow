@@ -82,7 +82,7 @@ const DetailsDialog = ({
         <Typography><CloseIcon onClick={closeModal} /></Typography>
       </Grid>
       <DialogContent className={classes.dialogContent}>
-        {iteratorsList && iteratorsList.length > 0 &&
+        {currentCard === 'Iteration' && iteratorsList && iteratorsList.length > 0 &&
           <Grid className={classes.tabInputContent}>
             <FormControl className={classes.formControl}>
               <InputLabel className={classes.resize}>Iterators</InputLabel>
