@@ -83,7 +83,7 @@ const DetailsDialog = ({
       </Grid>
       <DialogContent className={classes.dialogContent}>
         {currentCard === 'Iteration' && iteratorsList && iteratorsList.length > 0 &&
-          <Grid className={classes.tabInputContent}>
+          <Grid className={classes.tabSelectContent}>
             <FormControl className={classes.formControl}>
               <InputLabel className={classes.resize}>Iterators</InputLabel>
               <Select
@@ -98,7 +98,7 @@ const DetailsDialog = ({
             </FormControl>
           </Grid>
         }
-        <Grid item>
+        <Grid item className={classes.tabSelectContent}>
           {getPrimaryFieldLabel(currentCard) &&
             <TextField
               label={getPrimaryFieldLabel(currentCard)}
@@ -117,7 +117,7 @@ const DetailsDialog = ({
             />
           }
         </Grid>
-        <Grid item>
+        <Grid item className={classes.tabSelectContent}>
           {getSecondaryFieldLabel(currentCard) &&
             <TextField
               label={getSecondaryFieldLabel(currentCard)}

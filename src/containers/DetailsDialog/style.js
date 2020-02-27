@@ -10,6 +10,9 @@ export default makeStyles(theme => ({
     paddingBottom: 12,
     minWidth: 300,
   },
+  tabSelectContent: {
+    paddingBottom: 20,
+  },
   buttonGroup: {
     paddingTop: 30,
     paddingBottom: 20,
