@@ -61,8 +61,8 @@ const addIteratorsListRequest = (state, { payload }) => {
 const addIteratorsListSuccess = (state, { payload }) => {
   return update(state, {
     iteratorsList: {
-      $set: state.IteratorsList ?
-      addOrReplaceIterator(state.IteratorsList, payload.data) :
+      $set: state.iteratorsList ?
+      addOrReplaceIterator(state.iteratorsList, payload.data) :
         [payload.data]
     },
     getIteratorsList: {
