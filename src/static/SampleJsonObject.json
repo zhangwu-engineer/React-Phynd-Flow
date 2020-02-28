@@ -6895,10 +6895,97 @@
 				}
 		},
 		"Options": {
-			"MappingFieldId": 165545,
-			"MappingFieldType": "Column",
+			"MappingFieldId": 165604,
+			"MappingFieldType": "Iteration",
 			"SerAttributeId": null,
-			"ColumnIdentifier": "column1"
+			"Iterator": {
+				"IteratorId": 751,
+				"Source": {
+					"MappingFieldId": 165603,
+					"MappingFieldType": "Combination",
+					"SerAttributeId": null,
+					"Field1": {
+						"MappingFieldId": 165595,
+						"MappingFieldType": "Combination",
+						"SerAttributeId": null,
+						"Field1": {
+							"MappingFieldId": 165591,
+							"MappingFieldType": "Combination",
+							"SerAttributeId": null,
+							"Field1": {
+								"MappingFieldId": 165589,
+								"MappingFieldType": "Column",
+								"SerAttributeId": null,
+								"ColumnIdentifier": "column15"
+							},
+							"Field2": {
+								"MappingFieldId": 165590,
+								"MappingFieldType": "Constant",
+								"SerAttributeId": null,
+								"ConstantValue": "~~"
+							}
+						},
+						"Field2": {
+							"MappingFieldId": 165594,
+							"MappingFieldType": "Combination",
+							"SerAttributeId": null,
+							"Field1": {
+								"MappingFieldId": 165592,
+								"MappingFieldType": "Column",
+								"SerAttributeId": null,
+								"ColumnIdentifier": "column22"
+							},
+							"Field2": {
+								"MappingFieldId": 165593,
+								"MappingFieldType": "Constant",
+								"SerAttributeId": null,
+								"ConstantValue": "~~"
+							}
+						}
+					},
+					"Field2": {
+						"MappingFieldId": 165602,
+						"MappingFieldType": "Combination",
+						"SerAttributeId": null,
+						"Field1": {
+							"MappingFieldId": 165598,
+							"MappingFieldType": "Combination",
+							"SerAttributeId": null,
+							"Field1": {
+								"MappingFieldId": 165596,
+								"MappingFieldType": "Column",
+								"SerAttributeId": null,
+								"ColumnIdentifier": "column29"
+							},
+							"Field2": {
+								"MappingFieldId": 165597,
+								"MappingFieldType": "Constant",
+								"SerAttributeId": null,
+								"ConstantValue": "~~"
+							}
+						},
+						"Field2": {
+							"MappingFieldId": 165601,
+							"MappingFieldType": "Combination",
+							"SerAttributeId": null,
+							"Field1": {
+								"MappingFieldId": 165599,
+								"MappingFieldType": "Column",
+								"SerAttributeId": null,
+								"ColumnIdentifier": "column36"
+							},
+							"Field2": {
+								"MappingFieldId": 165600,
+								"MappingFieldType": "Constant",
+								"SerAttributeId": null,
+								"ConstantValue": "~~"
+							}
+						}
+					}
+				},
+				"Delimiter": "~~",
+				"Index": -1
+			}
 		},
 		"CompanyAction": {
 			"MappingFieldId": 165545,
@@ -7057,10 +7144,97 @@
 				"ConstantValue": null
 			},
 			"Name": {
-				"MappingFieldId": 165621,
-				"MappingFieldType": "Constant",
+				"MappingFieldId": 165604,
+				"MappingFieldType": "Iteration",
 				"SerAttributeId": null,
-				"ConstantValue": null
+				"Iterator": {
+					"IteratorId": 751,
+					"Source": {
+						"MappingFieldId": 165603,
+						"MappingFieldType": "Combination",
+						"SerAttributeId": null,
+						"Field1": {
+							"MappingFieldId": 165595,
+							"MappingFieldType": "Combination",
+							"SerAttributeId": null,
+							"Field1": {
+								"MappingFieldId": 165591,
+								"MappingFieldType": "Combination",
+								"SerAttributeId": null,
+								"Field1": {
+									"MappingFieldId": 165589,
+									"MappingFieldType": "Column",
+									"SerAttributeId": null,
+									"ColumnIdentifier": "column15"
+								},
+								"Field2": {
+									"MappingFieldId": 165590,
+									"MappingFieldType": "Constant",
+									"SerAttributeId": null,
+									"ConstantValue": "~~"
+								}
+							},
+							"Field2": {
+								"MappingFieldId": 165594,
+								"MappingFieldType": "Combination",
+								"SerAttributeId": null,
+								"Field1": {
+									"MappingFieldId": 165592,
+									"MappingFieldType": "Column",
+									"SerAttributeId": null,
+									"ColumnIdentifier": "column22"
+								},
+								"Field2": {
+									"MappingFieldId": 165593,
+									"MappingFieldType": "Constant",
+									"SerAttributeId": null,
+									"ConstantValue": "~~"
+								}
+							}
+						},
+						"Field2": {
+							"MappingFieldId": 165602,
+							"MappingFieldType": "Combination",
+							"SerAttributeId": null,
+							"Field1": {
+								"MappingFieldId": 165598,
+								"MappingFieldType": "Combination",
+								"SerAttributeId": null,
+								"Field1": {
+									"MappingFieldId": 165596,
+									"MappingFieldType": "Column",
+									"SerAttributeId": null,
+									"ColumnIdentifier": "column29"
+								},
+								"Field2": {
+									"MappingFieldId": 165597,
+									"MappingFieldType": "Constant",
+									"SerAttributeId": null,
+									"ConstantValue": "~~"
+								}
+							},
+							"Field2": {
+								"MappingFieldId": 165601,
+								"MappingFieldType": "Combination",
+								"SerAttributeId": null,
+								"Field1": {
+									"MappingFieldId": 165599,
+									"MappingFieldType": "Column",
+									"SerAttributeId": null,
+									"ColumnIdentifier": "column36"
+								},
+								"Field2": {
+									"MappingFieldId": 165600,
+									"MappingFieldType": "Constant",
+									"SerAttributeId": null,
+									"ConstantValue": "~~"
+								}
+							}
+						}
+					},
+					"Delimiter": "~~",
+					"Index": -1
+				}
 			},
 			"ExternalCode": {
 				"MappingFieldId": 165621,
