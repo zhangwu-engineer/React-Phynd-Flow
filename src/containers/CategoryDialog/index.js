@@ -15,7 +15,16 @@ import { NodeCard } from 'components/NodeCard';
 import { isSingleNode, DEFAULT_INPUT } from 'utils/helper';
 import DetailsDialog from 'containers/DetailsDialog';
 
-const CategoryDialog = ({ isModalShown, activeParent, currentCard, hideModal, setNewElement, removeElement }) => {
+const CategoryDialog = ({
+  isModalShown,
+  activeParent,
+  currentCard,
+  hideModal,
+  setNewElement,
+  removeElement,
+  iteratorsList,
+  addIteratorsList,
+}) => {
   const classes = useStyles();
   const [activeCard, setActiveCard] = React.useState(null);
   const [isDetailsModalShown, setDetailsModalShown] = React.useState(false);
@@ -70,7 +79,7 @@ const CategoryDialog = ({ isModalShown, activeParent, currentCard, hideModal, se
                 onClick={() => {
                   setActiveCard(key);
                   closeModal();
-                  if (!isSingleNode(key)) {
+                  if (key !== 'Iteration' ) {
                     setNewElement(key, DEFAULT_INPUT);
                   } else {
                     setDetailsModalShown(true);
@@ -112,6 +121,8 @@ const CategoryDialog = ({ isModalShown, activeParent, currentCard, hideModal, se
         updateElement={(element, inputValue) => {
           setNewElement(activeCard, inputValue);
         }}
+        iteratorsList={iteratorsList}
+        addIteratorsList={addIteratorsList}
       />
     </Fragment>
   );

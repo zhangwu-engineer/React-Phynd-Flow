@@ -7,6 +7,7 @@ import {
   getDashboardReducer,
   getFieldsList,
   getStashesList,
+  getIteratorsList,
   makeSidebarData,
   makeDashboardList,
   makeBlockList,
@@ -33,6 +34,10 @@ export const hoc = (WrapperContainer) => {
 
     stashData = data => {
       this.props.addStashesDataRequest({ data });
+    }
+
+    addIteratorsList = data => {
+      this.props.addIteratorsListRequest({ data });
     }
 
     revertStore = () => {
@@ -65,6 +70,7 @@ export const hoc = (WrapperContainer) => {
           updateDashboard={this.updateDashboard}
           updateFields={this.updateFields}
           stashData={this.stashData}
+          addIteratorsList={this.addIteratorsList}
           revertCTA={this.revertStore}
           submitCTA={this.submitStore}
           submitOne={this.submitOne}
@@ -94,6 +100,7 @@ export default (WrapperContainer) => {
     dashboardList: getDashboardList(state, props),
     fieldsList: getFieldsList(state, props),
     stashesList: getStashesList(state),
+    iteratorsList: getIteratorsList(state),
     sidebarData: getSidebarData(state, props),
     blockList: getBlockList(state, props),
     isContactMap: isContactMap(state, props),
@@ -107,6 +114,7 @@ export default (WrapperContainer) => {
     revertAllDashboardDataRequest: actions.revertAllDashboardDataRequest,
     revertOneDashboardDataRequest: actions.revertOneDashboardDataRequest,
     addStashesDataRequest: actions.addStashesDataRequest,
+    addIteratorsListRequest: actions.addIteratorsListRequest,
     updateFieldsDataRequest: actions.updateFieldsDataRequest,
     getFieldsPerEntityRequest: actions.getFieldsPerEntityRequest,
   }

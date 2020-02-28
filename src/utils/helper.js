@@ -50,7 +50,7 @@ export const getNameFromEntity = entity => {
     case 'healthplan-groups': return 'HealthplanGroupMaps';
     case 'healthplan-locations': return 'HealthplanLocationMaps';
     case 'healthplan-providers': return 'HealthplanProviderMaps';
-    default: console.log(`${entity}`.split('-').map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(' ')); return `${entity}`.split('-').map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(' ');
+    default: return `${entity}`.split('-').map(item => item.charAt(0).toUpperCase() + item.slice(1)).join(' ');
   }
 }
 
@@ -76,6 +76,20 @@ export const addOrReplaceStash = (arr, obj) => {
     arr.push(obj);
   } else {
     arr[index] = obj;
+  }
+  return arr;
+}
+
+export const addOrReplaceIterator = (arr, obj) => {
+  const { delimiter, index } = obj;
+  const listId = _.findIndex(arr, {
+    delimiter,
+    index,
+  });
+  if (listId === -1) {
+    arr.push(obj);
+  } else {
+    arr[listId] = obj;
   }
   return arr;
 } 

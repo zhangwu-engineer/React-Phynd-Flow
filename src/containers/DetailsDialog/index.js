@@ -6,6 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import _ from 'lodash';
 
 import useStyles from './style';
 
@@ -16,7 +21,17 @@ import {
   getTertiaryFieldLabel,
 } from 'utils/detailsDialog';
 
-const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails, hideModal, updateElement, removeElement }) => {
+const DetailsDialog = ({
+  isModalShown,
+  activeParent,
+  currentCard,
+  currentDetails,
+  hideModal,
+  updateElement,
+  removeElement,
+  iteratorsList,
+  addIteratorsList
+}) => {
   const classes = useStyles();
   const closeModal = () => {
     hideModal(false);
@@ -40,6 +55,15 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
     setInputTertiaryValue(event.target.value);
   };
 
+  const [iteratorsListId, setIteratorsListId] = React.useState(0);
+
+  const handleListIdChange = event => {
+    const newListId = event.target.value;
+    setIteratorsListId(newListId);
+    setInputPrimaryValue(iteratorsList[newListId].delimiter);
+    setInputSecondaryValue(iteratorsList[newListId].index);
+  };
+
   useEffect(() => {
     setInputPrimaryValue(currentDetails ? currentDetails.primary : '');
     setInputSecondaryValue(currentDetails ? currentDetails.secondary : '');
@@ -58,7 +82,23 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
         <Typography><CloseIcon onClick={closeModal} /></Typography>
       </Grid>
       <DialogContent className={classes.dialogContent}>
-        <Grid item>
+        {currentCard === 'Iteration' && iteratorsList && iteratorsList.length > 0 &&
+          <Grid className={classes.tabSelectContent}>
+            <FormControl className={classes.formControl}>
+              <InputLabel className={classes.resize}>Iterators</InputLabel>
+              <Select
+                className={classes.select}
+                value={iteratorsListId}
+                onChange={handleListIdChange}
+              >
+                {iteratorsList.map((data, index) => (
+                  <MenuItem value={index} key={`iterator-${index}`}>{`Delimiter: ${data.delimiter}, Index: ${data.index}`}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+        }
+        <Grid item className={classes.tabSelectContent}>
           {getPrimaryFieldLabel(currentCard) &&
             <TextField
               label={getPrimaryFieldLabel(currentCard)}
@@ -77,7 +117,7 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
             />
           }
         </Grid>
-        <Grid item>
+        <Grid item className={classes.tabSelectContent}>
           {getSecondaryFieldLabel(currentCard) &&
             <TextField
               label={getSecondaryFieldLabel(currentCard)}
@@ -123,6 +163,12 @@ const DetailsDialog = ({ isModalShown, activeParent, currentCard, currentDetails
             color="primary"
             className={classes.button}
             onClick={() => {
+              if (currentCard === 'Iteration') {
+                addIteratorsList({
+                  delimiter: inputPrimaryValue,
+                  index: inputSecondaryValue,
+                });
+              }
               updateElement(currentCard, {
                 primary: inputPrimaryValue,
                 secondary: inputSecondaryValue,

@@ -51,3 +51,12 @@ export const deleteStashesDataFailure = createAction(constants.DELETE_STASHES_DA
 export const setStashesDataRequest = createAction(constants.SET_STASHES_DATA_REQUEST)
 export const setStashesDataSuccess = createAction(constants.SET_STASHES_DATA_SUCCESS)
 export const setStashesDataFailure = createAction(constants.SET_STASHES_DATA_FAILURE)
+
+export const getIteratorsListDataIdle = createAction(constants.GET_ITERATORS_LIST_IDLE)
+export const getIteratorsListRequest = createAction(constants.GET_ITERATORS_LIST_REQUEST)
+export const getIteratorsListSuccess = createAction(constants.GET_ITERATORS_LIST_SUCCESS)
+export const getIteratorsListFailure = createAction(constants.GET_ITERATORS_LIST_FAILURE)
+
+export const addIteratorsListRequest = createAction(constants.ADD_ITERATORS_LIST_REQUEST)
+export const addIteratorsListSuccess = createAction(constants.ADD_ITERATORS_LIST_SUCCESS)
+export const addIteratorsListFailure = createAction(constants.ADD_ITERATORS_LIST_FAILURE)
