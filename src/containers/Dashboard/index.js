@@ -310,6 +310,8 @@ const Dashboard = ({
           activeParent={activeParent}
           currentCard={activeCard}
           currentDetails={activeDetails}
+          iteratorsList={iteratorsList}
+          addIteratorsList={addIteratorsList}
           updateElement={(element, inputValue) => {
             if (refs[activePanel] && refs[activePanel].current)
               refs[activePanel].current.validate(element, activeParent, inputValue);
